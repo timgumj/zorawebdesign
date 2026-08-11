@@ -1,0 +1,52 @@
+/* =========================================================
+   GLOBAL WEBSITE FONT
+   ========================================================= */
+
+:root {
+  --site-font: "Space Grotesk", Arial, Helvetica, sans-serif;
+}
+
+html,
+body {
+  font-family: var(--site-font);
+}
+
+/*
+ * Force all regular website elements to use the global font,
+ * even when individual components declare another font.
+ */
+body *,
+button,
+input,
+textarea,
+select,
+option {
+  font-family: var(--site-font) !important;
+}
+
+/*
+ * Prevent Font Awesome icons from being replaced by the
+ * regular website font.
+ */
+.fa,
+.fas,
+.far,
+.fal,
+.fab,
+[class^="fa-"],
+[class*=" fa-"] {
+  font-family: "Font Awesome 6 Free", "Font Awesome 6 Brands" !important;
+}
+
+/*
+ * Preserve Google Material icon fonts when used.
+ */
+.material-icons {
+  font-family: "Material Icons" !important;
+}
+
+.material-symbols-outlined,
+.material-symbols-rounded,
+.material-symbols-sharp {
+  font-family: "Material Symbols Outlined" !important;
+}

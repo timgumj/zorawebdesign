@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/png" href="/images/zora_design_fav11.png" />
+
+    <!-- Blocking Script: Prevents the white theme-flash -->
+    <script>
+      (function () {
+        const savedTheme = localStorage.getItem("site-theme") || "dark";
+        document.documentElement.classList.add(savedTheme);
+      })();
+    </script>
+
+    %sveltekit.head%
+  </head>
+
+  <body data-sveltekit-preload-data="hover">
+    <div style="display: contents">%sveltekit.body%</div>
+  </body>
+</html>
