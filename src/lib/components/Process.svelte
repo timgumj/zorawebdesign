@@ -7,12 +7,12 @@
     imageCredits = [],
   } = $props();
 
-  let lineVisible = $state(false);
+  let headerVisible = $state(false);
 
   const processImages = [
     "/images/meet-700.webp",
     "/images/Isa-700.webp",
-    "/images/design-700.webp",
+    "/images/project_process-700.webp",
     "/images/support-700.webp",
   ];
 
@@ -22,16 +22,24 @@
     return imageCredits[index] ?? defaultImageCredits[index] ?? "";
   }
 
-  function observeHeaderLine(node) {
+  function observeHeader(node) {
+    if (typeof IntersectionObserver === "undefined") {
+      headerVisible = true;
+
+      return {
+        destroy() {},
+      };
+    }
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          lineVisible = true;
+          headerVisible = true;
           observer.disconnect();
         }
       },
       {
-        threshold: 0.35,
+        threshold: 0.25,
         rootMargin: "0px 0px -8% 0px",
       },
     );
@@ -102,28 +110,32 @@
     <div class="shell-line edge-right"></div>
 
     <div class="container process-container">
-      <div class="process-header" use:observeHeaderLine>
-        <div class="process-header-row">
-          <div class="process-title-area">
-            <div class="process-title-row">
-              <span
-                class="section-pulse"
-                class:visible={lineVisible}
-                aria-hidden="true"
-              ></span>
+      <!-- =====================================================
+           BLUE SECTION HEADER
+      ====================================================== -->
+      <div
+        class="process-header"
+        class:visible={headerVisible}
+        use:observeHeader
+      >
+        <div class="process-header-inner">
+          <div class="process-header-main">
+            {#if eyebrow}
+              <span class="process-eyebrow">{eyebrow}</span>
+            {/if}
 
-              <h2>{title}</h2>
-            </div>
-
-            <div class="process-line" class:visible={lineVisible}></div>
+            <h2>{title}</h2>
           </div>
 
           {#if subtitle}
-            <p>{subtitle}</p>
+            <p class="process-subtitle">{subtitle}</p>
           {/if}
         </div>
       </div>
 
+      <!-- =====================================================
+           PROCESS LIST
+      ====================================================== -->
       <div class="process-list">
         {#each steps as step, index}
           <article class="process-stage">
@@ -152,7 +164,7 @@
                   <img
                     src={processImages[index]}
                     alt={step.title}
-                    class:grayscale-image={index === 2}
+                    class:process-feature-image={index === 2}
                     loading="lazy"
                     decoding="async"
                   />
@@ -171,11 +183,15 @@
 </section>
 
 <style>
+  /* =========================================================
+     SECTION
+  ========================================================= */
   .process {
     padding: 0;
     background: #111111;
     color: #ffffff;
     font-family: "Space Grotesk", Arial, sans-serif;
+
     transition:
       background 0.3s ease,
       color 0.3s ease;
@@ -188,16 +204,22 @@
 
   .process-shell {
     --shell-x: 40px;
+
     position: relative;
     width: min(1540px, calc(100% - 32px));
     margin: 0 auto;
+
     padding-top: 140px;
     padding-right: var(--shell-x);
     padding-bottom: 140px;
     padding-left: var(--shell-x);
+
     box-sizing: border-box;
   }
 
+  /* =========================================================
+     SHELL LINES
+  ========================================================= */
   .shell-line {
     position: absolute;
     top: 0;
@@ -206,6 +228,7 @@
     background: rgba(255, 255, 255, 0.08);
     pointer-events: none;
     z-index: 0;
+
     transition: background 0.3s ease;
   }
 
@@ -242,134 +265,112 @@
     width: 100%;
   }
 
+  /* =========================================================
+     BLUE SECTION HEADER
+  ========================================================= */
   .process-header {
     width: 100%;
-    margin-bottom: 70px;
-  }
-
-  .process-header-row {
-    width: 100%;
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) auto;
-    align-items: end;
-    gap: 24px;
-  }
-
-  .process-title-area {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    overflow: visible;
-  }
-
-  .process-title-row {
-    display: inline-flex;
-    align-items: center;
-    justify-content: flex-start;
-    gap: 20px;
-  }
-
-  .process-line {
-    width: 100%;
-    height: 2px;
-    background: #ffffff;
-    transform-origin: left center;
-    transform: scaleX(0.01);
-    transition:
-      transform 1s ease-out,
-      background 0.3s ease;
-  }
-
-  .process-line.visible {
-    transform: scaleX(1);
-  }
-
-  :global(body.light) .process-line {
-    background: #111111;
-  }
-
-  .section-pulse {
-    position: relative;
-    width: 28px;
-    height: 28px;
-    border-radius: 50%;
+    margin-bottom: 80px;
+    box-sizing: border-box;
     background: #0043ff;
-    flex-shrink: 0;
+    color: #ffffff;
+
     opacity: 0;
-    transform: scale(0.6);
+    transform: translateY(18px);
+
     transition:
-      opacity 0.4s ease,
-      transform 0.4s ease;
+      opacity 0.7s ease,
+      transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
-  .section-pulse.visible {
+  .process-header.visible {
     opacity: 1;
-    transform: scale(1);
+    transform: translateY(0);
   }
 
-  .section-pulse.visible::before,
-  .section-pulse.visible::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    border-radius: 50%;
-    background: rgba(0, 67, 255, 0.42);
-    animation: sectionPulse 1.8s ease-out infinite;
+  .process-header-inner {
+    width: 100%;
+    min-height: 280px;
+    box-sizing: border-box;
+
+    display: grid;
+
+    grid-template-columns:
+      minmax(0, 1.15fr)
+      minmax(320px, 0.85fr);
+
+    align-items: center;
+    gap: 80px;
+
+    padding: 58px 64px;
   }
 
-  .section-pulse.visible::after {
-    animation-delay: 0.9s;
+  .process-header-main {
+    min-width: 0;
   }
 
-  @keyframes sectionPulse {
-    0% {
-      transform: scale(1);
-      opacity: 0.7;
-    }
-
-    100% {
-      transform: scale(3.2);
-      opacity: 0;
-    }
+  /* =========================================================
+     EYEBROW
+  ========================================================= */
+  .process-eyebrow {
+    display: block;
+    margin: 0 0 18px;
+    color: rgba(255, 255, 255, 0.78);
+    font-size: 11px;
+    line-height: 1.2;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
   }
 
+  /* =========================================================
+     HEADER TITLE
+  ========================================================= */
   .process-header h2 {
+    max-width: 720px;
     margin: 0;
     color: #ffffff;
-    font-size: clamp(18px, 2vw, 28px);
-    line-height: 1.1;
-    letter-spacing: 0.08em;
-    font-weight: 700;
-    text-transform: uppercase;
-    transition: color 0.3s ease;
+    font-size: clamp(26px, 2.5vw, 40px);
+    line-height: 1.12;
+    letter-spacing: -0.035em;
+    font-weight: 500;
+    text-transform: none;
+  }
+
+  /* =========================================================
+     HEADER SUBTITLE
+  ========================================================= */
+  .process-subtitle {
+    max-width: 520px;
+    margin: 0;
+    padding: 0;
+    color: rgba(255, 255, 255, 0.82);
+    font-size: 16px;
+    line-height: 1.65;
+    letter-spacing: 0;
+    font-weight: 400;
+  }
+
+  :global(body.light) .process-header {
+    background: #0043ff;
+    color: #ffffff;
   }
 
   :global(body.light) .process-header h2 {
-    color: #111111;
+    color: #ffffff;
   }
 
-  .process-header p {
-    margin: 0;
-    max-width: 520px;
-    color: #bfbfbf;
-    font-size: 16px;
-    line-height: 1.4;
-    letter-spacing: 0.04em;
-    text-align: left;
-    display: flex;
-    align-items: center;
-    border-left: 2px solid #0043ff;
-    padding-left: 20px;
-    transform: translateY(-2px);
-    transition:
-      color 0.3s ease,
-      border-color 0.3s ease;
+  :global(body.light) .process-eyebrow {
+    color: rgba(255, 255, 255, 0.78);
   }
 
-  :global(body.light) .process-header p {
-    color: rgba(0, 0, 0, 0.68);
+  :global(body.light) .process-subtitle {
+    color: rgba(255, 255, 255, 0.82);
   }
 
+  /* =========================================================
+     PROCESS LIST
+  ========================================================= */
   .process-list {
     display: flex;
     flex-direction: column;
@@ -377,11 +378,18 @@
 
   .process-stage {
     position: relative;
+
     display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(320px, 0.75fr);
+
+    grid-template-columns:
+      minmax(0, 1fr)
+      minmax(320px, 0.75fr);
+
     gap: 80px;
     align-items: start;
+
     min-height: 320px;
+
     padding-top: 54px;
     padding-bottom: 54px;
   }
@@ -399,6 +407,7 @@
     height: 1px;
     background: rgba(255, 255, 255, 0.12);
     pointer-events: none;
+
     transition: background 0.3s ease;
   }
 
@@ -416,10 +425,18 @@
     display: none;
   }
 
+  /* =========================================================
+     STAGE LEFT
+  ========================================================= */
   .stage-left {
     display: grid;
-    grid-template-columns: 58px minmax(0, 1fr);
+
+    grid-template-columns:
+      58px
+      minmax(0, 1fr);
+
     gap: 34px;
+
     min-height: 320px;
   }
 
@@ -438,6 +455,7 @@
     letter-spacing: 0.04em;
     font-weight: 700;
     padding-top: 0;
+
     transition: color 0.3s ease;
   }
 
@@ -445,15 +463,23 @@
     color: #111111;
   }
 
+  /* =========================================================
+     VERTICAL PROGRESS LINE
+  ========================================================= */
   .stage-line {
     --line-progress: 0;
+
     position: absolute;
     top: 36px;
     bottom: 10px;
     left: 50%;
+
     width: 1px;
+
     background: transparent;
+
     transform: translateX(-50%);
+
     overflow: hidden;
   }
 
@@ -462,11 +488,16 @@
     width: 100%;
     height: 100%;
     background: #0043ff;
+
     transform: scaleY(var(--line-progress));
     transform-origin: top;
+
     will-change: transform;
   }
 
+  /* =========================================================
+     STAGE CONTENT
+  ========================================================= */
   .stage-content {
     max-width: 620px;
   }
@@ -479,6 +510,7 @@
     letter-spacing: 0.04em;
     text-transform: uppercase;
     font-weight: 700;
+
     transition: color 0.3s ease;
   }
 
@@ -492,6 +524,7 @@
     color: #9a9a9a;
     font-size: 16px;
     line-height: 1.7;
+
     transition: color 0.3s ease;
   }
 
@@ -499,6 +532,9 @@
     color: rgba(0, 0, 0, 0.68);
   }
 
+  /* =========================================================
+     STAGE IMAGE
+  ========================================================= */
   .stage-right {
     width: 100%;
     min-height: 300px;
@@ -508,14 +544,19 @@
     width: 100%;
     max-width: 460px;
     margin: 0 auto;
+
     overflow: hidden;
+
     opacity: 0.4;
+
     transform: scale(0.6);
     transform-origin: center;
+
     transition:
       opacity 0.9s ease,
       transform 1.2s cubic-bezier(0.16, 1, 0.3, 1),
       background 0.3s ease;
+
     will-change: opacity, transform;
   }
 
@@ -528,11 +569,19 @@
     display: block;
     width: 100%;
     height: 300px;
+
     object-fit: cover;
+    object-position: center center;
   }
 
-  .stage-right img.grayscale-image {
-    filter: grayscale(100%);
+  /* =========================================================
+     THIRD IMAGE
+     ORIGINAL COLOUR + SLIGHTLY HIGHER CROP
+  ========================================================= */
+  .stage-right img.process-feature-image {
+    filter: none;
+    object-fit: cover;
+    object-position: center 35%;
   }
 
   .image-credit {
@@ -541,6 +590,7 @@
     font-size: 12px;
     line-height: 1.4;
     letter-spacing: 0.03em;
+
     transition: color 0.3s ease;
   }
 
@@ -552,39 +602,53 @@
     min-height: 220px;
   }
 
+  /* =========================================================
+     TABLET / RESPONSIVE PROCESS LAYOUT
+  ========================================================= */
   @media (max-width: 1024px) {
     .shell-line {
       display: none;
     }
 
     .process-header {
-      margin-bottom: 50px;
+      margin-bottom: 60px;
     }
 
-    .process-header-row {
-      gap: 20px;
-      align-items: end;
+    .process-header-inner {
+      min-height: 240px;
+
+      grid-template-columns:
+        minmax(0, 1fr)
+        minmax(280px, 0.9fr);
+
+      gap: 48px;
+
+      padding: 48px 52px;
     }
 
-    .process-title-area {
-      gap: 5px;
+    .process-header h2 {
+      font-size: clamp(24px, 3vw, 34px);
     }
 
-    .process-title-row {
-      gap: 18px;
-    }
-
-    .process-header p {
-      transform: translateY(10px);
+    .process-subtitle {
+      font-size: 15px;
+      line-height: 1.6;
     }
 
     .process-stage {
       display: grid;
-      grid-template-columns: 58px minmax(0, 1fr);
+
+      grid-template-columns:
+        58px
+        minmax(0, 1fr);
+
       gap: 34px;
+
       min-height: auto;
+
       padding-top: 46px;
       padding-bottom: 46px;
+
       align-items: stretch;
     }
 
@@ -604,10 +668,14 @@
     .stage-number-wrap {
       grid-column: 1;
       grid-row: 1 / span 2;
+
       position: relative;
+
       display: flex;
       justify-content: center;
+
       align-self: stretch;
+
       min-height: 100%;
     }
 
@@ -624,6 +692,7 @@
     .stage-content {
       grid-column: 2;
       grid-row: 1;
+
       width: 100%;
       max-width: none;
     }
@@ -635,8 +704,11 @@
     .stage-right {
       grid-column: 2;
       grid-row: 2;
+
       min-height: auto;
+
       padding-left: 0;
+
       width: 100%;
     }
 
@@ -665,10 +737,15 @@
     }
   }
 
+  /* =========================================================
+     TABLET
+  ========================================================= */
   @media (min-width: 768px) and (max-width: 1024px) {
     .process-shell {
       --shell-x: 32px;
+
       width: min(1540px, calc(100% - 28px));
+
       padding-top: 110px;
       padding-right: var(--shell-x);
       padding-bottom: 82px;
@@ -676,82 +753,96 @@
     }
 
     .process-header {
-      margin-bottom: 50px;
+      margin-bottom: 56px;
     }
 
-    .process-header-row {
-      width: 100%;
-      display: grid;
-      grid-template-columns: minmax(0, 0.8fr) minmax(330px, 1.2fr);
-      align-items: end;
-      gap: 28px;
+    .process-header-inner {
+      min-height: 220px;
+
+      grid-template-columns:
+        minmax(0, 1fr)
+        minmax(260px, 0.9fr);
+
+      gap: 38px;
+
+      padding: 42px 44px;
     }
 
-    .process-title-area {
-      min-width: 0;
-      gap: 20px;
-    }
-
-    .process-title-row {
-      min-width: 0;
-      gap: 14px;
+    .process-eyebrow {
+      margin-bottom: 14px;
+      font-size: 9px;
     }
 
     .process-header h2 {
-      font-size: 15px;
-      line-height: 1.1;
-      white-space: nowrap;
+      font-size: 26px;
+      line-height: 1.15;
     }
 
-    .process-line {
-      width: 100%;
-    }
-
-    .process-header p {
-      max-width: 520px;
+    .process-subtitle {
       font-size: 13px;
-      line-height: 1.45;
-      padding-left: 16px;
-      transform: translateY(-2px);
-    }
-
-    .section-pulse {
-      width: 28px;
-      height: 28px;
+      line-height: 1.55;
     }
   }
 
+  /* =========================================================
+     MOBILE
+  ========================================================= */
   @media (max-width: 767px) {
-    .process-header-row {
-      grid-template-columns: 1fr;
-      align-items: stretch;
-      gap: 20px;
+    .process-shell {
+      --shell-x: 18px;
+
+      padding-top: 110px;
+      padding-right: var(--shell-x);
+      padding-bottom: 60px;
+      padding-left: var(--shell-x);
     }
 
-    .process-title-area {
-      gap: 14px;
+    .process-header {
+      margin-bottom: 50px;
     }
 
-    .process-title-row {
-      gap: 12px;
+    .process-header-inner {
+      min-height: 0;
+
+      display: flex;
+      flex-direction: column;
+
+      align-items: flex-start;
+
+      gap: 24px;
+
+      padding: 38px 30px;
     }
 
-    .process-header p {
+    .process-header-main {
+      width: 100%;
+    }
+
+    .process-eyebrow {
+      margin-bottom: 14px;
+      font-size: 9px;
+      letter-spacing: 0.17em;
+    }
+
+    .process-header h2 {
+      max-width: 100%;
+      font-size: clamp(24px, 7vw, 30px);
+      line-height: 1.15;
+    }
+
+    .process-subtitle {
       max-width: 100%;
       font-size: 14px;
       line-height: 1.6;
-      padding: 16px 0 16px 18px;
-      transform: none;
-    }
-
-    .section-pulse {
-      width: 22px;
-      height: 22px;
     }
 
     .process-stage {
-      grid-template-columns: 42px minmax(0, 1fr);
+      grid-template-columns:
+        42px
+        minmax(0, 1fr);
+
       gap: 20px;
+
       padding-top: 46px;
       padding-bottom: 46px;
     }
@@ -781,65 +872,99 @@
       background: #ffffff;
     }
 
+    /* All mobile images use the exact same dimensions */
     .stage-right img {
+      display: block;
+
+      width: 100%;
       height: 250px;
+
       object-fit: contain;
       object-position: center center;
+    }
+
+    /*
+     * Only remove the colour filter from image 03.
+     * Width, height, object-fit and positioning are inherited
+     * from the exact same rule as every other image.
+     */
+    .stage-right img.process-feature-image {
+      filter: none;
     }
 
     .stage-line {
       top: 32px;
       bottom: 10px;
     }
-
-    .process-shell {
-      --shell-x: 18px;
-      padding-top: 110px;
-      padding-right: var(--shell-x);
-      padding-bottom: 60px;
-      padding-left: var(--shell-x);
-    }
   }
 
-  @media (max-width: 600px) {
-    .section-pulse {
-      width: 22px;
-      height: 22px;
-    }
-
-    .process-header h2 {
-      font-size: clamp(18px, 7vw, 24px);
-    }
-  }
-
+  /* =========================================================
+     SMALL MOBILE
+  ========================================================= */
   @media (max-width: 480px) {
+    .process-header-inner {
+      padding: 34px 24px;
+    }
+
     .stage-right {
       padding-left: 0;
     }
 
+    /* All small-mobile images use the same exact dimensions */
     .stage-right img {
+      display: block;
+
+      width: 100%;
       height: 230px;
+
       object-fit: contain;
       object-position: center center;
+    }
+
+    /*
+     * Image 03 remains original colour only.
+     * No special sizing or positioning.
+     */
+    .stage-right img.process-feature-image {
+      filter: none;
     }
   }
 
   @media (max-width: 420px) {
-    .process-title-row {
-      gap: 10px;
+    .process-header {
+      margin-bottom: 46px;
     }
 
-    .section-pulse {
-      width: 18px;
-      height: 18px;
+    .process-header-inner {
+      gap: 20px;
+      padding: 30px 22px;
     }
 
     .process-header h2 {
-      font-size: 18px;
+      font-size: 23px;
     }
 
-    .process-header p {
-      padding: 18px 0 18px 16px;
+    .process-subtitle {
+      font-size: 14px;
+    }
+
+    /*
+     * Keep the exact same image sizing inherited
+     * from the 480px breakpoint.
+     */
+    .stage-right img.process-feature-image {
+      filter: none;
+    }
+  }
+
+  /* =========================================================
+     REDUCED MOTION
+  ========================================================= */
+  @media (prefers-reduced-motion: reduce) {
+    .process-header {
+      opacity: 1;
+      transform: none;
+      transition: none;
     }
   }
 </style>

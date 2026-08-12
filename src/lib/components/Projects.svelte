@@ -20,7 +20,7 @@
   } = $props();
 
   let visibleCount = $state(9);
-  let lineVisible = $state(false);
+  let headerVisible = $state(false);
 
   const LOAD_MORE_COUNT = 2;
 
@@ -76,16 +76,24 @@
     return tags.filter(Boolean).slice(0, 4);
   }
 
-  function observeLine(node) {
+  function observeHeader(node) {
+    if (typeof IntersectionObserver === "undefined") {
+      headerVisible = true;
+
+      return {
+        destroy() {},
+      };
+    }
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          lineVisible = true;
+          headerVisible = true;
           observer.disconnect();
         }
       },
       {
-        threshold: 0.35,
+        threshold: 0.25,
         rootMargin: "0px 0px -8% 0px",
       },
     );
@@ -100,6 +108,7 @@
   }
 
   const hasMoreProjects = $derived(visibleCount < projects.length);
+
   const visibleProgress = $derived(
     `${Math.min(visibleCount, projects.length)}/${projects.length}`,
   );
@@ -115,33 +124,36 @@
     <div class="project-v-line edge-right"></div>
 
     <div class="container projects-container">
-      <div class="projects-header" use:observeLine>
-        <div class="projects-header-main">
-          <div class="projects-title-area">
-            <div class="projects-title-row">
-              <span
-                class="section-pulse"
-                class:visible={lineVisible}
-                aria-hidden="true"
-              ></span>
-
-              <h2>{title}</h2>
-            </div>
-
-            <div class="projects-line" class:visible={lineVisible}></div>
+      <!-- =====================================================
+           BLUE SECTION HEADER
+      ====================================================== -->
+      <div
+        class="projects-header"
+        class:visible={headerVisible}
+        use:observeHeader
+      >
+        <div class="projects-header-inner">
+          <div class="projects-header-main">
+            <h2>{title}</h2>
           </div>
 
           {#if subtitle}
-            <p>{subtitle}</p>
+            <p class="projects-subtitle">{subtitle}</p>
           {/if}
         </div>
       </div>
 
+      <!-- =====================================================
+           PROJECT GRID LABEL
+      ====================================================== -->
       <div class="projects-grid-label">
         <span>{eyebrow || "SELECTED PROJECTS"}</span>
         <span>{String(projects.length).padStart(2, "0")} PROJECTS</span>
       </div>
 
+      <!-- =====================================================
+           PROJECT GRID
+      ====================================================== -->
       <div class="projects-grid-view">
         <div class="projects-grid">
           {#each projects as project, index}
@@ -150,7 +162,9 @@
               class:seo-hidden={index >= visibleCount}
               style={`--card-accent:${getAccent(index)};`}
             >
-              <div class="project-bg-number">{cleanNumber(project.number)}</div>
+              <div class="project-bg-number">
+                {cleanNumber(project.number)}
+              </div>
 
               <div class="project-image-wrap">
                 <img
@@ -180,7 +194,9 @@
                     <h3>{project.title}</h3>
                   </div>
 
-                  <p class="project-description">{getDescription(project)}</p>
+                  <p class="project-description">
+                    {getDescription(project)}
+                  </p>
                 </div>
 
                 <div class="project-footer" class:has-details={index === 0}>
@@ -192,6 +208,7 @@
                     aria-label={`${project.linkText ?? viewProjectText}: ${project.title}`}
                   >
                     <span>{project.linkText ?? viewProjectText}</span>
+
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="100%"
@@ -206,6 +223,7 @@
                         stroke-linecap="round"
                         stroke-linejoin="round"
                       ></path>
+
                       <path
                         d="M4.58714 4.34104H11.6582V11.4121"
                         stroke="currentColor"
@@ -221,7 +239,10 @@
                       class="project-details-link"
                       aria-label={`${project.detailsText ?? viewDetailsText}: ${project.title}`}
                     >
-                      <span>{project.detailsText ?? viewDetailsText}</span>
+                      <span>
+                        {project.detailsText ?? viewDetailsText}
+                      </span>
+
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="100%"
@@ -236,6 +257,7 @@
                           stroke-linecap="round"
                           stroke-linejoin="round"
                         ></path>
+
                         <path
                           d="M9.5 4.5L13 8L9.5 11.5"
                           stroke="currentColor"
@@ -270,6 +292,9 @@
 </section>
 
 <style>
+  /* =========================================================
+     SECTION
+  ========================================================= */
   .projects {
     padding: 0;
     font-family: "DM Sans", Arial, sans-serif;
@@ -298,6 +323,9 @@
     box-sizing: border-box;
   }
 
+  /* =========================================================
+     VERTICAL SHELL LINES
+  ========================================================= */
   .project-v-line {
     position: absolute;
     top: 0;
@@ -326,122 +354,88 @@
     width: 100%;
   }
 
+  /* =========================================================
+     BLUE SECTION HEADER
+  ========================================================= */
   .projects-header {
     width: 100%;
-    margin-bottom: 64px;
+    margin-bottom: 80px;
+    box-sizing: border-box;
+    background: #0043ff;
+    color: #ffffff;
+    opacity: 0;
+    transform: translateY(18px);
+    transition:
+      opacity 0.7s ease,
+      transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .projects-header.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .projects-header-inner {
+    width: 100%;
+    min-height: 280px;
+    box-sizing: border-box;
+    display: grid;
+    grid-template-columns:
+      minmax(0, 1.15fr)
+      minmax(320px, 0.85fr);
+    align-items: center;
+    gap: 80px;
+    padding: 58px 64px;
   }
 
   .projects-header-main {
-    width: 100%;
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) auto;
-    align-items: end;
-    gap: 24px;
-    margin-bottom: 20px;
-  }
-
-  .projects-title-area {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-  }
-
-  .projects-title-row {
-    display: inline-flex;
-    align-items: center;
-    gap: 20px;
-  }
-
-  .section-pulse {
-    position: relative;
-    width: 28px;
-    height: 28px;
-    border-radius: 50%;
-    background: #0043ff;
-    flex-shrink: 0;
-    opacity: 0;
-    transform: scale(0.6);
-    transition:
-      opacity 0.4s ease,
-      transform 0.4s ease;
-  }
-
-  .section-pulse.visible {
-    opacity: 1;
-    transform: scale(1);
-  }
-
-  .section-pulse.visible::before,
-  .section-pulse.visible::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    border-radius: 50%;
-    background: rgba(0, 67, 255, 0.42);
-    animation: sectionPulse 1.8s ease-out infinite;
-  }
-
-  .section-pulse.visible::after {
-    animation-delay: 0.9s;
-  }
-
-  @keyframes sectionPulse {
-    from {
-      transform: scale(1);
-      opacity: 0.7;
-    }
-
-    to {
-      transform: scale(3.2);
-      opacity: 0;
-    }
-  }
-
-  .projects-header h2 {
-    margin: 0;
-    font-size: clamp(18px, 2vw, 28px);
-    line-height: 1.1;
-    letter-spacing: 0.08em;
-    font-weight: 700;
-    text-transform: uppercase;
-  }
-
-  .projects-header p {
-    margin: 0;
-    max-width: 520px;
-    padding-left: 20px;
-    border-left: 2px solid #0043ff;
-    color: #bfbfbf;
-    font-size: 16px;
-    line-height: 1.4;
-    letter-spacing: 0.04em;
-  }
-
-  :global(body.light) .projects-header p {
-    color: rgba(0, 0, 0, 0.68);
-  }
-
-  .projects-line {
-    width: 100%;
-    height: 2px;
-    background: #fff;
-    transform-origin: left center;
-    transform: scaleX(0.01);
-    transition: transform 1s ease-out;
-  }
-
-  :global(body.light) .projects-line {
-    background: #111;
-  }
-
-  .projects-line.visible {
-    transform: scaleX(1);
+    min-width: 0;
   }
 
   /* =========================================================
-     PROJECT GRID
-     ========================================================= */
+     HEADER TITLE
+  ========================================================= */
+  .projects-header h2 {
+    max-width: 720px;
+    margin: 0;
+    color: #ffffff;
+    font-size: clamp(26px, 2.5vw, 40px);
+    line-height: 1.12;
+    letter-spacing: -0.035em;
+    font-weight: 500;
+    text-transform: none;
+  }
 
+  /* =========================================================
+     HEADER SUBTITLE
+  ========================================================= */
+  .projects-subtitle {
+    max-width: 520px;
+    margin: 0;
+    padding: 0;
+    color: rgba(255, 255, 255, 0.82);
+    font-size: 16px;
+    line-height: 1.65;
+    letter-spacing: 0;
+    font-weight: 400;
+  }
+
+  :global(body.light) .projects-header {
+    background: #0043ff;
+    color: #ffffff;
+  }
+
+  :global(body.light) .projects-header h2 {
+    color: #ffffff;
+  }
+
+  :global(body.light) .projects-subtitle {
+    color: rgba(255, 255, 255, 0.82);
+  }
+
+  /* =========================================================
+     PROJECT GRID LABEL
+  ========================================================= */
   .projects-grid-label {
     margin-bottom: 30px;
     padding-bottom: 15px;
@@ -460,15 +454,22 @@
     color: rgba(0, 0, 0, 0.45);
   }
 
+  /* =========================================================
+     PROJECT GRID
+  ========================================================= */
   .projects-grid {
     width: 100%;
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     grid-auto-rows: 1fr;
-    gap: 40px;
+    column-gap: 40px;
+    row-gap: 40px;
     align-items: stretch;
   }
 
+  /* =========================================================
+     PROJECT CARD
+  ========================================================= */
   .project-card {
     --stagger-y: 0px;
     position: relative;
@@ -498,16 +499,31 @@
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
   }
 
+  /* =========================================================
+     DESKTOP STAGGER
+  ========================================================= */
   @media (min-width: 1025px) {
-    .projects-grid > *:nth-child(2n + 1) {
+    .projects-grid > .project-card:nth-child(2n + 1) {
       --stagger-y: -20px;
     }
 
-    .projects-grid > *:nth-child(2n) {
+    .projects-grid > .project-card:nth-child(2n) {
       --stagger-y: 20px;
+    }
+
+    /*
+     * The Load More box occupies the right-hand column.
+     * It therefore uses the exact same +20px stagger as the
+     * right-column project cards.
+     */
+    .project-load-card {
+      transform: translateY(20px);
     }
   }
 
+  /* =========================================================
+     BACKGROUND NUMBER
+  ========================================================= */
   .project-bg-number {
     position: absolute;
     top: -4px;
@@ -524,6 +540,9 @@
     color: rgba(0, 0, 0, 0.05);
   }
 
+  /* =========================================================
+     PROJECT IMAGE
+  ========================================================= */
   .project-image-wrap {
     position: relative;
     display: block;
@@ -545,6 +564,9 @@
     transition: transform 0.35s ease;
   }
 
+  /* =========================================================
+     PROJECT CONTENT
+  ========================================================= */
   .project-content {
     min-height: 240px;
     padding: 24px 22px;
@@ -559,6 +581,9 @@
     background: #fff;
   }
 
+  /* =========================================================
+     PROJECT TAGS
+  ========================================================= */
   .project-tags {
     display: flex;
     flex-wrap: wrap;
@@ -586,6 +611,9 @@
     color: #111111;
   }
 
+  /* =========================================================
+     PROJECT COPY
+  ========================================================= */
   .project-copy {
     width: 100%;
     min-width: 0;
@@ -630,6 +658,9 @@
     color: rgba(0, 0, 0, 0.68);
   }
 
+  /* =========================================================
+     PROJECT FOOTER
+  ========================================================= */
   .project-footer {
     width: 100%;
     margin-top: auto;
@@ -703,21 +734,25 @@
     }
   }
 
+  /* =========================================================
+     LOAD MORE CARD
+  ========================================================= */
   .project-load-card {
     min-height: 520px;
     height: 100%;
+    margin: 0;
     padding: 28px;
     border: 1px solid rgba(255, 255, 255, 0.08);
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
     align-items: flex-start;
+    align-self: stretch;
     gap: 10px;
     background: linear-gradient(180deg, #151518, #0e0e10);
     color: #fff;
     text-align: left;
     cursor: pointer;
-    transform: translateY(var(--stagger-y, 0px));
   }
 
   :global(body.light) .project-load-card {
@@ -758,8 +793,7 @@
 
   /* =========================================================
      TABLET
-     ========================================================= */
-
+  ========================================================= */
   @media (max-width: 1024px) {
     .project-v-line {
       display: none;
@@ -769,13 +803,43 @@
       padding: 110px 24px;
     }
 
+    .projects-header {
+      margin-bottom: 56px;
+    }
+
+    .projects-header-inner {
+      min-height: 220px;
+      grid-template-columns:
+        minmax(0, 1fr)
+        minmax(260px, 0.9fr);
+      gap: 38px;
+      padding: 42px 44px;
+    }
+
+    .projects-header h2 {
+      font-size: 26px;
+      line-height: 1.15;
+    }
+
+    .projects-subtitle {
+      font-size: 13px;
+      line-height: 1.55;
+    }
+
     .projects-grid {
-      gap: 18px;
+      column-gap: 18px;
+      row-gap: 18px;
     }
 
     .project-card,
     .project-load-card {
       min-height: 470px;
+      transform: none;
+    }
+
+    .project-load-card {
+      margin: 0;
+      align-self: stretch;
       transform: none;
     }
 
@@ -786,34 +850,52 @@
 
   /* =========================================================
      MOBILE
-     ========================================================= */
-
+  ========================================================= */
   @media (max-width: 767px) {
     .projects-shell {
       width: min(1540px, calc(100% - 32px));
       padding: 110px 18px;
     }
 
-    .projects-header-main {
-      grid-template-columns: 1fr;
-      gap: 20px;
+    .projects-header {
+      margin-bottom: 50px;
     }
 
-    .projects-header p {
+    .projects-header-inner {
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 24px;
+      padding: 38px 30px;
+    }
+
+    .projects-header-main {
+      width: 100%;
+    }
+
+    .projects-header h2 {
       max-width: 100%;
-      padding: 16px 0 16px 18px;
+      font-size: clamp(24px, 7vw, 30px);
+      line-height: 1.15;
+    }
+
+    .projects-subtitle {
+      max-width: 100%;
       font-size: 14px;
       line-height: 1.6;
     }
 
     .projects-grid {
       grid-template-columns: 1fr;
-      gap: 30px;
+      column-gap: 0;
+      row-gap: 30px;
     }
 
     .project-card,
     .project-load-card {
       min-height: auto;
+      transform: none;
     }
 
     .project-image-wrap {
@@ -867,7 +949,33 @@
     }
   }
 
+  /* =========================================================
+     SMALL MOBILE
+  ========================================================= */
+  @media (max-width: 480px) {
+    .projects-header-inner {
+      padding: 34px 24px;
+    }
+  }
+
   @media (max-width: 420px) {
+    .projects-header {
+      margin-bottom: 46px;
+    }
+
+    .projects-header-inner {
+      gap: 20px;
+      padding: 30px 22px;
+    }
+
+    .projects-header h2 {
+      font-size: 23px;
+    }
+
+    .projects-subtitle {
+      font-size: 14px;
+    }
+
     .project-footer {
       gap: 16px;
     }
@@ -878,10 +986,14 @@
     }
   }
 
+  /* =========================================================
+     REDUCED MOTION
+  ========================================================= */
   @media (prefers-reduced-motion: reduce) {
-    .section-pulse.visible::before,
-    .section-pulse.visible::after {
-      animation: none;
+    .projects-header {
+      opacity: 1;
+      transform: none;
+      transition: none;
     }
   }
 </style>

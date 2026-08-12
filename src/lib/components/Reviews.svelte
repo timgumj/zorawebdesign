@@ -5,11 +5,11 @@
     reviews = [],
   } = $props();
 
-  let lineVisible = $state(false);
+  let headerVisible = $state(false);
 
-  function observeLine(node) {
+  function observeHeader(node) {
     if (typeof IntersectionObserver === "undefined") {
-      lineVisible = true;
+      headerVisible = true;
 
       return {
         destroy() {},
@@ -19,12 +19,12 @@
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          lineVisible = true;
+          headerVisible = true;
           observer.disconnect();
         }
       },
       {
-        threshold: 0.35,
+        threshold: 0.25,
         rootMargin: "0px 0px -8% 0px",
       },
     );
@@ -42,28 +42,21 @@
 <section class="reviews" id="reviews">
   <div class="reviews-shell">
     <div class="container reviews-container">
-      <div class="reviews-header" use:observeLine>
-        <div class="reviews-header-row">
-          <div class="reviews-title-area">
-            <div class="reviews-title-row">
-              <span
-                class="section-pulse"
-                class:visible={lineVisible}
-                aria-hidden="true"
-              ></span>
-
-              <h2>{title}</h2>
-            </div>
-
-            <div
-              class="reviews-line"
-              class:visible={lineVisible}
-              aria-hidden="true"
-            ></div>
+      <!-- =====================================================
+           BLUE SECTION HEADER
+      ====================================================== -->
+      <div
+        class="reviews-header"
+        class:visible={headerVisible}
+        use:observeHeader
+      >
+        <div class="reviews-header-inner">
+          <div class="reviews-header-main">
+            <h2>{title}</h2>
           </div>
 
           {#if subtitle}
-            <p>{subtitle}</p>
+            <p class="reviews-subtitle">{subtitle}</p>
           {/if}
         </div>
       </div>
@@ -127,7 +120,6 @@
 
   .reviews-shell {
     --shell-x: 40px;
-
     position: relative;
     width: min(1540px, calc(100% - 32px));
     margin: 0 auto;
@@ -143,215 +135,115 @@
   .reviews-container {
     width: 100%;
     min-width: 0;
-
     display: flex;
     flex-direction: column;
     align-items: stretch;
   }
 
   /* =========================================================
-     HEADER
-     ========================================================= */
-
+     BLUE SECTION HEADER
+  ========================================================= */
   .reviews-header {
     width: 100%;
-    margin-bottom: 70px;
-  }
-
-  .reviews-header-row {
-    width: 100%;
-
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) auto;
-    align-items: end;
-
-    gap: 24px;
-  }
-
-  .reviews-title-area {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-
-    overflow: visible;
-  }
-
-  .reviews-title-row {
-    display: inline-flex;
-    align-items: center;
-    justify-content: flex-start;
-
-    gap: 20px;
-  }
-
-  .reviews-line {
-    width: 100%;
-    height: 2px;
-
-    background: #ffffff;
-
-    transform: scaleX(0.01);
-    transform-origin: left center;
-
+    margin-bottom: 80px;
+    box-sizing: border-box;
+    background: #0043ff;
+    color: #ffffff;
+    opacity: 0;
+    transform: translateY(18px);
     transition:
-      transform 1s ease-out,
-      background 0.3s ease;
+      opacity 0.7s ease,
+      transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
-  .reviews-line.visible {
-    transform: scaleX(1);
+  .reviews-header.visible {
+    opacity: 1;
+    transform: translateY(0);
   }
 
-  :global(body.light) .reviews-line {
-    background: #111111;
+  .reviews-header-inner {
+    width: 100%;
+    min-height: 280px;
+    box-sizing: border-box;
+    display: grid;
+    grid-template-columns:
+      minmax(0, 1.15fr)
+      minmax(320px, 0.85fr);
+    align-items: center;
+    gap: 80px;
+    padding: 58px 64px;
+  }
+
+  .reviews-header-main {
+    min-width: 0;
   }
 
   /* =========================================================
-     PULSE
-     ========================================================= */
-
-  .section-pulse {
-    position: relative;
-
-    width: 28px;
-    height: 28px;
-
-    border-radius: 50%;
-
-    background: #0043ff;
-
-    flex-shrink: 0;
-
-    opacity: 0;
-    transform: scale(0.6);
-
-    transition:
-      opacity 0.4s ease,
-      transform 0.4s ease;
-  }
-
-  .section-pulse.visible {
-    opacity: 1;
-    transform: scale(1);
-  }
-
-  .section-pulse.visible::before,
-  .section-pulse.visible::after {
-    content: "";
-
-    position: absolute;
-    inset: 0;
-
-    border-radius: 50%;
-
-    background: rgba(0, 67, 255, 0.42);
-
-    animation: sectionPulse 1.8s ease-out infinite;
-  }
-
-  .section-pulse.visible::after {
-    animation-delay: 0.9s;
-  }
-
-  @keyframes sectionPulse {
-    0% {
-      transform: scale(1);
-      opacity: 0.7;
-    }
-
-    100% {
-      transform: scale(3.2);
-      opacity: 0;
-    }
-  }
-
+     HEADER TITLE
+  ========================================================= */
   .reviews-header h2 {
+    max-width: 720px;
     margin: 0;
-
     color: #ffffff;
+    font-size: clamp(26px, 2.5vw, 40px);
+    line-height: 1.12;
+    letter-spacing: -0.035em;
+    font-weight: 500;
+    text-transform: none;
+  }
 
-    font-size: clamp(18px, 2vw, 28px);
-    line-height: 1.1;
+  /* =========================================================
+     HEADER SUBTITLE
+  ========================================================= */
+  .reviews-subtitle {
+    max-width: 520px;
+    margin: 0;
+    padding: 0;
+    color: rgba(255, 255, 255, 0.82);
+    font-size: 16px;
+    line-height: 1.65;
+    letter-spacing: 0;
+    font-weight: 400;
+  }
 
-    letter-spacing: 0.08em;
-    font-weight: 700;
-    text-transform: uppercase;
-
-    transition: color 0.3s ease;
+  :global(body.light) .reviews-header {
+    background: #0043ff;
+    color: #ffffff;
   }
 
   :global(body.light) .reviews-header h2 {
-    color: #111111;
+    color: #ffffff;
   }
 
-  .reviews-header p {
-    margin: 0;
-
-    max-width: 520px;
-
-    color: #bfbfbf;
-
-    font-size: 16px;
-    line-height: 1.4;
-    letter-spacing: 0.04em;
-
-    text-align: left;
-
-    display: flex;
-    align-items: center;
-
-    border-left: 2px solid #0043ff;
-
-    padding-left: 20px;
-
-    transform: translateY(-2px);
-
-    transition:
-      color 0.3s ease,
-      border-color 0.3s ease;
-  }
-
-  :global(body.light) .reviews-header p {
-    color: rgba(0, 0, 0, 0.68);
-    border-color: rgba(0, 0, 0, 0.2);
+  :global(body.light) .reviews-subtitle {
+    color: rgba(255, 255, 255, 0.82);
   }
 
   /* =========================================================
      REVIEWS GRID
-     ========================================================= */
-
+  ========================================================= */
   .reviews-grid {
     width: 100%;
     min-width: 0;
-
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-
     gap: 20px;
   }
 
   /* =========================================================
      REVIEW CARD
-     ========================================================= */
-
+  ========================================================= */
   .review-card {
     position: relative;
-
     box-sizing: border-box;
-
     width: 100%;
     min-width: 0;
     min-height: 366px;
-
     display: flex;
     flex-direction: column;
-
     padding: 30px;
-
     background: #050505;
-
     border: 1px solid rgba(255, 255, 255, 0.14);
-
     transition:
       background 0.3s ease,
       border-color 0.3s ease,
@@ -360,29 +252,20 @@
 
   :global(body.light) .review-card {
     background: #ffffff;
-
     border-color: rgba(0, 0, 0, 0.1);
-
     box-shadow: 0 18px 45px rgba(0, 0, 0, 0.06);
   }
 
   .review-card::before {
     content: "“";
-
     position: absolute;
-
     top: 10px;
     right: 20px;
-
     color: rgba(255, 255, 255, 0.08);
-
     font-size: 80px;
     line-height: 1;
-
     font-family: Georgia, serif;
-
     pointer-events: none;
-
     transition: color 0.3s ease;
   }
 
@@ -392,39 +275,28 @@
 
   /* =========================================================
      STARS
-     ========================================================= */
-
+  ========================================================= */
   .review-stars {
     position: relative;
     z-index: 1;
-
     color: #0043ff;
-
     font-size: 18px;
     line-height: 1;
-
     letter-spacing: 3px;
-
     margin-bottom: 20px;
   }
 
   /* =========================================================
      REVIEW TEXT
-     ========================================================= */
-
+  ========================================================= */
   .review-text {
     position: relative;
     z-index: 1;
-
     margin: 0;
-
     color: #bfbfbf;
-
     font-size: 15px;
     line-height: 1.7;
-
     overflow-wrap: anywhere;
-
     transition: color 0.3s ease;
   }
 
@@ -434,33 +306,24 @@
 
   /* =========================================================
      REVIEW AUTHOR
-     ========================================================= */
-
+  ========================================================= */
   .review-author {
     position: relative;
     z-index: 1;
-
     margin-top: auto;
     padding-top: 28px;
-
     display: flex;
     align-items: center;
-
     gap: 14px;
   }
 
   .review-avatar {
     width: 54px;
     height: 54px;
-
     flex: 0 0 54px;
-
     object-fit: cover;
-
     border-radius: 50%;
-
     border: 2px solid rgba(255, 255, 255, 0.75);
-
     transition: border-color 0.3s ease;
   }
 
@@ -474,19 +337,13 @@
 
   .review-author h3 {
     margin: 0 0 4px;
-
     color: #ffffff;
-
     font-size: 14px;
     line-height: 1.3;
-
     font-weight: 700;
-
     letter-spacing: 0.04em;
     text-transform: uppercase;
-
     overflow-wrap: anywhere;
-
     transition: color 0.3s ease;
   }
 
@@ -496,16 +353,11 @@
 
   .review-author h4 {
     margin: 0;
-
     color: #8a8a8a;
-
     font-size: 12px;
     line-height: 1.4;
-
     font-weight: 400;
-
     overflow-wrap: anywhere;
-
     transition: color 0.3s ease;
   }
 
@@ -516,14 +368,11 @@
   /* =========================================================
      TABLET
      2 COLUMNS
-     ========================================================= */
-
+  ========================================================= */
   @media (min-width: 768px) and (max-width: 1100px) {
     .reviews-shell {
       --shell-x: 32px;
-
       width: min(1540px, calc(100% - 28px));
-
       padding-top: 110px;
       padding-right: var(--shell-x);
       padding-bottom: 82px;
@@ -531,62 +380,40 @@
     }
 
     .reviews-header {
-      margin-bottom: 50px;
+      margin-bottom: 56px;
     }
 
-    .reviews-header-row {
+    .reviews-header-inner {
+      min-height: 220px;
       grid-template-columns:
-        minmax(0, 0.8fr)
-        minmax(330px, 1.2fr);
-
-      align-items: end;
-
-      gap: 28px;
-    }
-
-    .reviews-title-area {
-      min-width: 0;
-      gap: 20px;
-    }
-
-    .reviews-title-row {
-      min-width: 0;
-      gap: 14px;
+        minmax(0, 1fr)
+        minmax(260px, 0.9fr);
+      gap: 38px;
+      padding: 42px 44px;
     }
 
     .reviews-header h2 {
-      font-size: 15px;
-      line-height: 1.1;
-
-      white-space: nowrap;
+      font-size: 26px;
+      line-height: 1.15;
     }
 
-    .reviews-header p {
-      max-width: 520px;
-
+    .reviews-subtitle {
       font-size: 13px;
-      line-height: 1.45;
-
-      padding-left: 16px;
-
-      transform: translateY(-2px);
+      line-height: 1.55;
     }
 
     .reviews-grid {
       grid-template-columns: repeat(2, minmax(0, 1fr));
-
       gap: 14px;
     }
 
     .review-card {
       min-height: 340px;
-
       padding: 26px;
     }
 
     .review-stars {
       font-size: 16px;
-
       margin-bottom: 18px;
     }
 
@@ -597,14 +424,12 @@
 
     .review-author {
       padding-top: 24px;
-
       gap: 12px;
     }
 
     .review-avatar {
       width: 48px;
       height: 48px;
-
       flex-basis: 48px;
     }
 
@@ -619,7 +444,6 @@
     .review-card::before {
       top: 8px;
       right: 16px;
-
       font-size: 68px;
     }
   }
@@ -627,61 +451,50 @@
   /* =========================================================
      MOBILE
      1 COLUMN
-     ========================================================= */
-
+  ========================================================= */
   @media (max-width: 767px) {
     .reviews-shell {
+      --shell-x: 40px;
       width: 100%;
-
       padding: 110px 40px;
     }
 
     .reviews-header {
-      margin-bottom: 46px;
-
-      text-align: left;
+      margin-bottom: 50px;
     }
 
-    .reviews-header-row {
-      grid-template-columns: 1fr;
-
-      align-items: stretch;
-
-      gap: 20px;
+    .reviews-header-inner {
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 24px;
+      padding: 38px 30px;
     }
 
-    .reviews-title-area {
-      gap: 14px;
+    .reviews-header-main {
+      width: 100%;
     }
 
-    .reviews-title-row {
-      gap: 12px;
-    }
-
-    .reviews-header p {
+    .reviews-header h2 {
       max-width: 100%;
+      font-size: clamp(24px, 7vw, 30px);
+      line-height: 1.15;
+    }
 
-      margin: 0;
-
-      padding: 16px 0 16px 18px;
-
+    .reviews-subtitle {
+      max-width: 100%;
       font-size: 14px;
       line-height: 1.6;
-
-      text-align: left;
-
-      transform: none;
     }
 
     .reviews-grid {
       grid-template-columns: 1fr;
-
       gap: 14px;
     }
 
     .review-card {
       min-height: 330px;
-
       padding: 24px;
     }
 
@@ -692,37 +505,33 @@
     .review-stars {
       font-size: 16px;
     }
-
-    .section-pulse {
-      width: 22px;
-      height: 22px;
-    }
-
-    .reviews-header h2 {
-      font-size: clamp(18px, 7vw, 24px);
-    }
   }
 
   /* =========================================================
      SMALL MOBILE
-     ========================================================= */
+  ========================================================= */
+  @media (max-width: 480px) {
+    .reviews-header-inner {
+      padding: 34px 24px;
+    }
+  }
 
   @media (max-width: 420px) {
-    .reviews-header-row {
-      gap: 10px;
+    .reviews-header {
+      margin-bottom: 46px;
     }
 
-    .section-pulse {
-      width: 18px;
-      height: 18px;
+    .reviews-header-inner {
+      gap: 20px;
+      padding: 30px 22px;
     }
 
     .reviews-header h2 {
-      font-size: 18px;
+      font-size: 23px;
     }
 
-    .reviews-header p {
-      padding: 18px 0 18px 16px;
+    .reviews-subtitle {
+      font-size: 14px;
     }
 
     .review-card {
@@ -732,17 +541,12 @@
 
   /* =========================================================
      REDUCED MOTION
-     ========================================================= */
-
+  ========================================================= */
   @media (prefers-reduced-motion: reduce) {
-    .reviews-line,
-    .section-pulse {
+    .reviews-header {
+      opacity: 1;
+      transform: none;
       transition: none;
-    }
-
-    .section-pulse.visible::before,
-    .section-pulse.visible::after {
-      animation: none;
     }
   }
 </style>
