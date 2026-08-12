@@ -180,9 +180,7 @@
       "—",
   );
 
-  const endpoint = import.meta.env.DEV
-    ? "http://localhost:8080/send-mail.php"
-    : "/send-mail.php";
+  const endpoint = "/api/send-mail";
 
   $effect(() => {
     if (!browser || !open) return;
