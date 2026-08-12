@@ -5,10 +5,7 @@
    * The static website and send-mail.php are both hosted on
    * https://zorawebdesign.com, so use the same-domain endpoint.
    */
-  const mailEndpoint = import.meta.env.DEV
-    ? "http://localhost:8080/send-mail.php"
-    : "/send-mail.php";
-
+  const mailEndpoint = "/api/send-mail";
   let {
     title = "KONTAKT",
     subtitle = "ICH FREUE MICH AUF DEINE NACHRICHT.",

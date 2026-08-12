@@ -1291,7 +1291,7 @@
     .main-nav {
       gap: 14px;
       padding: 12px 14px;
-      justify-content: flex-start;
+      justify-content: center;
     }
 
     .main-nav a {

@@ -1959,7 +1959,7 @@
 
     .problem-item-title {
       font-size: 10px;
-      line-height: 1.45;
+      line-height: 1.7;
       text-underline-offset: 5px;
     }
 

@@ -11,8 +11,8 @@
 
   const processImages = [
     "/images/meet-700.webp",
-    "/images/Isa-700.webp",
     "/images/project_process-700.webp",
+    "/images/Isa-700.webp",
     "/images/support-700.webp",
   ];
 
