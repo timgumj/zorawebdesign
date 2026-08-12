@@ -148,9 +148,7 @@
 
   const storageKey = "website-audit-last-url";
 
-  const auditMailEndpoint = import.meta.env.DEV
-    ? "http://localhost:8080/send-mail.php"
-    : "/send-mail.php";
+  const auditMailEndpoint = "/api/send-mail";
 
   let websiteUrl = $state("");
 
