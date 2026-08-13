@@ -12,30 +12,30 @@
 
   let { language = "de" } = $props();
 
-  /*
-   * Main configurator navigation
-   *
-   * intro  → introductory screen
-   * steps  → questions 1–6
-   * report → final recommendation
-   */
+  /* =========================================================
+     MAIN SCREEN
+  ========================================================= */
+
   let activeScreen = $state("intro");
   let currentStep = $state(1);
 
-  /*
-   * Step 1: Website type
-   */
+  /* =========================================================
+     STEP 1 — WEBSITE TYPE
+  ========================================================= */
+
   let selectedWebsiteType = $state("");
 
-  /*
-   * Step 2: Project goals
-   */
+  /* =========================================================
+     STEP 2 — GOALS
+  ========================================================= */
+
   let selectedGoals = $state([]);
   let projectStatus = $state("");
 
-  /*
-   * Step 3: Content readiness
-   */
+  /* =========================================================
+     STEP 3 — CONTENT READINESS
+  ========================================================= */
+
   let contentReadiness = $state("");
   let visualReadiness = $state("");
   let brandingReadiness = $state("");
@@ -43,33 +43,30 @@
   let designReferenceLinks = $state(["", ""]);
   let supportNeeds = $state([]);
 
-  /*
-   * Step 4: Website pages
-   */
+  /* =========================================================
+     STEP 4 — PAGES
+  ========================================================= */
+
   let selectedPages = $state([]);
   let pageVolume = $state("");
   let customPageNames = $state(["", "", ""]);
 
-  /*
-   * Tracks whether recommended pages have already been added.
-   */
   let pagesInitialised = $state(false);
 
-  /*
-   * Step 5: Website features
-   */
+  /* =========================================================
+     STEP 5 — FEATURES
+  ========================================================= */
+
   let selectedFeatures = $state([]);
   let websiteLanguages = $state("");
   let customIntegration = $state("");
 
-  /*
-   * Tracks whether recommended features have already been added.
-   */
   let featuresInitialised = $state(false);
 
-  /*
-   * Step 6: Timeline and support
-   */
+  /* =========================================================
+     STEP 6 — TIMELINE
+  ========================================================= */
+
   let projectStart = $state("");
   let launchTimeline = $state("");
   let collaborationModel = $state("");
@@ -77,25 +74,45 @@
   let trainingPreference = $state("");
   let timelineNote = $state("");
 
-  /*
-   * Final additions inside Step 6
-   */
+  /* =========================================================
+     STEP 6 — FINAL ADDITIONS
+  ========================================================= */
+
   let finalFeatureAdditions = $state([]);
   let finalRequirementNote = $state("");
 
-  /*
-   * Report and quote
-   */
+  /* =========================================================
+     REPORT / QUOTE
+  ========================================================= */
+
   let selectedPackage = $state("");
   let recommendedPackage = $state("growth");
   let quoteModalOpen = $state(false);
 
-  /*
-   * All collected configurator answers.
-   *
-   * This object is passed to QuoteModal.svelte so the submitted
-   * enquiry can contain the complete project information.
-   */
+  /* =========================================================
+     PAGE UI
+  ========================================================= */
+
+  const pageUi = $derived(
+    language === "en"
+      ? {
+          plannerLabel: "Website Planner",
+          step: "Step",
+          of: "of",
+          report: "Recommendation",
+        }
+      : {
+          plannerLabel: "Website Planner",
+          step: "Schritt",
+          of: "von",
+          report: "Empfehlung",
+        },
+  );
+
+  /* =========================================================
+     QUOTE ANSWERS
+  ========================================================= */
+
   const quoteAnswers = $derived({
     selectedWebsiteType,
     selectedGoals,
@@ -130,9 +147,10 @@
     recommendedPackage,
   });
 
-  /*
-   * Global header navigation
-   */
+  /* =========================================================
+     HEADER NAVIGATION
+  ========================================================= */
+
   const navigation = $derived(
     language === "en"
       ? {
@@ -161,9 +179,9 @@
                 title: "Open the free Website Audit tool",
               },
               {
-                label: "[WEBSITE CONFIGURATOR]",
+                label: "[WEBSITE PLANNER]",
                 href: "/en-2/website-configurator/",
-                title: "Open the Website Configurator",
+                title: "Open the Website Planner",
               },
             ],
           },
@@ -194,25 +212,35 @@
                 title: "Kostenlosen Website-Audit öffnen",
               },
               {
-                label: "[WEBSITE KONFIGURATOR]",
+                label: "[WEBSITE PLANER]",
                 href: "/website-konfigurator/",
-                title: "Website Konfigurator öffnen",
+                title: "Website Planner öffnen",
               },
             ],
           },
         },
   );
 
+  /* =========================================================
+     SCROLL
+  ========================================================= */
+
   function scrollToTop() {
     if (typeof window === "undefined") {
       return;
     }
 
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
+    requestAnimationFrame(() => {
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
     });
   }
+
+  /* =========================================================
+     INTRO
+  ========================================================= */
 
   function startConfigurator() {
     activeScreen = "steps";
@@ -228,10 +256,10 @@
     scrollToTop();
   }
 
-  /*
-   * Opens Step 6 when the user chooses to edit answers
-   * from the final report.
-   */
+  /* =========================================================
+     REPORT EDITING
+  ========================================================= */
+
   function editAnswers() {
     activeScreen = "steps";
     currentStep = 6;
@@ -239,16 +267,16 @@
     scrollToTop();
   }
 
-  /*
-   * Opens Step 5 when the user wants to review the
-   * selected features from Step 6.
-   */
   function reviewFeatures() {
     activeScreen = "steps";
     currentStep = 5;
 
     scrollToTop();
   }
+
+  /* =========================================================
+     QUOTE
+  ========================================================= */
 
   function requestQuote() {
     if (!selectedPackage) {
@@ -262,9 +290,14 @@
     quoteModalOpen = false;
   }
 
+  /* =========================================================
+     BACK
+  ========================================================= */
+
   function handleBack() {
     if (currentStep > 1) {
       currentStep -= 1;
+
       scrollToTop();
 
       return;
@@ -273,55 +306,52 @@
     returnToIntro();
   }
 
-  /*
-   * ConfiguratorSteps.svelte determines whether the current
-   * step is complete and only calls this function when the user
-   * is allowed to continue.
-   */
+  /* =========================================================
+     CONTINUE
+  ========================================================= */
+
   function handleContinue() {
     /*
-     * Step 1 → Step 2
+     * STEP 1 → STEP 2
      */
     if (currentStep === 1) {
       currentStep = 2;
+
       scrollToTop();
 
       return;
     }
 
     /*
-     * Step 2 → Step 3
+     * STEP 2 → STEP 3
      */
     if (currentStep === 2) {
       currentStep = 3;
+
       scrollToTop();
 
       return;
     }
 
     /*
-     * Step 3 → Step 4
-     *
-     * Add recommended pages only the first time the user
-     * reaches the pages step.
+     * STEP 3 → STEP 4
      */
     if (currentStep === 3) {
       if (!pagesInitialised) {
         selectedPages = getRecommendedPageIds(selectedWebsiteType);
+
         pagesInitialised = true;
       }
 
       currentStep = 4;
+
       scrollToTop();
 
       return;
     }
 
     /*
-     * Step 4 → Step 5
-     *
-     * Add recommended features only the first time the user
-     * reaches the features step.
+     * STEP 4 → STEP 5
      */
     if (currentStep === 4) {
       if (!featuresInitialised) {
@@ -331,26 +361,29 @@
       }
 
       currentStep = 5;
+
       scrollToTop();
 
       return;
     }
 
     /*
-     * Step 5 → Step 6
+     * STEP 5 → STEP 6
      */
     if (currentStep === 5) {
       currentStep = 6;
+
       scrollToTop();
 
       return;
     }
 
     /*
-     * Step 6 → Report
+     * STEP 6 → REPORT
      */
     if (currentStep === 6) {
       activeScreen = "report";
+
       scrollToTop();
     }
   }
@@ -358,9 +391,6 @@
 
 <svelte:window
   onkeydown={(event) => {
-    /*
-     * QuoteModal.svelte handles Escape itself while open.
-     */
     if (quoteModalOpen) {
       return;
     }
@@ -371,6 +401,7 @@
 
     if (currentStep > 1) {
       currentStep -= 1;
+
       scrollToTop();
 
       return;
@@ -383,73 +414,111 @@
 <div class="configurator-page">
   <Header nav={navigation} />
 
-  <main>
+  <main class="configurator-main">
     <div class="page-container">
-      {#if activeScreen === "intro"}
-        <ConfiguratorIntro {language} onStart={startConfigurator} />
-      {:else if activeScreen === "steps"}
-        <ConfiguratorSteps
-          {language}
-          {currentStep}
-          bind:selectedWebsiteType
-          bind:selectedGoals
-          bind:projectStatus
-          bind:contentReadiness
-          bind:visualReadiness
-          bind:brandingReadiness
-          bind:designDirection
-          bind:designReferenceLinks
-          bind:supportNeeds
-          bind:selectedPages
-          bind:pageVolume
-          bind:customPageNames
-          bind:selectedFeatures
-          bind:websiteLanguages
-          bind:customIntegration
-          bind:projectStart
-          bind:launchTimeline
-          bind:collaborationModel
-          bind:ongoingSupport
-          bind:trainingPreference
-          bind:timelineNote
-          bind:finalFeatureAdditions
-          bind:finalRequirementNote
-          onReviewFeatures={reviewFeatures}
-          onBack={handleBack}
-          onContinue={handleContinue}
-        />
-      {:else if activeScreen === "report"}
-        <ConfiguratorReport
-          {language}
-          {selectedWebsiteType}
-          {selectedGoals}
-          {projectStatus}
-          {contentReadiness}
-          {visualReadiness}
-          {brandingReadiness}
-          {designDirection}
-          {designReferenceLinks}
-          {supportNeeds}
-          {selectedPages}
-          {pageVolume}
-          {customPageNames}
-          {selectedFeatures}
-          {websiteLanguages}
-          {customIntegration}
-          {projectStart}
-          {launchTimeline}
-          {collaborationModel}
-          {ongoingSupport}
-          {trainingPreference}
-          {timelineNote}
-          {finalFeatureAdditions}
-          {finalRequirementNote}
-          {recommendedPackage}
-          bind:selectedPackage
-          onEditAnswers={editAnswers}
-          onRequestQuote={requestQuote}
-        />
+      <!-- ===================================================
+           COMPACT PLANNER STATUS
+
+           No progress bar.
+           No separator.
+           No duplicate horizontal lines.
+      ==================================================== -->
+
+      {#if activeScreen !== "intro"}
+        <div class="planner-status">
+          <span class="planner-label">
+            {pageUi.plannerLabel}
+          </span>
+
+          <span class="planner-step">
+            {#if activeScreen === "steps"}
+              {pageUi.step}
+              {currentStep}
+              {pageUi.of}
+              6
+            {:else}
+              {pageUi.report}
+            {/if}
+          </span>
+        </div>
       {/if}
+
+      <!-- ===================================================
+           SCREEN
+      ==================================================== -->
+
+      <div
+        class="screen-shell"
+        class:intro-screen={activeScreen === "intro"}
+        class:steps-screen={activeScreen === "steps"}
+        class:report-screen={activeScreen === "report"}
+      >
+        {#if activeScreen === "intro"}
+          <ConfiguratorIntro {language} onStart={startConfigurator} />
+        {:else if activeScreen === "steps"}
+          <ConfiguratorSteps
+            {language}
+            {currentStep}
+            bind:selectedWebsiteType
+            bind:selectedGoals
+            bind:projectStatus
+            bind:contentReadiness
+            bind:visualReadiness
+            bind:brandingReadiness
+            bind:designDirection
+            bind:designReferenceLinks
+            bind:supportNeeds
+            bind:selectedPages
+            bind:pageVolume
+            bind:customPageNames
+            bind:selectedFeatures
+            bind:websiteLanguages
+            bind:customIntegration
+            bind:projectStart
+            bind:launchTimeline
+            bind:collaborationModel
+            bind:ongoingSupport
+            bind:trainingPreference
+            bind:timelineNote
+            bind:finalFeatureAdditions
+            bind:finalRequirementNote
+            onReviewFeatures={reviewFeatures}
+            onBack={handleBack}
+            onContinue={handleContinue}
+          />
+        {:else if activeScreen === "report"}
+          <ConfiguratorReport
+            {language}
+            {selectedWebsiteType}
+            {selectedGoals}
+            {projectStatus}
+            {contentReadiness}
+            {visualReadiness}
+            {brandingReadiness}
+            {designDirection}
+            {designReferenceLinks}
+            {supportNeeds}
+            {selectedPages}
+            {pageVolume}
+            {customPageNames}
+            {selectedFeatures}
+            {websiteLanguages}
+            {customIntegration}
+            {projectStart}
+            {launchTimeline}
+            {collaborationModel}
+            {ongoingSupport}
+            {trainingPreference}
+            {timelineNote}
+            {finalFeatureAdditions}
+            {finalRequirementNote}
+            {recommendedPackage}
+            bind:selectedPackage
+            onEditAnswers={editAnswers}
+            onRequestQuote={requestQuote}
+          />
+        {/if}
+      </div>
     </div>
   </main>
 
@@ -466,13 +535,23 @@
 {/if}
 
 <style>
+  /* =========================================================
+     GLOBAL
+  ========================================================= */
+
   :global(html) {
     scroll-behavior: smooth;
+
+    scrollbar-gutter: stable;
+
     background: #080808;
   }
 
   :global(body) {
     margin: 0;
+
+    overflow-x: clip;
+
     background: #080808;
   }
 
@@ -484,36 +563,293 @@
     font-family: "DM Sans", Arial, sans-serif;
   }
 
+  /* =========================================================
+     PAGE
+  ========================================================= */
+
   .configurator-page {
+    width: 100%;
     min-height: 100vh;
-    overflow-x: hidden;
+
+    overflow-x: clip;
+
     background: #080808;
+
     color: #f5f5f5;
+
     font-family: "DM Sans", Arial, sans-serif;
   }
 
-  main {
+  /* =========================================================
+     MAIN
+  ========================================================= */
+
+  .configurator-main {
     min-height: calc(100vh - 100px);
-    padding-top: clamp(92px, 9vw, 130px);
-    padding-bottom: clamp(48px, 7vw, 96px);
+
+    padding-top: clamp(72px, 6vw, 88px);
+
+    padding-bottom: clamp(36px, 5vw, 64px);
   }
+
+  /* =========================================================
+     CONTAINER
+  ========================================================= */
 
   .page-container {
     width: 100%;
+
     max-width: 1600px;
+
     margin: 0 auto;
+
     padding-inline: clamp(20px, 4vw, 64px);
+
     box-sizing: border-box;
   }
 
+  /* =========================================================
+     COMPACT PLANNER STATUS
+  ========================================================= */
+
+  .planner-status {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 16px;
+
+    width: 100%;
+
+    margin: 0 0 clamp(16px, 1.8vw, 22px);
+
+    padding: 0 0 12px;
+
+    border-bottom: 1px solid #292929;
+  }
+
+  .planner-label {
+    color: #eeeeee;
+
+    font-size: 10px;
+    font-weight: 700;
+
+    line-height: 1;
+
+    letter-spacing: 0.08em;
+
+    text-transform: uppercase;
+  }
+
+  .planner-step {
+    color: #5f80ff;
+
+    font-size: 9px;
+    font-weight: 700;
+
+    line-height: 1;
+
+    letter-spacing: 0.06em;
+
+    text-transform: uppercase;
+  }
+
+  /* =========================================================
+     SCREEN
+  ========================================================= */
+
+  .screen-shell {
+    width: 100%;
+
+    min-width: 0;
+
+    margin: 0;
+    padding: 0;
+  }
+
+  .steps-screen,
+  .report-screen {
+    animation: screen-in 180ms ease both;
+  }
+
+  @keyframes screen-in {
+    from {
+      opacity: 0;
+    }
+
+    to {
+      opacity: 1;
+    }
+  }
+
+  /* =========================================================
+     TABLET
+  ========================================================= */
+
+  @media (max-width: 950px) {
+    .configurator-main {
+      padding-top: 72px;
+
+      padding-bottom: 44px;
+    }
+
+    .page-container {
+      padding-inline: 20px;
+    }
+
+    .planner-status {
+      margin-bottom: 20px;
+    }
+  }
+
+  /* =========================================================
+     MOBILE
+  ========================================================= */
+
   @media (max-width: 700px) {
-    main {
-      padding-top: 86px;
-      padding-bottom: 48px;
+    .configurator-main {
+      padding-top: 66px;
+
+      padding-bottom: 34px;
     }
 
     .page-container {
       padding-inline: 16px;
     }
+
+    .planner-status {
+      margin-bottom: 16px;
+    }
+
+    .planner-label {
+      font-size: 9px;
+    }
+
+    .planner-step {
+      font-size: 8px;
+    }
+  }
+
+  /* =========================================================
+     SMALL MOBILE
+  ========================================================= */
+
+  @media (max-width: 430px) {
+    .page-container {
+      padding-inline: 14px;
+    }
+
+    .configurator-main {
+      padding-top: 62px;
+    }
+  }
+
+  /* =========================================================
+     REDUCED MOTION
+  ========================================================= */
+
+  @media (prefers-reduced-motion: reduce) {
+    :global(html) {
+      scroll-behavior: auto;
+    }
+
+    .steps-screen,
+    .report-screen {
+      animation: none;
+    }
+  }
+
+  /* =========================================================
+     GLOBAL PLANNER TYPOGRAPHY OVERRIDES
+
+     One place to control readable text sizes across:
+     - Steps 1–6
+     - Report
+     - Package cards
+  ========================================================= */
+
+  /* MICRO LABELS / EYEBROWS */
+  .configurator-page :global(.substep-label),
+  .configurator-page :global(.section-label),
+  .configurator-page :global(.eyebrow),
+  .configurator-page :global(.package-kicker),
+  .configurator-page :global(.summary-number),
+  .configurator-page :global(.recommended-badge),
+  .configurator-page :global(.selected-badge),
+  .configurator-page :global(.recommended-label),
+  .configurator-page :global(.selected-label),
+  .configurator-page :global(.package-section-label) {
+    font-size: 10px !important;
+  }
+
+  /* NORMAL BODY / DESCRIPTION TEXT */
+  .configurator-page :global(.question-header p),
+  .configurator-page :global(.option-copy p),
+  .configurator-page :global(.package-tagline),
+  .configurator-page :global(.tagline),
+  .configurator-page :global(.suitable-for p),
+  .configurator-page :global(.suitable p),
+  .configurator-page :global(.summary-row strong),
+  .configurator-page :global(.summary-row a),
+  .configurator-page :global(.summary-content),
+  .configurator-page :global(.review-note),
+  .configurator-page :global(.info-note p),
+  .configurator-page :global(.note-heading p),
+  .configurator-page :global(.review-copy p),
+  .configurator-page :global(.recommendation-reason p),
+  .configurator-page :global(.reason-card p),
+  .configurator-page :global(.section-header p),
+  .configurator-page :global(.section-intro p),
+  .configurator-page :global(.included-note p),
+  .configurator-page :global(.status-block p),
+  .configurator-page :global(.hero-description),
+  .configurator-page :global(.next-step-copy p),
+  .configurator-page :global(.final-copy p),
+  .configurator-page :global(.selected-scope p),
+  .configurator-page :global(.personalised-list li),
+  .configurator-page :global(.included-section li),
+  .configurator-page :global(.limitations li),
+  .configurator-page :global(.details-content li),
+  .configurator-page :global(.personalised li) {
+    font-size: 12px !important;
+  }
+
+  /* ALL PLANNER LIST ITEMS */
+  .configurator-page :global(li) {
+    font-size: 12px !important;
+  }
+
+  /* CARD TITLES */
+  .configurator-page :global(.option-copy h2),
+  .configurator-page :global(.note-heading h2) {
+    font-size: 14px !important;
+  }
+
+  /* SUMMARY / ACCORDION TITLES */
+  .configurator-page :global(.summary-accordion summary strong),
+  .configurator-page :global(.scope-details summary) {
+    font-size: 11px !important;
+  }
+
+  /* TAGS */
+  .configurator-page :global(.tag-list span) {
+    font-size: 10px !important;
+  }
+
+  .screen-shell :global(button),
+  .screen-shell :global(.select-button),
+  .screen-shell :global(.continue-button),
+  .screen-shell :global(.back-button),
+  .screen-shell :global(.edit-button),
+  .screen-shell :global(.quote-button) {
+    font-size: 11px !important;
+  }
+
+  /* DISABLED / SECONDARY HELP TEXT */
+  .configurator-page :global(.disabled-hint),
+  .configurator-page :global(.hint),
+  .configurator-page :global(.quote-hint),
+  .configurator-page :global(.edit-area small) {
+    font-size: 10px !important;
   }
 </style>

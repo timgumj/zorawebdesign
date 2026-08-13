@@ -21,8 +21,8 @@
   let consent = $state(false);
 
   /*
-   * Hidden honeypot field.
-   * A real user should never fill this.
+   * Honeypot.
+   * Real users should never interact with this field.
    */
   let website = $state("");
 
@@ -36,12 +36,19 @@
   const text = $derived(
     language === "en"
       ? {
-          eyebrow: "Request a personalised quote",
-          title: "Tell us how to contact you",
+          eyebrow: "Final step",
+
+          title: "Where should we send your project quote?",
+
           description:
-            "Your complete website configuration will be sent securely to Zora Web Design for personal review.",
+            "Your website plan is complete. Add your contact details and Zora Web Design will personally review the full configuration before getting back to you.",
 
           selectedPackage: "Selected project scope",
+
+          contactSection: "Your contact details",
+
+          contactSectionDescription:
+            "We only need a few details to respond to your project request.",
 
           fullName: "Full name",
           fullNamePlaceholder: "Your full name",
@@ -53,41 +60,56 @@
           emailPlaceholder: "name@example.com",
 
           phone: "Phone number",
-          phonePlaceholder: "Optional unless you prefer a call",
+          phonePlaceholder: "Your phone number",
 
           currentWebsite: "Current website",
           currentWebsitePlaceholder: "https://example.com",
 
-          preferredContact: "Preferred contact method",
+          optional: "Optional",
+
+          preferredContact: "How would you prefer to be contacted?",
 
           contactEmail: "Email",
           contactPhone: "Phone",
-          contactEither: "Email or phone",
+          contactEither: "Either is fine",
 
           comments: "Anything else we should know?",
+
+          commentsHelp:
+            "Optional – add any final question, deadline or important project context.",
+
           commentsPlaceholder:
-            "Add any important information, questions or context for your project.",
+            "Add any important information or questions about your project.",
 
           consent:
             "I agree that Zora Web Design may use these details to review my configuration and contact me about my website project.",
 
-          privacy: "Your details are used only to respond to this request.",
+          privacy:
+            "Your information is used only to review and respond to this project request.",
 
-          submit: "Send configuration",
-          submitting: "Sending configuration…",
+          submit: "Send my website plan",
+          submitting: "Sending your website plan…",
+
+          submitNote:
+            "Your complete planner answers will be included automatically.",
 
           close: "Close",
           closeModal: "Close quote form",
 
-          successTitle: "Your configuration has been received",
+          successEyebrow: "Request received",
+
+          successTitle: "Your website plan has been sent",
+
           successText:
-            "Thank you. Zora Web Design will personally review your project details and contact you with the next steps.",
+            "Thank you. Zora Web Design will personally review your project details and contact you about the next steps.",
 
           confirmationSent:
             "A confirmation has also been sent to your email address.",
 
           confirmationNotSent:
-            "Your request was received, but the confirmation email could not be delivered. Zora Web Design still received your configuration.",
+            "Your request was received successfully, but the confirmation email could not be delivered. Zora Web Design still received your complete configuration.",
+
+          successPackage: "Project scope",
 
           error: "The configuration could not be sent. Please try again.",
 
@@ -104,12 +126,19 @@
           },
         }
       : {
-          eyebrow: "Persönliches Angebot anfordern",
-          title: "Wie dürfen wir Sie kontaktieren?",
+          eyebrow: "Letzter Schritt",
+
+          title: "Wie dürfen wir Ihnen Ihr Projektangebot senden?",
+
           description:
-            "Ihre vollständige Website-Konfiguration wird sicher an Zora Web Design zur persönlichen Prüfung gesendet.",
+            "Ihr Website-Plan ist vollständig. Ergänzen Sie Ihre Kontaktdaten und Zora Web Design prüft Ihre gesamte Konfiguration persönlich, bevor wir uns bei Ihnen melden.",
 
           selectedPackage: "Ausgewählter Projektumfang",
+
+          contactSection: "Ihre Kontaktdaten",
+
+          contactSectionDescription:
+            "Wir benötigen nur wenige Angaben, um auf Ihre Projektanfrage antworten zu können.",
 
           fullName: "Vollständiger Name",
           fullNamePlaceholder: "Ihr vollständiger Name",
@@ -121,34 +150,46 @@
           emailPlaceholder: "name@beispiel.at",
 
           phone: "Telefonnummer",
-          phonePlaceholder: "Optional, außer Sie wünschen einen Anruf",
+          phonePlaceholder: "Ihre Telefonnummer",
 
           currentWebsite: "Aktuelle Website",
           currentWebsitePlaceholder: "https://beispiel.at",
 
-          preferredContact: "Bevorzugte Kontaktart",
+          optional: "Optional",
+
+          preferredContact: "Wie möchten Sie am liebsten kontaktiert werden?",
 
           contactEmail: "E-Mail",
           contactPhone: "Telefon",
-          contactEither: "E-Mail oder Telefon",
+          contactEither: "Beides ist in Ordnung",
 
           comments: "Möchten Sie noch etwas ergänzen?",
+
+          commentsHelp:
+            "Optional – ergänzen Sie eine letzte Frage, einen Terminwunsch oder wichtige Hinweise zum Projekt.",
+
           commentsPlaceholder:
-            "Ergänzen Sie wichtige Informationen, Fragen oder Hinweise zu Ihrem Projekt.",
+            "Ergänzen Sie wichtige Informationen oder Fragen zu Ihrem Projekt.",
 
           consent:
             "Ich stimme zu, dass Zora Web Design diese Angaben zur Prüfung meiner Konfiguration und zur Kontaktaufnahme bezüglich meines Website-Projekts verwenden darf.",
 
           privacy:
-            "Ihre Angaben werden ausschließlich zur Bearbeitung dieser Anfrage verwendet.",
+            "Ihre Angaben werden ausschließlich zur Prüfung und Beantwortung dieser Projektanfrage verwendet.",
 
-          submit: "Konfiguration senden",
-          submitting: "Konfiguration wird gesendet…",
+          submit: "Website-Plan senden",
+          submitting: "Website-Plan wird gesendet…",
+
+          submitNote:
+            "Ihre vollständigen Antworten aus dem Website Planner werden automatisch mitgesendet.",
 
           close: "Schließen",
           closeModal: "Angebotsformular schließen",
 
-          successTitle: "Ihre Konfiguration wurde übermittelt",
+          successEyebrow: "Anfrage erhalten",
+
+          successTitle: "Ihr Website-Plan wurde gesendet",
+
           successText:
             "Vielen Dank. Zora Web Design prüft Ihre Projektangaben persönlich und meldet sich mit den nächsten Schritten.",
 
@@ -156,7 +197,9 @@
             "Eine Bestätigung wurde zusätzlich an Ihre E-Mail-Adresse gesendet.",
 
           confirmationNotSent:
-            "Ihre Anfrage wurde empfangen, die Bestätigungs-E-Mail konnte jedoch nicht zugestellt werden. Zora Web Design hat Ihre Konfiguration trotzdem erhalten.",
+            "Ihre Anfrage wurde erfolgreich empfangen, die Bestätigungs-E-Mail konnte jedoch nicht zugestellt werden. Zora Web Design hat Ihre vollständige Konfiguration trotzdem erhalten.",
+
+          successPackage: "Projektumfang",
 
           error:
             "Die Konfiguration konnte nicht gesendet werden. Bitte versuchen Sie es erneut.",
@@ -182,8 +225,13 @@
 
   const endpoint = "/api/send-mail";
 
+  /*
+   * Prevent the page behind the modal from scrolling.
+   */
   $effect(() => {
-    if (!browser || !open) return;
+    if (!browser || !open) {
+      return;
+    }
 
     const previousOverflow = document.body.style.overflow;
 
@@ -194,8 +242,13 @@
     };
   });
 
+  /*
+   * Focus the first form field when the modal opens.
+   */
   $effect(() => {
-    if (!open || submitted) return;
+    if (!open || submitted) {
+      return;
+    }
 
     tick().then(() => {
       nameInput?.focus();
@@ -203,7 +256,9 @@
   });
 
   function closeModal() {
-    if (submitting) return;
+    if (submitting) {
+      return;
+    }
 
     onClose();
   }
@@ -221,11 +276,13 @@
 
     if (!answers.selectedPackage) {
       errorMessage = text.packageMissing;
+
       return;
     }
 
     if (preferredContact === "phone" && !phone.trim()) {
       errorMessage = text.phoneRequired;
+
       return;
     }
 
@@ -255,6 +312,7 @@
 
         headers: {
           "Content-Type": "application/json",
+
           Accept: "application/json",
         },
 
@@ -268,6 +326,7 @@
       }
 
       clientEmailSent = Boolean(result.clientEmailSent);
+
       submitted = true;
     } catch (error) {
       console.error("Website configurator submission error:", error);
@@ -284,6 +343,10 @@
 
 {#if open}
   <div class="modal-layer">
+    <!-- =====================================================
+         BACKDROP
+    ====================================================== -->
+
     <button
       type="button"
       class="modal-backdrop"
@@ -291,6 +354,10 @@
       disabled={submitting}
       onclick={closeModal}
     ></button>
+
+    <!-- =====================================================
+         MODAL
+    ====================================================== -->
 
     <div
       class="modal-panel"
@@ -307,14 +374,20 @@
         disabled={submitting}
         onclick={closeModal}
       >
-        <span aria-hidden="true">×</span>
+        <span aria-hidden="true"> × </span>
       </button>
+
+      <!-- ===================================================
+           SUCCESS
+      ==================================================== -->
 
       {#if submitted}
         <div class="success-state" aria-live="polite">
-          <span class="success-mark" aria-hidden="true">✓</span>
+          <span class="success-mark" aria-hidden="true"> ✓ </span>
 
-          <span class="eyebrow">Zora Web Design</span>
+          <span class="eyebrow">
+            {text.successEyebrow}
+          </span>
 
           <h2 id="quote-modal-title">
             {text.successTitle}
@@ -324,14 +397,44 @@
             {text.successText}
           </p>
 
-          <div class="confirmation-note">
-            {clientEmailSent ? text.confirmationSent : text.confirmationNotSent}
+          <div class="success-package">
+            <span>
+              {text.successPackage}
+            </span>
+
+            <strong>
+              {selectedPackageLabel}
+            </strong>
           </div>
 
-          <button type="button" class="primary-button" onclick={closeModal}>
-            {text.close}
+          <div class="confirmation-note" class:warning={!clientEmailSent}>
+            <span class="confirmation-mark" aria-hidden="true">
+              {clientEmailSent ? "✓" : "i"}
+            </span>
+
+            <span>
+              {clientEmailSent
+                ? text.confirmationSent
+                : text.confirmationNotSent}
+            </span>
+          </div>
+
+          <button
+            type="button"
+            class="primary-button success-close-button"
+            onclick={closeModal}
+          >
+            <span>
+              {text.close}
+            </span>
+
+            <span aria-hidden="true"> → </span>
           </button>
         </div>
+
+        <!-- ===================================================
+           FORM
+      ==================================================== -->
       {:else}
         <header class="modal-header">
           <span class="eyebrow">
@@ -358,6 +461,10 @@
         </header>
 
         <form onsubmit={submitQuote}>
+          <!-- =================================================
+               HONEYPOT
+          ================================================== -->
+
           <div class="honeypot" aria-hidden="true">
             <label>
               Website
@@ -372,76 +479,125 @@
             </label>
           </div>
 
-          <div class="form-grid">
-            <label class="field">
-              <span>{text.fullName}</span>
+          <!-- =================================================
+               CONTACT DETAILS
+          ================================================== -->
 
-              <input
-                bind:this={nameInput}
-                type="text"
-                name="fullName"
-                autocomplete="name"
-                maxlength="120"
-                placeholder={text.fullNamePlaceholder}
-                bind:value={fullName}
-                required
-              />
-            </label>
+          <section class="form-section">
+            <div class="form-section-heading">
+              <span class="form-section-number"> 01 </span>
 
-            <label class="field">
-              <span>{text.company}</span>
+              <div>
+                <h3>
+                  {text.contactSection}
+                </h3>
 
-              <input
-                type="text"
-                name="company"
-                autocomplete="organization"
-                maxlength="160"
-                placeholder={text.companyPlaceholder}
-                bind:value={company}
-                required
-              />
-            </label>
+                <p>
+                  {text.contactSectionDescription}
+                </p>
+              </div>
+            </div>
 
-            <label class="field">
-              <span>{text.email}</span>
+            <div class="form-grid">
+              <label class="field">
+                <span class="field-label">
+                  {text.fullName}
+                </span>
 
-              <input
-                type="email"
-                name="email"
-                autocomplete="email"
-                maxlength="180"
-                placeholder={text.emailPlaceholder}
-                bind:value={email}
-                required
-              />
-            </label>
+                <input
+                  bind:this={nameInput}
+                  type="text"
+                  name="fullName"
+                  autocomplete="name"
+                  maxlength="120"
+                  placeholder={text.fullNamePlaceholder}
+                  bind:value={fullName}
+                  required
+                />
+              </label>
 
-            <label class="field">
-              <span>{text.phone}</span>
+              <label class="field">
+                <span class="field-label">
+                  {text.company}
+                </span>
 
-              <input
-                type="tel"
-                name="phone"
-                autocomplete="tel"
-                maxlength="80"
-                placeholder={text.phonePlaceholder}
-                bind:value={phone}
-              />
-            </label>
+                <input
+                  type="text"
+                  name="company"
+                  autocomplete="organization"
+                  maxlength="160"
+                  placeholder={text.companyPlaceholder}
+                  bind:value={company}
+                  required
+                />
+              </label>
 
-            <label class="field field-wide">
-              <span>{text.currentWebsite}</span>
+              <label class="field">
+                <span class="field-label">
+                  {text.email}
+                </span>
 
-              <input
-                type="url"
-                name="currentWebsite"
-                autocomplete="url"
-                maxlength="300"
-                placeholder={text.currentWebsitePlaceholder}
-                bind:value={currentWebsite}
-              />
-            </label>
-          </div>
+                <input
+                  type="email"
+                  name="email"
+                  autocomplete="email"
+                  maxlength="180"
+                  placeholder={text.emailPlaceholder}
+                  bind:value={email}
+                  required
+                />
+              </label>
+
+              <label class="field">
+                <span class="field-label-row">
+                  <span>
+                    {text.phone}
+                  </span>
+
+                  {#if preferredContact !== "phone"}
+                    <small>
+                      {text.optional}
+                    </small>
+                  {/if}
+                </span>
+
+                <input
+                  type="tel"
+                  name="phone"
+                  autocomplete="tel"
+                  maxlength="80"
+                  placeholder={text.phonePlaceholder}
+                  bind:value={phone}
+                  required={preferredContact === "phone"}
+                />
+              </label>
+
+              <label class="field field-wide">
+                <span class="field-label-row">
+                  <span>
+                    {text.currentWebsite}
+                  </span>
+
+                  <small>
+                    {text.optional}
+                  </small>
+                </span>
+
+                <input
+                  type="url"
+                  name="currentWebsite"
+                  autocomplete="url"
+                  maxlength="300"
+                  placeholder={text.currentWebsitePlaceholder}
+                  bind:value={currentWebsite}
+                />
+              </label>
+            </div>
+          </section>
+
+          <!-- =================================================
+               CONTACT METHOD
+          ================================================== -->
 
           <fieldset class="contact-method">
             <legend>
@@ -458,9 +614,13 @@
                   required
                 />
 
-                <span>
-                  {text.contactEmail}
+                <span class="contact-radio">
+                  <span></span>
                 </span>
+
+                <strong>
+                  {text.contactEmail}
+                </strong>
               </label>
 
               <label class:selected={preferredContact === "phone"}>
@@ -471,9 +631,13 @@
                   bind:group={preferredContact}
                 />
 
-                <span>
-                  {text.contactPhone}
+                <span class="contact-radio">
+                  <span></span>
                 </span>
+
+                <strong>
+                  {text.contactPhone}
+                </strong>
               </label>
 
               <label class:selected={preferredContact === "either"}>
@@ -484,15 +648,37 @@
                   bind:group={preferredContact}
                 />
 
-                <span>
-                  {text.contactEither}
+                <span class="contact-radio">
+                  <span></span>
                 </span>
+
+                <strong>
+                  {text.contactEither}
+                </strong>
               </label>
             </div>
           </fieldset>
 
-          <label class="field comments-field">
-            <span>{text.comments}</span>
+          <!-- =================================================
+               COMMENTS
+          ================================================== -->
+
+          <section class="comments-section">
+            <div class="comments-heading">
+              <div>
+                <h3>
+                  {text.comments}
+                </h3>
+
+                <span class="optional-label">
+                  {text.optional}
+                </span>
+              </div>
+
+              <p>
+                {text.commentsHelp}
+              </p>
+            </div>
 
             <textarea
               name="comments"
@@ -501,37 +687,69 @@
               placeholder={text.commentsPlaceholder}
               bind:value={comments}
             ></textarea>
-          </label>
+          </section>
 
-          <label class="consent-field">
-            <input type="checkbox" bind:checked={consent} required />
+          <!-- =================================================
+               CONSENT
+          ================================================== -->
 
-            <span>{text.consent}</span>
-          </label>
+          <div class="consent-section">
+            <label class="consent-field">
+              <input type="checkbox" bind:checked={consent} required />
 
-          <p class="privacy-note">
-            {text.privacy}
-          </p>
+              <span class="consent-checkbox" aria-hidden="true">
+                {#if consent}
+                  ✓
+                {/if}
+              </span>
+
+              <span class="consent-copy">
+                {text.consent}
+              </span>
+            </label>
+
+            <p class="privacy-note">
+              {text.privacy}
+            </p>
+          </div>
+
+          <!-- =================================================
+               ERROR
+          ================================================== -->
 
           {#if errorMessage}
             <p class="error-message" role="alert">
-              {errorMessage}
+              <span aria-hidden="true"> ! </span>
+
+              <span>
+                {errorMessage}
+              </span>
             </p>
           {/if}
 
-          <button
-            type="submit"
-            class="primary-button submit-button"
-            disabled={submitting}
-          >
-            <span>
-              {submitting ? text.submitting : text.submit}
+          <!-- =================================================
+               SUBMIT
+          ================================================== -->
+
+          <div class="submit-area">
+            <span class="submit-note">
+              {text.submitNote}
             </span>
 
-            <span aria-hidden="true">
-              {submitting ? "…" : "→"}
-            </span>
-          </button>
+            <button
+              type="submit"
+              class="primary-button submit-button"
+              disabled={submitting}
+            >
+              <span>
+                {submitting ? text.submitting : text.submit}
+              </span>
+
+              <span aria-hidden="true">
+                {submitting ? "…" : "→"}
+              </span>
+            </button>
+          </div>
         </form>
       {/if}
     </div>
@@ -539,26 +757,44 @@
 {/if}
 
 <style>
+  /* =========================================================
+     MODAL LAYER
+  ========================================================= */
+
   .modal-layer {
     position: fixed;
+
     inset: 0;
+
     z-index: 10000;
+
     display: grid;
+
     place-items: center;
+
     padding: 20px;
+
     box-sizing: border-box;
   }
 
   .modal-backdrop {
     position: absolute;
+
     inset: 0;
+
     width: 100%;
     height: 100%;
+
+    margin: 0;
     padding: 0;
+
     border: 0;
     border-radius: 0;
-    background: rgba(0, 0, 0, 0.82);
-    backdrop-filter: blur(8px);
+
+    background: rgba(0, 0, 0, 0.84);
+
+    backdrop-filter: blur(6px);
+
     cursor: default;
   }
 
@@ -566,362 +802,905 @@
     opacity: 1;
   }
 
+  /* =========================================================
+     PANEL
+  ========================================================= */
+
   .modal-panel {
     position: relative;
+
     z-index: 1;
-    width: min(920px, 100%);
+
+    width: min(900px, 100%);
+
     max-height: calc(100vh - 40px);
+
     overflow-y: auto;
+
     border: 1px solid #303030;
+
     background: #0b0b0b;
+
     color: #f1f1f1;
+
     box-shadow: 0 30px 100px rgba(0, 0, 0, 0.55);
+
     font-family: "DM Sans", Arial, sans-serif;
+
     outline: none;
+
+    box-sizing: border-box;
   }
+
+  /* =========================================================
+     CLOSE
+  ========================================================= */
 
   .close-button {
     position: absolute;
+
     top: 16px;
     right: 16px;
+
     z-index: 2;
-    width: 40px;
-    height: 40px;
-    padding: 0;
+
     display: grid;
+
+    width: 38px;
+    height: 38px;
+
     place-items: center;
+
+    margin: 0;
+    padding: 0;
+
     border: 1px solid #393939;
+
     border-radius: 0;
+
     background: #0b0b0b;
-    color: #c9c9c9;
+
+    color: #bcbcbc;
+
     font-family: inherit;
-    font-size: 24px;
+
+    font-size: 21px;
     font-weight: 300;
+
     cursor: pointer;
   }
 
   .close-button:hover:not(:disabled) {
-    border-color: #d0d0d0;
+    border-color: #6d6d6d;
+
     color: #ffffff;
   }
 
   .close-button:disabled {
     opacity: 0.45;
-    cursor: not-allowed;
+
+    cursor: default;
   }
 
+  /* =========================================================
+     HEADER
+  ========================================================= */
+
   .modal-header {
-    padding: clamp(30px, 5vw, 56px) clamp(24px, 5vw, 56px) 32px;
+    padding: clamp(32px, 5vw, 54px);
+
+    padding-right: clamp(72px, 8vw, 100px);
+
     border-bottom: 1px solid #292929;
   }
 
   .eyebrow {
     display: block;
-    margin-bottom: 13px;
-    color: #777777;
+
+    margin-bottom: 12px;
+
+    color: #5f80ff;
+
     font-size: 10px;
     font-weight: 700;
+
+    line-height: 1;
+
     letter-spacing: 0.1em;
+
     text-transform: uppercase;
   }
 
   h2 {
     max-width: 680px;
+
     margin: 0;
+
     color: #f1f1f1;
-    font-size: clamp(28px, 4vw, 42px);
-    font-weight: 650;
+
+    font-size: clamp(29px, 4vw, 42px);
+
+    font-weight: 600;
+
     line-height: 1.06;
-    letter-spacing: -0.04em;
+
+    letter-spacing: -0.035em;
+
+    text-wrap: balance;
   }
 
   .modal-header > p {
-    max-width: 700px;
-    margin: 16px 0 0;
-    color: #999999;
-    font-size: 14px;
-    line-height: 1.7;
+    max-width: 690px;
+
+    margin: 14px 0 0;
+
+    color: #929292;
+
+    font-size: 13px;
+
+    line-height: 1.65;
   }
 
+  /* =========================================================
+     PACKAGE
+  ========================================================= */
+
   .package-summary {
-    margin-top: 28px;
-    padding: 16px 18px;
     display: flex;
+
     align-items: center;
     justify-content: space-between;
+
     gap: 18px;
+
+    margin-top: 24px;
+
+    padding: 14px 16px;
+
     border: 1px solid #303030;
+
+    border-left: 2px solid #0043ff;
+
     background: #090909;
   }
 
   .package-summary span {
     color: #777777;
+
     font-size: 9px;
     font-weight: 700;
+
     letter-spacing: 0.08em;
+
     text-transform: uppercase;
   }
 
   .package-summary strong {
-    color: #4f76ff;
-    font-size: 17px;
+    color: #6e8cff;
+
+    font-size: 15px;
     font-weight: 600;
   }
 
+  /* =========================================================
+     FORM
+  ========================================================= */
+
   form {
-    padding: 32px clamp(24px, 5vw, 56px) clamp(32px, 5vw, 52px);
+    padding: 30px clamp(24px, 5vw, 54px) clamp(32px, 5vw, 50px);
   }
 
   .honeypot {
     position: absolute;
+
     left: -10000px;
+
     width: 1px;
     height: 1px;
+
     overflow: hidden;
   }
 
+  /* =========================================================
+     SECTION HEADING
+  ========================================================= */
+
+  .form-section-heading {
+    display: grid;
+
+    grid-template-columns:
+      24px
+      minmax(0, 1fr);
+
+    gap: 12px;
+
+    margin-bottom: 20px;
+  }
+
+  .form-section-number {
+    padding-top: 3px;
+
+    color: #5f80ff;
+
+    font-size: 9px;
+    font-weight: 700;
+  }
+
+  .form-section-heading h3,
+  .comments-heading h3 {
+    margin: 0;
+
+    color: #eeeeee;
+
+    font-size: 16px;
+    font-weight: 600;
+
+    line-height: 1.3;
+  }
+
+  .form-section-heading p {
+    max-width: 600px;
+
+    margin: 5px 0 0;
+
+    color: #777777;
+
+    font-size: 10.5px;
+
+    line-height: 1.5;
+  }
+
+  /* =========================================================
+     GRID
+  ========================================================= */
+
   .form-grid {
     display: grid;
+
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 18px;
+
+    gap: 17px 12px;
   }
 
   .field {
     display: grid;
-    gap: 8px;
+
+    gap: 7px;
   }
 
   .field-wide {
     grid-column: 1 / -1;
   }
 
-  .field > span,
+  .field-label,
+  .field-label-row,
   .contact-method legend {
-    color: #8b8b8b;
-    font-size: 10px;
+    color: #858585;
+
+    font-size: 9px;
     font-weight: 700;
+
     letter-spacing: 0.07em;
+
     text-transform: uppercase;
   }
+
+  .field-label-row {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 10px;
+  }
+
+  .field-label-row small {
+    color: #5f5f5f;
+
+    font-size: 8px;
+    font-weight: 700;
+
+    letter-spacing: 0.07em;
+
+    text-transform: uppercase;
+  }
+
+  /* =========================================================
+     INPUTS
+  ========================================================= */
 
   input,
   textarea {
     width: 100%;
+
     border: 1px solid #353535;
+
     border-radius: 0;
+
     background: #080808;
+
     color: #eeeeee;
+
     font-family: inherit;
-    font-size: 14px;
+
     box-sizing: border-box;
+
     outline: none;
+
+    transition: border-color 160ms ease;
   }
 
   input {
-    min-height: 52px;
-    padding: 0 14px;
+    min-height: 49px;
+
+    padding: 0 13px;
+
+    font-size: 12px;
   }
 
   textarea {
-    min-height: 130px;
-    padding: 14px;
+    min-height: 120px;
+
+    padding: 13px;
+
     resize: vertical;
+
+    font-size: 12px;
+
     line-height: 1.55;
   }
 
   input:focus,
   textarea:focus {
-    border-color: #d0d0d0;
+    border-color: #777777;
   }
 
   input::placeholder,
   textarea::placeholder {
-    color: #5f5f5f;
+    color: #555555;
   }
+
+  /* =========================================================
+     CONTACT METHOD
+  ========================================================= */
 
   .contact-method {
     margin: 28px 0 0;
-    padding: 0;
+
+    padding: 26px 0 0;
+
     border: 0;
+
+    border-top: 1px solid #292929;
   }
 
   .contact-method legend {
-    margin-bottom: 10px;
+    margin-bottom: 12px;
   }
 
   .contact-options {
     display: grid;
+
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 10px;
+
+    gap: 8px;
   }
 
   .contact-options label {
-    min-height: 52px;
-    padding: 0 14px;
-    display: flex;
+    display: grid;
+
+    grid-template-columns:
+      auto
+      minmax(0, 1fr);
+
     align-items: center;
+
     gap: 10px;
+
+    min-height: 52px;
+
+    padding: 0 13px;
+
     border: 1px solid #353535;
+
     background: #090909;
+
     color: #a5a5a5;
-    font-size: 12px;
+
     cursor: pointer;
+
+    box-sizing: border-box;
+
+    transition:
+      border-color 160ms ease,
+      background 160ms ease;
   }
 
   .contact-options label:hover {
-    border-color: #d0d0d0;
+    border-color: #5d5d5d;
   }
 
   .contact-options label.selected {
-    border-color: #d0d0d0;
-    color: #4f76ff;
+    border-color: #0043ff;
+
+    background: rgba(0, 67, 255, 0.05);
+
+    color: #6e8cff;
   }
 
   .contact-options input {
-    width: 16px;
-    min-height: auto;
-    height: 16px;
-    padding: 0;
-    accent-color: #0043ff;
+    position: absolute;
+
+    width: 1px;
+    height: 1px;
+
+    opacity: 0;
+
+    pointer-events: none;
   }
 
-  .comments-field {
+  .contact-radio {
+    display: grid;
+
+    width: 17px;
+    height: 17px;
+
+    place-items: center;
+
+    border: 1px solid #606060;
+
+    border-radius: 50%;
+
+    box-sizing: border-box;
+  }
+
+  .contact-radio span {
+    width: 7px;
+    height: 7px;
+
+    border-radius: 50%;
+
+    background: transparent;
+  }
+
+  .contact-options label.selected .contact-radio {
+    border-color: #0043ff;
+  }
+
+  .contact-options label.selected .contact-radio span {
+    background: #0043ff;
+  }
+
+  .contact-options strong {
+    font-size: 10px;
+    font-weight: 600;
+
+    line-height: 1.3;
+  }
+
+  /* =========================================================
+     COMMENTS
+  ========================================================= */
+
+  .comments-section {
     margin-top: 28px;
+
+    padding-top: 26px;
+
+    border-top: 1px solid #292929;
+  }
+
+  .comments-heading {
+    margin-bottom: 13px;
+  }
+
+  .comments-heading > div {
+    display: flex;
+
+    align-items: center;
+
+    flex-wrap: wrap;
+
+    gap: 9px;
+  }
+
+  .comments-heading p {
+    max-width: 620px;
+
+    margin: 6px 0 0;
+
+    color: #707070;
+
+    font-size: 10px;
+
+    line-height: 1.5;
+  }
+
+  .optional-label {
+    color: #5f80ff;
+
+    font-size: 8px;
+    font-weight: 700;
+
+    letter-spacing: 0.07em;
+
+    text-transform: uppercase;
+  }
+
+  /* =========================================================
+     CONSENT
+  ========================================================= */
+
+  .consent-section {
+    margin-top: 24px;
+
+    padding-top: 22px;
+
+    border-top: 1px solid #292929;
   }
 
   .consent-field {
-    margin-top: 24px;
     display: grid;
-    grid-template-columns: 18px minmax(0, 1fr);
+
+    grid-template-columns:
+      auto
+      minmax(0, 1fr);
+
     gap: 11px;
+
     align-items: start;
-    color: #9a9a9a;
-    font-size: 11px;
-    line-height: 1.6;
+
+    color: #929292;
+
+    font-size: 10.5px;
+
+    line-height: 1.55;
+
     cursor: pointer;
   }
 
   .consent-field input {
-    width: 17px;
-    min-height: auto;
-    height: 17px;
+    position: absolute;
+
+    width: 1px;
+    height: 1px;
+
+    opacity: 0;
+
+    pointer-events: none;
+  }
+
+  .consent-checkbox {
+    display: grid;
+
+    width: 18px;
+    height: 18px;
+
+    place-items: center;
+
     margin-top: 1px;
-    padding: 0;
-    accent-color: #0043ff;
+
+    border: 1px solid #606060;
+
+    color: #ffffff;
+
+    font-size: 9px;
+    font-weight: 700;
+
+    box-sizing: border-box;
+  }
+
+  .consent-field input:checked + .consent-checkbox {
+    border-color: #0043ff;
+
+    background: #0043ff;
   }
 
   .privacy-note {
-    margin: 12px 0 0 29px;
-    color: #666666;
-    font-size: 10px;
+    margin: 9px 0 0 29px;
+
+    color: #5f5f5f;
+
+    font-size: 9px;
+
     line-height: 1.5;
   }
 
+  /* =========================================================
+     ERROR
+  ========================================================= */
+
   .error-message {
+    display: grid;
+
+    grid-template-columns:
+      auto
+      minmax(0, 1fr);
+
+    gap: 10px;
+
     margin: 20px 0 0;
-    padding: 13px 14px;
+
+    padding: 12px 13px;
+
     border: 1px solid #744141;
+
     background: #140d0d;
-    color: #e1a3a3;
-    font-size: 12px;
+
+    color: #d99a9a;
+
+    font-size: 11px;
+
+    line-height: 1.5;
+  }
+
+  .error-message > span:first-child {
+    font-weight: 700;
+  }
+
+  /* =========================================================
+     SUBMIT
+  ========================================================= */
+
+  .submit-area {
+    display: grid;
+
+    grid-template-columns:
+      minmax(0, 1fr)
+      minmax(220px, auto);
+
+    gap: 18px;
+
+    align-items: center;
+
+    margin-top: 24px;
+
+    padding-top: 22px;
+
+    border-top: 1px solid #292929;
+  }
+
+  .submit-note {
+    max-width: 420px;
+
+    color: #666666;
+
+    font-size: 9px;
+
     line-height: 1.5;
   }
 
   .primary-button {
-    min-height: 52px;
-    padding: 0 20px;
+    display: inline-flex;
+
+    min-height: 50px;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 12px;
+
+    padding: 0 18px;
+
     border: 1px solid #0043ff;
+
     border-radius: 0;
+
     background: #0043ff;
+
     color: #ffffff;
+
     font-family: inherit;
+
     font-size: 10px;
     font-weight: 700;
+
     letter-spacing: 0.07em;
+
     text-transform: uppercase;
+
     cursor: pointer;
+
+    box-sizing: border-box;
   }
 
   .submit-button {
-    width: 100%;
-    margin-top: 24px;
-    display: flex;
-    align-items: center;
+    min-width: 230px;
+
     justify-content: space-between;
   }
 
   .primary-button:hover:not(:disabled) {
-    border-color: #1b56ff;
-    background: #1b56ff;
+    opacity: 0.9;
   }
 
   .primary-button:disabled {
     border-color: #292929;
+
     background: #161616;
+
     color: #5d5d5d;
-    cursor: not-allowed;
+
+    cursor: default;
   }
 
+  /* =========================================================
+     FOCUS
+  ========================================================= */
+
   .close-button:focus-visible,
-  .primary-button:focus-visible,
-  input:focus-visible,
-  textarea:focus-visible,
-  .contact-options label:has(input:focus-visible) {
+  .primary-button:focus-visible {
     outline: 2px solid #0043ff;
+
     outline-offset: 3px;
   }
 
+  input:focus-visible,
+  textarea:focus-visible {
+    border-color: #0043ff;
+  }
+
+  .contact-options label:has(input:focus-visible),
+  .consent-field:has(input:focus-visible) .consent-checkbox {
+    outline: 2px solid #0043ff;
+
+    outline-offset: 3px;
+  }
+
+  /* =========================================================
+     SUCCESS
+  ========================================================= */
+
   .success-state {
-    min-height: 560px;
-    padding: clamp(36px, 7vw, 80px);
     display: flex;
+
+    min-height: 540px;
+
     flex-direction: column;
+
     align-items: flex-start;
     justify-content: center;
+
+    padding: clamp(38px, 7vw, 76px);
+
     box-sizing: border-box;
   }
 
   .success-mark {
     display: grid;
-    width: 54px;
-    height: 54px;
-    margin-bottom: 30px;
+
+    width: 48px;
+    height: 48px;
+
     place-items: center;
-    border: 1px solid #d0d0d0;
-    color: #0043ff;
-    font-size: 18px;
+
+    margin-bottom: 26px;
+
+    border: 1px solid #0043ff;
+
+    background: #0043ff;
+
+    color: #ffffff;
+
+    font-size: 15px;
     font-weight: 700;
   }
 
-  .success-state p {
-    max-width: 650px;
-    margin: 18px 0 0;
-    color: #999999;
-    font-size: 14px;
-    line-height: 1.7;
+  .success-state h2 {
+    max-width: 660px;
+  }
+
+  .success-state > p {
+    max-width: 640px;
+
+    margin: 16px 0 0;
+
+    color: #929292;
+
+    font-size: 13px;
+
+    line-height: 1.65;
+  }
+
+  .success-package {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 20px;
+
+    width: min(520px, 100%);
+
+    margin-top: 24px;
+
+    padding: 13px 15px;
+
+    border: 1px solid #303030;
+
+    border-left: 2px solid #0043ff;
+
+    box-sizing: border-box;
+  }
+
+  .success-package span {
+    color: #707070;
+
+    font-size: 9px;
+    font-weight: 700;
+
+    letter-spacing: 0.08em;
+
+    text-transform: uppercase;
+  }
+
+  .success-package strong {
+    color: #6e8cff;
+
+    font-size: 13px;
+    font-weight: 600;
   }
 
   .confirmation-note {
-    max-width: 650px;
-    margin: 24px 0 28px;
-    padding: 15px;
+    display: grid;
+
+    grid-template-columns:
+      auto
+      minmax(0, 1fr);
+
+    gap: 10px;
+
+    max-width: 620px;
+
+    margin: 16px 0 26px;
+
+    padding: 13px;
+
     border: 1px solid #303030;
+
     color: #8d8d8d;
-    font-size: 11px;
-    line-height: 1.6;
+
+    font-size: 10px;
+
+    line-height: 1.55;
   }
+
+  .confirmation-mark {
+    color: #5f80ff;
+
+    font-weight: 700;
+  }
+
+  .confirmation-note.warning .confirmation-mark {
+    color: #b0b0b0;
+  }
+
+  .success-close-button {
+    min-width: 150px;
+
+    justify-content: space-between;
+  }
+
+  /* =========================================================
+     MOBILE
+  ========================================================= */
 
   @media (max-width: 700px) {
     .modal-layer {
       padding: 0;
+
       place-items: stretch;
     }
 
     .modal-panel {
       width: 100%;
-      max-height: 100vh;
-      min-height: 100vh;
+
+      max-height: 100dvh;
+      min-height: 100dvh;
+
+      border-top: 0;
       border-right: 0;
+      border-bottom: 0;
       border-left: 0;
     }
 
@@ -931,7 +1710,27 @@
     }
 
     .modal-header {
-      padding-top: 72px;
+      padding: 68px 20px 24px;
+    }
+
+    h2 {
+      font-size: clamp(26px, 8vw, 34px);
+    }
+
+    .modal-header > p {
+      font-size: 12px;
+    }
+
+    .package-summary {
+      align-items: flex-start;
+
+      flex-direction: column;
+
+      gap: 6px;
+    }
+
+    form {
+      padding: 24px 20px 36px;
     }
 
     .form-grid,
@@ -943,13 +1742,62 @@
       grid-column: auto;
     }
 
-    .package-summary {
-      align-items: flex-start;
-      flex-direction: column;
+    .contact-options label {
+      min-height: 50px;
+    }
+
+    .submit-area {
+      grid-template-columns: 1fr;
+
+      gap: 12px;
+    }
+
+    .submit-note {
+      max-width: none;
+    }
+
+    .submit-button {
+      width: 100%;
     }
 
     .success-state {
-      min-height: 100vh;
+      min-height: 100dvh;
+
+      padding: 72px 22px 32px;
+    }
+
+    .success-close-button {
+      width: 100%;
+    }
+  }
+
+  /* =========================================================
+     SMALL MOBILE
+  ========================================================= */
+
+  @media (max-width: 430px) {
+    .modal-header {
+      padding-inline: 18px;
+    }
+
+    form {
+      padding-inline: 18px;
+    }
+
+    .success-state {
+      padding-inline: 18px;
+    }
+  }
+
+  /* =========================================================
+     REDUCED MOTION
+  ========================================================= */
+
+  @media (prefers-reduced-motion: reduce) {
+    input,
+    textarea,
+    .contact-options label {
+      transition: none;
     }
   }
 </style>

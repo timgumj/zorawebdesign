@@ -5,54 +5,33 @@
     isValidReferenceUrl,
   } from "$lib/data/website-configurator/content-readiness-data.js";
 
-  import { getWebsiteTypeById } from "$lib/data/website-configurator/configurator-data.js";
-
   let {
     language = "de",
     selectedWebsiteType = "",
-
     contentReadiness = $bindable(""),
     visualReadiness = $bindable(""),
     brandingReadiness = $bindable(""),
     designDirection = $bindable(""),
     designReferenceLinks = $bindable(["", ""]),
     supportNeeds = $bindable([]),
-
     contentStage = $bindable("content"),
   } = $props();
 
   const text = $derived(getContentReadinessContent(language));
 
   const interfaceText = $derived(
-    language === "de"
+    language === "en"
       ? {
-          part: "Teil",
-          of: "von",
-          selected: "Ausgewählt",
-          continue: "Weiter",
-          back: "Zurück",
           optional: "Optional",
-          requiredHint: "Bitte wähle eine Option aus.",
-          finishHint:
-            "Diese Auswahl ist optional. Du kannst direkt fortfahren.",
-          stages: {
-            content: "Inhalte",
-            visual: "Bilder",
-            branding: "Marke",
-            direction: "Design",
-            support: "Unterstützung",
-          },
-        }
-      : {
-          part: "Part",
-          of: "of",
           selected: "Selected",
-          continue: "Continue",
           back: "Back",
-          optional: "Optional",
-          requiredHint: "Please select one option.",
-          finishHint:
-            "This selection is optional. You can continue without choosing anything.",
+          continue: "Continue",
+
+          requiredHint: "Choose one option to continue.",
+
+          supportHint:
+            "Optional — select only the areas where you would like support.",
+
           stages: {
             content: "Content",
             visual: "Images",
@@ -60,34 +39,49 @@
             direction: "Design",
             support: "Support",
           },
+        }
+      : {
+          optional: "Optional",
+          selected: "Ausgewählt",
+          back: "Zurück",
+          continue: "Weiter",
+
+          requiredHint: "Wählen Sie eine Option aus.",
+
+          supportHint:
+            "Optional — wählen Sie nur die Bereiche aus, bei denen Sie Unterstützung möchten.",
+
+          stages: {
+            content: "Inhalte",
+            visual: "Bilder",
+            branding: "Marke",
+            direction: "Design",
+            support: "Unterstützung",
+          },
         },
   );
 
   const stages = $derived([
     {
       id: "content",
-      number: "01",
       label: interfaceText.stages.content,
     },
     {
       id: "visual",
-      number: "02",
       label: interfaceText.stages.visual,
     },
     {
       id: "branding",
-      number: "03",
       label: interfaceText.stages.branding,
     },
     {
       id: "direction",
-      number: "04",
       label: interfaceText.stages.direction,
     },
     {
       id: "support",
-      number: "05",
       label: interfaceText.stages.support,
+      optional: true,
     },
   ]);
 
@@ -98,9 +92,7 @@
     ),
   );
 
-  const selectedWebsiteTypeOption = $derived(
-    getWebsiteTypeById(selectedWebsiteType, language),
-  );
+  const currentStage = $derived(stages[currentStageIndex]);
 
   const selectedContentOption = $derived(
     getContentReadinessOption("contentOptions", contentReadiness, language),
@@ -118,14 +110,6 @@
     getContentReadinessOption("directionOptions", designDirection, language),
   );
 
-  const selectedSupportOptions = $derived(
-    supportNeeds
-      .map((supportId) =>
-        text.supportOptions.find((option) => option.id === supportId),
-      )
-      .filter(Boolean),
-  );
-
   const showReferenceFields = $derived(
     Boolean(selectedDirectionOption?.showLinks),
   );
@@ -138,7 +122,6 @@
         description: text.contentDescription,
         options: text.contentOptions,
         selectedId: contentReadiness,
-        selectedOption: selectedContentOption,
       };
     }
 
@@ -149,7 +132,6 @@
         description: text.visualDescription,
         options: text.visualOptions,
         selectedId: visualReadiness,
-        selectedOption: selectedVisualOption,
       };
     }
 
@@ -160,7 +142,6 @@
         description: text.brandingDescription,
         options: text.brandingOptions,
         selectedId: brandingReadiness,
-        selectedOption: selectedBrandingOption,
       };
     }
 
@@ -171,15 +152,24 @@
         description: text.directionDescription,
         options: text.directionOptions,
         selectedId: designDirection,
-        selectedOption: selectedDirectionOption,
       };
     }
 
     return null;
   });
 
+  function referenceLinkIsValid(link = "") {
+    const value = String(link).trim();
+
+    if (!value) {
+      return true;
+    }
+
+    return isValidReferenceUrl(value);
+  }
+
   const referenceLinksValid = $derived(
-    designReferenceLinks.every((link) => isValidReferenceUrl(link ?? "")),
+    designReferenceLinks.every((link) => referenceLinkIsValid(link ?? "")),
   );
 
   const currentStageComplete = $derived(
@@ -193,62 +183,6 @@
             ? Boolean(designDirection) && referenceLinksValid
             : true,
   );
-
-  function stageIsComplete(stageId) {
-    if (stageId === "content") {
-      return Boolean(contentReadiness);
-    }
-
-    if (stageId === "visual") {
-      return Boolean(visualReadiness);
-    }
-
-    if (stageId === "branding") {
-      return Boolean(brandingReadiness);
-    }
-
-    if (stageId === "direction") {
-      return Boolean(designDirection) && referenceLinksValid;
-    }
-
-    if (stageId === "support") {
-      return contentStage === "support";
-    }
-
-    return false;
-  }
-
-  function canOpenStage(stageId) {
-    const targetIndex = stages.findIndex((stage) => stage.id === stageId);
-
-    if (targetIndex <= currentStageIndex) {
-      return true;
-    }
-
-    if (stageId === "visual") {
-      return Boolean(contentReadiness);
-    }
-
-    if (stageId === "branding") {
-      return Boolean(contentReadiness && visualReadiness);
-    }
-
-    if (stageId === "direction") {
-      return Boolean(contentReadiness && visualReadiness && brandingReadiness);
-    }
-
-    if (stageId === "support") {
-      return Boolean(
-        contentReadiness &&
-          visualReadiness &&
-          brandingReadiness &&
-          designDirection &&
-          referenceLinksValid,
-      );
-    }
-
-    return false;
-  }
 
   function selectOption(group, optionId) {
     if (group === "content") {
@@ -301,16 +235,8 @@
     const updatedLinks = [...designReferenceLinks];
 
     updatedLinks[index] = value;
+
     designReferenceLinks = updatedLinks;
-  }
-
-  function openStage(stageId) {
-    if (!canOpenStage(stageId)) {
-      return;
-    }
-
-    contentStage = stageId;
-    scrollToTop();
   }
 
   function goToNextStage() {
@@ -325,7 +251,6 @@
     }
 
     contentStage = nextStage.id;
-    scrollToTop();
   }
 
   function goToPreviousStage() {
@@ -336,16 +261,6 @@
     }
 
     contentStage = previousStage.id;
-    scrollToTop();
-  }
-
-  function scrollToTop() {
-    requestAnimationFrame(() => {
-      document.querySelector(".content-readiness-step")?.scrollIntoView({
-        behavior: "smooth",
-        block: "start",
-      });
-    });
   }
 
   function handleSelectableKeydown(event, callback) {
@@ -354,738 +269,846 @@
     }
 
     event.preventDefault();
+
     callback();
   }
 </script>
 
 <div class="content-readiness-step">
-  <nav class="stage-navigation" aria-label="Content readiness progress">
-    {#each stages as stage, index}
-      <button
-        type="button"
-        class="stage-button"
-        class:active={contentStage === stage.id}
-        class:completed={stageIsComplete(stage.id)}
-        disabled={!canOpenStage(stage.id)}
-        onclick={() => openStage(stage.id)}
+  {#if currentQuestion}
+    <section
+      class="question-panel"
+      aria-labelledby={`${currentQuestion.id}-question-title`}
+    >
+      <header class="question-header">
+        <span class="substep-label">
+          {currentStage.label}
+          ·
+          {currentStageIndex + 1}
+          /
+          {stages.length}
+        </span>
+
+        <h1 id={`${currentQuestion.id}-question-title`}>
+          {currentQuestion.title}
+        </h1>
+
+        <p>
+          {currentQuestion.description}
+        </p>
+      </header>
+
+      <div
+        class="option-grid"
+        role="radiogroup"
+        aria-label={currentQuestion.title}
       >
-        <span class="stage-number">
-          {stage.number}
-        </span>
-
-        <span class="stage-label">
-          {stage.label}
-        </span>
-      </button>
-
-      {#if index < stages.length - 1}
-        <span
-          class="stage-line"
-          class:completed-line={stageIsComplete(stage.id)}
-          aria-hidden="true"
-        ></span>
-      {/if}
-    {/each}
-  </nav>
-
-  <div class="step-layout">
-    <main class="selection-area">
-      {#if currentQuestion}
-        <section
-          class="question-panel"
-          aria-labelledby={`${currentQuestion.id}-question-title`}
-        >
-          <header class="question-header">
-            <div class="question-heading-copy">
-              <span class="question-stage">
-                {interfaceText.part}
-                {currentStageIndex + 1}
-                {interfaceText.of}
-                {stages.length}
-              </span>
-
-              <h2 id={`${currentQuestion.id}-question-title`}>
-                {currentQuestion.title}
-              </h2>
-
-              <p>
-                {currentQuestion.description}
-              </p>
-            </div>
-
-            {#if currentQuestion.selectedOption}
-              <div class="selected-answer">
-                <span>
-                  {interfaceText.selected}
-                </span>
-
-                <strong>
-                  {currentQuestion.selectedOption.label}
-                </strong>
-              </div>
-            {/if}
-          </header>
+        {#each currentQuestion.options as option}
+          {@const selected = currentQuestion.selectedId === option.id}
 
           <div
-            class="option-grid"
-            role="radiogroup"
-            aria-label={currentQuestion.title}
+            class="selection-card"
+            class:selected
+            role="radio"
+            aria-checked={selected}
+            tabindex="0"
+            onclick={() => selectOption(currentQuestion.id, option.id)}
+            onkeydown={(event) =>
+              handleSelectableKeydown(event, () =>
+                selectOption(currentQuestion.id, option.id),
+              )}
           >
-            {#each currentQuestion.options as option}
-              <div
-                class="selection-card"
-                class:selected={currentQuestion.selectedId === option.id}
-                role="radio"
-                aria-checked={currentQuestion.selectedId === option.id}
-                tabindex="0"
-                onclick={() => selectOption(currentQuestion.id, option.id)}
-                onkeydown={(event) =>
-                  handleSelectableKeydown(event, () =>
-                    selectOption(currentQuestion.id, option.id),
-                  )}
-              >
-                <div class="selection-indicator" aria-hidden="true">
-                  <span></span>
-                </div>
-
-                <div class="option-copy">
-                  <h3>{option.label}</h3>
-
-                  <p>
-                    {option.description}
-                  </p>
-                </div>
-              </div>
-            {/each}
-          </div>
-
-          {#if contentStage === "direction" && showReferenceFields}
-            <div class="reference-panel">
-              <div class="reference-heading">
-                <div>
-                  <h3>
-                    {text.referencesTitle}
-                  </h3>
-
-                  <p>
-                    {text.referencesDescription}
-                  </p>
-                </div>
-
-                <span class="optional-label">
-                  {text.optionalLabel}
-                </span>
-              </div>
-
-              <div class="reference-grid">
-                <label>
-                  <span>
-                    {text.referenceOneLabel}
-                  </span>
-
-                  <input
-                    type="url"
-                    inputmode="url"
-                    autocomplete="url"
-                    placeholder={text.referencePlaceholder}
-                    value={designReferenceLinks[0] ?? ""}
-                    aria-invalid={!isValidReferenceUrl(
-                      designReferenceLinks[0] ?? "",
-                    )}
-                    oninput={(event) =>
-                      updateReferenceLink(0, event.currentTarget.value)}
+            <div class="option-icon" aria-hidden="true">
+              {#if option.id === "content-ready"}
+                <svg viewBox="0 0 48 48">
+                  <path d="M11 6h20l6 6v30H11V6Z" />
+                  <path d="M31 6v8h6" />
+                  <path d="M17 20h14M17 26h10" />
+                  <circle cx="31" cy="33" r="8" />
+                  <path d="m27 33 3 3 5-6" />
+                </svg>
+              {:else if option.id === "content-mostly-ready"}
+                <svg viewBox="0 0 48 48">
+                  <path d="M11 6h20l6 6v30H11V6Z" />
+                  <path d="M31 6v8h6" />
+                  <path d="M17 20h14M17 26h14M17 32h8" />
+                  <path d="M31 32h7" />
+                </svg>
+              {:else if option.id === "content-some"}
+                <svg viewBox="0 0 48 48">
+                  <path d="M11 6h20l6 6v30H11V6Z" />
+                  <path d="M31 6v8h6" />
+                  <path d="M17 20h12M17 26h8" />
+                  <path d="m26 36 10-10 4 4-10 10-6 2 2-6Z" />
+                </svg>
+              {:else if option.id === "content-scratch"}
+                <svg viewBox="0 0 48 48">
+                  <path d="M13 8h18l6 6v26H13V8Z" />
+                  <path d="M31 8v8h6" />
+                  <path d="m10 34 15-15 5 5-15 15-7 2 2-7Z" />
+                </svg>
+              {:else if option.id === "visual-ready"}
+                <svg viewBox="0 0 48 48">
+                  <rect x="7" y="8" width="34" height="30" />
+                  <circle cx="17" cy="17" r="3" />
+                  <path d="m11 33 9-9 6 6 5-5 7 8" />
+                  <circle cx="36" cy="34" r="7" />
+                  <path d="m33 34 2 2 4-5" />
+                </svg>
+              {:else if option.id === "visual-some"}
+                <svg viewBox="0 0 48 48">
+                  <rect x="7" y="10" width="26" height="24" />
+                  <rect x="15" y="6" width="26" height="24" />
+                  <circle cx="24" cy="15" r="3" />
+                  <path d="m18 26 6-6 5 5 4-4 5 5" />
+                </svg>
+              {:else if option.id === "visual-stock"}
+                <svg viewBox="0 0 48 48">
+                  <rect x="7" y="8" width="28" height="26" />
+                  <circle cx="16" cy="16" r="3" />
+                  <path d="m11 29 7-7 5 5 4-4 5 6" />
+                  <circle cx="35" cy="34" r="7" />
+                  <path d="m40 39-3.5-3.5" />
+                </svg>
+              {:else if option.id === "visual-photography"}
+                <svg viewBox="0 0 48 48">
+                  <path d="M10 15h8l3-5h8l3 5h6v24H10V15Z" />
+                  <circle cx="24" cy="27" r="8" />
+                  <circle cx="24" cy="27" r="3" />
+                </svg>
+              {:else if option.id === "branding-complete"}
+                <svg viewBox="0 0 48 48">
+                  <rect x="7" y="7" width="34" height="34" />
+                  <rect x="12" y="12" width="10" height="10" />
+                  <rect x="26" y="12" width="10" height="10" />
+                  <rect x="12" y="26" width="10" height="10" />
+                  <path d="M27 31h9" />
+                </svg>
+              {:else if option.id === "branding-logo-colors"}
+                <svg viewBox="0 0 48 48">
+                  <circle cx="18" cy="18" r="9" />
+                  <path d="M18 9v18M9 18h18" />
+                  <path
+                    d="M28 30c0-5 4-9 9-9 0 0 4 2 4 6 0 5-5 5-5 9 0 3-2 5-5 5-2 0-4-1-5-3"
                   />
-
-                  {#if !isValidReferenceUrl(designReferenceLinks[0] ?? "")}
-                    <small class="field-error">
-                      {text.invalidUrl}
-                    </small>
-                  {/if}
-                </label>
-
-                <label>
-                  <span>
-                    {text.referenceTwoLabel}
-                  </span>
-
-                  <input
-                    type="url"
-                    inputmode="url"
-                    autocomplete="url"
-                    placeholder={text.referencePlaceholder}
-                    value={designReferenceLinks[1] ?? ""}
-                    aria-invalid={!isValidReferenceUrl(
-                      designReferenceLinks[1] ?? "",
-                    )}
-                    oninput={(event) =>
-                      updateReferenceLink(1, event.currentTarget.value)}
+                </svg>
+              {:else if option.id === "branding-logo"}
+                <svg viewBox="0 0 48 48">
+                  <rect x="8" y="8" width="32" height="32" />
+                  <circle cx="24" cy="24" r="9" />
+                  <path d="M24 15v18M15 24h18" />
+                </svg>
+              {:else if option.id === "branding-none"}
+                <svg viewBox="0 0 48 48">
+                  <rect x="8" y="8" width="32" height="32" />
+                  <path d="M13 35 35 13" />
+                  <path d="M14 14h8M26 34h8" />
+                </svg>
+              {:else if option.id === "direction-references"}
+                <svg viewBox="0 0 48 48">
+                  <rect x="7" y="8" width="34" height="30" />
+                  <path d="M7 16h34" />
+                  <path d="M14 23h20M14 29h14" />
+                  <path d="M33 33h7v7" />
+                </svg>
+              {:else if option.id === "direction-rough"}
+                <svg viewBox="0 0 48 48">
+                  <path d="m10 35 17-17 6 6-17 17-8 2 2-8Z" />
+                  <path d="m29 16 4-4 6 6-4 4" />
+                  <path d="M9 10h13M9 16h9" />
+                </svg>
+              {:else if option.id === "direction-open"}
+                <svg viewBox="0 0 48 48">
+                  <circle cx="24" cy="24" r="17" />
+                  <path d="m30 18-5 9-9 5 5-9 9-5Z" />
+                  <circle
+                    cx="24"
+                    cy="24"
+                    r="2"
+                    fill="currentColor"
+                    stroke="none"
                   />
-
-                  {#if !isValidReferenceUrl(designReferenceLinks[1] ?? "")}
-                    <small class="field-error">
-                      {text.invalidUrl}
-                    </small>
-                  {/if}
-                </label>
-              </div>
-
-              <p class="reference-note">
-                {text.referenceNote}
-              </p>
-            </div>
-          {/if}
-        </section>
-      {:else if contentStage === "support"}
-        <section class="question-panel" aria-labelledby="support-needs-title">
-          <header class="question-header">
-            <div class="question-heading-copy">
-              <span class="question-stage">
-                {interfaceText.part}
-                {currentStageIndex + 1}
-                {interfaceText.of}
-                {stages.length}
-              </span>
-
-              <div class="title-row">
-                <h2 id="support-needs-title">
-                  {text.supportTitle}
-                </h2>
-
-                <span class="optional-label">
-                  {text.optionalLabel}
-                </span>
-              </div>
-
-              <p>
-                {text.supportDescription}
-              </p>
+                </svg>
+              {:else if option.id === "direction-unsure"}
+                <svg viewBox="0 0 48 48">
+                  <circle cx="24" cy="24" r="17" />
+                  <path d="M18 18a6 6 0 1 1 8 5.7c-1.5.6-2 1.5-2 3.3" />
+                  <circle
+                    cx="24"
+                    cy="33"
+                    r="1.5"
+                    fill="currentColor"
+                    stroke="none"
+                  />
+                </svg>
+              {/if}
             </div>
 
-            {#if selectedSupportOptions.length > 0}
-              <div class="selection-count">
-                <strong>
-                  {selectedSupportOptions.length}
-                </strong>
+            <div class="option-copy">
+              <h2>
+                {option.label}
+              </h2>
 
-                <span>
-                  {interfaceText.selected}
-                </span>
-              </div>
-            {/if}
-          </header>
+              {#if option.description}
+                <p>
+                  {option.description}
+                </p>
+              {/if}
+            </div>
 
-          <div class="support-grid" role="group" aria-label={text.supportTitle}>
-            {#each text.supportOptions as option}
-              <div
-                class="support-option"
-                class:selected={supportNeeds.includes(option.id)}
-                role="checkbox"
-                aria-checked={supportNeeds.includes(option.id)}
-                tabindex="0"
-                onclick={() => toggleSupportNeed(option.id)}
-                onkeydown={(event) =>
-                  handleSelectableKeydown(event, () =>
-                    toggleSupportNeed(option.id),
-                  )}
-              >
-                <span class="support-indicator" aria-hidden="true"></span>
-
-                <span>
-                  {option.label}
-                </span>
-              </div>
-            {/each}
+            <span class="selection-state" aria-hidden="true">
+              {#if selected}
+                <svg viewBox="0 0 20 20">
+                  <path d="m5 10.25 3.15 3.1L15 6.75" />
+                </svg>
+              {/if}
+            </span>
           </div>
-
-          <p class="optional-hint">
-            {interfaceText.finishHint}
-          </p>
-        </section>
-      {/if}
-
-      <div class="internal-navigation">
-        {#if currentStageIndex > 0}
-          <button
-            type="button"
-            class="internal-back-button"
-            onclick={goToPreviousStage}
-          >
-            <span aria-hidden="true">←</span>
-            {interfaceText.back}
-          </button>
-        {:else}
-          <span class="navigation-placeholder" aria-hidden="true"></span>
-        {/if}
-
-        {#if contentStage !== "support"}
-          <div class="internal-continue-area">
-            {#if !currentStageComplete}
-              <span class="internal-hint">
-                {interfaceText.requiredHint}
-              </span>
-            {/if}
-
-            <button
-              type="button"
-              class="internal-continue-button"
-              disabled={!currentStageComplete}
-              onclick={goToNextStage}
-            >
-              {interfaceText.continue}
-              <span aria-hidden="true">→</span>
-            </button>
-          </div>
-        {/if}
+        {/each}
       </div>
-    </main>
 
-    <aside class="guidance-panel">
-      <div class="selection-summary">
-        <span class="panel-label">
-          {text.summaryLabel}
+      {#if contentStage === "direction" && showReferenceFields}
+        <div class="reference-panel">
+          <div class="reference-heading">
+            <div class="reference-title-row">
+              <h2>
+                {text.referencesTitle}
+              </h2>
+
+              <span>
+                {text.optionalLabel}
+              </span>
+            </div>
+
+            <p>
+              {text.referencesDescription}
+            </p>
+          </div>
+
+          <div class="reference-grid">
+            <label>
+              <span>
+                {text.referenceOneLabel}
+              </span>
+
+              <input
+                type="url"
+                inputmode="url"
+                autocomplete="url"
+                placeholder={language === "en"
+                  ? "https://example.com"
+                  : "https://beispiel.at"}
+                value={designReferenceLinks[0] ?? ""}
+                aria-invalid={!referenceLinkIsValid(
+                  designReferenceLinks[0] ?? "",
+                )}
+                oninput={(event) =>
+                  updateReferenceLink(0, event.currentTarget.value)}
+              />
+
+              {#if !referenceLinkIsValid(designReferenceLinks[0] ?? "")}
+                <small class="field-error">
+                  {text.invalidUrl}
+                </small>
+              {/if}
+            </label>
+
+            <label>
+              <span>
+                {text.referenceTwoLabel}
+              </span>
+
+              <input
+                type="url"
+                inputmode="url"
+                autocomplete="url"
+                placeholder={language === "en"
+                  ? "https://example.com"
+                  : "https://beispiel.at"}
+                value={designReferenceLinks[1] ?? ""}
+                aria-invalid={!referenceLinkIsValid(
+                  designReferenceLinks[1] ?? "",
+                )}
+                oninput={(event) =>
+                  updateReferenceLink(1, event.currentTarget.value)}
+              />
+
+              {#if !referenceLinkIsValid(designReferenceLinks[1] ?? "")}
+                <small class="field-error">
+                  {text.invalidUrl}
+                </small>
+              {/if}
+            </label>
+          </div>
+
+          <p class="reference-note">
+            {text.referenceNote}
+          </p>
+        </div>
+      {/if}
+    </section>
+  {:else if contentStage === "support"}
+    <section class="question-panel" aria-labelledby="support-needs-title">
+      <header class="question-header">
+        <span class="substep-label">
+          {currentStage.label}
+          ·
+          {currentStageIndex + 1}
+          /
+          {stages.length}
+          ·
+          {interfaceText.optional}
         </span>
 
-        <div class="summary-item">
+        <h1 id="support-needs-title">
+          {text.supportTitle}
+        </h1>
+
+        <p>
+          {text.supportDescription}
+        </p>
+      </header>
+
+      <div class="support-grid" role="group" aria-label={text.supportTitle}>
+        {#each text.supportOptions as option}
+          {@const selected = supportNeeds.includes(option.id)}
+
+          <div
+            class="support-card"
+            class:selected
+            role="checkbox"
+            aria-checked={selected}
+            tabindex="0"
+            onclick={() => toggleSupportNeed(option.id)}
+            onkeydown={(event) =>
+              handleSelectableKeydown(event, () =>
+                toggleSupportNeed(option.id),
+              )}
+          >
+            <div class="option-icon support-icon" aria-hidden="true">
+              {#if option.id === "support-copywriting"}
+                <svg viewBox="0 0 48 48">
+                  <path d="M11 6h20l6 6v30H11V6Z" />
+                  <path d="M31 6v8h6" />
+                  <path d="M17 21h14M17 27h10" />
+                  <path d="m27 37 9-9 4 4-9 9-6 2 2-6Z" />
+                </svg>
+              {:else if option.id === "support-content-planning"}
+                <svg viewBox="0 0 48 48">
+                  <rect x="8" y="8" width="32" height="32" />
+                  <path d="M14 16h20M14 24h12M14 32h8" />
+                  <path d="M31 29h7M34.5 25.5v7" />
+                </svg>
+              {:else if option.id === "support-image-sourcing"}
+                <svg viewBox="0 0 48 48">
+                  <rect x="7" y="8" width="28" height="26" />
+                  <circle cx="16" cy="16" r="3" />
+                  <path d="m11 29 7-7 5 5 4-4 5 6" />
+                  <circle cx="35" cy="34" r="7" />
+                  <path d="m40 39-3.5-3.5" />
+                </svg>
+              {:else if option.id === "support-photography"}
+                <svg viewBox="0 0 48 48">
+                  <path d="M10 15h8l3-5h8l3 5h6v24H10V15Z" />
+                  <circle cx="24" cy="27" r="8" />
+                  <circle cx="24" cy="27" r="3" />
+                </svg>
+              {:else if option.id === "support-branding"}
+                <svg viewBox="0 0 48 48">
+                  <circle cx="18" cy="18" r="9" />
+                  <path d="M18 9v18M9 18h18" />
+                  <path
+                    d="M28 30c0-5 4-9 9-9 0 0 4 2 4 6 0 5-5 5-5 9 0 3-2 5-5 5-2 0-4-1-5-3"
+                  />
+                </svg>
+              {:else}
+                <svg viewBox="0 0 48 48">
+                  <circle cx="24" cy="24" r="17" />
+                  <path d="M18 18a6 6 0 1 1 8 5.7c-1.5.6-2 1.5-2 3.3" />
+                  <circle
+                    cx="24"
+                    cy="33"
+                    r="1.5"
+                    fill="currentColor"
+                    stroke="none"
+                  />
+                </svg>
+              {/if}
+            </div>
+
+            <div class="option-copy">
+              <h2>
+                {option.label}
+              </h2>
+            </div>
+
+            <span class="selection-state" aria-hidden="true">
+              {#if selected}
+                <svg viewBox="0 0 20 20">
+                  <path d="m5 10.25 3.15 3.1L15 6.75" />
+                </svg>
+              {/if}
+            </span>
+          </div>
+        {/each}
+      </div>
+
+      <p class="support-helper">
+        {interfaceText.supportHint}
+      </p>
+    </section>
+  {/if}
+
+  <!-- =====================================================
+       INTERNAL NAVIGATION
+  ====================================================== -->
+
+  <div class="internal-navigation">
+    <div>
+      {#if currentStageIndex > 0}
+        <button type="button" class="back-button" onclick={goToPreviousStage}>
+          <svg viewBox="0 0 20 20" aria-hidden="true">
+            <path d="M11.75 4.75 6.5 10l5.25 5.25" />
+          </svg>
+
           <span>
-            {text.websiteTypeLabel}
+            {interfaceText.back}
           </span>
+        </button>
+      {/if}
+    </div>
 
-          <strong class:empty-selection={!selectedWebsiteTypeOption}>
-            {selectedWebsiteTypeOption?.label ?? "—"}
-          </strong>
-        </div>
-
-        <div class="summary-item">
-          <span>{text.contentLabel}</span>
-
-          <strong class:empty-selection={!selectedContentOption}>
-            {selectedContentOption?.label ?? text.nothingSelected}
-          </strong>
-        </div>
-
-        <div class="summary-item">
-          <span>{text.visualLabel}</span>
-
-          <strong class:empty-selection={!selectedVisualOption}>
-            {selectedVisualOption?.label ?? text.nothingSelected}
-          </strong>
-        </div>
-
-        <div class="summary-item">
-          <span>{text.brandingLabel}</span>
-
-          <strong class:empty-selection={!selectedBrandingOption}>
-            {selectedBrandingOption?.label ?? text.nothingSelected}
-          </strong>
-        </div>
-
-        <div class="summary-item">
-          <span>{text.directionLabel}</span>
-
-          <strong class:empty-selection={!selectedDirectionOption}>
-            {selectedDirectionOption?.label ?? text.nothingSelected}
-          </strong>
-        </div>
-
-        {#if contentStage === "direction" || contentStage === "support"}
-          <div class="summary-item">
-            <span>
-              {text.referencesLabel}
-            </span>
-
-            {#if designReferenceLinks.some((link) => link.trim())}
-              <div class="reference-summary">
-                {#each designReferenceLinks.filter( (link) => link.trim(), ) as link}
-                  <span>{link}</span>
-                {/each}
-              </div>
-            {:else}
-              <strong class="empty-selection">
-                {text.noReferences}
-              </strong>
-            {/if}
-          </div>
+    {#if contentStage !== "support"}
+      <div class="continue-area">
+        {#if !currentStageComplete}
+          <span class="hint">
+            {interfaceText.requiredHint}
+          </span>
         {/if}
 
-        {#if contentStage === "support"}
-          <div class="summary-item">
-            <span>
-              {text.supportLabel}
-            </span>
-
-            {#if selectedSupportOptions.length > 0}
-              <div class="support-summary">
-                {#each selectedSupportOptions as option}
-                  <span>
-                    {option.label}
-                  </span>
-                {/each}
-              </div>
-            {:else}
-              <strong class="empty-selection">
-                {text.noSupport}
-              </strong>
-            {/if}
-          </div>
-        {/if}
-      </div>
-
-      <div class="recommendation">
-        <span class="recommendation-mark" aria-hidden="true"> Z </span>
-
-        <div>
-          <span class="panel-label">
-            {text.recommendationLabel}
+        <button
+          type="button"
+          class="continue-button"
+          disabled={!currentStageComplete}
+          onclick={goToNextStage}
+        >
+          <span>
+            {interfaceText.continue}
           </span>
 
-          <p>
-            {text.recommendationText}
-          </p>
-        </div>
+          <svg viewBox="0 0 20 20" aria-hidden="true">
+            <path d="m8.25 4.75 5.25 5.25-5.25 5.25" />
+          </svg>
+        </button>
       </div>
-    </aside>
+    {:else}
+      <span class="support-finish-state">
+        {supportNeeds.length > 0
+          ? `${supportNeeds.length} ${interfaceText.selected}`
+          : interfaceText.optional}
+      </span>
+    {/if}
   </div>
 </div>
 
 <style>
   .content-readiness-step {
+    --step-bg: #080808;
+    --step-card: #0c0c0c;
+    --step-card-hover: #101010;
+
+    --step-text: #f3f3f3;
+    --step-copy: #888888;
+    --step-muted: #666666;
+
+    --step-border: #2c2c2c;
+    --step-border-hover: #505050;
+
+    --step-accent: #0043ff;
+    --step-accent-hover: #1b56ff;
+    --step-accent-soft: rgba(0, 67, 255, 0.08);
+
     width: 100%;
-    font-family: "DM Sans", Arial, sans-serif;
-  }
 
-  .stage-navigation {
-    display: grid;
-    grid-template-columns:
-      auto minmax(16px, 1fr)
-      auto minmax(16px, 1fr)
-      auto minmax(16px, 1fr)
-      auto minmax(16px, 1fr)
-      auto;
-    align-items: center;
-    gap: 9px;
-    padding: 20px 0;
-    border-bottom: 1px solid #292929;
-  }
-
-  .stage-button {
-    display: inline-flex;
-    align-items: center;
-    gap: 7px;
+    margin: 0;
     padding: 0;
-    border: 0;
-    background: transparent;
-    color: #555555;
-    font-family: inherit;
-    cursor: pointer;
-  }
 
-  .stage-button:disabled {
-    cursor: not-allowed;
-    opacity: 0.55;
-  }
+    background: var(--step-bg);
 
-  .stage-button.active {
-    color: #f0f0f0;
-  }
+    color: var(--step-text);
 
-  .stage-button.completed:not(.active) {
-    color: #8b8b8b;
-  }
+    font-family: "DM Sans", Arial, sans-serif;
 
-  .stage-number {
-    display: grid;
-    width: 23px;
-    height: 23px;
-    flex: 0 0 auto;
-    place-items: center;
-    border: 1px solid #353535;
-    font-size: 7px;
-    font-weight: 700;
     box-sizing: border-box;
   }
 
-  .stage-button.active .stage-number {
-    border-color: #0043ff;
-    background: #0043ff;
-    color: #ffffff;
-  }
+  /* =========================================================
+     QUESTION
+  ========================================================= */
 
-  .stage-button.completed:not(.active) .stage-number {
-    border-color: #777777;
-  }
-
-  .stage-label {
-    font-size: 8px;
-    font-weight: 700;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-  }
-
-  .stage-line {
+  .question-panel {
     width: 100%;
-    height: 1px;
-    background: #292929;
-  }
-
-  .stage-line.completed-line {
-    background: #666666;
-  }
-
-  .step-layout {
-    display: grid;
-    grid-template-columns:
-      minmax(0, 1fr)
-      minmax(220px, 270px);
-    gap: clamp(22px, 3vw, 42px);
-    padding: clamp(22px, 3vw, 34px) 0;
-  }
-
-  .selection-area {
-    min-width: 0;
   }
 
   .question-header {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 18px;
-    margin-bottom: 16px;
+    width: 100%;
+
+    margin: 0 0 20px;
   }
 
-  .question-heading-copy {
-    min-width: 0;
-  }
-
-  .question-stage {
+  .substep-label {
     display: block;
-    margin-bottom: 9px;
-    color: #0043ff;
+
+    margin: 0 0 9px;
+
+    color: var(--step-accent);
+
     font-size: 9px;
     font-weight: 700;
-    letter-spacing: 0.1em;
+
+    line-height: 1;
+
+    letter-spacing: 0.08em;
+
     text-transform: uppercase;
   }
 
-  .question-header h2 {
+  .question-header h1 {
+    max-width: 900px;
+
     margin: 0 0 6px;
-    color: #eeeeee;
-    font-size: clamp(20px, 2vw, 27px);
+
+    color: var(--step-text);
+
+    font-size: clamp(26px, 2.5vw, 36px);
+
     font-weight: 600;
-    line-height: 1.15;
-    letter-spacing: -0.025em;
+
+    line-height: 1.08;
+
+    letter-spacing: -0.035em;
   }
 
   .question-header p {
-    max-width: 660px;
+    max-width: 760px;
+
     margin: 0;
-    color: #929292;
-    font-size: 11px;
-    line-height: 1.5;
-  }
 
-  .title-row {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
+    color: var(--step-copy);
 
-  .selected-answer {
-    min-width: 118px;
-    max-width: 170px;
-    padding: 10px;
-    border: 1px solid #303030;
-    box-sizing: border-box;
-  }
-
-  .selected-answer span {
-    display: block;
-    margin-bottom: 5px;
-    color: #777777;
-    font-size: 7px;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-  }
-
-  .selected-answer strong {
-    display: block;
-    color: #4f76ff;
-    font-size: 10px;
-    font-weight: 500;
-    line-height: 1.4;
-  }
-
-  .selection-count {
-    display: grid;
-    min-width: 64px;
-    place-items: center;
-    padding: 10px;
-    border: 1px solid #303030;
-    box-sizing: border-box;
-  }
-
-  .selection-count strong {
-    color: #4f76ff;
-    font-size: 18px;
-  }
-
-  .selection-count span {
-    color: #777777;
-    font-size: 7px;
-    font-weight: 700;
-    text-transform: uppercase;
-  }
-
-  .option-grid {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 8px;
-  }
-
-  .selection-card {
-    display: grid;
-    grid-template-columns: auto minmax(0, 1fr);
-    gap: 10px;
-    min-height: 78px;
-    padding: 12px;
-    border: 1px solid #292929;
-    background: #0c0c0c;
-    cursor: pointer;
-    outline: none;
-    box-sizing: border-box;
-    transition:
-      border-color 180ms ease,
-      background 180ms ease;
-  }
-
-  .selection-card:hover {
-    border-color: #555555;
-    background: #101010;
-  }
-
-  .selection-card:focus-visible {
-    border-color: #d7d7d7;
-    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.12);
-  }
-
-  .selection-card.selected {
-    border-color: #d0d0d0;
-  }
-
-  .selection-indicator {
-    display: grid;
-    width: 16px;
-    height: 16px;
-    place-items: center;
-    margin-top: 1px;
-    border: 1px solid #626262;
-    box-sizing: border-box;
-  }
-
-  .selection-indicator span {
-    width: 6px;
-    height: 6px;
-    background: transparent;
-  }
-
-  .selection-card.selected .selection-indicator {
-    border-color: #d0d0d0;
-  }
-
-  .selection-card.selected .selection-indicator span {
-    background: #0043ff;
-  }
-
-  .selection-card.selected .option-copy h3 {
-    color: #4f76ff;
-  }
-
-  .option-copy h3 {
-    margin: 0 0 4px;
-    color: #eeeeee;
     font-size: 12px;
+
+    line-height: 1.45;
+  }
+
+  /* =========================================================
+     OPTION GRID
+  ========================================================= */
+
+  .option-grid,
+  .support-grid {
+    display: grid;
+
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    gap: 10px;
+
+    width: 100%;
+  }
+
+  /* =========================================================
+     CARDS
+  ========================================================= */
+
+  .selection-card,
+  .support-card {
+    position: relative;
+
+    display: flex;
+
+    min-width: 0;
+    min-height: 150px;
+
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    padding: 17px 18px 15px;
+
+    border: 1px solid var(--step-border);
+
+    border-radius: 0;
+
+    background: var(--step-card);
+
+    cursor: pointer;
+
+    box-sizing: border-box;
+
+    outline: none;
+
+    transition:
+      border-color 150ms ease,
+      background 150ms ease;
+  }
+
+  .selection-card:hover,
+  .support-card:hover {
+    border-color: var(--step-border-hover);
+
+    background: var(--step-card-hover);
+  }
+
+  .selection-card.selected,
+  .support-card.selected {
+    border-color: var(--step-accent);
+
+    background: var(--step-accent-soft);
+  }
+
+  .selection-card:focus-visible,
+  .support-card:focus-visible {
+    outline: 2px solid var(--step-accent);
+
+    outline-offset: 2px;
+  }
+
+  /* =========================================================
+     ICONS
+  ========================================================= */
+
+  .option-icon {
+    display: grid;
+
+    width: 46px;
+    height: 46px;
+
+    place-items: center;
+
+    margin-bottom: 12px;
+
+    color: var(--step-text);
+  }
+
+  .option-icon svg {
+    width: 40px;
+    height: 40px;
+
+    fill: none;
+
+    stroke: currentColor;
+
+    stroke-width: 1.5;
+
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .selection-card.selected .option-icon,
+  .support-card.selected .option-icon {
+    color: var(--step-accent);
+  }
+
+  /* =========================================================
+     COPY
+  ========================================================= */
+
+  .option-copy {
+    width: 100%;
+
+    min-width: 0;
+
+    padding-right: 28px;
+  }
+
+  .option-copy h2 {
+    margin: 0;
+
+    color: var(--step-text);
+
+    font-size: 13px;
     font-weight: 600;
+
     line-height: 1.25;
+
+    overflow-wrap: anywhere;
   }
 
   .option-copy p {
-    margin: 0;
-    color: #999999;
-    font-size: 9px;
+    display: -webkit-box;
+
+    margin: 5px 0 0;
+
+    overflow: hidden;
+
+    color: var(--step-copy);
+
+    font-size: 10px;
+
     line-height: 1.4;
+
+    overflow-wrap: anywhere;
+
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
   }
+
+  /* =========================================================
+     SELECTION STATE
+  ========================================================= */
+
+  .selection-state {
+    position: absolute;
+
+    top: 16px;
+    right: 16px;
+
+    display: grid;
+
+    width: 20px;
+    height: 20px;
+
+    place-items: center;
+
+    border: 1px solid #4b4b4b;
+
+    border-radius: 0;
+
+    box-sizing: border-box;
+  }
+
+  .selection-state svg {
+    width: 13px;
+    height: 13px;
+
+    fill: none;
+
+    stroke: #ffffff;
+
+    stroke-width: 1.8;
+
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .selection-card.selected .selection-state,
+  .support-card.selected .selection-state {
+    border-color: var(--step-accent);
+
+    background: var(--step-accent);
+  }
+
+  /* =========================================================
+     REFERENCES
+  ========================================================= */
 
   .reference-panel {
     margin-top: 14px;
-    padding: 18px;
-    border: 1px solid #464646;
-    background: #0c0c0c;
+
+    padding: 16px;
+
+    border: 1px solid var(--step-border);
+
+    background: var(--step-card);
   }
 
   .reference-heading {
-    display: flex;
-    justify-content: space-between;
-    gap: 20px;
-    margin-bottom: 16px;
+    margin-bottom: 14px;
   }
 
-  .reference-heading h3 {
-    margin: 0 0 6px;
-    color: #eeeeee;
-    font-size: 14px;
+  .reference-title-row {
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    margin-bottom: 5px;
+  }
+
+  .reference-title-row h2 {
+    margin: 0;
+
+    color: var(--step-text);
+
+    font-size: 13px;
+    font-weight: 600;
+  }
+
+  .reference-title-row span {
+    color: var(--step-accent);
+
+    font-size: 8px;
+    font-weight: 700;
+
+    letter-spacing: 0.08em;
+
+    text-transform: uppercase;
   }
 
   .reference-heading p {
-    margin: 0;
-    color: #929292;
-    font-size: 11px;
-    line-height: 1.5;
-  }
+    max-width: 640px;
 
-  .optional-label {
-    flex: 0 0 auto;
-    color: #4f76ff;
-    font-size: 8px;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
+    margin: 0;
+
+    color: var(--step-copy);
+
+    font-size: 10.5px;
+
+    line-height: 1.45;
   }
 
   .reference-grid {
     display: grid;
+
     grid-template-columns: repeat(2, minmax(0, 1fr));
+
     gap: 10px;
   }
 
   .reference-grid label {
     display: grid;
-    gap: 7px;
+
+    gap: 6px;
   }
 
   .reference-grid label > span {
-    color: #a2a2a2;
+    color: var(--step-muted);
+
     font-size: 9px;
     font-weight: 700;
+
     letter-spacing: 0.07em;
+
     text-transform: uppercase;
   }
 
   .reference-grid input {
     width: 100%;
-    min-height: 46px;
-    padding: 0 12px;
+
+    min-height: 42px;
+
+    padding: 0 11px;
+
     border: 1px solid #3a3a3a;
+
     border-radius: 0;
-    background: #080808;
-    color: #eeeeee;
+
+    background: #070707;
+
+    color: var(--step-text);
+
     font-family: inherit;
-    font-size: 12px;
+
+    font-size: 11px;
+
     box-sizing: border-box;
+
     outline: none;
   }
 
   .reference-grid input:focus {
-    border-color: #d0d0d0;
+    border-color: var(--step-accent);
   }
 
   .reference-grid input[aria-invalid="true"] {
@@ -1093,346 +1116,326 @@
   }
 
   .field-error {
-    color: #b2b2b2;
+    color: #b5b5b5;
+
     font-size: 9px;
   }
 
-  .reference-note,
-  .optional-hint {
-    margin: 12px 0 0;
-    color: #727272;
-    font-size: 10px;
-    line-height: 1.5;
-  }
+  .reference-note {
+    margin: 10px 0 0;
 
-  .support-grid {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 8px;
-  }
+    color: var(--step-muted);
 
-  .support-option {
-    display: flex;
-    min-height: 44px;
-    align-items: center;
-    gap: 9px;
-    padding: 0 11px;
-    border: 1px solid #3a3a3a;
-    background: #0c0c0c;
-    color: #b8b8b8;
-    font-size: 10px;
-    cursor: pointer;
-    box-sizing: border-box;
-    outline: none;
-  }
-
-  .support-option:hover,
-  .support-option:focus-visible {
-    border-color: #d0d0d0;
-  }
-
-  .support-option.selected {
-    border-color: #d0d0d0;
-    color: #4f76ff;
-  }
-
-  .support-indicator {
-    width: 8px;
-    height: 8px;
-    flex: 0 0 auto;
-    border: 1px solid #8c8c8c;
-  }
-
-  .support-option.selected .support-indicator {
-    border-color: #d0d0d0;
-    background: #0043ff;
-  }
-
-  .internal-navigation {
-    display: flex;
-    align-items: flex-end;
-    justify-content: space-between;
-    gap: 16px;
-    margin-top: 18px;
-    padding-top: 16px;
-    border-top: 1px solid #292929;
-  }
-
-  .navigation-placeholder {
-    display: block;
-  }
-
-  .internal-continue-area {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-  }
-
-  .internal-hint {
-    color: #666666;
     font-size: 9px;
+
+    line-height: 1.45;
   }
 
-  .internal-back-button,
-  .internal-continue-button {
-    display: inline-flex;
-    min-height: 44px;
-    align-items: center;
-    justify-content: center;
-    gap: 9px;
-    padding: 0 17px;
-    border-radius: 0;
-    font-family: inherit;
-    font-size: 9px;
-    font-weight: 700;
-    letter-spacing: 0.07em;
-    text-transform: uppercase;
-    cursor: pointer;
+  /* =========================================================
+     SUPPORT
+  ========================================================= */
+
+  .support-card {
+    min-height: 126px;
   }
 
-  .internal-back-button {
-    border: 1px solid #3b3b3b;
-    background: transparent;
-    color: #c4c4c4;
-  }
-
-  .internal-back-button:hover {
-    border-color: #777777;
-  }
-
-  .internal-continue-button {
-    border: 1px solid #0043ff;
-    background: #0043ff;
-    color: #ffffff;
-  }
-
-  .internal-continue-button:disabled {
-    border-color: #292929;
-    background: #151515;
-    color: #555555;
-    cursor: not-allowed;
-  }
-
-  .guidance-panel {
-    position: sticky;
-    top: 110px;
-    align-self: start;
-    border-top: 1px solid #303030;
-  }
-
-  .selection-summary,
-  .recommendation {
-    padding: 16px 0;
-    border-bottom: 1px solid #292929;
-  }
-
-  .panel-label {
-    display: block;
+  .support-icon {
     margin-bottom: 10px;
-    color: #777777;
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
   }
 
-  .summary-item {
-    padding: 9px 0;
-    border-top: 1px solid #242424;
-  }
+  .support-helper {
+    margin: 10px 0 0;
 
-  .summary-item:first-of-type {
-    border-top: 0;
-  }
+    color: var(--step-muted);
 
-  .summary-item > span {
-    display: block;
-    margin-bottom: 6px;
-    color: #707070;
-    font-size: 8px;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-  }
+    font-size: 9px;
 
-  .summary-item strong {
-    display: block;
-    color: #4f76ff;
-    font-size: 11px;
-    font-weight: 500;
     line-height: 1.4;
   }
 
-  .empty-selection {
-    color: #707070 !important;
-    font-weight: 400 !important;
-  }
+  /* =========================================================
+     NAVIGATION
+  ========================================================= */
 
-  .support-summary {
+  .internal-navigation {
     display: flex;
-    flex-wrap: wrap;
-    gap: 5px;
+
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 20px;
+
+    margin-top: 20px;
   }
 
-  .support-summary span {
-    padding: 5px 7px;
-    border: 1px solid #505050;
-    color: #4f76ff;
+  .continue-area {
+    display: flex;
+
+    align-items: center;
+    justify-content: flex-end;
+
+    gap: 14px;
+  }
+
+  .hint {
+    max-width: 210px;
+
+    color: var(--step-muted);
+
     font-size: 9px;
+
+    line-height: 1.35;
+
+    text-align: right;
   }
 
-  .reference-summary {
-    display: grid;
-    gap: 5px;
+  .continue-button,
+  .back-button {
+    display: inline-flex;
+
+    min-height: 44px;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 8px;
+
+    border-radius: 0;
+
+    font-family: inherit;
+
+    font-size: 10px;
+    font-weight: 650;
+
+    line-height: 1;
+
+    cursor: pointer;
+
+    box-sizing: border-box;
   }
 
-  .reference-summary span {
-    overflow-wrap: anywhere;
-    color: #4f76ff;
-    font-size: 9px;
+  .continue-button svg,
+  .back-button svg {
+    width: 16px;
+    height: 16px;
+
+    fill: none;
+
+    stroke: currentColor;
+
+    stroke-width: 1.6;
+
+    stroke-linecap: round;
+    stroke-linejoin: round;
   }
 
-  .recommendation {
-    display: grid;
-    grid-template-columns: auto minmax(0, 1fr);
-    gap: 12px;
+  .continue-button {
+    min-width: 145px;
+
+    padding: 0 16px;
+
+    border: 1px solid var(--step-accent);
+
+    background: var(--step-accent);
+
+    color: #ffffff;
   }
 
-  .recommendation-mark {
-    display: grid;
-    width: 28px;
-    height: 28px;
-    place-items: center;
-    border: 1px solid #d0d0d0;
-    color: #0043ff;
+  .continue-button:hover:not(:disabled) {
+    border-color: var(--step-accent-hover);
+
+    background: var(--step-accent-hover);
+  }
+
+  .continue-button:disabled {
+    border-color: var(--step-border);
+
+    background: #151515;
+
+    color: #555555;
+
+    cursor: default;
+  }
+
+  .back-button {
+    padding: 0 4px;
+
+    border: 0;
+
+    background: transparent;
+
+    color: #999999;
+  }
+
+  .back-button:hover {
+    color: #ffffff;
+  }
+
+  .continue-button:focus-visible,
+  .back-button:focus-visible {
+    outline: 2px solid var(--step-accent);
+
+    outline-offset: 3px;
+  }
+
+  .support-finish-state {
+    color: var(--step-muted);
+
     font-size: 9px;
     font-weight: 700;
+
+    letter-spacing: 0.07em;
+
+    text-transform: uppercase;
   }
 
-  .recommendation p {
-    margin: 0;
-    color: #8a8a8a;
-    font-size: 11px;
-    line-height: 1.55;
-  }
+  /* =========================================================
+     TABLET
+  ========================================================= */
 
-  @media (max-width: 1050px) {
-    .stage-label {
-      display: none;
-    }
-  }
-
-  @media (max-width: 950px) {
-    .step-layout {
-      grid-template-columns: 1fr;
-    }
-
-    .guidance-panel {
-      position: static;
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 10px;
-      border-top: 0;
-    }
-
-    .selection-summary,
-    .recommendation {
-      padding: 16px;
-      border: 1px solid #292929;
-    }
-  }
-
-  @media (max-width: 700px) {
-    .stage-navigation {
-      gap: 5px;
-      padding: 17px 0;
-    }
-
-    .stage-number {
-      width: 21px;
-      height: 21px;
-    }
-
-    .step-layout {
-      gap: 24px;
-      padding: 26px 0;
-    }
-
+  @media (max-width: 760px) {
     .question-header {
-      gap: 12px;
+      margin-bottom: 17px;
     }
 
-    .selected-answer {
-      display: none;
+    .question-header h1 {
+      font-size: clamp(23px, 6vw, 30px);
+    }
+
+    .question-header p {
+      font-size: 11px;
     }
 
     .option-grid,
     .support-grid {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 7px;
-    }
-
-    .reference-grid {
-      grid-template-columns: 1fr;
-    }
-
-    .selection-card {
-      min-height: 74px;
-      padding: 10px;
       gap: 8px;
     }
 
-    .option-copy h3 {
-      font-size: 11px;
+    .selection-card {
+      min-height: 136px;
+
+      padding: 15px;
+    }
+
+    .support-card {
+      min-height: 116px;
+
+      padding: 15px;
+    }
+
+    .option-icon {
+      width: 42px;
+      height: 42px;
+
+      margin-bottom: 10px;
+    }
+
+    .option-icon svg {
+      width: 36px;
+      height: 36px;
+    }
+
+    .selection-state {
+      top: 14px;
+      right: 14px;
+
+      width: 18px;
+      height: 18px;
+    }
+
+    .option-copy h2 {
+      font-size: 12px;
     }
 
     .option-copy p {
-      font-size: 8.5px;
-      line-height: 1.35;
+      font-size: 9.5px;
     }
 
-    .support-option {
-      min-height: 42px;
-      padding: 0 9px;
-      font-size: 9px;
+    .internal-navigation {
+      margin-top: 18px;
+    }
+  }
+
+  /* =========================================================
+     MOBILE
+  ========================================================= */
+
+  @media (max-width: 560px) {
+    .question-header {
+      margin-bottom: 15px;
+    }
+
+    .option-grid,
+    .support-grid,
+    .reference-grid {
+      grid-template-columns: 1fr;
+
+      gap: 7px;
+    }
+
+    .selection-card {
+      min-height: 126px;
+    }
+
+    .support-card {
+      min-height: 108px;
+    }
+
+    .reference-panel {
+      padding: 14px;
     }
 
     .internal-navigation {
       align-items: stretch;
+
       flex-direction: column-reverse;
+
+      gap: 8px;
+
+      margin-top: 16px;
     }
 
-    .internal-continue-area {
+    .continue-area {
+      width: 100%;
+
       align-items: stretch;
+
       flex-direction: column;
+
+      gap: 7px;
     }
 
-    .internal-hint {
+    .hint {
+      max-width: none;
+
       text-align: left;
     }
 
-    .internal-back-button,
-    .internal-continue-button {
+    .continue-button {
       width: 100%;
+
+      min-height: 46px;
     }
 
-    .guidance-panel {
-      grid-template-columns: 1fr;
+    .back-button {
+      width: fit-content;
+
+      min-height: 38px;
+    }
+
+    .support-finish-state {
+      text-align: right;
     }
   }
 
-  @media (max-width: 430px) {
-    .option-grid,
-    .support-grid {
-      grid-template-columns: 1fr;
-    }
-
-    .selection-card {
-      min-height: 68px;
-    }
-  }
+  /* =========================================================
+     REDUCED MOTION
+  ========================================================= */
 
   @media (prefers-reduced-motion: reduce) {
-    .selection-card {
+    .selection-card,
+    .support-card,
+    .continue-button {
       transition: none;
     }
   }

@@ -1,10 +1,8 @@
 <script>
   let {
     language = "de",
-
     recommendedPackage = "growth",
     selectedPackage = $bindable(""),
-
     selectedPageLabels = [],
     pageVolumeLabel = "",
     selectedFeatureLabels = [],
@@ -13,7 +11,6 @@
     ongoingSupportLabels = [],
     trainingLabel = "",
     finalRequirementLabels = [],
-
     customIntegration = "",
     finalRequirementNote = "",
   } = $props();
@@ -23,199 +20,220 @@
       ? {
           recommended: "Recommended",
           selected: "Selected",
-          select: "Select option",
-          selectedOption: "Selected option",
+          select: "Choose this scope",
+          selectedOption: "Selected",
           packageLabel: "Project scope",
-          suitableFor: "Suitable for",
-          includes: "What this scope includes",
-          yourRequirements: "Your requirements covered",
-          limitations: "Normally not included",
+          suitableFor: "Best suited for",
+          yourProject: "Your project",
+          details: "Scope details",
+          includes: "Included",
+          limitations: "Usually not included",
           finalReview:
-            "The final scope will be confirmed after Zora Web Design reviews your complete configuration.",
+            "The final scope will be confirmed after your complete planner has been reviewed.",
 
           emptyPages: "No specific project pages selected",
           emptyFeatures: "No additional functionality selected",
           oneLanguageFallback: "One website language",
-          noSupport: "Client-provided content and standard project handover",
 
           essential: {
             name: "Essential",
+
             tagline:
-              "A focused professional website with a compact page structure and straightforward functionality.",
+              "A focused professional website with a compact structure and straightforward functionality.",
+
             suitable:
-              "Best for smaller businesses, freelancers and organisations with prepared content and uncomplicated requirements.",
+              "Smaller businesses, freelancers and organisations with prepared content and uncomplicated requirements.",
+
             pageScope: "Up to 5 core project pages",
+
             included: [
-              "Custom responsive design for mobile, tablet and desktop",
-              "Home, About, Services and Contact structure as required",
-              "Contact form or standard enquiry form",
-              "Basic SEO titles, descriptions and page structure",
+              "Custom responsive design",
+              "Core page structure",
+              "Contact or enquiry form",
+              "Basic SEO setup",
               "Privacy, legal, cookie and 404 pages",
-              "Client-provided content inserted into the website",
               "Technical testing and launch preparation",
               "Basic website handover guidance",
             ],
+
             limitations: [
-              "Complex booking, payment or membership functionality",
-              "Custom databases or advanced filtering",
-              "Several external software integrations",
-              "Extensive copywriting, branding or content production",
+              "Complex booking or payment systems",
+              "Member areas and custom databases",
+              "Multiple complex integrations",
+              "Extensive content production",
             ],
           },
 
           growth: {
             name: "Growth",
+
             tagline:
-              "A complete business or organisation website with a stronger content structure, additional functionality and strategic support.",
+              "A complete business or organisation website with more content, functionality and strategic support.",
+
             suitable:
-              "Best for established businesses, organisations and professional services that need more pages, multilingual content or selected integrations.",
+              "Established businesses, organisations and professional services requiring more pages, multilingual content or selected integrations.",
+
             pageScope: "Up to 10–12 project pages",
+
             included: [
               "Everything required for the Essential foundation",
-              "Expanded and individually planned page architecture",
-              "Reusable sections for services, projects, team, events or articles",
+              "Expanded page architecture",
+              "Reusable service, project, team or content sections",
               "Advanced enquiry or registration forms",
-              "One or two language versions",
-              "Selected newsletter, calendar, analytics or CRM connections",
-              "Content structure and conversion guidance",
-              "Support refining available text and visual material",
-              "Enhanced SEO structure across important pages",
-              "Personal training session or individual video guide",
-              "Launch support and post-launch quality review",
+              "Multilingual structure",
+              "Selected newsletter, analytics, calendar or CRM connections",
+              "Content and conversion guidance",
+              "Enhanced SEO structure",
+              "Training and launch support",
             ],
+
             limitations: [
-              "Large online shops or complex marketplaces",
-              "Custom member dashboards and advanced user permissions",
-              "Large custom databases or application-style functionality",
-              "Several complex API connections and automated workflows",
+              "Large online shops",
+              "Complex member dashboards",
+              "Large custom databases",
+              "Several complex API workflows",
             ],
           },
 
           advanced: {
             name: "Advanced",
+
             tagline:
-              "A technically demanding or content-heavy website with custom functionality, integrations and complex workflows.",
+              "A technically demanding or content-heavy website with custom functionality and integrations.",
+
             suitable:
-              "Best for shops, booking platforms, membership systems, education portals, property websites and custom web applications.",
+              "Shops, booking platforms, membership systems, education portals and custom web applications.",
+
             pageScope:
-              "Full custom architecture based on the selected project structure",
+              "Custom architecture based on the complete project requirements",
+
             included: [
-              "Custom information architecture for a large website",
-              "Recurring detail pages for products, properties, courses, events or members",
-              "Online shop, payments, donations or booking functionality",
-              "User registration, login and protected content",
-              "Advanced search, filtering and structured databases",
-              "CRM, API and external software connections",
-              "Automated confirmations, notifications and workflows",
-              "Advanced multilingual architecture",
-              "Extended performance, security and quality testing",
-              "Technical documentation and detailed training",
-              "Phased launch planning and ongoing technical support options",
+              "Custom information architecture",
+              "Recurring structured content",
+              "Payments, bookings or donations",
+              "User accounts and protected content",
+              "Advanced search and filtering",
+              "CRM, API and software integrations",
+              "Automated workflows",
+              "Advanced multilingual setup",
+              "Extended performance and security testing",
+              "Technical documentation and training",
             ],
+
             limitations: [
-              "The precise technical scope must be reviewed before a final quote",
-              "Third-party software fees and licenses are quoted separately",
-              "Complex integrations may require a discovery or planning phase",
+              "Technical scope requires review before final quotation",
+              "Third-party licenses are quoted separately",
+              "Complex integrations may require a discovery phase",
             ],
           },
         }
       : {
           recommended: "Empfohlen",
           selected: "Ausgewählt",
-          select: "Option auswählen",
-          selectedOption: "Ausgewählte Option",
+          select: "Diesen Umfang wählen",
+          selectedOption: "Ausgewählt",
           packageLabel: "Projektumfang",
-          suitableFor: "Geeignet für",
-          includes: "Was dieser Umfang enthält",
-          yourRequirements: "Ihre berücksichtigten Anforderungen",
+          suitableFor: "Besonders geeignet für",
+          yourProject: "Ihr Projekt",
+          details: "Umfang im Detail",
+          includes: "Enthalten",
           limitations: "Normalerweise nicht enthalten",
           finalReview:
-            "Der endgültige Umfang wird bestätigt, nachdem Zora Web Design Ihre vollständige Konfiguration geprüft hat.",
+            "Der endgültige Umfang wird bestätigt, nachdem Ihr vollständiger Website Planner geprüft wurde.",
 
           emptyPages: "Keine bestimmten Projektseiten ausgewählt",
           emptyFeatures: "Keine zusätzlichen Funktionen ausgewählt",
           oneLanguageFallback: "Eine Website-Sprache",
-          noSupport:
-            "Vom Kunden bereitgestellte Inhalte und grundlegende Übergabe",
 
           essential: {
             name: "Essential",
+
             tagline:
-              "Eine fokussierte professionelle Website mit kompakter Seitenstruktur und klaren Standardfunktionen.",
+              "Eine fokussierte professionelle Website mit kompakter Struktur und klaren Standardfunktionen.",
+
             suitable:
-              "Geeignet für kleinere Unternehmen, Freelancer und Organisationen mit vorbereiteten Inhalten und überschaubaren Anforderungen.",
+              "Kleinere Unternehmen, Freelancer und Organisationen mit vorbereiteten Inhalten und überschaubaren Anforderungen.",
+
             pageScope: "Bis zu 5 zentrale Projektseiten",
+
             included: [
-              "Individuelles responsives Design für Smartphone, Tablet und Desktop",
-              "Startseite, Über uns, Leistungen und Kontakt nach Bedarf",
-              "Kontaktformular oder standardisiertes Anfrageformular",
-              "Grundlegende SEO-Titel, Beschreibungen und Seitenstruktur",
+              "Individuelles responsives Design",
+              "Zentrale Seitenstruktur",
+              "Kontakt- oder Anfrageformular",
+              "Grundlegende SEO-Einrichtung",
               "Datenschutz-, Impressums-, Cookie- und 404-Seiten",
-              "Einpflege der vom Kunden bereitgestellten Inhalte",
-              "Technische Tests und Vorbereitung der Veröffentlichung",
-              "Grundlegende Einführung in die Website-Verwaltung",
+              "Technische Tests und Launch-Vorbereitung",
+              "Grundlegende Website-Übergabe",
             ],
+
             limitations: [
-              "Komplexe Buchungs-, Zahlungs- oder Mitgliederfunktionen",
-              "Individuelle Datenbanken oder erweiterte Filter",
-              "Mehrere externe Software-Integrationen",
-              "Umfangreiche Texterstellung, Branding- oder Content-Produktion",
+              "Komplexe Buchungs- oder Zahlungssysteme",
+              "Mitgliederbereiche und individuelle Datenbanken",
+              "Mehrere komplexe Integrationen",
+              "Umfangreiche Content-Produktion",
             ],
           },
 
           growth: {
             name: "Growth",
+
             tagline:
-              "Eine vollständige Unternehmens- oder Organisationswebsite mit stärkerer Inhaltsstruktur, zusätzlichen Funktionen und strategischer Unterstützung.",
+              "Eine vollständige Unternehmens- oder Organisationswebsite mit mehr Inhalt, Funktionen und strategischer Unterstützung.",
+
             suitable:
-              "Geeignet für etablierte Unternehmen, Organisationen und Dienstleister mit mehr Seiten, mehreren Sprachen oder ausgewählten Integrationen.",
+              "Etablierte Unternehmen, Organisationen und Dienstleister mit mehr Seiten, mehreren Sprachen oder ausgewählten Integrationen.",
+
             pageScope: "Bis zu 10–12 Projektseiten",
+
             included: [
               "Alle wichtigen Grundlagen aus Essential",
-              "Erweiterte und individuell geplante Seitenarchitektur",
-              "Wiederverwendbare Bereiche für Leistungen, Projekte, Team, Events oder Beiträge",
-              "Erweiterte Anfrage-, Bewerbungs- oder Anmeldeformulare",
-              "Eine oder zwei vollständige Sprachversionen",
-              "Ausgewählte Newsletter-, Kalender-, Analyse- oder CRM-Verbindungen",
+              "Erweiterte Seitenarchitektur",
+              "Wiederverwendbare Bereiche für Leistungen, Projekte, Team oder Inhalte",
+              "Erweiterte Anfrage- oder Anmeldeformulare",
+              "Mehrsprachige Struktur",
+              "Ausgewählte Newsletter-, Analyse-, Kalender- oder CRM-Verbindungen",
               "Beratung zu Inhaltsstruktur und Conversion",
-              "Unterstützung bei der Optimierung vorhandener Texte und Bilder",
-              "Stärkere SEO-Struktur für wichtige Seiten",
-              "Persönliche Einführung oder individuelle Videoanleitung",
-              "Unterstützung bei der Veröffentlichung und Qualitätskontrolle",
+              "Stärkere SEO-Struktur",
+              "Schulung und Launch-Unterstützung",
             ],
+
             limitations: [
-              "Große Onlineshops oder komplexe Marktplätze",
-              "Individuelle Mitglieder-Dashboards und komplexe Benutzerrechte",
-              "Große individuelle Datenbanken oder App-Funktionalität",
-              "Mehrere komplexe API-Verbindungen und Automatisierungen",
+              "Große Onlineshops",
+              "Komplexe Mitglieder-Dashboards",
+              "Große individuelle Datenbanken",
+              "Mehrere komplexe API-Abläufe",
             ],
           },
 
           advanced: {
             name: "Advanced",
+
             tagline:
-              "Eine technisch anspruchsvolle oder inhaltsreiche Website mit individuellen Funktionen, Integrationen und komplexen Abläufen.",
+              "Eine technisch anspruchsvolle oder inhaltsreiche Website mit individuellen Funktionen und Integrationen.",
+
             suitable:
-              "Geeignet für Shops, Buchungsplattformen, Mitgliederbereiche, Bildungsportale, Immobilienseiten und individuelle Webanwendungen.",
+              "Shops, Buchungsplattformen, Mitgliederbereiche, Bildungsportale und individuelle Webanwendungen.",
+
             pageScope:
-              "Vollständig individuelle Architektur auf Basis der gewählten Projektstruktur",
+              "Individuelle Architektur auf Basis der vollständigen Projektanforderungen",
+
             included: [
-              "Individuelle Informationsarchitektur für umfangreiche Websites",
-              "Wiederkehrende Detailseiten für Produkte, Immobilien, Kurse, Events oder Mitglieder",
-              "Onlineshop, Zahlungen, Spenden oder Buchungsfunktionen",
-              "Benutzerregistrierung, Login und geschützte Inhalte",
-              "Erweiterte Suche, Filter und strukturierte Datenbanken",
-              "CRM-, API- und externe Software-Verbindungen",
-              "Automatisierte Bestätigungen, Benachrichtigungen und Abläufe",
-              "Erweiterte mehrsprachige Website-Architektur",
-              "Umfangreiche Performance-, Sicherheits- und Qualitätstests",
-              "Technische Dokumentation und ausführliche Einführung",
-              "Phasenplanung und Optionen für laufende technische Betreuung",
+              "Individuelle Informationsarchitektur",
+              "Wiederkehrende strukturierte Inhalte",
+              "Zahlungen, Buchungen oder Spenden",
+              "Benutzerkonten und geschützte Inhalte",
+              "Erweiterte Suche und Filter",
+              "CRM-, API- und Software-Integrationen",
+              "Automatisierte Abläufe",
+              "Erweiterte Mehrsprachigkeit",
+              "Umfangreiche Performance- und Sicherheitstests",
+              "Technische Dokumentation und Schulung",
             ],
+
             limitations: [
-              "Der genaue technische Umfang muss vor dem endgültigen Angebot geprüft werden",
-              "Gebühren und Lizenzen externer Anbieter werden separat kalkuliert",
-              "Komplexe Integrationen können eine eigene Planungsphase benötigen",
+              "Technischer Umfang muss vor dem finalen Angebot geprüft werden",
+              "Externe Lizenzen werden separat kalkuliert",
+              "Komplexe Integrationen können eine Planungsphase benötigen",
             ],
           },
         },
@@ -240,18 +258,17 @@
   function joinPreview(values, limit) {
     const cleanValues = unique(values);
 
-    if (cleanValues.length === 0) {
+    if (!cleanValues.length) {
       return "";
     }
 
     const visible = cleanValues.slice(0, limit);
+
     const hiddenCount = cleanValues.length - visible.length;
 
-    if (hiddenCount <= 0) {
-      return visible.join(", ");
-    }
-
-    return `${visible.join(", ")} +${hiddenCount}`;
+    return hiddenCount > 0
+      ? `${visible.join(", ")} +${hiddenCount}`
+      : visible.join(", ");
   }
 
   function buildPersonalisedRequirements(packageId) {
@@ -270,10 +287,11 @@
     };
 
     const pageLimit = pageLimits[packageId];
+
     const featureLimit = featureLimits[packageId];
 
     if (pageCount > 0) {
-      const pagePreview =
+      const preview =
         packageId === "advanced"
           ? joinPreview(selectedPageLabels, selectedPageLabels.length)
           : joinPreview(selectedPageLabels, pageLimit);
@@ -281,14 +299,14 @@
       if (language === "en") {
         requirements.push(
           pageCount > pageLimit
-            ? `Covers up to ${pageLimit} of your ${pageCount} selected project pages: ${pagePreview}`
-            : `Covers your selected project pages: ${pagePreview}`,
+            ? `Up to ${pageLimit} of your ${pageCount} selected pages: ${preview}`
+            : `Selected pages: ${preview}`,
         );
       } else {
         requirements.push(
           pageCount > pageLimit
-            ? `Umfasst bis zu ${pageLimit} Ihrer ${pageCount} ausgewählten Projektseiten: ${pagePreview}`
-            : `Umfasst Ihre ausgewählten Projektseiten: ${pagePreview}`,
+            ? `Bis zu ${pageLimit} Ihrer ${pageCount} gewählten Seiten: ${preview}`
+            : `Gewählte Seiten: ${preview}`,
         );
       }
     } else {
@@ -298,41 +316,35 @@
     if (pageVolumeLabel) {
       requirements.push(
         language === "en"
-          ? `Repeating detail pages: ${pageVolumeLabel}`
-          : `Wiederkehrende Detailseiten: ${pageVolumeLabel}`,
+          ? `Detail pages: ${pageVolumeLabel}`
+          : `Detailseiten: ${pageVolumeLabel}`,
       );
     }
 
-    if (websiteLanguageLabel) {
+    requirements.push(
+      language === "en"
+        ? `Languages: ${websiteLanguageLabel || text.oneLanguageFallback}`
+        : `Sprachen: ${websiteLanguageLabel || text.oneLanguageFallback}`,
+    );
+
+    if (selectedFeatureLabels.length) {
       requirements.push(
         language === "en"
-          ? `Website languages: ${websiteLanguageLabel}`
-          : `Website-Sprachen: ${websiteLanguageLabel}`,
-      );
-    } else {
-      requirements.push(text.oneLanguageFallback);
-    }
-
-    if (selectedFeatureLabels.length > 0) {
-      const featurePreview = joinPreview(selectedFeatureLabels, featureLimit);
-
-      requirements.push(
-        language === "en"
-          ? `Requested functionality: ${featurePreview}`
-          : `Gewünschte Funktionen: ${featurePreview}`,
+          ? `Functions: ${joinPreview(selectedFeatureLabels, featureLimit)}`
+          : `Funktionen: ${joinPreview(selectedFeatureLabels, featureLimit)}`,
       );
     } else {
       requirements.push(text.emptyFeatures);
     }
 
-    if (preparationSupportLabels.length > 0) {
+    if (preparationSupportLabels.length) {
       requirements.push(
         language === "en"
-          ? `Content and design support: ${joinPreview(
+          ? `Content support: ${joinPreview(
               preparationSupportLabels,
               packageId === "essential" ? 2 : preparationSupportLabels.length,
             )}`
-          : `Unterstützung bei Inhalt und Design: ${joinPreview(
+          : `Content-Unterstützung: ${joinPreview(
               preparationSupportLabels,
               packageId === "essential" ? 2 : preparationSupportLabels.length,
             )}`,
@@ -342,19 +354,19 @@
     if (trainingLabel) {
       requirements.push(
         language === "en"
-          ? `Website handover: ${trainingLabel}`
-          : `Website-Übergabe: ${trainingLabel}`,
+          ? `Handover: ${trainingLabel}`
+          : `Übergabe: ${trainingLabel}`,
       );
     }
 
-    if (packageId !== "essential" && ongoingSupportLabels.length > 0) {
+    if (packageId !== "essential" && ongoingSupportLabels.length) {
       requirements.push(
         language === "en"
-          ? `Ongoing support requested: ${joinPreview(
+          ? `Support: ${joinPreview(
               ongoingSupportLabels,
               packageId === "growth" ? 3 : ongoingSupportLabels.length,
             )}`
-          : `Gewünschte laufende Betreuung: ${joinPreview(
+          : `Betreuung: ${joinPreview(
               ongoingSupportLabels,
               packageId === "growth" ? 3 : ongoingSupportLabels.length,
             )}`,
@@ -364,12 +376,12 @@
     if (packageId !== "essential" && customIntegration.trim()) {
       requirements.push(
         language === "en"
-          ? `Special integration: ${customIntegration.trim()}`
-          : `Besondere Integration: ${customIntegration.trim()}`,
+          ? `Integration: ${customIntegration.trim()}`
+          : `Integration: ${customIntegration.trim()}`,
       );
     }
 
-    if (packageId === "advanced" && finalRequirementLabels.length > 0) {
+    if (packageId === "advanced" && finalRequirementLabels.length) {
       requirements.push(
         language === "en"
           ? `Additional requirements: ${joinPreview(
@@ -400,377 +412,576 @@
 </script>
 
 <div class="package-grid" role="radiogroup" aria-label={text.packageLabel}>
-  {#each packageOptions as packageOption, index}
+  {#each packageOptions as packageOption}
     {@const isRecommended = packageOption.id === recommendedPackage}
 
     {@const isSelected = packageOption.id === selectedPackage}
 
-    <button
-      type="button"
+    <article
+      class="package-card"
       class:recommended={isRecommended}
       class:selected={isSelected}
-      class="package-card"
-      role="radio"
-      aria-checked={isSelected}
-      onclick={() => selectPackage(packageOption.id)}
     >
       <div class="package-top">
-        <span class="package-number">
-          {String(index + 1).padStart(2, "0")}
-        </span>
+        <div>
+          <span class="package-kicker">
+            {text.packageLabel}
+          </span>
 
-        <div class="package-labels">
+          <h3>
+            {packageOption.name}
+          </h3>
+        </div>
+
+        <div class="badges">
           {#if isRecommended}
-            <span class="recommended-label">
+            <span class="recommended-badge">
               {text.recommended}
             </span>
           {/if}
 
           {#if isSelected}
-            <span class="selected-label">
+            <span class="selected-badge">
               {text.selected}
             </span>
           {/if}
         </div>
       </div>
 
-      <div class="package-heading">
-        <span>{text.packageLabel}</span>
-        <h3>{packageOption.name}</h3>
-      </div>
-
-      <p class="package-tagline">
+      <p class="tagline">
         {packageOption.tagline}
       </p>
 
-      <div class="suitable-for">
-        <span>{text.suitableFor}</span>
-        <p>{packageOption.suitable}</p>
+      <div class="scope">
+        <span>
+          {packageOption.pageScope}
+        </span>
       </div>
 
-      <div class="scope-highlight">
-        <span>{text.includes}</span>
-        <strong>{packageOption.pageScope}</strong>
-      </div>
-
-      <div class="package-section">
-        <span class="package-section-label">
-          {text.yourRequirements}
+      <div class="suitable">
+        <span class="section-label">
+          {text.suitableFor}
         </span>
 
-        <ul class="personalised-list">
+        <p>
+          {packageOption.suitable}
+        </p>
+      </div>
+
+      <div class="personalised">
+        <span class="section-label">
+          {text.yourProject}
+        </span>
+
+        <ul>
           {#each packageOption.personalisedRequirements as requirement}
             <li>
-              <span aria-hidden="true">✓</span>
-              <span>{requirement}</span>
+              <svg viewBox="0 0 20 20" aria-hidden="true">
+                <path d="m5 10.25 3.15 3.1L15 6.75" />
+              </svg>
+
+              <span>
+                {requirement}
+              </span>
             </li>
           {/each}
         </ul>
       </div>
 
-      <div class="package-section">
-        <span class="package-section-label">
-          {text.includes}
-        </span>
+      <details class="scope-details">
+        <summary>
+          <span>
+            {text.details}
+          </span>
 
-        <ul>
-          {#each packageOption.included as feature}
-            <li>
-              <span aria-hidden="true">✓</span>
-              <span>{feature}</span>
-            </li>
-          {/each}
-        </ul>
-      </div>
+          <svg viewBox="0 0 20 20" aria-hidden="true">
+            <path d="m5 7.5 5 5 5-5" />
+          </svg>
+        </summary>
 
-      <div class="limitations">
-        <span>{text.limitations}</span>
+        <div class="details-content">
+          <div>
+            <span class="section-label">
+              {text.includes}
+            </span>
 
-        <ul>
-          {#each packageOption.limitations as limitation}
-            <li>
-              <span aria-hidden="true">—</span>
-              <span>{limitation}</span>
-            </li>
-          {/each}
-        </ul>
-      </div>
+            <ul>
+              {#each packageOption.included as item}
+                <li>
+                  <svg viewBox="0 0 20 20" aria-hidden="true">
+                    <path d="m5 10.25 3.15 3.1L15 6.75" />
+                  </svg>
 
-      <p class="review-note">
-        {text.finalReview}
-      </p>
+                  <span>
+                    {item}
+                  </span>
+                </li>
+              {/each}
+            </ul>
+          </div>
 
-      <span class:selected={isSelected} class="select-button">
+          <div class="limitations">
+            <span class="section-label">
+              {text.limitations}
+            </span>
+
+            <ul>
+              {#each packageOption.limitations as item}
+                <li>
+                  <span class="dash"> — </span>
+
+                  <span>
+                    {item}
+                  </span>
+                </li>
+              {/each}
+            </ul>
+          </div>
+
+          <p class="review-note">
+            {text.finalReview}
+          </p>
+        </div>
+      </details>
+
+      <button
+        type="button"
+        class="select-button"
+        class:selected={isSelected}
+        role="radio"
+        aria-checked={isSelected}
+        onclick={() => selectPackage(packageOption.id)}
+      >
         <span>
           {isSelected ? text.selectedOption : text.select}
         </span>
 
-        <span aria-hidden="true">
-          {isSelected ? "✓" : "→"}
-        </span>
-      </span>
-    </button>
+        {#if isSelected}
+          <svg viewBox="0 0 20 20" aria-hidden="true">
+            <path d="m5 10.25 3.15 3.1L15 6.75" />
+          </svg>
+        {:else}
+          <svg viewBox="0 0 20 20" aria-hidden="true">
+            <path d="m8 5 5 5-5 5" />
+          </svg>
+        {/if}
+      </button>
+    </article>
   {/each}
 </div>
 
 <style>
   .package-grid {
     display: grid;
+
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    border-top: 1px solid #303030;
-    border-left: 1px solid #303030;
+
+    gap: 10px;
+
     font-family: "DM Sans", Arial, sans-serif;
   }
 
   .package-card {
     position: relative;
-    width: 100%;
-    min-width: 0;
-    min-height: 100%;
-    padding: clamp(22px, 2.5vw, 34px);
+
     display: flex;
+
+    min-width: 0;
+
     flex-direction: column;
-    border: 0;
-    border-right: 1px solid #303030;
-    border-bottom: 1px solid #303030;
+
+    padding: 22px;
+
+    border: 1px solid #2d2d2d;
+
     border-radius: 0;
-    appearance: none;
+
     background: #0b0b0b;
-    color: inherit;
-    font-family: inherit;
-    text-align: left;
-    cursor: pointer;
+
     box-sizing: border-box;
-    transition:
-      background 180ms ease,
-      box-shadow 180ms ease;
   }
 
-  .package-card:hover {
-    background: #0f0f0f;
-  }
-
-  .package-card:focus-visible {
-    outline: 2px solid #0043ff;
-    outline-offset: -2px;
+  .package-card.recommended {
+    border-color: #0043ff;
   }
 
   .package-card.recommended::before {
     content: "";
+
     position: absolute;
+
     top: -1px;
     right: -1px;
     left: -1px;
-    height: 3px;
+
+    height: 2px;
+
     background: #0043ff;
   }
 
   .package-card.selected {
-    background: #101010;
-    box-shadow: inset 0 0 0 1px #d0d0d0;
-  }
+    background: rgba(0, 67, 255, 0.06);
 
-  .package-card.selected.recommended {
     box-shadow: inset 0 0 0 1px #0043ff;
   }
 
   .package-top {
-    min-height: 30px;
     display: flex;
+
     align-items: flex-start;
     justify-content: space-between;
-    gap: 12px;
+
+    gap: 18px;
   }
 
-  .package-number {
-    color: #686868;
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-  }
+  .package-kicker,
+  .section-label {
+    display: block;
 
-  .recommended .package-number {
-    color: #0043ff;
-  }
+    color: #6e6e6e;
 
-  .package-labels {
-    display: flex;
-    justify-content: flex-end;
-    gap: 6px;
-    flex-wrap: wrap;
-  }
-
-  .recommended-label,
-  .selected-label {
-    padding: 5px 7px;
-    border: 1px solid #d0d0d0;
-    background: #0b0b0b;
     font-size: 8px;
     font-weight: 700;
-    line-height: 1;
-    letter-spacing: 0.07em;
+
+    line-height: 1.2;
+
+    letter-spacing: 0.08em;
+
     text-transform: uppercase;
   }
 
-  .recommended-label {
-    color: #4f76ff;
+  .package-top h3 {
+    margin: 7px 0 0;
+
+    color: #f0f0f0;
+
+    font-size: clamp(27px, 2.6vw, 38px);
+
+    font-weight: 600;
+
+    line-height: 1;
+
+    letter-spacing: -0.04em;
   }
 
-  .selected-label {
+  .recommended .package-top h3,
+  .selected .package-top h3 {
+    color: #6f8dff;
+  }
+
+  .badges {
+    display: flex;
+
+    justify-content: flex-end;
+
+    flex-wrap: wrap;
+
+    gap: 5px;
+  }
+
+  .recommended-badge,
+  .selected-badge {
+    display: inline-flex;
+
+    min-height: 21px;
+
+    align-items: center;
+
+    padding: 0 6px;
+
+    border: 1px solid #444444;
+
+    font-size: 7.5px;
+    font-weight: 700;
+
+    letter-spacing: 0.07em;
+
+    text-transform: uppercase;
+  }
+
+  .recommended-badge {
+    border-color: #0043ff;
+
+    color: #6f8dff;
+  }
+
+  .selected-badge {
     color: #eeeeee;
   }
 
-  .package-heading {
-    margin-top: 22px;
+  .tagline {
+    margin: 16px 0 0;
+
+    color: #969696;
+
+    font-size: 10.5px;
+
+    line-height: 1.5;
   }
 
-  .package-heading > span,
-  .suitable-for > span,
-  .scope-highlight > span,
-  .package-section-label,
-  .limitations > span {
-    display: block;
-    margin-bottom: 8px;
-    color: #777777;
-    font-size: 9px;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
+  .scope {
+    margin-top: 17px;
+
+    padding: 11px 12px;
+
+    border: 1px solid #303030;
+
+    background: #090909;
   }
 
-  .package-heading h3 {
-    margin: 0;
-    color: #f1f1f1;
-    font-size: clamp(26px, 2.6vw, 40px);
-    font-weight: 650;
-    line-height: 1;
-    letter-spacing: -0.045em;
+  .scope span {
+    color: #6f8dff;
+
+    font-size: 11px;
+    font-weight: 600;
+
+    line-height: 1.4;
   }
 
-  .recommended .package-heading h3 {
-    color: #4f76ff;
-  }
+  .suitable,
+  .personalised,
+  .scope-details {
+    margin-top: 18px;
 
-  .package-tagline {
-    margin: 22px 0 0;
-    color: #a3a3a3;
-    font-size: 14px;
-    line-height: 1.65;
-  }
+    padding-top: 16px;
 
-  .suitable-for,
-  .scope-highlight,
-  .package-section,
-  .limitations {
-    margin-top: 24px;
-    padding-top: 20px;
     border-top: 1px solid #292929;
   }
 
-  .suitable-for p {
-    margin: 0;
-    color: #999999;
-    font-size: 12px;
-    line-height: 1.6;
+  .suitable p {
+    margin: 7px 0 0;
+
+    color: #8c8c8c;
+
+    font-size: 9.5px;
+
+    line-height: 1.5;
   }
 
-  .scope-highlight strong {
-    display: block;
-    color: #4f76ff;
-    font-size: 15px;
-    font-weight: 600;
-    line-height: 1.45;
+  .personalised .section-label {
+    color: #6f8dff;
   }
 
   ul {
-    margin: 0;
-    padding: 0;
     display: grid;
-    gap: 12px;
+
+    gap: 7px;
+
+    margin: 10px 0 0;
+
+    padding: 0;
+
     list-style: none;
   }
 
   li {
     display: grid;
-    grid-template-columns: 16px minmax(0, 1fr);
-    gap: 9px;
+
+    grid-template-columns:
+      14px
+      minmax(0, 1fr);
+
+    gap: 7px;
+
     color: #b3b3b3;
-    font-size: 12px;
-    line-height: 1.5;
+
+    font-size: 9px;
+
+    line-height: 1.45;
   }
 
-  li > span:first-child {
-    color: #0043ff;
-    font-size: 10px;
+  li svg {
+    width: 13px;
+    height: 13px;
+
+    margin-top: 1px;
+
+    fill: none;
+
+    stroke: #5f80ff;
+
+    stroke-width: 1.8;
+
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .scope-details {
+    margin-bottom: 18px;
+  }
+
+  .scope-details summary {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 12px;
+
+    color: #a8a8a8;
+
+    font-size: 9px;
     font-weight: 700;
+
+    cursor: pointer;
+
+    list-style: none;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.06em;
   }
 
-  .personalised-list li {
-    color: #d0d0d0;
+  .scope-details summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .scope-details summary svg {
+    width: 15px;
+    height: 15px;
+
+    fill: none;
+
+    stroke: currentColor;
+
+    stroke-width: 1.5;
+
+    transition: transform 150ms ease;
+  }
+
+  .scope-details[open] summary svg {
+    transform: rotate(180deg);
+  }
+
+  .details-content {
+    display: grid;
+
+    gap: 18px;
+
+    margin-top: 15px;
+
+    padding-top: 15px;
+
+    border-top: 1px solid #292929;
+  }
+
+  .details-content .section-label {
+    margin-bottom: 9px;
   }
 
   .limitations li {
-    color: #888888;
+    color: #757575;
   }
 
-  .limitations li > span:first-child {
-    color: #666666;
+  .dash {
+    color: #555555;
   }
 
   .review-note {
-    margin: 24px 0;
-    color: #717171;
-    font-size: 10px;
-    line-height: 1.55;
+    margin: 0;
+
+    color: #606060;
+
+    font-size: 8.5px;
+
+    line-height: 1.45;
   }
 
   .select-button {
-    width: 100%;
-    min-height: 50px;
-    margin-top: auto;
-    padding: 0 16px;
     display: inline-flex;
+
+    width: 100%;
+    min-height: 44px;
+
     align-items: center;
     justify-content: space-between;
-    gap: 14px;
-    border: 1px solid #d0d0d0;
-    background: #0b0b0b;
-    color: #dddddd;
-    font-size: 10px;
+
+    gap: 12px;
+
+    margin-top: auto;
+
+    padding: 0 13px;
+
+    border: 1px solid #444444;
+
+    border-radius: 0;
+
+    background: transparent;
+
+    color: #d1d1d1;
+
+    font-family: inherit;
+
+    font-size: 9px;
     font-weight: 700;
-    letter-spacing: 0.07em;
+
+    cursor: pointer;
+
     text-transform: uppercase;
-    box-sizing: border-box;
+
+    letter-spacing: 0.06em;
   }
 
-  .package-card:hover .select-button {
-    background: #131313;
+  .select-button:hover {
+    border-color: #707070;
   }
 
   .select-button.selected {
     border-color: #0043ff;
+
     background: #0043ff;
+
     color: #ffffff;
+  }
+
+  .select-button svg {
+    width: 15px;
+    height: 15px;
+
+    fill: none;
+
+    stroke: currentColor;
+
+    stroke-width: 1.7;
+
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .select-button:focus-visible,
+  .scope-details summary:focus-visible {
+    outline: 2px solid #0043ff;
+
+    outline-offset: 3px;
   }
 
   @media (max-width: 1180px) {
     .package-grid {
       grid-template-columns: 1fr;
     }
+
+    .tagline,
+    .suitable p {
+      max-width: 760px;
+    }
   }
 
-  @media (max-width: 700px) {
+  @media (max-width: 600px) {
     .package-card {
-      padding: 22px;
+      padding: 18px;
     }
 
-    .package-heading h3 {
-      font-size: 30px;
+    .package-top h3 {
+      font-size: 29px;
+    }
+
+    .package-top {
+      gap: 10px;
     }
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .package-card {
+    .scope-details summary svg {
       transition: none;
     }
   }

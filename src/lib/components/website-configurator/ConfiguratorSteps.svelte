@@ -1,8 +1,5 @@
 <script>
-  import {
-    CONFIGURATOR_TOTAL_QUESTION_STEPS,
-    getConfiguratorContent,
-  } from "$lib/data/website-configurator/configurator-data.js";
+  import { CONFIGURATOR_TOTAL_QUESTION_STEPS } from "$lib/data/website-configurator/configurator-data.js";
 
   import StepWebsiteType from "./steps/StepWebsiteType.svelte";
   import StepGoals from "./steps/StepGoals.svelte";
@@ -50,137 +47,48 @@
     onContinue = () => {},
   } = $props();
 
+  /*
+   * Step 3 contains its own internal sequence.
+   */
   let contentStage = $state("content");
 
-  const content = $derived(getConfiguratorContent(language));
-
-  const progressPercentage = $derived(
-    Math.min(
-      100,
-      Math.max(0, (currentStep / CONFIGURATOR_TOTAL_QUESTION_STEPS) * 100),
-    ),
-  );
-
-  const stepText = $derived(
+  const ui = $derived(
     language === "en"
       ? {
-          1: {
-            eyebrow: content.steps.websiteType.eyebrow,
-            title: content.steps.websiteType.title,
-            description: content.steps.websiteType.description,
-            back: content.steps.websiteType.backButton,
-            continue: content.steps.websiteType.continueButton,
-            disabled: content.steps.websiteType.continueDisabledHint,
+          back: "Back",
+
+          continueLabels: {
+            1: "Continue",
+            2: "Continue",
+            3: "Continue to pages",
+            4: "Continue to features",
           },
-          2: {
-            eyebrow: content.steps.goals.eyebrow,
-            title: content.steps.goals.title,
-            description: content.steps.goals.description,
-            back: content.steps.goals.backButton,
-            continue: content.steps.goals.continueButton,
-            disabled: content.steps.goals.continueDisabledHint,
-          },
-          3: {
-            eyebrow: "Project preparation",
-            title: "How prepared is your content?",
-            description:
-              "Tell us what is already available and where you may need support.",
-            back: "Back",
-            continue: "Continue to pages",
-            disabled:
-              "Complete the required content questions before continuing.",
-          },
-          4: {
-            eyebrow: "Website structure",
-            title: "Which pages does your website need?",
-            description:
-              "Review the recommended structure and add the pages your project requires.",
-            back: "Back",
-            continue: "Continue to features",
-            disabled:
-              "Select at least one page and choose the approximate page volume.",
-          },
-          5: {
-            eyebrow: "Website functionality",
-            title: "Which features does your website need?",
-            description:
-              "Choose the functions, languages and integrations required for the project.",
-            back: "Back",
-            continue: "Continue to timeline",
-            disabled:
-              "Select at least one feature and choose the website languages.",
-          },
-          6: {
-            eyebrow: "Timeline and support",
-            title: "How should the project move forward?",
-            description:
-              "Define the timing, collaboration, support and training preferences.",
-            back: "Back",
-            continue: "View recommendation",
-            disabled: "Complete the required timeline and support questions.",
+
+          disabledLabels: {
+            1: "Choose one option to continue.",
+            2: "Complete both questions to continue.",
+            3: "Complete the required questions to continue.",
+            4: "Choose your pages and project size to continue.",
           },
         }
       : {
-          1: {
-            eyebrow: content.steps.websiteType.eyebrow,
-            title: content.steps.websiteType.title,
-            description: content.steps.websiteType.description,
-            back: content.steps.websiteType.backButton,
-            continue: content.steps.websiteType.continueButton,
-            disabled: content.steps.websiteType.continueDisabledHint,
+          back: "Zurück",
+
+          continueLabels: {
+            1: "Weiter",
+            2: "Weiter",
+            3: "Weiter zu den Seiten",
+            4: "Weiter zu den Funktionen",
           },
-          2: {
-            eyebrow: content.steps.goals.eyebrow,
-            title: content.steps.goals.title,
-            description: content.steps.goals.description,
-            back: content.steps.goals.backButton,
-            continue: content.steps.goals.continueButton,
-            disabled: content.steps.goals.continueDisabledHint,
-          },
-          3: {
-            eyebrow: "Projektvorbereitung",
-            title: "Wie gut sind Ihre Inhalte vorbereitet?",
-            description:
-              "Zeigen Sie uns, was bereits vorhanden ist und wobei Sie Unterstützung benötigen.",
-            back: "Zurück",
-            continue: "Weiter zu den Seiten",
-            disabled:
-              "Bitte beantworten Sie zuerst alle erforderlichen Inhaltsfragen.",
-          },
-          4: {
-            eyebrow: "Website-Struktur",
-            title: "Welche Seiten benötigt Ihre Website?",
-            description:
-              "Prüfen Sie die empfohlene Struktur und ergänzen Sie die benötigten Seiten.",
-            back: "Zurück",
-            continue: "Weiter zu den Funktionen",
-            disabled:
-              "Wählen Sie mindestens eine Seite und den ungefähren Seitenumfang.",
-          },
-          5: {
-            eyebrow: "Website-Funktionen",
-            title: "Welche Funktionen benötigt Ihre Website?",
-            description:
-              "Wählen Sie Funktionen, Sprachen und Integrationen für Ihr Projekt.",
-            back: "Zurück",
-            continue: "Weiter zum Zeitplan",
-            disabled:
-              "Wählen Sie mindestens eine Funktion und die Website-Sprachen.",
-          },
-          6: {
-            eyebrow: "Zeitplan und Betreuung",
-            title: "Wie soll das Projekt umgesetzt werden?",
-            description:
-              "Definieren Sie Zeitrahmen, Zusammenarbeit, Betreuung und Schulung.",
-            back: "Zurück",
-            continue: "Empfehlung ansehen",
-            disabled:
-              "Bitte beantworten Sie die erforderlichen Fragen zu Zeitplan und Betreuung.",
+
+          disabledLabels: {
+            1: "Wählen Sie eine Option aus.",
+            2: "Beantworten Sie beide Fragen.",
+            3: "Beantworten Sie die erforderlichen Fragen.",
+            4: "Wählen Sie Seiten und Projektumfang aus.",
           },
         },
   );
-
-  const activeStepText = $derived(stepText[currentStep] ?? stepText[1]);
 
   const canContinue = $derived(
     currentStep === 1
@@ -211,76 +119,48 @@
   );
 
   /*
-   * Steps 5 and 6 contain their own internal navigation buttons.
-   * The shared footer is therefore shown only for Steps 1–4.
+   * Steps 5 and 6 contain their own navigation.
+   *
+   * Step 3 manages its own internal navigation until
+   * the final support stage.
    */
   const showFooter = $derived(
-    currentStep !== 5 &&
+    currentStep !== 2 &&
+      currentStep !== 4 &&
+      currentStep !== 5 &&
       currentStep !== 6 &&
       (currentStep !== 3 || contentStage === "support"),
   );
 
-  /*
-   * Configurator.svelte owns the main step number.
-   * These handlers only ask the parent to move backward or forward.
-   */
+  const continueLabel = $derived(ui.continueLabels[currentStep] ?? "");
+
+  const disabledLabel = $derived(ui.disabledLabels[currentStep] ?? "");
+
   function handleBack() {
     onBack();
   }
 
   function handleContinue() {
-    if (!canContinue) return;
+    if (!canContinue) {
+      return;
+    }
 
     onContinue();
   }
 </script>
 
-<section
-  class="configurator-step"
-  aria-labelledby={`configurator-step-${currentStep}-heading`}
->
+<section class="configurator-step">
   <div class="step-shell">
-    <header class="step-header">
-      <div class="progress-header">
-        <span class="step-number">
-          {language === "en"
-            ? `Step ${currentStep} of ${CONFIGURATOR_TOTAL_QUESTION_STEPS}`
-            : `Schritt ${currentStep} von ${CONFIGURATOR_TOTAL_QUESTION_STEPS}`}
-        </span>
+    <!-- =====================================================
+         ACTUAL QUESTION
 
-        <span class="progress-value">
-          {Math.round(progressPercentage)}%
-        </span>
-      </div>
+         No secondary progress.
+         No secondary header.
+         No 01 / 06.
+         No duplicate explanatory heading.
+    ====================================================== -->
 
-      <div
-        class="progress-track"
-        role="progressbar"
-        aria-label={language === "en"
-          ? `Step ${currentStep} progress`
-          : `Fortschritt Schritt ${currentStep}`}
-        aria-valuemin="0"
-        aria-valuemax="100"
-        aria-valuenow={Math.round(progressPercentage)}
-      >
-        <span class="progress-fill" style={`width: ${progressPercentage}%`}
-        ></span>
-      </div>
-
-      <div class="heading-block">
-        <p class="eyebrow">{activeStepText.eyebrow}</p>
-
-        <h1 id={`configurator-step-${currentStep}-heading`}>
-          {activeStepText.title}
-        </h1>
-
-        <p class="description">
-          {activeStepText.description}
-        </p>
-      </div>
-    </header>
-
-    <div class="step-content">
+    <main class="step-content">
       {#if currentStep === 1}
         <StepWebsiteType
           {language}
@@ -293,6 +173,8 @@
           {selectedWebsiteType}
           bind:selectedGoals
           bind:projectStatus
+          onBack={handleBack}
+          onContinue={handleContinue}
         />
       {:else if currentStep === 3}
         <StepContent
@@ -313,6 +195,8 @@
           bind:selectedPages
           bind:pageVolume
           bind:customPageNames
+          onBack={handleBack}
+          onContinue={handleContinue}
         />
       {:else if currentStep === 5}
         <StepFeatures
@@ -321,6 +205,7 @@
           bind:selectedFeatures
           bind:websiteLanguages
           bind:customIntegration
+          onBack={handleBack}
           onContinue={handleContinue}
         />
       {:else if currentStep === 6}
@@ -338,19 +223,28 @@
           onContinue={handleContinue}
         />
       {/if}
-    </div>
+    </main>
+
+    <!-- =====================================================
+         SIMPLE SHARED NAVIGATION
+    ====================================================== -->
 
     {#if showFooter}
       <footer class="step-footer">
         <button type="button" class="back-button" onclick={handleBack}>
-          <span aria-hidden="true">←</span>
-          {activeStepText.back}
+          <svg viewBox="0 0 20 20" aria-hidden="true">
+            <path d="M11.75 4.75 6.5 10l5.25 5.25" />
+          </svg>
+
+          <span>
+            {ui.back}
+          </span>
         </button>
 
         <div class="continue-area">
-          {#if !canContinue}
+          {#if !canContinue && disabledLabel}
             <span class="disabled-hint">
-              {activeStepText.disabled}
+              {disabledLabel}
             </span>
           {/if}
 
@@ -360,8 +254,13 @@
             disabled={!canContinue}
             onclick={handleContinue}
           >
-            {activeStepText.continue}
-            <span aria-hidden="true">→</span>
+            <span>
+              {continueLabel}
+            </span>
+
+            <svg viewBox="0 0 20 20" aria-hidden="true">
+              <path d="m8.25 4.75 5.25 5.25-5.25 5.25" />
+            </svg>
           </button>
         </div>
       </footer>
@@ -370,225 +269,312 @@
 </section>
 
 <style>
+  /* =========================================================
+     THEME
+     LIGHT MODE DEFAULT
+  ========================================================= */
+
   .configurator-step {
+    --planner-text: #111111;
+    --planner-text-soft: #666666;
+    --planner-text-muted: #929292;
+
+    --planner-border: #deded9;
+
+    --planner-accent: #0043ff;
+    --planner-accent-hover: #173fff;
+
+    --planner-disabled-bg: #eeeeeb;
+    --planner-disabled-text: #9d9d98;
+
     width: 100%;
-    min-height: calc(100vh - 180px);
-    color: #f3f3f3;
-    background: #080808;
+    min-height: 0;
+
+    margin: 0;
+    padding: 0;
+
+    color: var(--planner-text);
+
+    background: transparent;
+
     font-family: "DM Sans", Arial, sans-serif;
+
+    box-sizing: border-box;
   }
+
+  :global(html[data-theme="dark"]) .configurator-step {
+    --planner-text: #f4f4f4;
+    --planner-text-soft: #9b9b9b;
+    --planner-text-muted: #686868;
+
+    --planner-border: #292929;
+
+    --planner-accent: #0043ff;
+    --planner-accent-hover: #1b56ff;
+
+    --planner-disabled-bg: #151515;
+    --planner-disabled-text: #555555;
+  }
+
+  /* =========================================================
+     FULL WIDTH
+
+     Uses the complete width of the parent page container.
+  ========================================================= */
 
   .step-shell {
     width: 100%;
-    margin: 0 auto;
-  }
+    max-width: none;
 
-  .step-header {
-    padding: 0 0 clamp(24px, 3vw, 38px);
-    border-bottom: 1px solid #292929;
-  }
-
-  .progress-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 16px;
-    margin-bottom: 12px;
-  }
-
-  .step-number,
-  .progress-value,
-  .eyebrow {
-    font-size: 10px;
-    font-weight: 700;
-    line-height: 1.3;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-  }
-
-  .step-number {
-    color: #a0a0a0;
-  }
-
-  .progress-value {
-    color: #0043ff;
-  }
-
-  .progress-track {
-    position: relative;
-    width: 100%;
-    height: 2px;
-    overflow: hidden;
-    background: #272727;
-  }
-
-  .progress-fill {
-    position: absolute;
-    inset: 0 auto 0 0;
-    height: 100%;
-    background: #0043ff;
-    transition: width 240ms ease;
-  }
-
-  .heading-block {
-    width: 100%;
-    padding-top: clamp(24px, 3vw, 38px);
-  }
-
-  .eyebrow {
-    margin: 0 0 12px;
-    color: #929292;
-  }
-
-  h1,
-  p {
-    font-family: "DM Sans", Arial, sans-serif;
-  }
-
-  h1 {
-    width: 100%;
-    margin: 0 0 12px;
-    color: #f3f3f3;
-    font-size: clamp(28px, 3vw, 42px);
-    font-weight: 650;
-    line-height: 1.05;
-    letter-spacing: -0.04em;
-  }
-
-  .description {
-    width: 100%;
-    max-width: 900px;
     margin: 0;
-    color: #a8a8a8;
-    font-size: 14px;
-    line-height: 1.65;
+    padding: 0;
+
+    box-sizing: border-box;
   }
+
+  /* =========================================================
+     CONTENT
+
+     Deliberately no top margin.
+     The question starts immediately below the global header.
+  ========================================================= */
 
   .step-content {
     width: 100%;
-    padding: clamp(32px, 4vw, 56px) 0;
+    min-width: 0;
+
+    margin: 0;
+    padding: 0;
+
+    box-sizing: border-box;
   }
+
+  /* =========================================================
+     FOOTER
+
+     Keep this compact to save vertical space.
+  ========================================================= */
 
   .step-footer {
     display: flex;
-    align-items: flex-end;
-    justify-content: space-between;
-    gap: 32px;
-    padding-top: 24px;
-    border-top: 1px solid #292929;
-  }
 
-  .back-button,
-  .continue-button {
-    display: inline-flex;
-    min-height: 50px;
     align-items: center;
-    justify-content: center;
-    gap: 10px;
-    padding: 0 22px;
-    border-radius: 0;
-    font-family: "DM Sans", Arial, sans-serif;
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 0.07em;
-    text-transform: uppercase;
-    cursor: pointer;
-  }
+    justify-content: space-between;
 
-  .back-button {
-    border: 1px solid #3b3b3b;
-    background: transparent;
-    color: #c4c4c4;
-  }
+    gap: 20px;
 
-  .back-button:hover {
-    border-color: #777777;
+    margin-top: clamp(22px, 3vw, 32px);
+
+    padding-top: 16px;
+
+    border-top: 1px solid var(--planner-border);
   }
 
   .continue-area {
     display: flex;
+
     align-items: center;
     justify-content: flex-end;
-    gap: 18px;
+
+    gap: 14px;
   }
 
-  .disabled-hint {
-    max-width: 280px;
-    color: #666666;
+  /* =========================================================
+     BUTTONS
+  ========================================================= */
+
+  .back-button,
+  .continue-button {
+    display: inline-flex;
+
+    min-height: 44px;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 8px;
+
+    padding: 0 16px;
+
+    border-radius: 0;
+
+    font-family: inherit;
+
     font-size: 10px;
-    line-height: 1.45;
-    text-align: right;
+    font-weight: 650;
+
+    line-height: 1;
+
+    cursor: pointer;
+
+    box-sizing: border-box;
+
+    transition:
+      border-color 160ms ease,
+      background 160ms ease,
+      color 160ms ease,
+      opacity 160ms ease;
   }
+
+  .back-button svg,
+  .continue-button svg {
+    width: 16px;
+    height: 16px;
+
+    flex: 0 0 auto;
+
+    fill: none;
+
+    stroke: currentColor;
+
+    stroke-width: 1.6;
+
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  /* =========================================================
+     BACK
+  ========================================================= */
+
+  .back-button {
+    padding-left: 2px;
+
+    border: 0;
+
+    background: transparent;
+
+    color: var(--planner-text-soft);
+  }
+
+  .back-button:hover {
+    color: var(--planner-text);
+  }
+
+  /* =========================================================
+     CONTINUE
+  ========================================================= */
 
   .continue-button {
-    min-width: 145px;
-    border: 1px solid #0043ff;
-    background: #0043ff;
+    min-width: 150px;
+
+    border: 1px solid var(--planner-accent);
+
+    background: var(--planner-accent);
+
     color: #ffffff;
   }
 
   .continue-button:hover:not(:disabled) {
-    border-color: #1b56ff;
-    background: #1b56ff;
+    border-color: var(--planner-accent-hover);
+
+    background: var(--planner-accent-hover);
   }
 
   .continue-button:disabled {
-    border-color: #292929;
-    background: #151515;
-    color: #555555;
-    cursor: not-allowed;
+    border-color: var(--planner-border);
+
+    background: var(--planner-disabled-bg);
+
+    color: var(--planner-disabled-text);
+
+    cursor: default;
   }
+
+  /* =========================================================
+     DISABLED HINT
+  ========================================================= */
+
+  .disabled-hint {
+    max-width: 220px;
+
+    color: var(--planner-text-muted);
+
+    font-size: 9px;
+
+    line-height: 1.35;
+
+    text-align: right;
+  }
+
+  /* =========================================================
+     FOCUS
+  ========================================================= */
 
   .back-button:focus-visible,
   .continue-button:focus-visible {
-    outline: 2px solid #0043ff;
+    outline: 2px solid var(--planner-accent);
+
     outline-offset: 3px;
   }
 
+  /* =========================================================
+     TABLET
+  ========================================================= */
+
+  @media (max-width: 950px) {
+    .step-footer {
+      margin-top: 24px;
+
+      padding-top: 15px;
+    }
+  }
+
+  /* =========================================================
+     MOBILE
+  ========================================================= */
+
   @media (max-width: 700px) {
-    .step-header {
-      padding-bottom: 26px;
-    }
-
-    h1 {
-      font-size: clamp(25px, 8vw, 34px);
-      line-height: 1.08;
-    }
-
-    .description {
-      font-size: 13px;
-    }
-
-    .step-content {
-      padding: 30px 0;
-    }
-
     .step-footer {
       align-items: stretch;
+
       flex-direction: column-reverse;
-      gap: 12px;
+
+      gap: 8px;
+
+      margin-top: 22px;
+
+      padding-top: 14px;
     }
 
     .continue-area {
       width: 100%;
+
       align-items: stretch;
+
       flex-direction: column;
-      gap: 10px;
+
+      gap: 7px;
     }
 
     .disabled-hint {
       max-width: none;
+
       text-align: left;
     }
 
-    .back-button,
     .continue-button {
       width: 100%;
+
+      min-height: 46px;
+    }
+
+    .back-button {
+      width: fit-content;
+
+      min-height: 38px;
+
+      padding: 0 2px;
     }
   }
 
+  /* =========================================================
+     REDUCED MOTION
+  ========================================================= */
+
   @media (prefers-reduced-motion: reduce) {
-    .progress-fill {
+    .back-button,
+    .continue-button {
       transition: none;
     }
   }

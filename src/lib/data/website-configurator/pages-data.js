@@ -14,6 +14,14 @@ export const WEBSITE_TYPE_RECOMMENDED_PAGE_IDS = {
     "contact",
   ],
 
+    "law-firm": [
+    "home",
+    "about",
+    "services-overview",
+    "team",
+    "contact",
+  ],
+
   freelancer: [
     "home",
     "about",

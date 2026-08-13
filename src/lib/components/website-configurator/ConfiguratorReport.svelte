@@ -69,19 +69,18 @@
   const text = $derived(
     language === "en"
       ? {
-          eyebrow: "Your personalised project recommendation",
-          title: "Your website project overview",
+          eyebrow: "Planner complete",
+
+          title: "Your website project plan",
+
           description:
-            "Based on your answers, we have prepared a practical project summary and three concrete implementation scopes.",
+            "We have combined your answers into a practical project recommendation. Review the summary, choose your preferred scope and send it to Zora Web Design for a personalised quote.",
 
-          completedLabel: "Configuration complete",
-          noPricesLabel: "No prices are shown",
-          noPricesText:
-            "The final quote will be prepared personally after the full scope has been reviewed.",
+          recommendation: "Recommended scope",
 
-          recommendationTitle: "Recommended project scope",
-          recommendationReasonTitle: "Why this scope fits",
-          complexityLabel: "Estimated project complexity",
+          recommendationReason: "Why this fits",
+
+          complexity: "Project complexity",
 
           complexityValues: {
             essential: "Focused",
@@ -91,92 +90,130 @@
 
           recommendationReasons: {
             essential:
-              "Your selected structure is compact and the required functionality appears straightforward.",
+              "Your project has a compact structure and mostly straightforward functionality.",
+
             growth:
-              "Your project combines several pages, additional functionality, content support or multilingual requirements.",
+              "Your project combines several pages, additional functionality, content requirements, multilingual needs or ongoing support.",
+
             advanced:
-              "Your project includes advanced functionality, large content structures, payments, bookings, user accounts or external integrations.",
+              "Your project includes advanced functionality, larger content structures, payments, bookings, user accounts or external integrations.",
           },
 
-          summaryTitle: "Your project summary",
-          summaryDescription:
-            "This overview reflects the information you selected during the configurator.",
+          summaryLabel: "Project summary",
 
-          projectFoundationTitle: "Project foundation",
-          websiteTypeLabel: "Website type",
-          goalsLabel: "Main goals",
-          statusLabel: "Current status",
+          summaryTitle: "Review your planner",
 
-          preparationTitle: "Content and design",
-          contentLabel: "Content readiness",
-          visualLabel: "Visual material",
-          brandingLabel: "Brand identity",
-          directionLabel: "Design direction",
-          referencesLabel: "Visual references",
-          supportNeedsLabel: "Content and design support",
+          summaryText:
+            "Open any section below to review the answers you provided.",
 
-          structureTitle: "Pages and structure",
-          pagesLabel: "Selected pages",
-          volumeLabel: "Repeating detail pages",
-          customPagesLabel: "Custom pages",
+          foundation: "Project foundation",
 
-          featuresTitle: "Features and technology",
-          featuresLabel: "Selected features",
-          languagesLabel: "Website languages",
-          integrationLabel: "Special integration",
-          finalRequirementsLabel: "Additional requirements",
-          finalRequirementNoteLabel: "Additional functionality note",
+          preparation: "Content and design",
 
-          timelineTitle: "Timeline and ongoing support",
-          startLabel: "Preferred project start",
-          launchLabel: "Preferred launch",
-          collaborationLabel: "Website management",
-          ongoingSupportLabel: "Ongoing support",
-          trainingLabel: "Training",
-          notesLabel: "Additional notes",
+          structure: "Pages and structure",
 
-          packagesEyebrow: "Compare concrete project scopes",
-          packagesTitle: "Choose the scope that best matches your project",
-          packagesDescription:
-            "Each option below shows practical deliverables and how your selected pages, features and support requirements fit into the scope.",
+          features: "Features and technology",
 
-          selectedPackageTitle: "Selected project scope",
-          selectedPackageEmpty:
-            "Select one of the three options above to continue.",
+          timeline: "Timeline and support",
 
-          selectedPackageNames: {
+          websiteType: "Website type",
+
+          goals: "Main goals",
+
+          status: "Current status",
+
+          content: "Content readiness",
+
+          visual: "Visual material",
+
+          branding: "Brand identity",
+
+          direction: "Design direction",
+
+          references: "Visual references",
+
+          supportNeeds: "Content and design support",
+
+          pages: "Selected pages",
+
+          volume: "Repeating detail pages",
+
+          customPages: "Custom pages",
+
+          selectedFeatures: "Selected features",
+
+          languages: "Website languages",
+
+          integration: "Special integration",
+
+          finalRequirements: "Additional requirements",
+
+          finalRequirementNote: "Additional functionality note",
+
+          start: "Preferred project start",
+
+          launch: "Preferred launch",
+
+          collaboration: "Website management",
+
+          ongoingSupport: "Ongoing support",
+
+          training: "Training",
+
+          notes: "Additional notes",
+
+          includedPages:
+            "Technical, privacy, legal, cookie and 404 pages are included automatically.",
+
+          compareLabel: "Project scopes",
+
+          compareTitle: "Choose the scope that fits your project",
+
+          compareText:
+            "Your recommended option is highlighted. You can still choose another scope if it feels more appropriate.",
+
+          selectedScope: "Selected scope",
+
+          noSelection: "Choose one of the scopes above to continue.",
+
+          packageNames: {
             essential: "Essential",
             growth: "Growth",
             advanced: "Advanced",
           },
 
-          nextStepTitle: "Ready for the next step?",
-          nextStepDescription:
-            "Choose a project scope and send the configuration to Zora Web Design. The full details will be reviewed before a personalised quote is prepared.",
+          nextLabel: "Next step",
 
-          editButton: "Review answers",
-          quoteButton: "Request personalised quote",
-          quoteDisabled: "Select a project scope before requesting a quote.",
+          nextTitle: "Ready to discuss your project?",
 
-          emptyValue: "Not specified",
-          noneSelected: "None selected",
-          standardIncluded:
-            "Essential technical, privacy, legal, cookie and 404 pages are included automatically.",
+          nextText:
+            "Send your completed planner to Zora Web Design. The project will be reviewed personally before a final quote is prepared.",
+
+          personalQuote: "Personal quote only — no automatic pricing.",
+
+          edit: "Review answers",
+
+          quote: "Request personalised quote",
+
+          quoteDisabled: "Choose a project scope first.",
+
+          empty: "Not specified",
+
+          none: "None selected",
         }
       : {
-          eyebrow: "Ihre persönliche Projektempfehlung",
-          title: "Ihre Website-Projektübersicht",
+          eyebrow: "Planner abgeschlossen",
+
+          title: "Ihr Website-Projektplan",
+
           description:
-            "Auf Grundlage Ihrer Antworten haben wir eine praktische Projektzusammenfassung und drei konkrete Umsetzungsumfänge erstellt.",
+            "Ihre Antworten wurden zu einer konkreten Projektempfehlung zusammengeführt. Prüfen Sie die Zusammenfassung, wählen Sie Ihren bevorzugten Umfang und senden Sie die Planung für ein persönliches Angebot an Zora Web Design.",
 
-          completedLabel: "Konfiguration abgeschlossen",
-          noPricesLabel: "Keine Preise werden angezeigt",
-          noPricesText:
-            "Das endgültige Angebot wird persönlich erstellt, nachdem der vollständige Umfang geprüft wurde.",
+          recommendation: "Empfohlener Umfang",
 
-          recommendationTitle: "Empfohlener Projektumfang",
-          recommendationReasonTitle: "Warum dieser Umfang passt",
-          complexityLabel: "Geschätzte Projektkomplexität",
+          recommendationReason: "Warum dieser Umfang passt",
+
+          complexity: "Projektkomplexität",
 
           complexityValues: {
             essential: "Fokussiert",
@@ -186,83 +223,125 @@
 
           recommendationReasons: {
             essential:
-              "Ihre ausgewählte Struktur ist kompakt und die benötigten Funktionen sind weitgehend überschaubar.",
+              "Ihr Projekt hat eine kompakte Struktur und überwiegend überschaubare Funktionen.",
+
             growth:
-              "Ihr Projekt verbindet mehrere Seiten, zusätzliche Funktionen, Inhaltsunterstützung oder Mehrsprachigkeit.",
+              "Ihr Projekt kombiniert mehrere Seiten, zusätzliche Funktionen, Inhaltsanforderungen, Mehrsprachigkeit oder laufende Betreuung.",
+
             advanced:
-              "Ihr Projekt umfasst erweiterte Funktionen, große Inhaltsstrukturen, Zahlungen, Buchungen, Benutzerkonten oder externe Integrationen.",
+              "Ihr Projekt umfasst erweiterte Funktionen, größere Inhaltsstrukturen, Zahlungen, Buchungen, Benutzerkonten oder externe Integrationen.",
           },
 
-          summaryTitle: "Ihre Projektzusammenfassung",
-          summaryDescription:
-            "Diese Übersicht zeigt die Angaben, die Sie im Konfigurator ausgewählt haben.",
+          summaryLabel: "Projektübersicht",
 
-          projectFoundationTitle: "Projektgrundlage",
-          websiteTypeLabel: "Website-Art",
-          goalsLabel: "Wichtigste Ziele",
-          statusLabel: "Aktueller Stand",
+          summaryTitle: "Ihre Planung prüfen",
 
-          preparationTitle: "Inhalte und Design",
-          contentLabel: "Vorbereitung der Inhalte",
-          visualLabel: "Bildmaterial",
-          brandingLabel: "Branding",
-          directionLabel: "Designrichtung",
-          referencesLabel: "Visuelle Referenzen",
-          supportNeedsLabel: "Unterstützung bei Inhalt und Design",
+          summaryText:
+            "Öffnen Sie einen Bereich, um Ihre Angaben noch einmal zu kontrollieren.",
 
-          structureTitle: "Seiten und Struktur",
-          pagesLabel: "Ausgewählte Seiten",
-          volumeLabel: "Wiederkehrende Detailseiten",
-          customPagesLabel: "Individuelle Seiten",
+          foundation: "Projektgrundlage",
 
-          featuresTitle: "Funktionen und Technik",
-          featuresLabel: "Ausgewählte Funktionen",
-          languagesLabel: "Website-Sprachen",
-          integrationLabel: "Besondere Integration",
-          finalRequirementsLabel: "Weitere Anforderungen",
-          finalRequirementNoteLabel: "Zusätzliche Funktionsbeschreibung",
+          preparation: "Inhalte und Design",
 
-          timelineTitle: "Zeitplan und laufende Betreuung",
-          startLabel: "Gewünschter Projektstart",
-          launchLabel: "Gewünschte Veröffentlichung",
-          collaborationLabel: "Verwaltung der Website",
-          ongoingSupportLabel: "Laufende Betreuung",
-          trainingLabel: "Einführung",
-          notesLabel: "Weitere Hinweise",
+          structure: "Seiten und Struktur",
 
-          packagesEyebrow: "Konkrete Projektumfänge vergleichen",
-          packagesTitle:
-            "Wählen Sie den Umfang, der am besten zu Ihrem Projekt passt",
-          packagesDescription:
-            "Jede Option zeigt konkrete Leistungen und wie Ihre ausgewählten Seiten, Funktionen und Unterstützungsanforderungen in den Umfang passen.",
+          features: "Funktionen und Technik",
 
-          selectedPackageTitle: "Ausgewählter Projektumfang",
-          selectedPackageEmpty:
-            "Wählen Sie oben eine der drei Optionen aus, um fortzufahren.",
+          timeline: "Zeitplan und Betreuung",
 
-          selectedPackageNames: {
+          websiteType: "Website-Art",
+
+          goals: "Wichtigste Ziele",
+
+          status: "Aktueller Stand",
+
+          content: "Vorbereitung der Inhalte",
+
+          visual: "Bildmaterial",
+
+          branding: "Branding",
+
+          direction: "Designrichtung",
+
+          references: "Visuelle Referenzen",
+
+          supportNeeds: "Unterstützung bei Inhalt und Design",
+
+          pages: "Ausgewählte Seiten",
+
+          volume: "Wiederkehrende Detailseiten",
+
+          customPages: "Individuelle Seiten",
+
+          selectedFeatures: "Ausgewählte Funktionen",
+
+          languages: "Website-Sprachen",
+
+          integration: "Besondere Integration",
+
+          finalRequirements: "Weitere Anforderungen",
+
+          finalRequirementNote: "Zusätzliche Funktionsbeschreibung",
+
+          start: "Gewünschter Projektstart",
+
+          launch: "Gewünschte Veröffentlichung",
+
+          collaboration: "Verwaltung der Website",
+
+          ongoingSupport: "Laufende Betreuung",
+
+          training: "Einführung",
+
+          notes: "Weitere Hinweise",
+
+          includedPages:
+            "Technische, Datenschutz-, Impressums-, Cookie- und 404-Seiten sind automatisch enthalten.",
+
+          compareLabel: "Projektumfänge",
+
+          compareTitle: "Wählen Sie den passenden Umfang",
+
+          compareText:
+            "Die empfohlene Option ist hervorgehoben. Sie können trotzdem einen anderen Umfang wählen, wenn dieser besser zu Ihrem Projekt passt.",
+
+          selectedScope: "Gewählter Umfang",
+
+          noSelection:
+            "Wählen Sie oben einen Projektumfang aus, um fortzufahren.",
+
+          packageNames: {
             essential: "Essential",
             growth: "Growth",
             advanced: "Advanced",
           },
 
-          nextStepTitle: "Bereit für den nächsten Schritt?",
-          nextStepDescription:
-            "Wählen Sie einen Projektumfang und senden Sie Ihre Konfiguration an Zora Web Design. Die vollständigen Angaben werden vor der Erstellung eines persönlichen Angebots geprüft.",
+          nextLabel: "Nächster Schritt",
 
-          editButton: "Antworten prüfen",
-          quoteButton: "Persönliches Angebot anfordern",
-          quoteDisabled: "Wählen Sie zuerst einen Projektumfang aus.",
+          nextTitle: "Bereit, Ihr Projekt zu besprechen?",
 
-          emptyValue: "Nicht angegeben",
-          noneSelected: "Keine Auswahl",
-          standardIncluded:
-            "Grundlegende technische, Datenschutz-, Impressums-, Cookie- und 404-Seiten sind automatisch enthalten.",
+          nextText:
+            "Senden Sie Ihren vollständigen Website Planner an Zora Web Design. Das Projekt wird persönlich geprüft, bevor ein finales Angebot erstellt wird.",
+
+          personalQuote:
+            "Persönliches Angebot — keine automatische Preisberechnung.",
+
+          edit: "Antworten prüfen",
+
+          quote: "Persönliches Angebot anfordern",
+
+          quoteDisabled: "Wählen Sie zuerst einen Projektumfang.",
+
+          empty: "Nicht angegeben",
+
+          none: "Keine Auswahl",
         },
   );
 
   const pagesText = $derived(getPagesContent(language));
+
   const featuresText = $derived(getFeaturesContent(language));
+
   const timelineText = $derived(getTimelineSupportContent(language));
 
   const websiteTypeOption = $derived(
@@ -463,334 +542,317 @@
   );
 
   const recommendedPackageName = $derived(
-    text.selectedPackageNames[activeRecommendedPackage] ??
-      text.selectedPackageNames.growth,
+    text.packageNames[activeRecommendedPackage] ?? text.packageNames.growth,
   );
 
   const selectedPackageName = $derived(
     selectedPackage
-      ? (text.selectedPackageNames[selectedPackage] ?? selectedPackage)
+      ? (text.packageNames[selectedPackage] ?? selectedPackage)
       : "",
   );
 
   function requestQuote() {
-    if (!selectedPackage) return;
+    if (!selectedPackage) {
+      return;
+    }
 
     onRequestQuote();
   }
 </script>
 
 <section class="report" aria-labelledby="configurator-report-title">
-  <header class="report-hero">
-    <div class="hero-copy">
-      <span class="eyebrow">{text.eyebrow}</span>
+  <!-- =====================================================
+       COMPLETE
+  ====================================================== -->
+
+  <header class="report-header">
+    <div class="completion-mark">
+      <svg viewBox="0 0 32 32" aria-hidden="true">
+        <circle cx="16" cy="16" r="13" />
+
+        <path d="m10 16 4 4 8-9" />
+      </svg>
+    </div>
+
+    <div class="header-copy">
+      <span class="eyebrow">
+        {text.eyebrow}
+      </span>
 
       <h1 id="configurator-report-title">
         {text.title}
       </h1>
 
-      <p class="hero-description">
+      <p>
         {text.description}
       </p>
     </div>
-
-    <div class="hero-status">
-      <div class="status-row">
-        <span class="status-mark" aria-hidden="true">✓</span>
-        <span>{text.completedLabel}</span>
-      </div>
-
-      <div class="status-row">
-        <span class="status-mark" aria-hidden="true">—</span>
-        <span>{text.noPricesLabel}</span>
-      </div>
-
-      <p>{text.noPricesText}</p>
-    </div>
   </header>
 
-  <section
-    class="recommendation-overview"
-    aria-labelledby="recommendation-title"
-  >
-    <div class="recommendation-heading">
-      <span class="recommendation-number">01</span>
+  <!-- =====================================================
+       RECOMMENDATION
+  ====================================================== -->
 
-      <div>
-        <span class="section-label">
-          {text.recommendationTitle}
-        </span>
+  <section class="recommendation" aria-labelledby="recommendation-title">
+    <div class="recommendation-main">
+      <span class="section-label">
+        {text.recommendation}
+      </span>
 
-        <h2 id="recommendation-title">
-          {recommendedPackageName}
-        </h2>
+      <h2 id="recommendation-title">
+        {recommendedPackageName}
+      </h2>
+
+      <div class="recommended-badge">
+        {language === "en" ? "Recommended" : "Empfohlen"}
       </div>
     </div>
 
-    <div class="recommendation-details">
-      <article>
-        <span>{text.complexityLabel}</span>
+    <div class="recommendation-info">
+      <div class="recommendation-stat">
+        <span>
+          {text.complexity}
+        </span>
 
         <strong>
           {text.complexityValues[activeRecommendedPackage]}
         </strong>
-      </article>
+      </div>
 
-      <article>
-        <span>{text.recommendationReasonTitle}</span>
+      <div class="recommendation-reason">
+        <span>
+          {text.recommendationReason}
+        </span>
 
         <p>
           {text.recommendationReasons[activeRecommendedPackage]}
         </p>
-      </article>
+      </div>
     </div>
   </section>
 
-  <section class="project-summary" aria-labelledby="project-summary-title">
-    <div class="section-intro">
-      <span class="section-number">02</span>
+  <!-- =====================================================
+       SUMMARY
+  ====================================================== -->
 
-      <div>
-        <span class="section-label">
-          {text.summaryTitle}
-        </span>
+  <section class="summary-section">
+    <header class="section-header">
+      <span class="section-label">
+        {text.summaryLabel}
+      </span>
 
-        <h2 id="project-summary-title">
-          {websiteTypeOption?.label ?? text.emptyValue}
-        </h2>
+      <h2>
+        {text.summaryTitle}
+      </h2>
 
-        <p>{text.summaryDescription}</p>
-      </div>
-    </div>
+      <p>
+        {text.summaryText}
+      </p>
+    </header>
 
-    <div class="summary-grid">
-      <article class="summary-card">
-        <div class="summary-card-heading">
-          <span>01</span>
-          <h3>{text.projectFoundationTitle}</h3>
-        </div>
+    <div class="summary-accordion">
+      <details open>
+        <summary>
+          <div>
+            <span class="summary-number"> 01 </span>
 
-        <div class="summary-row">
-          <span>{text.websiteTypeLabel}</span>
-
-          <strong>
-            {websiteTypeOption?.label ?? text.emptyValue}
-          </strong>
-        </div>
-
-        <div class="summary-row">
-          <span>{text.goalsLabel}</span>
-
-          {#if selectedGoalOptions.length > 0}
-            <div class="tag-list">
-              {#each selectedGoalOptions as option}
-                <span>{option.label}</span>
-              {/each}
-            </div>
-          {:else}
-            <strong class="empty-value">
-              {text.noneSelected}
+            <strong>
+              {text.foundation}
             </strong>
+          </div>
+
+          <svg viewBox="0 0 20 20" aria-hidden="true">
+            <path d="m5 7.5 5 5 5-5" />
+          </svg>
+        </summary>
+
+        <div class="summary-content">
+          {@render valueRow(text.websiteType, websiteTypeOption?.label)}
+
+          {@render tagsRow(
+            text.goals,
+            selectedGoalOptions.map((option) => option.label),
+          )}
+
+          {@render valueRow(text.status, projectStatusOption?.label)}
+        </div>
+      </details>
+
+      <details>
+        <summary>
+          <div>
+            <span class="summary-number"> 02 </span>
+
+            <strong>
+              {text.preparation}
+            </strong>
+          </div>
+
+          <svg viewBox="0 0 20 20" aria-hidden="true">
+            <path d="m5 7.5 5 5 5-5" />
+          </svg>
+        </summary>
+
+        <div class="summary-content">
+          {@render valueRow(text.content, contentOption?.label)}
+
+          {@render valueRow(text.visual, visualOption?.label)}
+
+          {@render valueRow(text.branding, brandingOption?.label)}
+
+          {@render valueRow(text.direction, directionOption?.label)}
+
+          {#if validReferenceLinks.length}
+            <div class="summary-row">
+              <span>
+                {text.references}
+              </span>
+
+              <div class="link-list">
+                {#each validReferenceLinks as link}
+                  <a href={link} target="_blank" rel="noreferrer">
+                    {link}
+                  </a>
+                {/each}
+              </div>
+            </div>
+          {/if}
+
+          {#if preparationSupportLabels.length}
+            {@render tagsRow(text.supportNeeds, preparationSupportLabels)}
           {/if}
         </div>
+      </details>
 
-        <div class="summary-row">
-          <span>{text.statusLabel}</span>
+      <details>
+        <summary>
+          <div>
+            <span class="summary-number"> 03 </span>
 
-          <strong>
-            {projectStatusOption?.label ?? text.emptyValue}
-          </strong>
-        </div>
-      </article>
-
-      <article class="summary-card">
-        <div class="summary-card-heading">
-          <span>02</span>
-          <h3>{text.preparationTitle}</h3>
-        </div>
-
-        {@render summaryValue(
-          text.contentLabel,
-          contentOption?.label,
-          text.emptyValue,
-        )}
-
-        {@render summaryValue(
-          text.visualLabel,
-          visualOption?.label,
-          text.emptyValue,
-        )}
-
-        {@render summaryValue(
-          text.brandingLabel,
-          brandingOption?.label,
-          text.emptyValue,
-        )}
-
-        {@render summaryValue(
-          text.directionLabel,
-          directionOption?.label,
-          text.emptyValue,
-        )}
-
-        <div class="summary-row">
-          <span>{text.referencesLabel}</span>
-
-          {#if validReferenceLinks.length > 0}
-            <div class="link-list">
-              {#each validReferenceLinks as link}
-                <a href={link} target="_blank" rel="noreferrer">
-                  {link}
-                </a>
-              {/each}
-            </div>
-          {:else}
-            <strong class="empty-value">
-              {text.noneSelected}
+            <strong>
+              {text.structure}
             </strong>
+          </div>
+
+          <svg viewBox="0 0 20 20" aria-hidden="true">
+            <path d="m5 7.5 5 5 5-5" />
+          </svg>
+        </summary>
+
+        <div class="summary-content">
+          <div class="included-note">
+            <svg viewBox="0 0 20 20" aria-hidden="true">
+              <path d="m5 10.25 3.15 3.1L15 6.75" />
+            </svg>
+
+            <span>
+              {text.includedPages}
+            </span>
+          </div>
+
+          {@render tagsRow(text.pages, selectedPageLabels)}
+
+          {#if pageVolumeOption}
+            {@render valueRow(text.volume, pageVolumeOption.label)}
+          {/if}
+
+          {#if enteredCustomPages.length}
+            {@render tagsRow(text.customPages, enteredCustomPages)}
           {/if}
         </div>
+      </details>
 
-        {@render tagSummary(
-          text.supportNeedsLabel,
-          preparationSupportLabels,
-          text.noneSelected,
-        )}
-      </article>
+      <details>
+        <summary>
+          <div>
+            <span class="summary-number"> 04 </span>
 
-      <article class="summary-card">
-        <div class="summary-card-heading">
-          <span>03</span>
-          <h3>{text.structureTitle}</h3>
+            <strong>
+              {text.features}
+            </strong>
+          </div>
+
+          <svg viewBox="0 0 20 20" aria-hidden="true">
+            <path d="m5 7.5 5 5 5-5" />
+          </svg>
+        </summary>
+
+        <div class="summary-content">
+          {@render tagsRow(text.selectedFeatures, selectedFeatureLabels)}
+
+          {@render valueRow(text.languages, languageOption?.label)}
+
+          {#if customIntegration.trim()}
+            {@render valueRow(text.integration, customIntegration.trim())}
+          {/if}
+
+          {#if finalRequirementLabels.length}
+            {@render tagsRow(text.finalRequirements, finalRequirementLabels)}
+          {/if}
+
+          {#if finalRequirementNote.trim()}
+            {@render valueRow(
+              text.finalRequirementNote,
+              finalRequirementNote.trim(),
+            )}
+          {/if}
         </div>
+      </details>
 
-        <div class="included-note">
-          <span aria-hidden="true">✓</span>
-          <p>{text.standardIncluded}</p>
+      <details>
+        <summary>
+          <div>
+            <span class="summary-number"> 05 </span>
+
+            <strong>
+              {text.timeline}
+            </strong>
+          </div>
+
+          <svg viewBox="0 0 20 20" aria-hidden="true">
+            <path d="m5 7.5 5 5 5-5" />
+          </svg>
+        </summary>
+
+        <div class="summary-content">
+          {@render valueRow(text.start, projectStartOption?.label)}
+
+          {@render valueRow(text.launch, launchOption?.label)}
+
+          {@render valueRow(text.collaboration, collaborationOption?.label)}
+
+          {@render valueRow(text.training, trainingOption?.label)}
+
+          {#if ongoingSupportLabels.length}
+            {@render tagsRow(text.ongoingSupport, ongoingSupportLabels)}
+          {/if}
+
+          {#if timelineNote.trim()}
+            {@render valueRow(text.notes, timelineNote.trim())}
+          {/if}
         </div>
-
-        {@render tagSummary(
-          text.pagesLabel,
-          selectedPageLabels,
-          text.noneSelected,
-        )}
-
-        {@render summaryValue(
-          text.volumeLabel,
-          pageVolumeOption?.label,
-          text.emptyValue,
-        )}
-
-        {@render tagSummary(
-          text.customPagesLabel,
-          enteredCustomPages,
-          text.noneSelected,
-        )}
-      </article>
-
-      <article class="summary-card">
-        <div class="summary-card-heading">
-          <span>04</span>
-          <h3>{text.featuresTitle}</h3>
-        </div>
-
-        {@render tagSummary(
-          text.featuresLabel,
-          selectedFeatureLabels,
-          text.noneSelected,
-        )}
-
-        {@render summaryValue(
-          text.languagesLabel,
-          languageOption?.label,
-          text.emptyValue,
-        )}
-
-        {@render summaryValue(
-          text.integrationLabel,
-          customIntegration.trim(),
-          text.emptyValue,
-        )}
-
-        {@render tagSummary(
-          text.finalRequirementsLabel,
-          finalRequirementLabels,
-          text.noneSelected,
-        )}
-
-        {@render summaryValue(
-          text.finalRequirementNoteLabel,
-          finalRequirementNote.trim(),
-          text.emptyValue,
-        )}
-      </article>
-
-      <article class="summary-card summary-card-wide">
-        <div class="summary-card-heading">
-          <span>05</span>
-          <h3>{text.timelineTitle}</h3>
-        </div>
-
-        <div class="timeline-summary-grid">
-          {@render summaryValue(
-            text.startLabel,
-            projectStartOption?.label,
-            text.emptyValue,
-          )}
-
-          {@render summaryValue(
-            text.launchLabel,
-            launchOption?.label,
-            text.emptyValue,
-          )}
-
-          {@render summaryValue(
-            text.collaborationLabel,
-            collaborationOption?.label,
-            text.emptyValue,
-          )}
-
-          {@render summaryValue(
-            text.trainingLabel,
-            trainingOption?.label,
-            text.emptyValue,
-          )}
-        </div>
-
-        {@render tagSummary(
-          text.ongoingSupportLabel,
-          ongoingSupportLabels,
-          text.noneSelected,
-        )}
-
-        {@render summaryValue(
-          text.notesLabel,
-          timelineNote.trim(),
-          text.emptyValue,
-        )}
-      </article>
+      </details>
     </div>
   </section>
 
-  <section
-    class="package-comparison"
-    aria-labelledby="package-comparison-title"
-  >
-    <div class="section-intro">
-      <span class="section-number">03</span>
+  <!-- =====================================================
+       PACKAGES
+  ====================================================== -->
 
-      <div>
-        <span class="section-label">
-          {text.packagesEyebrow}
-        </span>
+  <section class="packages-section">
+    <header class="section-header">
+      <span class="section-label">
+        {text.compareLabel}
+      </span>
 
-        <h2 id="package-comparison-title">
-          {text.packagesTitle}
-        </h2>
+      <h2>
+        {text.compareTitle}
+      </h2>
 
-        <p>{text.packagesDescription}</p>
-      </div>
-    </div>
+      <p>
+        {text.compareText}
+      </p>
+    </header>
 
     <PackageCards
       {language}
@@ -809,34 +871,68 @@
     />
   </section>
 
-  <section class="report-actions">
-    <div class="selected-package-summary">
-      <span>{text.selectedPackageTitle}</span>
+  <!-- =====================================================
+       FINAL CTA
+  ====================================================== -->
+
+  <section class="final-action">
+    <div class="final-copy">
+      <span class="section-label">
+        {text.nextLabel}
+      </span>
+
+      <h2>
+        {text.nextTitle}
+      </h2>
+
+      <p>
+        {text.nextText}
+      </p>
+
+      <div class="personal-quote-note">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M12 3 4 7v6c0 5 3 8 8 9 5-1 8-4 8-9V7l-8-4Z" />
+          <path d="M9 12h6M12 9v6" />
+        </svg>
+
+        <span>
+          {text.personalQuote}
+        </span>
+      </div>
+    </div>
+
+    <div class="selected-scope">
+      <span>
+        {text.selectedScope}
+      </span>
 
       {#if selectedPackageName}
-        <strong>{selectedPackageName}</strong>
+        <strong>
+          {selectedPackageName}
+        </strong>
       {:else}
-        <p>{text.selectedPackageEmpty}</p>
+        <p>
+          {text.noSelection}
+        </p>
       {/if}
     </div>
 
-    <div class="next-step-copy">
-      <span class="section-label">
-        {text.nextStepTitle}
-      </span>
-
-      <p>{text.nextStepDescription}</p>
-    </div>
-
-    <div class="action-buttons">
+    <div class="actions">
       <button type="button" class="edit-button" onclick={onEditAnswers}>
-        <span aria-hidden="true">←</span>
-        {text.editButton}
+        <svg viewBox="0 0 20 20" aria-hidden="true">
+          <path d="M11.75 4.75 6.5 10l5.25 5.25" />
+        </svg>
+
+        <span>
+          {text.edit}
+        </span>
       </button>
 
-      <div class="quote-action">
+      <div class="quote-area">
         {#if !selectedPackage}
-          <span>{text.quoteDisabled}</span>
+          <span class="quote-hint">
+            {text.quoteDisabled}
+          </span>
         {/if}
 
         <button
@@ -845,37 +941,48 @@
           disabled={!selectedPackage}
           onclick={requestQuote}
         >
-          {text.quoteButton}
-          <span aria-hidden="true">→</span>
+          <span>
+            {text.quote}
+          </span>
+
+          <svg viewBox="0 0 20 20" aria-hidden="true">
+            <path d="m8.25 4.75 5.25 5.25-5.25 5.25" />
+          </svg>
         </button>
       </div>
     </div>
   </section>
 </section>
 
-{#snippet summaryValue(label, value, emptyValue)}
+{#snippet valueRow(label, value)}
   <div class="summary-row">
-    <span>{label}</span>
+    <span>
+      {label}
+    </span>
 
-    <strong class:empty-value={!value}>
-      {value || emptyValue}
+    <strong class:empty={!value}>
+      {value || text.empty}
     </strong>
   </div>
 {/snippet}
 
-{#snippet tagSummary(label, values, emptyLabel)}
+{#snippet tagsRow(label, values)}
   <div class="summary-row">
-    <span>{label}</span>
+    <span>
+      {label}
+    </span>
 
-    {#if values.length > 0}
+    {#if values.length}
       <div class="tag-list">
         {#each values as value}
-          <span>{value}</span>
+          <span>
+            {value}
+          </span>
         {/each}
       </div>
     {:else}
-      <strong class="empty-value">
-        {emptyLabel}
+      <strong class="empty">
+        {text.none}
       </strong>
     {/if}
   </div>
@@ -884,472 +991,782 @@
 <style>
   .report {
     width: 100%;
-    color: #f1f1f1;
+
     background: #080808;
+
+    color: #f1f1f1;
+
     font-family: "DM Sans", Arial, sans-serif;
   }
 
-  .report-hero {
-    min-height: 420px;
+  /* =========================================================
+     HEADER
+  ========================================================= */
+
+  .report-header {
     display: grid;
+
     grid-template-columns:
-      minmax(0, 1.25fr)
-      minmax(280px, 0.75fr);
-    border: 1px solid #292929;
-    background: #0b0b0b;
+      auto
+      minmax(0, 1fr);
+
+    gap: 18px;
+
+    align-items: flex-start;
+
+    padding: 28px 0 30px;
+
+    border-bottom: 1px solid #292929;
   }
 
-  .hero-copy {
-    padding: clamp(30px, 5vw, 64px);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+  .completion-mark {
+    display: grid;
+
+    width: 48px;
+    height: 48px;
+
+    place-items: center;
+
+    border: 1px solid #0043ff;
+
+    background: rgba(0, 67, 255, 0.08);
+
+    color: #5f80ff;
+  }
+
+  .completion-mark svg {
+    width: 28px;
+    height: 28px;
+
+    fill: none;
+
+    stroke: currentColor;
+
+    stroke-width: 1.6;
+
+    stroke-linecap: round;
+    stroke-linejoin: round;
   }
 
   .eyebrow,
   .section-label {
     display: block;
-    color: #777777;
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-  }
 
-  h1 {
-    max-width: 900px;
-    margin: 15px 0 20px;
-    color: #f3f3f3;
-    font-size: clamp(28px, 3vw, 42px);
-    font-weight: 650;
-    line-height: 1.08;
-    letter-spacing: -0.03em;
-  }
+    color: #5f80ff;
 
-  .hero-description {
-    max-width: 760px;
-    margin: 0;
-    color: #a5a5a5;
-    font-size: 15px;
-    line-height: 1.7;
-  }
-
-  .hero-status {
-    padding: clamp(28px, 4vw, 46px);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    border-left: 1px solid #292929;
-    background: #0d0d0d;
-  }
-
-  .status-row {
-    min-height: 54px;
-    display: grid;
-    grid-template-columns: 28px minmax(0, 1fr);
-    gap: 12px;
-    align-items: center;
-    border-bottom: 1px solid #292929;
-    color: #c5c5c5;
-    font-size: 12px;
-    font-weight: 600;
-  }
-
-  .status-mark {
-    color: #0043ff;
-  }
-
-  .hero-status > p {
-    margin: 22px 0 0;
-    color: #7f7f7f;
-    font-size: 12px;
-    line-height: 1.65;
-  }
-
-  .recommendation-overview {
-    margin-top: clamp(30px, 5vw, 56px);
-    padding: clamp(28px, 4vw, 48px);
-    display: grid;
-    grid-template-columns:
-      minmax(250px, 0.75fr)
-      minmax(0, 1.25fr);
-    gap: clamp(30px, 5vw, 70px);
-    border: 1px solid #292929;
-    border-top: 3px solid #0043ff;
-    background: #0c0c0c;
-  }
-
-  .recommendation-heading {
-    display: grid;
-    grid-template-columns: 30px minmax(0, 1fr);
-    gap: 16px;
-  }
-
-  .recommendation-number,
-  .section-number {
-    color: #0043ff;
-    font-size: 10px;
-    font-weight: 700;
-  }
-
-  .recommendation-heading h2 {
-    margin: 9px 0 0;
-    color: #4f76ff;
-    font-size: clamp(34px, 4vw, 58px);
-    font-weight: 650;
-    line-height: 1;
-    letter-spacing: -0.05em;
-  }
-
-  .recommendation-details {
-    display: grid;
-    grid-template-columns:
-      minmax(150px, 0.5fr)
-      minmax(0, 1fr);
-    gap: 20px;
-  }
-
-  .recommendation-details article {
-    padding: 20px;
-    border: 1px solid #303030;
-    background: #090909;
-  }
-
-  .recommendation-details article > span {
-    display: block;
-    margin-bottom: 12px;
-    color: #727272;
     font-size: 9px;
     font-weight: 700;
+
     letter-spacing: 0.08em;
+
     text-transform: uppercase;
   }
 
-  .recommendation-details strong {
-    color: #4f76ff;
-    font-size: 20px;
+  .header-copy h1 {
+    max-width: 900px;
+
+    margin: 8px 0 8px;
+
+    color: #f3f3f3;
+
+    font-size: clamp(30px, 3.3vw, 44px);
+
+    font-weight: 600;
+
+    line-height: 1.04;
+
+    letter-spacing: -0.04em;
   }
 
-  .recommendation-details p {
+  .header-copy p {
+    max-width: 780px;
+
     margin: 0;
-    color: #9d9d9d;
-    font-size: 13px;
-    line-height: 1.65;
+
+    color: #8e8e8e;
+
+    font-size: 12px;
+
+    line-height: 1.55;
   }
 
-  .project-summary,
-  .package-comparison {
-    margin-top: clamp(56px, 8vw, 110px);
-  }
+  /* =========================================================
+     RECOMMENDATION
+  ========================================================= */
 
-  .section-intro {
-    max-width: 1050px;
-    margin-bottom: 28px;
+  .recommendation {
     display: grid;
-    grid-template-columns: 30px minmax(0, 1fr);
-    gap: 16px;
-  }
 
-  .section-intro h2 {
-    margin: 10px 0 12px;
-    color: #eeeeee;
-    font-size: clamp(22px, 2.6vw, 34px);
-    font-weight: 650;
-    line-height: 1.1;
-    letter-spacing: -0.035em;
-  }
+    grid-template-columns:
+      minmax(220px, 0.65fr)
+      minmax(0, 1.35fr);
 
-  .section-intro p {
-    max-width: 800px;
-    margin: 0;
-    color: #939393;
-    font-size: 14px;
-    line-height: 1.65;
-  }
+    gap: 28px;
 
-  .summary-grid {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    border-top: 1px solid #303030;
-    border-left: 1px solid #303030;
-  }
+    margin-top: 28px;
 
-  .summary-card {
-    min-width: 0;
-    padding: clamp(22px, 3vw, 34px);
-    border-right: 1px solid #303030;
-    border-bottom: 1px solid #303030;
+    padding: 24px;
+
+    border: 1px solid #303030;
+
+    border-top: 2px solid #0043ff;
+
     background: #0b0b0b;
   }
 
-  .summary-card-wide {
-    grid-column: 1 / -1;
+  .recommendation-main h2 {
+    margin: 8px 0 10px;
+
+    color: #6f8dff;
+
+    font-size: clamp(34px, 4vw, 52px);
+
+    font-weight: 600;
+
+    line-height: 1;
+
+    letter-spacing: -0.045em;
   }
 
-  .summary-card-heading {
-    margin-bottom: 20px;
+  .recommended-badge {
+    display: inline-flex;
+
+    min-height: 22px;
+
+    align-items: center;
+
+    padding: 0 7px;
+
+    border: 1px solid #0043ff;
+
+    color: #6f8dff;
+
+    font-size: 8px;
+    font-weight: 700;
+
+    letter-spacing: 0.07em;
+
+    text-transform: uppercase;
+  }
+
+  .recommendation-info {
     display: grid;
-    grid-template-columns: 24px minmax(0, 1fr);
-    gap: 12px;
+
+    grid-template-columns:
+      minmax(120px, 0.35fr)
+      minmax(0, 1fr);
+
+    gap: 10px;
   }
 
-  .summary-card-heading > span {
-    color: #0043ff;
+  .recommendation-stat,
+  .recommendation-reason {
+    padding: 16px;
+
+    border: 1px solid #292929;
+
+    background: #090909;
+  }
+
+  .recommendation-stat > span,
+  .recommendation-reason > span {
+    display: block;
+
+    margin-bottom: 8px;
+
+    color: #666666;
+
+    font-size: 8px;
+    font-weight: 700;
+
+    letter-spacing: 0.07em;
+
+    text-transform: uppercase;
+  }
+
+  .recommendation-stat strong {
+    color: #6f8dff;
+
+    font-size: 15px;
+    font-weight: 600;
+  }
+
+  .recommendation-reason p {
+    margin: 0;
+
+    color: #929292;
+
+    font-size: 10px;
+
+    line-height: 1.5;
+  }
+
+  /* =========================================================
+     SECTIONS
+  ========================================================= */
+
+  .summary-section,
+  .packages-section,
+  .final-action {
+    margin-top: clamp(46px, 6vw, 72px);
+  }
+
+  .section-header {
+    max-width: 850px;
+
+    margin-bottom: 20px;
+  }
+
+  .section-header h2 {
+    margin: 7px 0 6px;
+
+    color: #eeeeee;
+
+    font-size: clamp(24px, 2.5vw, 32px);
+
+    font-weight: 600;
+
+    line-height: 1.1;
+
+    letter-spacing: -0.03em;
+  }
+
+  .section-header p {
+    max-width: 700px;
+
+    margin: 0;
+
+    color: #858585;
+
+    font-size: 11px;
+
+    line-height: 1.5;
+  }
+
+  /* =========================================================
+     SUMMARY ACCORDION
+  ========================================================= */
+
+  .summary-accordion {
+    border-top: 1px solid #303030;
+  }
+
+  .summary-accordion details {
+    border-bottom: 1px solid #303030;
+  }
+
+  .summary-accordion summary {
+    display: flex;
+
+    min-height: 58px;
+
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 20px;
+
+    padding: 0 4px;
+
+    color: #dcdcdc;
+
+    cursor: pointer;
+
+    list-style: none;
+  }
+
+  .summary-accordion summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .summary-accordion summary > div {
+    display: flex;
+
+    align-items: center;
+
+    gap: 14px;
+  }
+
+  .summary-number {
+    color: #5f80ff;
+
     font-size: 9px;
     font-weight: 700;
   }
 
-  .summary-card-heading h3 {
-    margin: 0;
-    color: #eeeeee;
-    font-size: 18px;
+  .summary-accordion summary strong {
+    font-size: 12px;
     font-weight: 600;
   }
 
+  .summary-accordion summary > svg {
+    width: 16px;
+    height: 16px;
+
+    fill: none;
+
+    stroke: #737373;
+
+    stroke-width: 1.5;
+
+    transition: transform 150ms ease;
+  }
+
+  .summary-accordion details[open] summary > svg {
+    transform: rotate(180deg);
+  }
+
+  .summary-content {
+    display: grid;
+
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    gap: 0 26px;
+
+    padding: 0 4px 18px;
+  }
+
   .summary-row {
-    padding: 15px 0;
-    border-top: 1px solid #292929;
+    min-width: 0;
+
+    padding: 11px 0;
+
+    border-top: 1px solid #242424;
   }
 
   .summary-row > span {
     display: block;
-    margin-bottom: 8px;
-    color: #707070;
-    font-size: 9px;
+
+    margin-bottom: 6px;
+
+    color: #666666;
+
+    font-size: 8px;
     font-weight: 700;
-    letter-spacing: 0.08em;
+
+    letter-spacing: 0.07em;
+
     text-transform: uppercase;
   }
 
-  .summary-row strong {
+  .summary-row > strong {
     display: block;
-    color: #4f76ff;
-    font-size: 12px;
+
+    color: #6f8dff;
+
+    font-size: 10px;
     font-weight: 500;
-    line-height: 1.55;
+
+    line-height: 1.45;
+
     overflow-wrap: anywhere;
+
     white-space: pre-wrap;
   }
 
-  .empty-value {
-    color: #707070 !important;
-    font-weight: 400 !important;
+  .summary-row > strong.empty {
+    color: #666666;
   }
 
   .tag-list {
     display: flex;
+
     flex-wrap: wrap;
-    gap: 6px;
+
+    gap: 5px;
   }
 
-  .tag-list span {
-    padding: 6px 8px;
-    border: 1px solid #d0d0d0;
-    background: #0c0c0c;
-    color: #4f76ff;
-    font-size: 10px;
+  .tag-list > span {
+    padding: 4px 6px;
+
+    border: 1px solid #414141;
+
+    color: #6f8dff;
+
+    font-size: 8.5px;
+
+    line-height: 1.3;
   }
 
   .link-list {
     display: grid;
-    gap: 7px;
+
+    gap: 5px;
   }
 
   .link-list a {
-    color: #4f76ff;
-    font-size: 11px;
+    color: #6f8dff;
+
+    font-size: 9px;
+
     overflow-wrap: anywhere;
+
+    text-decoration: underline;
+
+    text-underline-offset: 3px;
   }
 
   .included-note {
-    margin-bottom: 8px;
-    padding: 14px;
-    display: grid;
-    grid-template-columns: 18px minmax(0, 1fr);
-    gap: 10px;
-    border: 1px solid #303030;
-    background: #090909;
-  }
-
-  .included-note > span {
-    color: #0043ff;
-  }
-
-  .included-note p {
-    margin: 0;
-    color: #8f8f8f;
-    font-size: 11px;
-    line-height: 1.55;
-  }
-
-  .timeline-summary-grid {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    column-gap: 28px;
-  }
-
-  .report-actions {
-    margin-top: clamp(40px, 7vw, 86px);
-    padding: clamp(26px, 4vw, 48px);
-    display: grid;
-    grid-template-columns:
-      minmax(190px, 0.65fr)
-      minmax(0, 1fr);
-    gap: 28px 50px;
-    border: 1px solid #292929;
-    background: #0c0c0c;
-  }
-
-  .selected-package-summary {
-    padding-right: 30px;
-    border-right: 1px solid #303030;
-  }
-
-  .selected-package-summary > span {
-    display: block;
-    margin-bottom: 10px;
-    color: #727272;
-    font-size: 9px;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-  }
-
-  .selected-package-summary strong {
-    color: #4f76ff;
-    font-size: 30px;
-  }
-
-  .selected-package-summary p,
-  .next-step-copy p {
-    margin: 0;
-    color: #858585;
-    font-size: 12px;
-    line-height: 1.6;
-  }
-
-  .next-step-copy p {
-    max-width: 680px;
-    margin-top: 10px;
-  }
-
-  .action-buttons {
     grid-column: 1 / -1;
-    padding-top: 24px;
+
+    display: grid;
+
+    grid-template-columns:
+      auto
+      minmax(0, 1fr);
+
+    gap: 8px;
+
+    align-items: start;
+
+    margin: 0 0 4px;
+
+    padding: 10px 11px;
+
+    border: 1px solid #292929;
+
+    background: #090909;
+
+    color: #858585;
+
+    font-size: 9px;
+
+    line-height: 1.45;
+  }
+
+  .included-note svg {
+    width: 14px;
+    height: 14px;
+
+    fill: none;
+
+    stroke: #5f80ff;
+
+    stroke-width: 1.8;
+  }
+
+  /* =========================================================
+     FINAL ACTION
+  ========================================================= */
+
+  .final-action {
+    display: grid;
+
+    grid-template-columns:
+      minmax(0, 1fr)
+      minmax(180px, 0.38fr);
+
+    gap: 28px;
+
+    padding: 24px;
+
+    border: 1px solid #303030;
+
+    border-top: 2px solid #0043ff;
+
+    background: #0b0b0b;
+  }
+
+  .final-copy h2 {
+    margin: 7px 0 7px;
+
+    color: #eeeeee;
+
+    font-size: clamp(23px, 2.5vw, 31px);
+
+    font-weight: 600;
+
+    line-height: 1.1;
+
+    letter-spacing: -0.03em;
+  }
+
+  .final-copy > p {
+    max-width: 680px;
+
+    margin: 0;
+
+    color: #898989;
+
+    font-size: 10.5px;
+
+    line-height: 1.5;
+  }
+
+  .personal-quote-note {
     display: flex;
-    align-items: flex-end;
+
+    align-items: center;
+
+    gap: 8px;
+
+    margin-top: 14px;
+
+    color: #777777;
+
+    font-size: 9px;
+  }
+
+  .personal-quote-note svg {
+    width: 18px;
+    height: 18px;
+
+    fill: none;
+
+    stroke: #5f80ff;
+
+    stroke-width: 1.4;
+  }
+
+  .selected-scope {
+    padding-left: 22px;
+
+    border-left: 1px solid #303030;
+  }
+
+  .selected-scope > span {
+    display: block;
+
+    margin-bottom: 8px;
+
+    color: #666666;
+
+    font-size: 8px;
+    font-weight: 700;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.07em;
+  }
+
+  .selected-scope strong {
+    display: block;
+
+    color: #6f8dff;
+
+    font-size: clamp(24px, 2.5vw, 32px);
+
+    font-weight: 600;
+
+    line-height: 1;
+  }
+
+  .selected-scope p {
+    margin: 0;
+
+    color: #707070;
+
+    font-size: 9.5px;
+
+    line-height: 1.45;
+  }
+
+  .actions {
+    grid-column: 1 / -1;
+
+    display: flex;
+
+    align-items: center;
     justify-content: space-between;
+
     gap: 20px;
+
+    padding-top: 18px;
+
     border-top: 1px solid #303030;
   }
 
   .edit-button,
   .quote-button {
-    min-height: 52px;
-    padding: 0 20px;
     display: inline-flex;
+
+    min-height: 44px;
+
     align-items: center;
     justify-content: center;
-    gap: 11px;
+
+    gap: 8px;
+
     border-radius: 0;
+
     font-family: inherit;
-    font-size: 10px;
+
+    font-size: 9px;
     font-weight: 700;
-    letter-spacing: 0.07em;
-    text-transform: uppercase;
+
     cursor: pointer;
   }
 
+  .edit-button svg,
+  .quote-button svg {
+    width: 15px;
+    height: 15px;
+
+    fill: none;
+
+    stroke: currentColor;
+
+    stroke-width: 1.6;
+
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
   .edit-button {
-    border: 1px solid #3b3b3b;
+    padding: 0 4px;
+
+    border: 0;
+
     background: transparent;
-    color: #bdbdbd;
+
+    color: #999999;
   }
 
-  .quote-action {
+  .edit-button:hover {
+    color: #ffffff;
+  }
+
+  .quote-area {
     display: flex;
+
     align-items: center;
-    justify-content: flex-end;
-    gap: 16px;
+
+    gap: 12px;
   }
 
-  .quote-action > span {
-    max-width: 250px;
-    color: #666666;
-    font-size: 10px;
+  .quote-hint {
+    max-width: 200px;
+
+    color: #626262;
+
+    font-size: 8.5px;
+
+    line-height: 1.4;
+
     text-align: right;
   }
 
   .quote-button {
-    min-width: 230px;
+    min-width: 210px;
+
+    padding: 0 15px;
+
     border: 1px solid #0043ff;
+
     background: #0043ff;
+
     color: #ffffff;
+  }
+
+  .quote-button:hover:not(:disabled) {
+    background: #1b56ff;
+
+    border-color: #1b56ff;
   }
 
   .quote-button:disabled {
     border-color: #292929;
+
     background: #151515;
+
     color: #555555;
-    cursor: not-allowed;
+
+    cursor: default;
   }
 
-  @media (max-width: 1050px) {
-    .report-hero,
-    .recommendation-overview {
+  .summary-accordion summary:focus-visible,
+  .edit-button:focus-visible,
+  .quote-button:focus-visible {
+    outline: 2px solid #0043ff;
+
+    outline-offset: 3px;
+  }
+
+  @media (max-width: 900px) {
+    .recommendation {
       grid-template-columns: 1fr;
     }
 
-    .hero-status {
-      border-top: 1px solid #292929;
+    .recommendation-info {
+      grid-template-columns:
+        minmax(150px, 0.35fr)
+        minmax(0, 1fr);
+    }
+  }
+
+  @media (max-width: 700px) {
+    .report-header {
+      grid-template-columns: 1fr;
+
+      gap: 12px;
+    }
+
+    .completion-mark {
+      width: 42px;
+      height: 42px;
+    }
+
+    .header-copy h1 {
+      font-size: clamp(28px, 8vw, 38px);
+    }
+
+    .recommendation {
+      padding: 18px;
+    }
+
+    .recommendation-info {
+      grid-template-columns: 1fr;
+    }
+
+    .summary-content {
+      grid-template-columns: 1fr;
+    }
+
+    .final-action {
+      grid-template-columns: 1fr;
+
+      padding: 18px;
+    }
+
+    .selected-scope {
+      padding: 18px 0 0;
+
+      border-top: 1px solid #303030;
+
       border-left: 0;
     }
 
-    .summary-grid {
-      grid-template-columns: 1fr;
-    }
-
-    .summary-card-wide {
-      grid-column: auto;
-    }
-  }
-
-  @media (max-width: 760px) {
-    h1 {
-      font-size: clamp(36px, 11vw, 52px);
-    }
-
-    .recommendation-details,
-    .timeline-summary-grid,
-    .report-actions {
-      grid-template-columns: 1fr;
-    }
-
-    .selected-package-summary {
-      padding-right: 0;
-      padding-bottom: 22px;
-      border-right: 0;
-      border-bottom: 1px solid #303030;
-    }
-
-    .action-buttons {
+    .actions {
       align-items: stretch;
+
       flex-direction: column-reverse;
     }
 
-    .quote-action {
+    .quote-area {
+      width: 100%;
+
       align-items: stretch;
+
       flex-direction: column;
     }
 
-    .quote-action > span {
+    .quote-hint {
       max-width: none;
+
       text-align: left;
     }
 
-    .edit-button,
     .quote-button {
       width: 100%;
+    }
+
+    .edit-button {
+      align-self: flex-start;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .summary-accordion summary > svg {
+      transition: none;
     }
   }
 </style>

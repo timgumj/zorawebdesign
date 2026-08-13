@@ -14,6 +14,12 @@ export const WEBSITE_TYPE_RECOMMENDED_FEATURE_IDS = {
     "testimonials",
   ],
 
+  other: [
+  "contact-form",
+  "analytics",
+  "newsletter",
+],
+
   freelancer: [
     "contact-form",
     "analytics",

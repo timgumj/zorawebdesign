@@ -5,73 +5,111 @@
     language === "en"
       ? {
           eyebrow: "Website Project Planning",
+
           title: "Website planner",
+
           description:
             "Answer a few focused questions and receive a tailored recommendation for the pages, features and level of support your website may need.",
-          time: "Takes about 3–5 minutes",
-          button: "Plan My Website →",
+
+          time: "About 3–5 minutes",
+
+          button: "Plan my website",
+
           privacy:
-            "You decide at the end whether you want to request a personal quote.",
-          previewLabel: "Project preview",
+            "No commitment. You decide at the end whether you want to request a personal quote.",
+
+          previewLabel: "Your project",
+
+          previewProgress: "Example",
+
           previewType: "Website type",
-          previewTypeValue: "Example: Business website",
+
+          previewTypeValue: "Business website",
+
           previewGoals: "Main goals",
+
           previewGoalOne: "Generate enquiries",
+
           previewGoalTwo: "Build trust",
+
           previewScope: "Recommended scope",
+
           previewScopeValue: "Growth",
-          previewNote: "Personalised from your answers",
+
+          previewNote: "Tailored from your answers",
+
+          outcomeEyebrow: "What you get",
+
           highlights: [
             {
               number: "01",
-              title: "Define your goals",
-              text: "Tell us what your website should achieve.",
+              title: "Clarify your project",
+              text: "Define what your website needs to achieve and where you are starting from.",
             },
             {
               number: "02",
-              title: "Choose your requirements",
-              text: "Select relevant pages, features and support.",
+              title: "Choose what you need",
+              text: "Select relevant pages, features, content needs and support.",
             },
             {
               number: "03",
-              title: "Compare your options",
-              text: "Review three project scopes and request a quote.",
+              title: "Get a recommendation",
+              text: "Receive a suggested project scope based on your answers.",
             },
           ],
         }
       : {
           eyebrow: "Website-Projektplanung",
+
           title: "Website Planner",
+
           description:
             "Beantworten Sie einige gezielte Fragen und erhalten Sie eine individuelle Empfehlung für Seiten, Funktionen und den passenden Betreuungsumfang Ihrer Website.",
-          time: "Dauert etwa 3–5 Minuten",
-          button: "Website planen →",
+
+          time: "Etwa 3–5 Minuten",
+
+          button: "Website planen",
+
           privacy:
-            "Am Ende entscheiden Sie, ob Sie ein persönliches Angebot anfordern möchten.",
-          previewLabel: "Projektvorschau",
+            "Unverbindlich. Am Ende entscheiden Sie selbst, ob Sie ein persönliches Angebot anfordern möchten.",
+
+          previewLabel: "Ihr Projekt",
+
+          previewProgress: "Beispiel",
+
           previewType: "Website-Art",
-          previewTypeValue: "Beispiel: Unternehmenswebsite",
+
+          previewTypeValue: "Unternehmenswebsite",
+
           previewGoals: "Wichtigste Ziele",
+
           previewGoalOne: "Mehr Anfragen",
+
           previewGoalTwo: "Vertrauen aufbauen",
+
           previewScope: "Empfohlener Umfang",
+
           previewScopeValue: "Growth",
-          previewNote: "Persönlich aus Ihren Antworten",
+
+          previewNote: "Individuell aus Ihren Antworten",
+
+          outcomeEyebrow: "Was Sie erhalten",
+
           highlights: [
             {
               number: "01",
-              title: "Ziele definieren",
-              text: "Teilen Sie uns mit, was Ihre Website erreichen soll.",
+              title: "Projekt klären",
+              text: "Definieren Sie, was Ihre Website erreichen soll und wo Ihr Projekt aktuell steht.",
             },
             {
               number: "02",
-              title: "Anforderungen wählen",
-              text: "Wählen Sie passende Seiten, Funktionen und Unterstützung.",
+              title: "Bedarf festlegen",
+              text: "Wählen Sie relevante Seiten, Funktionen, Inhalte und Unterstützung.",
             },
             {
               number: "03",
-              title: "Optionen vergleichen",
-              text: "Vergleichen Sie drei Projektumfänge und fordern Sie ein Angebot an.",
+              title: "Empfehlung erhalten",
+              text: "Erhalten Sie einen passenden Projektumfang auf Basis Ihrer Antworten.",
             },
           ],
         },
@@ -79,11 +117,19 @@
 </script>
 
 <section class="intro-card">
+  <!-- =====================================================
+       MAIN INTRO
+  ====================================================== -->
+
   <div class="intro-main">
     <div class="intro-copy">
-      <span class="eyebrow">{text.eyebrow}</span>
+      <span class="eyebrow">
+        {text.eyebrow}
+      </span>
 
-      <h1>{text.title}</h1>
+      <h1>
+        {text.title}
+      </h1>
 
       <p class="intro-description">
         {text.description}
@@ -91,69 +137,125 @@
 
       <div class="intro-actions">
         <button type="button" onclick={onStart}>
-          {text.button}
+          <span>
+            {text.button}
+          </span>
+
+          <span aria-hidden="true"> → </span>
         </button>
 
-        <span class="time-label">{text.time}</span>
+        <span class="time-label">
+          {text.time}
+        </span>
       </div>
 
-      <p class="privacy-note">{text.privacy}</p>
+      <p class="privacy-note">
+        {text.privacy}
+      </p>
     </div>
+
+    <!-- =====================================================
+         PREVIEW
+    ====================================================== -->
 
     <div class="intro-visual" aria-hidden="true">
       <div class="preview-window">
         <div class="preview-topbar">
-          <span>{text.previewLabel}</span>
-          <span class="preview-progress">01 / 06</span>
+          <span>
+            {text.previewLabel}
+          </span>
+
+          <span class="preview-progress">
+            {text.previewProgress}
+          </span>
         </div>
 
         <div class="preview-progress-track">
           <span></span>
         </div>
 
-        <div class="preview-section">
-          <span class="preview-kicker">01</span>
+        <div class="preview-content">
+          <div class="preview-section">
+            <span class="preview-kicker"> 01 </span>
 
-          <div>
-            <span class="preview-label">{text.previewType}</span>
-            <strong>{text.previewTypeValue}</strong>
-          </div>
-        </div>
+            <div>
+              <span class="preview-label">
+                {text.previewType}
+              </span>
 
-        <div class="preview-section">
-          <span class="preview-kicker">02</span>
-
-          <div>
-            <span class="preview-label">{text.previewGoals}</span>
-
-            <div class="preview-tags">
-              <span>{text.previewGoalOne}</span>
-              <span>{text.previewGoalTwo}</span>
+              <strong>
+                {text.previewTypeValue}
+              </strong>
             </div>
           </div>
-        </div>
 
-        <div class="preview-section recommended-section">
-          <span class="preview-kicker">03</span>
+          <div class="preview-section">
+            <span class="preview-kicker"> 02 </span>
 
-          <div>
-            <span class="preview-label">{text.previewScope}</span>
-            <strong class="scope-value">{text.previewScopeValue}</strong>
-            <small>{text.previewNote}</small>
+            <div>
+              <span class="preview-label">
+                {text.previewGoals}
+              </span>
+
+              <div class="preview-tags">
+                <span>
+                  {text.previewGoalOne}
+                </span>
+
+                <span>
+                  {text.previewGoalTwo}
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div class="preview-section recommended-section">
+            <span class="preview-kicker"> 03 </span>
+
+            <div>
+              <span class="preview-label">
+                {text.previewScope}
+              </span>
+
+              <strong class="scope-value">
+                {text.previewScopeValue}
+              </strong>
+
+              <small>
+                {text.previewNote}
+              </small>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
 
+  <!-- =====================================================
+       HIGHLIGHTS
+  ====================================================== -->
+
+  <div class="intro-outcome-heading">
+    <span>
+      {text.outcomeEyebrow}
+    </span>
+  </div>
+
   <div class="intro-highlights">
     {#each text.highlights as item}
       <article>
-        <span class="highlight-number">{item.number}</span>
+        <span class="highlight-number">
+          {item.number}
+        </span>
 
         <div>
-          <h2>{item.title}</h2>
-          <p>{item.text}</p>
+          <h2>
+            {item.title}
+          </h2>
+
+          <p>
+            {item.text}
+          </p>
         </div>
       </article>
     {/each}
@@ -161,164 +263,293 @@
 </section>
 
 <style>
+  /* =========================================================
+     CARD
+  ========================================================= */
+
   .intro-card {
     width: 100%;
+
     overflow: hidden;
+
     border: 1px solid #292929;
+
     background: #0b0b0b;
+
     box-sizing: border-box;
+
     font-family: "DM Sans", Arial, sans-serif;
   }
 
+  /* =========================================================
+     MAIN
+  ========================================================= */
+
   .intro-main {
-    min-height: 480px;
     display: grid;
-    grid-template-columns: minmax(0, 1.15fr) minmax(320px, 0.85fr);
+
+    grid-template-columns:
+      minmax(0, 1.15fr)
+      minmax(320px, 0.85fr);
+
+    min-height: 470px;
   }
 
+  /* =========================================================
+     COPY
+  ========================================================= */
+
   .intro-copy {
-    padding: clamp(30px, 4vw, 56px);
     display: flex;
+
     flex-direction: column;
+
     justify-content: center;
+
+    padding: clamp(32px, 4vw, 58px);
   }
 
   .eyebrow {
     display: block;
-    margin-bottom: 16px;
-    color: #929292;
+
+    margin-bottom: 14px;
+
+    color: #4f76ff;
+
     font-size: 10px;
     font-weight: 700;
-    letter-spacing: 0.1em;
+
+    line-height: 1;
+
+    letter-spacing: 0.11em;
+
     text-transform: uppercase;
   }
 
   h1 {
     max-width: 760px;
-    margin: 0 0 22px;
+
+    margin: 0 0 20px;
+
     color: #f3f3f3;
+
     font-family: "DM Sans", Arial, sans-serif;
-    font-size: clamp(34px, 4vw, 52px);
-    font-weight: 700;
+
+    font-size: clamp(36px, 4.3vw, 56px);
+
+    font-weight: 600;
+
     line-height: 0.98;
-    letter-spacing: -0.05em;
+
+    letter-spacing: -0.045em;
+
     text-transform: uppercase;
+
+    text-wrap: balance;
   }
 
   .intro-description {
-    max-width: 650px;
+    max-width: 660px;
+
     margin: 0;
-    color: #b4b4b4;
-    font-size: 15px;
+
+    color: #a4a4a4;
+
+    font-size: 14px;
+
     line-height: 1.7;
   }
 
+  /* =========================================================
+     CTA
+  ========================================================= */
+
   .intro-actions {
-    margin-top: 30px;
     display: flex;
+
     align-items: center;
-    gap: 18px;
+
     flex-wrap: wrap;
+
+    gap: 18px;
+
+    margin-top: 30px;
   }
 
   button {
+    display: inline-flex;
+
     min-height: 48px;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 10px;
+
     padding: 0 22px;
+
     border: 1px solid #0043ff;
+
     border-radius: 0;
+
     background: #0043ff;
+
     color: #ffffff;
+
     font-family: "DM Sans", Arial, sans-serif;
-    font-size: 14px;
+
+    font-size: 11px;
     font-weight: 700;
+
     letter-spacing: 0.08em;
+
     text-transform: uppercase;
+
     cursor: pointer;
+
     transition:
-      background 0.2s ease,
-      border-color 0.2s ease;
+      opacity 160ms ease,
+      background 160ms ease,
+      border-color 160ms ease;
   }
 
   button:hover {
-    border-color: #1b56ff;
-    background: #1b56ff;
+    opacity: 0.9;
   }
 
   button:focus-visible {
     outline: 2px solid #0043ff;
+
     outline-offset: 4px;
   }
 
   .time-label {
-    color: #e0e0e0;
-    font-size: 14px;
-    font-weight: 600;
-    letter-spacing: 0.05em;
+    color: #9a9a9a;
+
+    font-size: 10px;
+    font-weight: 700;
+
+    letter-spacing: 0.07em;
+
     text-transform: uppercase;
   }
 
   .privacy-note {
-    max-width: 570px;
-    margin: 22px 0 0;
-    color: #777777;
-    font-size: 14px;
-    line-height: 1.6;
+    max-width: 590px;
+
+    margin: 18px 0 0;
+
+    color: #696969;
+
+    font-size: 10px;
+
+    line-height: 1.55;
   }
 
+  /* =========================================================
+     VISUAL
+  ========================================================= */
+
   .intro-visual {
-    min-height: 100%;
-    padding: clamp(28px, 4vw, 46px);
-    border-left: 1px solid #292929;
     display: grid;
+
+    min-height: 100%;
+
     place-items: center;
+
+    padding: clamp(28px, 4vw, 46px);
+
     overflow: hidden;
+
+    border-left: 1px solid #292929;
+
     background: #0d0d0d;
+
     box-sizing: border-box;
   }
 
+  /* =========================================================
+     PREVIEW WINDOW
+  ========================================================= */
+
   .preview-window {
     width: min(390px, 100%);
+
     border: 1px solid #353535;
+
     background: #090909;
   }
 
   .preview-topbar {
-    min-height: 48px;
-    padding: 0 16px;
     display: flex;
+
+    min-height: 46px;
+
     align-items: center;
     justify-content: space-between;
+
+    gap: 12px;
+
+    padding: 0 15px;
+
     border-bottom: 1px solid #292929;
-    color: #8f8f8f;
+
+    color: #777777;
+
     font-size: 9px;
     font-weight: 700;
-    letter-spacing: 0.1em;
+
+    letter-spacing: 0.09em;
+
     text-transform: uppercase;
   }
 
   .preview-progress {
-    color: #0043ff;
+    color: #5f80ff;
   }
 
   .preview-progress-track {
-    height: 2px;
+    width: 100%;
+    height: 1px;
+
+    overflow: hidden;
+
     background: #262626;
   }
 
   .preview-progress-track span {
     display: block;
-    width: 34%;
+
+    width: 46%;
     height: 100%;
+
     background: #0043ff;
   }
 
-  .preview-section {
-    min-height: 94px;
-    padding: 18px;
+  .preview-content {
     display: grid;
-    grid-template-columns: 24px minmax(0, 1fr);
+  }
+
+  /* =========================================================
+     PREVIEW SECTIONS
+  ========================================================= */
+
+  .preview-section {
+    display: grid;
+
+    grid-template-columns:
+      24px
+      minmax(0, 1fr);
+
     gap: 14px;
+
+    min-height: 90px;
+
+    padding: 17px;
+
     border-bottom: 1px solid #292929;
+
+    box-sizing: border-box;
   }
 
   .preview-section:last-child {
@@ -326,71 +557,136 @@
   }
 
   .preview-kicker {
-    color: #777777;
+    color: #5f80ff;
+
     font-size: 9px;
     font-weight: 700;
   }
 
   .preview-label {
     display: block;
-    margin-bottom: 8px;
+
+    margin-bottom: 7px;
+
     color: #747474;
-    font-size: 9px;
+
+    font-size: 8px;
     font-weight: 700;
+
     letter-spacing: 0.08em;
+
     text-transform: uppercase;
   }
 
   .preview-section strong {
     display: block;
+
     color: #ececec;
-    font-size: 15px;
+
+    font-size: 13px;
     font-weight: 600;
+
+    line-height: 1.35;
   }
+
+  /* =========================================================
+     PREVIEW TAGS
+  ========================================================= */
 
   .preview-tags {
     display: flex;
+
     flex-wrap: wrap;
+
     gap: 6px;
   }
 
   .preview-tags span {
     padding: 5px 7px;
-    border: 1px solid #d0d0d0;
-    background: #0b0b0b;
-    color: #4f76ff;
-    font-size: 14px;
+
+    border: 1px solid #454545;
+
+    color: #5f80ff;
+
+    font-size: 9px;
+
+    line-height: 1.3;
   }
 
+  /* =========================================================
+     RECOMMENDATION PREVIEW
+  ========================================================= */
+
   .recommended-section {
-    background: #0b0b0b;
+    background: rgba(0, 67, 255, 0.035);
   }
 
   .scope-value {
-    color: #4f76ff !important;
+    color: #6e8cff !important;
   }
 
   .recommended-section small {
     display: block;
+
     margin-top: 6px;
-    color: #7e7e7e;
-    font-size: 10px;
+
+    color: #777777;
+
+    font-size: 9px;
+
+    line-height: 1.4;
   }
+
+  /* =========================================================
+     OUTCOME HEADING
+  ========================================================= */
+
+  .intro-outcome-heading {
+    padding: 16px 24px;
+
+    border-top: 1px solid #292929;
+
+    border-bottom: 1px solid #292929;
+  }
+
+  .intro-outcome-heading span {
+    color: #5f80ff;
+
+    font-size: 9px;
+    font-weight: 700;
+
+    letter-spacing: 0.1em;
+
+    text-transform: uppercase;
+  }
+
+  /* =========================================================
+     HIGHLIGHTS
+  ========================================================= */
 
   .intro-highlights {
     display: grid;
+
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    border-top: 1px solid #292929;
   }
 
   .intro-highlights article {
-    min-height: 130px;
-    padding: 24px;
     display: grid;
-    grid-template-columns: auto 1fr;
-    gap: 18px;
+
+    grid-template-columns:
+      auto
+      minmax(0, 1fr);
+
+    gap: 16px;
+
     align-items: start;
+
+    min-height: 122px;
+
+    padding: 22px;
+
     border-right: 1px solid #292929;
+
     box-sizing: border-box;
   }
 
@@ -399,50 +695,115 @@
   }
 
   .highlight-number {
-    color: #0043ff;
-    font-size: 11px;
+    color: #5f80ff;
+
+    font-size: 10px;
     font-weight: 700;
+
     letter-spacing: 0.08em;
   }
 
   .intro-highlights h2 {
-    margin: 0 0 8px;
-    color: #f1f1f1;
-    font-size: 14px;
-    font-weight: 700;
-    line-height: 1.25;
-    letter-spacing: -0.015em;
+    margin: 0 0 7px;
+
+    color: #eeeeee;
+
+    font-size: 12px;
+    font-weight: 600;
+
+    line-height: 1.3;
+
+    letter-spacing: 0.01em;
+
     text-transform: uppercase;
   }
 
   .intro-highlights p {
     margin: 0;
-    color: #8f8f8f;
-    font-size: 14px;
-    line-height: 1.6;
+
+    color: #898989;
+
+    font-size: 10.5px;
+
+    line-height: 1.55;
   }
+
+  /* =========================================================
+     TABLET
+  ========================================================= */
 
   @media (max-width: 900px) {
     .intro-main {
-      min-height: auto;
+      min-height: 0;
+
       grid-template-columns: 1fr;
     }
 
     .intro-visual {
-      min-height: 360px;
+      min-height: 330px;
+
       border-top: 1px solid #292929;
+
       border-left: 0;
     }
   }
 
+  /* =========================================================
+     MOBILE
+  ========================================================= */
+
   @media (max-width: 700px) {
+    .intro-copy {
+      padding: 28px 22px;
+    }
+
+    h1 {
+      font-size: clamp(32px, 10vw, 44px);
+    }
+
+    .intro-description {
+      font-size: 12px;
+    }
+
+    .intro-actions {
+      align-items: stretch;
+
+      flex-direction: column;
+
+      margin-top: 25px;
+    }
+
+    button {
+      width: 100%;
+
+      min-height: 48px;
+    }
+
+    .time-label {
+      text-align: center;
+    }
+
+    .privacy-note {
+      margin-top: 16px;
+
+      text-align: center;
+    }
+
+    .intro-visual {
+      min-height: auto;
+
+      padding: 22px;
+    }
+
     .intro-highlights {
       grid-template-columns: 1fr;
     }
 
     .intro-highlights article {
       min-height: auto;
+
       border-right: 0;
+
       border-bottom: 1px solid #292929;
     }
 
@@ -451,27 +812,37 @@
     }
   }
 
-  @media (max-width: 520px) {
+  /* =========================================================
+     SMALL MOBILE
+  ========================================================= */
+
+  @media (max-width: 430px) {
     .intro-copy {
-      padding: 24px;
-    }
-
-    h1 {
-      font-size: clamp(32px, 11vw, 44px);
-    }
-
-    .intro-actions {
-      align-items: stretch;
-      flex-direction: column;
-    }
-
-    button {
-      width: 100%;
+      padding: 24px 18px;
     }
 
     .intro-visual {
-      min-height: auto;
-      padding: 24px;
+      padding: 18px;
+    }
+
+    .preview-section {
+      min-height: 84px;
+
+      padding: 14px;
+    }
+
+    .intro-highlights article {
+      padding: 18px;
+    }
+  }
+
+  /* =========================================================
+     REDUCED MOTION
+  ========================================================= */
+
+  @media (prefers-reduced-motion: reduce) {
+    button {
+      transition: none;
     }
   }
 </style>

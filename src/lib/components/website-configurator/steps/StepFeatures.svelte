@@ -4,7 +4,6 @@
     getFeaturesContent,
     getRecommendedFeatureIds,
   } from "$lib/data/website-configurator/features-data.js";
-  import { getWebsiteTypeById } from "$lib/data/website-configurator/configurator-data.js";
 
   let {
     language = "de",
@@ -12,7 +11,7 @@
     selectedFeatures = $bindable([]),
     websiteLanguages = $bindable(""),
     customIntegration = $bindable(""),
-
+    onBack = () => {},
     onContinue = () => {},
   } = $props();
 
@@ -21,9 +20,7 @@
   let selectedExtraIds = $state([]);
 
   const text = $derived(getFeaturesContent(language));
-  const selectedWebsiteTypeOption = $derived(
-    getWebsiteTypeById(selectedWebsiteType, language),
-  );
+
   const recommendedFeatureIds = $derived(
     getRecommendedFeatureIds(selectedWebsiteType),
   );
@@ -31,299 +28,336 @@
   const ui = $derived(
     language === "en"
       ? {
-          step: "Step 5",
-          title: "Website functionality",
-          intro: "Let’s decide what your visitors should be able to do.",
-          websiteType: "Selected website type",
-          progress: ["Purpose", "Essentials", "Extras", "Languages"],
-          purposeEyebrow: "Main purpose",
-          purposeTitle:
-            "What is the single most important thing your website should do?",
+          stages: {
+            purpose: "Purpose",
+            essentials: "Essentials",
+            extras: "Additional",
+            languages: "Languages",
+          },
+
+          optional: "Optional",
+          selected: "Selected",
+
+          purposeTitle: "What is the main thing your website should do?",
+
           purposeText:
-            "Choose the closest answer. You can add more afterwards.",
-          detailEyebrow: "Essential functions",
-          detailTitle: "What does this need to include?",
-          detailText: "We have kept this to the fundamentals.",
-          extrasEyebrow: "Optional",
-          extrasTitle: "Should the website do anything else?",
-          extrasText: "Select only additional areas that are clearly relevant.",
-          noExtras: "No, that is all",
-          languageEyebrow: "Almost done",
+            "Choose the option that comes closest. You can add other functions afterwards.",
+
+          detailTitle: "Which functions are essential for that?",
+
+          detailText:
+            "We have suggested a suitable starting point. Keep the functions you need and remove anything unnecessary.",
+
+          extrasTitle: "Would anything else be useful?",
+
+          extrasText:
+            "This step is optional. Add only functions that clearly support the website.",
+
           languageTitle: "How many languages will your website have?",
-          languageText: "You can tell us which languages later.",
+
+          languageText:
+            "Choose the approximate number for now. The exact languages can be confirmed later.",
+
+          noExtras: "No additional functions",
+
           back: "Back",
           continue: "Continue",
           finish: "Continue to timeline",
-          completed: "All Step 5 questions answered.",
+
           required: "Choose one option to continue.",
-          detailRequired: "Choose at least one essential function.",
+
+          detailRequired: "Select at least one essential function.",
+
           languageRequired: "Choose the number of website languages.",
-          summary: "Step 5 summary",
+
           mainPurpose: "Main purpose",
-          additional: "Additional",
-          languages: "Languages",
-          none: "None",
-          notSelected: "Not selected",
-          changeLater: "Everything can still be changed later.",
-          purposes: [
-            {
-              id: "enquiries",
-              label: "Generate enquiries",
-              description: "Help visitors contact you or request an offer.",
-              featureIds: ["contact-form", "testimonials", "map-location"],
-            },
-            {
-              id: "commerce",
-              label: "Sell products",
-              description: "Present products and accept online payments.",
-              featureIds: [
-                "product-management",
-                "online-payments",
-                "order-emails",
-                "customer-account",
-              ],
-            },
-            {
-              id: "booking",
-              label: "Accept bookings",
-              description:
-                "Let visitors reserve appointments, services or places.",
-              featureIds: [
-                "appointment-booking",
-                "availability-calendar",
-                "reservation-system",
-                "registration-form",
-              ],
-            },
-            {
-              id: "portfolio",
-              label: "Showcase my work",
-              description:
-                "Present projects, images, services or case studies.",
-              featureIds: [
-                "portfolio-filter",
-                "gallery-lightbox",
-                "testimonials",
-                "contact-form",
-              ],
-            },
-            {
-              id: "content",
-              label: "Share information",
-              description: "Publish useful content, news or resources.",
-              featureIds: [
-                "content-management",
-                "newsletter",
-                "advanced-search",
-                "document-library",
-              ],
-            },
-            {
-              id: "community",
-              label: "Build a community",
-              description: "Create member access or protected content.",
-              featureIds: [
-                "user-registration",
-                "member-login",
-                "protected-content",
-                "user-dashboard",
-              ],
-            },
-            {
-              id: "unsure",
-              label: "I’m not sure yet",
-              description: "We will recommend the right setup later.",
-              featureIds: [],
-            },
-          ],
-          extras: [
-            { id: "events", label: "Events", featureIds: ["event-management"] },
-            {
-              id: "newsletter",
-              label: "Newsletter",
-              featureIds: ["newsletter"],
-            },
-            {
-              id: "members",
-              label: "Members area",
-              featureIds: ["member-login", "protected-content"],
-            },
-            {
-              id: "payments",
-              label: "Online payments",
-              featureIds: ["online-payments"],
-            },
-            {
-              id: "gallery",
-              label: "Gallery or portfolio",
-              featureIds: ["gallery-lightbox", "portfolio-filter"],
-            },
-            {
-              id: "search",
-              label: "Advanced search",
-              featureIds: ["advanced-search"],
-            },
-          ],
         }
       : {
-          step: "Schritt 5",
-          title: "Website-Funktionen",
-          intro:
-            "Legen wir fest, was Ihre Besucher auf der Website tun können sollen.",
-          websiteType: "Gewählte Website-Art",
-          progress: ["Zweck", "Grundlagen", "Zusätzlich", "Sprachen"],
-          purposeEyebrow: "Hauptfunktion",
+          stages: {
+            purpose: "Zweck",
+            essentials: "Grundlagen",
+            extras: "Zusätzlich",
+            languages: "Sprachen",
+          },
+
+          optional: "Optional",
+          selected: "Ausgewählt",
+
           purposeTitle: "Was ist die wichtigste Aufgabe Ihrer Website?",
+
           purposeText:
-            "Wählen Sie die passendste Antwort. Weitere Funktionen können Sie danach ergänzen.",
-          detailEyebrow: "Wesentliche Funktionen",
-          detailTitle: "Was soll dafür enthalten sein?",
-          detailText: "Wir zeigen nur die wichtigsten Grundlagen.",
-          extrasEyebrow: "Optional",
+            "Wählen Sie die Antwort, die am besten passt. Weitere Funktionen können Sie anschließend ergänzen.",
+
+          detailTitle: "Welche Funktionen sind dafür wesentlich?",
+
+          detailText:
+            "Wir haben eine passende Grundlage vorgeschlagen. Behalten Sie, was Sie benötigen, und entfernen Sie Unnötiges.",
+
           extrasTitle: "Soll die Website noch etwas Zusätzliches können?",
+
           extrasText:
-            "Wählen Sie nur weitere Bereiche, die eindeutig relevant sind.",
-          noExtras: "Nein, das ist alles",
-          languageEyebrow: "Fast geschafft",
+            "Dieser Schritt ist optional. Ergänzen Sie nur Funktionen, die für das Projekt wirklich sinnvoll sind.",
+
           languageTitle: "Wie viele Sprachen soll Ihre Website haben?",
+
           languageText:
-            "Welche Sprachen es sind, können Sie uns später mitteilen.",
+            "Wählen Sie zunächst nur die ungefähre Anzahl. Die konkreten Sprachen können später festgelegt werden.",
+
+          noExtras: "Keine zusätzlichen Funktionen",
+
           back: "Zurück",
           continue: "Weiter",
           finish: "Weiter zum Zeitplan",
-          completed: "Alle Fragen in Schritt 5 sind beantwortet.",
+
           required: "Bitte wählen Sie eine Option.",
+
           detailRequired:
             "Bitte wählen Sie mindestens eine wesentliche Funktion.",
+
           languageRequired: "Bitte wählen Sie die Anzahl der Website-Sprachen.",
-          summary: "Übersicht Schritt 5",
+
           mainPurpose: "Hauptfunktion",
-          additional: "Zusätzlich",
-          languages: "Sprachen",
-          none: "Keine",
-          notSelected: "Nicht gewählt",
-          changeLater: "Alle Angaben können später noch geändert werden.",
-          purposes: [
-            {
-              id: "enquiries",
-              label: "Anfragen erhalten",
-              description:
-                "Besucher sollen Kontakt aufnehmen oder ein Angebot anfragen.",
-              featureIds: ["contact-form", "testimonials", "map-location"],
-            },
-            {
-              id: "commerce",
-              label: "Produkte verkaufen",
-              description:
-                "Produkte präsentieren und Online-Zahlungen ermöglichen.",
-              featureIds: [
-                "product-management",
-                "online-payments",
-                "order-emails",
-                "customer-account",
-              ],
-            },
-            {
-              id: "booking",
-              label: "Buchungen annehmen",
-              description:
-                "Termine, Leistungen oder Plätze online reservieren lassen.",
-              featureIds: [
-                "appointment-booking",
-                "availability-calendar",
-                "reservation-system",
-                "registration-form",
-              ],
-            },
-            {
-              id: "portfolio",
-              label: "Arbeiten präsentieren",
-              description:
-                "Projekte, Bilder, Leistungen oder Referenzen zeigen.",
-              featureIds: [
-                "portfolio-filter",
-                "gallery-lightbox",
-                "testimonials",
-                "contact-form",
-              ],
-            },
-            {
-              id: "content",
-              label: "Informationen teilen",
-              description:
-                "Inhalte, Neuigkeiten oder Dokumente veröffentlichen.",
-              featureIds: [
-                "content-management",
-                "newsletter",
-                "advanced-search",
-                "document-library",
-              ],
-            },
-            {
-              id: "community",
-              label: "Community aufbauen",
-              description:
-                "Mitgliederzugänge oder geschützte Inhalte anbieten.",
-              featureIds: [
-                "user-registration",
-                "member-login",
-                "protected-content",
-                "user-dashboard",
-              ],
-            },
-            {
-              id: "unsure",
-              label: "Noch nicht sicher",
-              description: "Wir empfehlen später die passende Lösung.",
-              featureIds: [],
-            },
-          ],
-          extras: [
-            {
-              id: "events",
-              label: "Veranstaltungen",
-              featureIds: ["event-management"],
-            },
-            {
-              id: "newsletter",
-              label: "Newsletter",
-              featureIds: ["newsletter"],
-            },
-            {
-              id: "members",
-              label: "Mitgliederbereich",
-              featureIds: ["member-login", "protected-content"],
-            },
-            {
-              id: "payments",
-              label: "Online-Zahlungen",
-              featureIds: ["online-payments"],
-            },
-            {
-              id: "gallery",
-              label: "Galerie oder Portfolio",
-              featureIds: ["gallery-lightbox", "portfolio-filter"],
-            },
-            {
-              id: "search",
-              label: "Erweiterte Suche",
-              featureIds: ["advanced-search"],
-            },
-          ],
         },
   );
 
+  const purposes = $derived(
+    language === "en"
+      ? [
+          {
+            id: "enquiries",
+            label: "Generate enquiries",
+            description:
+              "Help visitors contact you, request information or ask for an offer.",
+            featureIds: ["contact-form", "testimonials", "map-location"],
+          },
+          {
+            id: "commerce",
+            label: "Sell products",
+            description:
+              "Present products and accept online payments through the website.",
+            featureIds: [
+              "product-management",
+              "online-payments",
+              "order-emails",
+              "customer-account",
+            ],
+          },
+          {
+            id: "booking",
+            label: "Accept bookings",
+            description:
+              "Let visitors reserve appointments, services or places online.",
+            featureIds: [
+              "appointment-booking",
+              "availability-calendar",
+              "reservation-system",
+              "registration-form",
+            ],
+          },
+          {
+            id: "portfolio",
+            label: "Showcase my work",
+            description:
+              "Present projects, images, services, case studies or references.",
+            featureIds: [
+              "portfolio-filter",
+              "gallery-lightbox",
+              "testimonials",
+              "contact-form",
+            ],
+          },
+          {
+            id: "content",
+            label: "Share information",
+            description:
+              "Publish articles, news, resources, documents or other useful content.",
+            featureIds: [
+              "content-management",
+              "newsletter",
+              "advanced-search",
+              "document-library",
+            ],
+          },
+          {
+            id: "community",
+            label: "Build a community",
+            description: "Create member access, accounts or protected areas.",
+            featureIds: [
+              "user-registration",
+              "member-login",
+              "protected-content",
+              "user-dashboard",
+            ],
+          },
+          {
+            id: "unsure",
+            label: "I’m not sure yet",
+            description:
+              "We can recommend a suitable setup based on the rest of your project.",
+            featureIds: [],
+          },
+        ]
+      : [
+          {
+            id: "enquiries",
+            label: "Anfragen erhalten",
+            description:
+              "Besucher sollen Kontakt aufnehmen, Informationen anfragen oder ein Angebot erhalten können.",
+            featureIds: ["contact-form", "testimonials", "map-location"],
+          },
+          {
+            id: "commerce",
+            label: "Produkte verkaufen",
+            description:
+              "Produkte präsentieren und Zahlungen direkt über die Website ermöglichen.",
+            featureIds: [
+              "product-management",
+              "online-payments",
+              "order-emails",
+              "customer-account",
+            ],
+          },
+          {
+            id: "booking",
+            label: "Buchungen annehmen",
+            description:
+              "Termine, Leistungen oder Plätze direkt online reservieren lassen.",
+            featureIds: [
+              "appointment-booking",
+              "availability-calendar",
+              "reservation-system",
+              "registration-form",
+            ],
+          },
+          {
+            id: "portfolio",
+            label: "Arbeiten präsentieren",
+            description:
+              "Projekte, Bilder, Leistungen, Fallstudien oder Referenzen zeigen.",
+            featureIds: [
+              "portfolio-filter",
+              "gallery-lightbox",
+              "testimonials",
+              "contact-form",
+            ],
+          },
+          {
+            id: "content",
+            label: "Informationen teilen",
+            description:
+              "Artikel, Neuigkeiten, Ressourcen, Dokumente oder andere Inhalte veröffentlichen.",
+            featureIds: [
+              "content-management",
+              "newsletter",
+              "advanced-search",
+              "document-library",
+            ],
+          },
+          {
+            id: "community",
+            label: "Community aufbauen",
+            description:
+              "Mitgliederzugänge, Benutzerkonten oder geschützte Inhalte anbieten.",
+            featureIds: [
+              "user-registration",
+              "member-login",
+              "protected-content",
+              "user-dashboard",
+            ],
+          },
+          {
+            id: "unsure",
+            label: "Noch nicht sicher",
+            description:
+              "Wir können auf Basis des restlichen Projekts eine passende Lösung empfehlen.",
+            featureIds: [],
+          },
+        ],
+  );
+
+  const extras = $derived(
+    language === "en"
+      ? [
+          {
+            id: "events",
+            label: "Events",
+            featureIds: ["event-management"],
+          },
+          {
+            id: "newsletter",
+            label: "Newsletter",
+            featureIds: ["newsletter"],
+          },
+          {
+            id: "members",
+            label: "Members area",
+            featureIds: ["member-login", "protected-content"],
+          },
+          {
+            id: "payments",
+            label: "Online payments",
+            featureIds: ["online-payments"],
+          },
+          {
+            id: "gallery",
+            label: "Gallery or portfolio",
+            featureIds: ["gallery-lightbox", "portfolio-filter"],
+          },
+          {
+            id: "search",
+            label: "Advanced search",
+            featureIds: ["advanced-search"],
+          },
+        ]
+      : [
+          {
+            id: "events",
+            label: "Veranstaltungen",
+            featureIds: ["event-management"],
+          },
+          {
+            id: "newsletter",
+            label: "Newsletter",
+            featureIds: ["newsletter"],
+          },
+          {
+            id: "members",
+            label: "Mitgliederbereich",
+            featureIds: ["member-login", "protected-content"],
+          },
+          {
+            id: "payments",
+            label: "Online-Zahlungen",
+            featureIds: ["online-payments"],
+          },
+          {
+            id: "gallery",
+            label: "Galerie oder Portfolio",
+            featureIds: ["gallery-lightbox", "portfolio-filter"],
+          },
+          {
+            id: "search",
+            label: "Erweiterte Suche",
+            featureIds: ["advanced-search"],
+          },
+        ],
+  );
+
   const selectedPurpose = $derived(
-    ui.purposes.find((item) => item.id === selectedPurposeId) ?? null,
+    purposes.find((item) => item.id === selectedPurposeId) ?? null,
   );
 
   const purposeFeatureIds = $derived.by(() => {
-    if (!selectedPurpose) return [];
+    if (!selectedPurpose) {
+      return [];
+    }
+
     if (selectedPurpose.id === "unsure") {
       return recommendedFeatureIds.length
         ? recommendedFeatureIds.slice(0, 4)
         : ["contact-form"];
     }
+
     return selectedPurpose.featureIds;
   });
 
@@ -331,14 +365,6 @@
     purposeFeatureIds
       .map((id) => getFeatureOptionById(id, language))
       .filter(Boolean),
-  );
-
-  const selectedExtras = $derived(
-    ui.extras.filter((item) => selectedExtraIds.includes(item.id)),
-  );
-
-  const selectedLanguage = $derived(
-    text.languageOptions.find((item) => item.id === websiteLanguages) ?? null,
   );
 
   const canMoveForward = $derived(
@@ -353,13 +379,15 @@
 
   function selectPurpose(option) {
     const managedIds = new Set([
-      ...ui.purposes.flatMap((item) => item.featureIds),
-      ...ui.extras.flatMap((item) => item.featureIds),
+      ...purposes.flatMap((item) => item.featureIds),
+      ...extras.flatMap((item) => item.featureIds),
       ...recommendedFeatureIds,
     ]);
 
     selectedFeatures = selectedFeatures.filter((id) => !managedIds.has(id));
+
     selectedPurposeId = option.id;
+
     selectedExtraIds = [];
 
     const defaults =
@@ -381,783 +409,1364 @@
 
     if (active) {
       selectedExtraIds = selectedExtraIds.filter((id) => id !== option.id);
+
       selectedFeatures = selectedFeatures.filter(
         (id) =>
           !option.featureIds.includes(id) || purposeFeatureIds.includes(id),
       );
+
       return;
     }
 
     selectedExtraIds = [...selectedExtraIds, option.id];
+
     selectedFeatures = [
-      ...new Set([...selectedFeatures, option.featureIds[0]]),
+      ...new Set([...selectedFeatures, ...option.featureIds]),
     ];
   }
 
   function clearExtras() {
-    const extraIds = new Set(ui.extras.flatMap((item) => item.featureIds));
+    const extraFeatureIds = new Set(extras.flatMap((item) => item.featureIds));
+
     selectedExtraIds = [];
+
     selectedFeatures = selectedFeatures.filter(
-      (id) => !extraIds.has(id) || purposeFeatureIds.includes(id),
+      (id) => !extraFeatureIds.has(id) || purposeFeatureIds.includes(id),
     );
   }
 
+  function goForward() {
+    if (!canMoveForward) {
+      return;
+    }
+
+    if (screen < 4) {
+      screen += 1;
+      return;
+    }
+
+    onContinue();
+  }
+
+  function goBack() {
+    if (screen > 1) {
+      screen -= 1;
+      return;
+    }
+
+    onBack();
+  }
+
   function handleKeydown(event, callback) {
-    if (event.key !== "Enter" && event.key !== " ") return;
+    if (event.key !== "Enter" && event.key !== " ") {
+      return;
+    }
+
     event.preventDefault();
+
     callback();
+  }
+
+  function getPurposeIcon(id) {
+    const iconMap = {
+      enquiries: "message",
+      commerce: "shop",
+      booking: "calendar",
+      portfolio: "portfolio",
+      content: "document",
+      community: "community",
+      unsure: "question",
+    };
+
+    return iconMap[id] ?? "document";
+  }
+
+  function getFeatureIcon(id) {
+    const iconMap = {
+      "contact-form": "message",
+      newsletter: "mail",
+      analytics: "analytics",
+      "map-location": "location",
+      "social-sharing": "share",
+      testimonials: "reviews",
+      "content-management": "document",
+      "advanced-search": "search",
+
+      "appointment-booking": "calendar",
+      "booking-system": "calendar",
+      "reservation-system": "calendar",
+      "availability-calendar": "calendar",
+      "registration-form": "registration",
+      "event-management": "event",
+      ticketing: "ticket",
+
+      "online-payments": "payment",
+      "product-management": "product",
+      "customer-account": "account",
+      "order-emails": "mail",
+      "subscription-payments": "repeat-payment",
+      "donation-payment": "donation",
+      "discount-codes": "tag",
+
+      "user-registration": "registration",
+      "member-login": "login",
+      "protected-content": "lock",
+      "user-dashboard": "dashboard",
+      "user-roles": "users",
+
+      "portfolio-filter": "portfolio",
+      "gallery-lightbox": "gallery",
+      "course-management": "education",
+      "menu-management": "menu",
+      "property-filter": "filter",
+      "document-library": "library",
+
+      "crm-integration": "integration",
+      "email-marketing": "mail",
+      "calendar-integration": "calendar",
+      "accounting-integration": "integration",
+      "external-api": "api",
+      automation: "automation",
+
+      "secure-forms": "lock",
+      "custom-database": "database",
+      "advanced-filtering": "filter",
+      "interactive-calculator": "calculator",
+      "ai-function": "ai",
+      "custom-feature": "custom",
+    };
+
+    return iconMap[id] ?? "custom";
+  }
+
+  function getExtraIcon(id) {
+    const iconMap = {
+      events: "event",
+      newsletter: "mail",
+      members: "users",
+      payments: "payment",
+      gallery: "gallery",
+      search: "search",
+    };
+
+    return iconMap[id] ?? "custom";
   }
 </script>
 
-<div class="step-shell">
-  <header class="compact-hero">
-    <div>
-      <span class="step-label">{ui.step}</span>
-      <h2>{ui.title}</h2>
-      <p>{ui.intro}</p>
-    </div>
+<div class="features-step">
+  {#if screen === 1}
+    <!-- =====================================================
+         PURPOSE · 1 / 4
+    ====================================================== -->
 
-    <div class="website-type">
-      <span>{ui.websiteType}</span>
-      <strong>{selectedWebsiteTypeOption?.label ?? "—"}</strong>
-    </div>
-  </header>
+    <section class="question-panel" aria-labelledby="feature-purpose-title">
+      <header class="question-header">
+        <span class="substep-label">
+          {ui.stages.purpose}
+          · 1 / 4
+        </span>
 
-  <nav class="micro-progress" aria-label="Step 5 progress">
-    {#each ui.progress as label, index}
-      <button
-        type="button"
-        class:active={screen === index + 1}
-        class:complete={screen > index + 1}
-        disabled={index + 1 > screen}
-        onclick={() => {
-          if (index + 1 < screen) screen = index + 1;
-        }}
-      >
-        <span>{String(index + 1).padStart(2, "0")}</span>
-        <small>{label}</small>
-      </button>
-    {/each}
-  </nav>
+        <h1 id="feature-purpose-title">
+          {ui.purposeTitle}
+        </h1>
 
-  <div class="content-layout">
-    <main class="question-panel">
-      {#if screen === 1}
-        <section class="screen">
-          <div class="question-copy">
-            <span class="eyebrow">{ui.purposeEyebrow}</span>
-            <h3>{ui.purposeTitle}</h3>
-            <p>{ui.purposeText}</p>
+        <p>
+          {ui.purposeText}
+        </p>
+      </header>
+
+      <div class="purpose-grid" role="radiogroup" aria-label={ui.purposeTitle}>
+        {#each purposes as option}
+          {@const selected = selectedPurposeId === option.id}
+
+          {@const iconType = getPurposeIcon(option.id)}
+
+          <div
+            class="selection-card purpose-card"
+            class:selected
+            role="radio"
+            aria-checked={selected}
+            tabindex="0"
+            onclick={() => selectPurpose(option)}
+            onkeydown={(event) =>
+              handleKeydown(event, () => selectPurpose(option))}
+          >
+            <div class="option-icon" aria-hidden="true">
+              {#if iconType === "message"}
+                <svg viewBox="0 0 48 48">
+                  <path d="M7 8h34v25H20l-9 7v-7H7V8Z" />
+                  <path d="M14 16h20M14 22h14" />
+                </svg>
+              {:else if iconType === "shop"}
+                <svg viewBox="0 0 48 48">
+                  <path d="M11 18h26l-2 21H13l-2-21Z" />
+                  <path d="M18 19v-4a6 6 0 0 1 12 0v4" />
+                  <path d="M17 26h14" />
+                </svg>
+              {:else if iconType === "calendar"}
+                <svg viewBox="0 0 48 48">
+                  <rect x="7" y="10" width="34" height="30" />
+                  <path d="M7 18h34M15 6v8M33 6v8" />
+                  <path d="m15 29 5 5 12-12" />
+                </svg>
+              {:else if iconType === "portfolio"}
+                <svg viewBox="0 0 48 48">
+                  <rect x="7" y="8" width="34" height="30" />
+                  <circle cx="17" cy="17" r="3" />
+                  <path d="m11 33 9-9 6 6 5-5 7 8" />
+                </svg>
+              {:else if iconType === "document"}
+                <svg viewBox="0 0 48 48">
+                  <path d="M11 6h20l6 6v30H11V6Z" />
+                  <path d="M31 6v8h6" />
+                  <path d="M17 20h14M17 26h14M17 32h9" />
+                </svg>
+              {:else if iconType === "community"}
+                <svg viewBox="0 0 48 48">
+                  <circle cx="24" cy="15" r="5" />
+                  <circle cx="12" cy="21" r="4" />
+                  <circle cx="36" cy="21" r="4" />
+                  <path d="M15 39c0-7 3.5-11 9-11s9 4 9 11" />
+                  <path d="M4 38c0-6 3-10 8-10 2 0 4 .7 5.5 2" />
+                  <path d="M44 38c0-6-3-10-8-10-2 0-4 .7-5.5 2" />
+                </svg>
+              {:else}
+                <svg viewBox="0 0 48 48">
+                  <circle cx="24" cy="24" r="17" />
+                  <path d="M18 18a6 6 0 1 1 8 5.7c-1.5.6-2 1.5-2 3.3" />
+                  <circle
+                    cx="24"
+                    cy="33"
+                    r="1.5"
+                    fill="currentColor"
+                    stroke="none"
+                  />
+                </svg>
+              {/if}
+            </div>
+
+            <div class="option-copy">
+              <h2>
+                {option.label}
+              </h2>
+
+              <p>
+                {option.description}
+              </p>
+            </div>
+
+            <span class="selection-state" aria-hidden="true">
+              {#if selected}
+                <svg viewBox="0 0 20 20">
+                  <path d="m5 10.25 3.15 3.1L15 6.75" />
+                </svg>
+              {/if}
+            </span>
           </div>
+        {/each}
+      </div>
+    </section>
+  {:else if screen === 2}
+    <!-- =====================================================
+         ESSENTIALS · 2 / 4
+    ====================================================== -->
 
-          <div class="purpose-grid" role="radiogroup">
-            {#each ui.purposes as option}
-              <div
-                class:selected={selectedPurposeId === option.id}
-                class="purpose-option"
-                role="radio"
-                aria-checked={selectedPurposeId === option.id}
-                tabindex="0"
-                onclick={() => selectPurpose(option)}
-                onkeydown={(event) =>
-                  handleKeydown(event, () => selectPurpose(option))}
-              >
-                <span class="radio"><span></span></span>
-                <span>
-                  <strong>{option.label}</strong>
-                  <small>{option.description}</small>
-                </span>
-              </div>
-            {/each}
-          </div>
+    <section class="question-panel" aria-labelledby="feature-essentials-title">
+      <header class="question-header">
+        <span class="substep-label">
+          {ui.stages.essentials}
+          · 2 / 4
+        </span>
 
-          {#if !selectedPurposeId}
-            <p class="validation">{ui.required}</p>
-          {/if}
-        </section>
-      {:else if screen === 2}
-        <section class="screen">
-          <div class="question-copy">
-            <span class="eyebrow">{ui.detailEyebrow}</span>
-            <h3>{ui.detailTitle}</h3>
-            <p>{ui.detailText}</p>
-          </div>
+        <h1 id="feature-essentials-title">
+          {ui.detailTitle}
+        </h1>
 
-          <div class="selected-purpose-banner">
-            <span>{ui.mainPurpose}</span>
-            <strong>{selectedPurpose?.label}</strong>
-          </div>
+        <p>
+          {ui.detailText}
+        </p>
+      </header>
 
-          <div class="detail-list">
-            {#each purposeFeatures as feature}
-              <button
-                type="button"
-                class:selected={selectedFeatures.includes(feature.id)}
-                class="detail-option"
-                aria-pressed={selectedFeatures.includes(feature.id)}
-                onclick={() => toggleFeature(feature.id)}
-              >
-                <span class="check"><span></span></span>
-                <span>
-                  <strong>{feature.label}</strong>
-                  <small>{feature.description}</small>
-                </span>
-              </button>
-            {/each}
-          </div>
+      {#if selectedPurpose}
+        <div class="purpose-context">
+          <span>
+            {ui.mainPurpose}
+          </span>
 
-          {#if !canMoveForward}
-            <p class="validation">{ui.detailRequired}</p>
-          {/if}
-        </section>
-      {:else if screen === 3}
-        <section class="screen">
-          <div class="question-copy">
-            <span class="eyebrow">{ui.extrasEyebrow}</span>
-            <h3>{ui.extrasTitle}</h3>
-            <p>{ui.extrasText}</p>
-          </div>
-
-          <div class="extras-grid">
-            {#each ui.extras as option}
-              <button
-                type="button"
-                class:selected={selectedExtraIds.includes(option.id)}
-                class="extra-option"
-                aria-pressed={selectedExtraIds.includes(option.id)}
-                onclick={() => toggleExtra(option)}
-              >
-                <span class="check"><span></span></span>
-                <strong>{option.label}</strong>
-              </button>
-            {/each}
-
-            <button
-              type="button"
-              class:selected={selectedExtraIds.length === 0}
-              class="extra-option no-extra"
-              aria-pressed={selectedExtraIds.length === 0}
-              onclick={clearExtras}
-            >
-              <span class="check"><span></span></span>
-              <strong>{ui.noExtras}</strong>
-            </button>
-          </div>
-        </section>
-      {:else}
-        <section class="screen">
-          <div class="question-copy">
-            <span class="eyebrow">{ui.languageEyebrow}</span>
-            <h3>{ui.languageTitle}</h3>
-            <p>{ui.languageText}</p>
-          </div>
-
-          <div class="language-grid" role="radiogroup">
-            {#each text.languageOptions as option}
-              <div
-                class:selected={websiteLanguages === option.id}
-                class="language-option"
-                role="radio"
-                aria-checked={websiteLanguages === option.id}
-                tabindex="0"
-                onclick={() => (websiteLanguages = option.id)}
-                onkeydown={(event) =>
-                  handleKeydown(event, () => (websiteLanguages = option.id))}
-              >
-                <span class="radio"><span></span></span>
-                <strong>{option.label}</strong>
-              </div>
-            {/each}
-          </div>
-
-          {#if !websiteLanguages}
-            <p class="validation">{ui.languageRequired}</p>
-          {/if}
-        </section>
+          <strong>
+            {selectedPurpose.label}
+          </strong>
+        </div>
       {/if}
 
-      <div class="screen-actions">
-        {#if screen > 1}
-          <button
-            type="button"
-            class="back-button"
-            onclick={() => (screen -= 1)}
-          >
-            ← {ui.back}
-          </button>
-        {:else}
-          <span></span>
-        {/if}
+      <div class="feature-grid" role="group" aria-label={ui.detailTitle}>
+        {#each purposeFeatures as feature}
+          {@const selected = selectedFeatures.includes(feature.id)}
 
-        {#if screen < 4}
+          {@const iconType = getFeatureIcon(feature.id)}
+
           <button
             type="button"
-            class="continue-button"
-            disabled={!canMoveForward}
-            onclick={() => (screen += 1)}
+            class="selection-card feature-card"
+            class:selected
+            aria-pressed={selected}
+            onclick={() => toggleFeature(feature.id)}
           >
-            {ui.continue} →
-          </button>
-        {:else if websiteLanguages}
-          <div class="completion-action">
-            <span class="completion-status">
-              <span aria-hidden="true">✓</span>
-              <strong>{ui.completed}</strong>
+            <div class="option-icon" aria-hidden="true">
+              {#if iconType === "message"}
+                <svg viewBox="0 0 48 48">
+                  <path d="M7 8h34v25H20l-9 7v-7H7V8Z" />
+                  <path d="M14 16h20M14 22h14" />
+                </svg>
+              {:else if iconType === "reviews"}
+                <svg viewBox="0 0 48 48">
+                  <path d="M7 9h34v24H20l-9 7v-7H7V9Z" />
+                  <path
+                    d="m24 15 2.2 4.4 4.8.7-3.5 3.4.8 4.8-4.3-2.3-4.3 2.3.8-4.8-3.5-3.4 4.8-.7L24 15Z"
+                  />
+                </svg>
+              {:else if iconType === "location"}
+                <svg viewBox="0 0 48 48">
+                  <path
+                    d="M24 42S11 29 11 19a13 13 0 0 1 26 0c0 10-13 23-13 23Z"
+                  />
+                  <circle cx="24" cy="19" r="5" />
+                </svg>
+              {:else if iconType === "product"}
+                <svg viewBox="0 0 48 48">
+                  <path d="m24 6 16 9v18l-16 9-16-9V15l16-9Z" />
+                  <path d="m8 15 16 9 16-9M24 24v18" />
+                </svg>
+              {:else if iconType === "payment"}
+                <svg viewBox="0 0 48 48">
+                  <rect x="7" y="12" width="34" height="24" />
+                  <path d="M7 19h34" />
+                  <path d="M13 29h8" />
+                  <path d="m29 28 3 3 6-7" />
+                </svg>
+              {:else if iconType === "mail"}
+                <svg viewBox="0 0 48 48">
+                  <rect x="7" y="11" width="34" height="26" />
+                  <path d="m8 14 16 13 16-13" />
+                </svg>
+              {:else if iconType === "account"}
+                <svg viewBox="0 0 48 48">
+                  <circle cx="24" cy="16" r="7" />
+                  <path d="M10 40c0-9 5-15 14-15s14 6 14 15" />
+                </svg>
+              {:else if iconType === "calendar" || iconType === "event"}
+                <svg viewBox="0 0 48 48">
+                  <rect x="7" y="10" width="34" height="30" />
+                  <path d="M7 18h34M15 6v8M33 6v8" />
+                  <path d="M15 25h6v6h-6zM27 25h6v6h-6z" />
+                </svg>
+              {:else if iconType === "registration"}
+                <svg viewBox="0 0 48 48">
+                  <rect x="9" y="7" width="30" height="34" />
+                  <circle cx="18" cy="17" r="4" />
+                  <path d="M13 28c1-5 3-7 5-7s4 2 5 7" />
+                  <path d="M27 17h7M27 23h7M27 29h7" />
+                </svg>
+              {:else if iconType === "portfolio"}
+                <svg viewBox="0 0 48 48">
+                  <rect x="7" y="8" width="34" height="30" />
+                  <path d="M7 16h34" />
+                  <path d="M13 23h8M27 23h8M13 30h8M27 30h8" />
+                </svg>
+              {:else if iconType === "gallery"}
+                <svg viewBox="0 0 48 48">
+                  <rect x="7" y="8" width="34" height="30" />
+                  <circle cx="17" cy="17" r="3" />
+                  <path d="m11 33 9-9 6 6 5-5 7 8" />
+                </svg>
+              {:else if iconType === "document"}
+                <svg viewBox="0 0 48 48">
+                  <path d="M11 6h20l6 6v30H11V6Z" />
+                  <path d="M31 6v8h6" />
+                  <path d="M17 20h14M17 26h14M17 32h9" />
+                </svg>
+              {:else if iconType === "search"}
+                <svg viewBox="0 0 48 48">
+                  <circle cx="20" cy="20" r="11" />
+                  <path d="m28 28 12 12" />
+                  <path d="M15 20h10M20 15v10" />
+                </svg>
+              {:else if iconType === "library"}
+                <svg viewBox="0 0 48 48">
+                  <rect x="8" y="7" width="9" height="34" />
+                  <rect x="20" y="7" width="9" height="34" />
+                  <path d="m32 9 8-2 6 32-8 2-6-32Z" />
+                </svg>
+              {:else if iconType === "login"}
+                <svg viewBox="0 0 48 48">
+                  <path d="M22 8h18v32H22" />
+                  <path d="M7 24h22" />
+                  <path d="m22 17 7 7-7 7" />
+                </svg>
+              {:else if iconType === "lock"}
+                <svg viewBox="0 0 48 48">
+                  <rect x="9" y="20" width="30" height="21" />
+                  <path d="M16 20v-6a8 8 0 0 1 16 0v6" />
+                  <circle cx="24" cy="30" r="2" />
+                  <path d="M24 32v4" />
+                </svg>
+              {:else if iconType === "dashboard"}
+                <svg viewBox="0 0 48 48">
+                  <rect x="7" y="8" width="34" height="32" />
+                  <path d="M7 16h34" />
+                  <rect x="12" y="21" width="10" height="13" />
+                  <rect x="27" y="21" width="9" height="5" />
+                  <rect x="27" y="29" width="9" height="5" />
+                </svg>
+              {:else if iconType === "analytics"}
+                <svg viewBox="0 0 48 48">
+                  <path d="M8 39V9" />
+                  <path d="M8 39h33" />
+                  <path d="m14 31 8-9 7 5 10-14" />
+                  <path d="M34 13h5v5" />
+                </svg>
+              {:else if iconType === "database"}
+                <svg viewBox="0 0 48 48">
+                  <ellipse cx="24" cy="11" rx="15" ry="6" />
+                  <path d="M9 11v12c0 3 7 6 15 6s15-3 15-6V11" />
+                  <path d="M9 23v12c0 3 7 6 15 6s15-3 15-6V23" />
+                </svg>
+              {:else}
+                <svg viewBox="0 0 48 48">
+                  <rect x="8" y="8" width="32" height="32" />
+                  <path d="M24 15v18M15 24h18" />
+                </svg>
+              {/if}
+            </div>
+
+            <div class="option-copy">
+              <h2>
+                {feature.label}
+              </h2>
+
+              <p>
+                {feature.description}
+              </p>
+            </div>
+
+            <span class="selection-state" aria-hidden="true">
+              {#if selected}
+                <svg viewBox="0 0 20 20">
+                  <path d="m5 10.25 3.15 3.1L15 6.75" />
+                </svg>
+              {/if}
             </span>
+          </button>
+        {/each}
+      </div>
+    </section>
+  {:else if screen === 3}
+    <!-- =====================================================
+         ADDITIONAL · 3 / 4
+    ====================================================== -->
 
-            <button
-              type="button"
-              class="continue-button timeline-button"
-              onclick={onContinue}
-            >
-              {ui.finish} →
-            </button>
+    <section class="question-panel" aria-labelledby="feature-extras-title">
+      <header class="question-header">
+        <span class="substep-label">
+          {ui.stages.extras}
+          · 3 / 4 ·
+          {ui.optional}
+        </span>
+
+        <h1 id="feature-extras-title">
+          {ui.extrasTitle}
+        </h1>
+
+        <p>
+          {ui.extrasText}
+        </p>
+      </header>
+
+      <div class="extras-grid" role="group" aria-label={ui.extrasTitle}>
+        {#each extras as option}
+          {@const selected = selectedExtraIds.includes(option.id)}
+
+          {@const iconType = getExtraIcon(option.id)}
+
+          <button
+            type="button"
+            class="selection-card extra-card"
+            class:selected
+            aria-pressed={selected}
+            onclick={() => toggleExtra(option)}
+          >
+            <div class="option-icon" aria-hidden="true">
+              {#if iconType === "event"}
+                <svg viewBox="0 0 48 48">
+                  <rect x="7" y="10" width="34" height="30" />
+                  <path d="M7 18h34M15 6v8M33 6v8" />
+                  <path d="M15 25h6v6h-6zM27 25h6v6h-6z" />
+                </svg>
+              {:else if iconType === "mail"}
+                <svg viewBox="0 0 48 48">
+                  <rect x="7" y="11" width="34" height="26" />
+                  <path d="m8 14 16 13 16-13" />
+                </svg>
+              {:else if iconType === "users"}
+                <svg viewBox="0 0 48 48">
+                  <circle cx="18" cy="16" r="6" />
+                  <circle cx="34" cy="18" r="4" />
+                  <path d="M7 40c0-9 4-14 11-14s11 5 11 14" />
+                  <path d="M29 29c2-2 4-3 6-3 5 0 8 4 8 12" />
+                </svg>
+              {:else if iconType === "payment"}
+                <svg viewBox="0 0 48 48">
+                  <rect x="7" y="12" width="34" height="24" />
+                  <path d="M7 19h34" />
+                  <path d="M13 29h8" />
+                  <path d="m29 28 3 3 6-7" />
+                </svg>
+              {:else if iconType === "gallery"}
+                <svg viewBox="0 0 48 48">
+                  <rect x="7" y="8" width="34" height="30" />
+                  <circle cx="17" cy="17" r="3" />
+                  <path d="m11 33 9-9 6 6 5-5 7 8" />
+                </svg>
+              {:else if iconType === "search"}
+                <svg viewBox="0 0 48 48">
+                  <circle cx="20" cy="20" r="11" />
+                  <path d="m28 28 12 12" />
+                </svg>
+              {:else}
+                <svg viewBox="0 0 48 48">
+                  <rect x="8" y="8" width="32" height="32" />
+                  <path d="M24 15v18M15 24h18" />
+                </svg>
+              {/if}
+            </div>
+
+            <div class="option-copy">
+              <h2>
+                {option.label}
+              </h2>
+            </div>
+
+            <span class="selection-state" aria-hidden="true">
+              {#if selected}
+                <svg viewBox="0 0 20 20">
+                  <path d="m5 10.25 3.15 3.1L15 6.75" />
+                </svg>
+              {/if}
+            </span>
+          </button>
+        {/each}
+
+        <button
+          type="button"
+          class="selection-card extra-card no-extra-card"
+          class:selected={selectedExtraIds.length === 0}
+          aria-pressed={selectedExtraIds.length === 0}
+          onclick={clearExtras}
+        >
+          <div class="option-icon" aria-hidden="true">
+            <svg viewBox="0 0 48 48">
+              <circle cx="24" cy="24" r="17" />
+              <path d="M13 35 35 13" />
+            </svg>
           </div>
-        {:else}
-          <div class="final-message">
-            <span aria-hidden="true">→</span>
-            <strong>{ui.languageRequired}</strong>
+
+          <div class="option-copy">
+            <h2>
+              {ui.noExtras}
+            </h2>
           </div>
-        {/if}
+
+          <span class="selection-state" aria-hidden="true">
+            {#if selectedExtraIds.length === 0}
+              <svg viewBox="0 0 20 20">
+                <path d="m5 10.25 3.15 3.1L15 6.75" />
+              </svg>
+            {/if}
+          </span>
+        </button>
       </div>
-    </main>
+    </section>
+  {:else}
+    <!-- =====================================================
+         LANGUAGES · 4 / 4
+    ====================================================== -->
 
-    <aside class="summary-panel">
-      <span class="summary-label">{ui.summary}</span>
+    <section class="question-panel" aria-labelledby="feature-language-title">
+      <header class="question-header">
+        <span class="substep-label">
+          {ui.stages.languages}
+          · 4 / 4
+        </span>
 
-      <div class="summary-item">
-        <span>{ui.mainPurpose}</span>
-        <strong class:muted={!selectedPurpose}>
-          {selectedPurpose?.label ?? ui.notSelected}
-        </strong>
-      </div>
+        <h1 id="feature-language-title">
+          {ui.languageTitle}
+        </h1>
 
-      <div class="summary-item">
-        <span>{ui.additional}</span>
-        {#if selectedExtras.length}
-          <div class="summary-list">
-            {#each selectedExtras as option}
-              <strong>{option.label}</strong>
-            {/each}
+        <p>
+          {ui.languageText}
+        </p>
+      </header>
+
+      <div
+        class="language-grid"
+        role="radiogroup"
+        aria-label={ui.languageTitle}
+      >
+        {#each text.languageOptions as option}
+          {@const selected = websiteLanguages === option.id}
+
+          <div
+            class="selection-card language-card"
+            class:selected
+            role="radio"
+            aria-checked={selected}
+            tabindex="0"
+            onclick={() => {
+              websiteLanguages = option.id;
+            }}
+            onkeydown={(event) =>
+              handleKeydown(event, () => {
+                websiteLanguages = option.id;
+              })}
+          >
+            <div class="language-icon" aria-hidden="true">
+              {#if option.id === "one-language"}
+                <svg viewBox="0 0 48 48">
+                  <circle cx="24" cy="24" r="17" />
+                  <path d="M7 24h34" />
+                  <path d="M24 7c5 5 8 11 8 17s-3 12-8 17" />
+                  <path d="M24 7c-5 5-8 11-8 17s3 12 8 17" />
+                </svg>
+              {:else if option.id === "two-languages"}
+                <svg viewBox="0 0 48 48">
+                  <circle cx="18" cy="22" r="13" />
+                  <circle cx="31" cy="27" r="11" />
+                  <path d="M5 22h26M18 9c4 4 6 8 6 13" />
+                </svg>
+              {:else if option.id === "three-languages"}
+                <svg viewBox="0 0 48 48">
+                  <circle cx="15" cy="19" r="9" />
+                  <circle cx="33" cy="19" r="9" />
+                  <circle cx="24" cy="32" r="9" />
+                </svg>
+              {:else if option.id === "more-languages"}
+                <svg viewBox="0 0 48 48">
+                  <circle cx="24" cy="24" r="17" />
+                  <path d="M7 24h34" />
+                  <path d="M24 7c5 5 8 11 8 17s-3 12-8 17" />
+                  <path d="M24 7c-5 5-8 11-8 17s3 12 8 17" />
+                  <path d="M14 14h20M14 34h20" />
+                </svg>
+              {:else}
+                <svg viewBox="0 0 48 48">
+                  <circle cx="24" cy="24" r="17" />
+                  <path d="M18 18a6 6 0 1 1 8 5.7c-1.5.6-2 1.5-2 3.3" />
+                  <circle
+                    cx="24"
+                    cy="33"
+                    r="1.5"
+                    fill="currentColor"
+                    stroke="none"
+                  />
+                </svg>
+              {/if}
+            </div>
+
+            <div class="option-copy">
+              <h2>
+                {option.label}
+              </h2>
+
+              <p>
+                {option.description}
+              </p>
+            </div>
+
+            <span class="selection-state" aria-hidden="true">
+              {#if selected}
+                <svg viewBox="0 0 20 20">
+                  <path d="m5 10.25 3.15 3.1L15 6.75" />
+                </svg>
+              {/if}
+            </span>
           </div>
-        {:else}
-          <strong class="muted">{ui.none}</strong>
-        {/if}
+        {/each}
       </div>
+    </section>
+  {/if}
 
-      <div class="summary-item">
-        <span>{ui.languages}</span>
-        <strong class:muted={!selectedLanguage}>
-          {selectedLanguage?.label ?? ui.notSelected}
-        </strong>
-      </div>
+  <!-- =====================================================
+       NAVIGATION
+  ====================================================== -->
 
-      <p class="change-note">{ui.changeLater}</p>
-    </aside>
+  <div class="internal-navigation">
+    <div>
+      <button type="button" class="back-button" onclick={goBack}>
+        <svg viewBox="0 0 20 20" aria-hidden="true">
+          <path d="M11.75 4.75 6.5 10l5.25 5.25" />
+        </svg>
+
+        <span>
+          {ui.back}
+        </span>
+      </button>
+    </div>
+
+    <div class="continue-area">
+      {#if !canMoveForward}
+        <span class="hint">
+          {screen === 1
+            ? ui.required
+            : screen === 2
+              ? ui.detailRequired
+              : ui.languageRequired}
+        </span>
+      {/if}
+
+      <button
+        type="button"
+        class="continue-button"
+        disabled={!canMoveForward}
+        onclick={goForward}
+      >
+        <span>
+          {screen === 4 ? ui.finish : ui.continue}
+        </span>
+
+        <svg viewBox="0 0 20 20" aria-hidden="true">
+          <path d="m8.25 4.75 5.25 5.25-5.25 5.25" />
+        </svg>
+      </button>
+    </div>
   </div>
 </div>
 
 <style>
-  .step-shell {
-    padding: clamp(24px, 3.5vw, 44px) 0;
-    font-family: "DM Sans", Arial, sans-serif;
-  }
+  .features-step {
+    --step-bg: #080808;
+    --step-card: #0c0c0c;
+    --step-card-hover: #101010;
 
-  .compact-hero {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(180px, 240px);
-    gap: 32px;
-    align-items: end;
-    padding-bottom: 24px;
-    border-bottom: 1px solid #292929;
-  }
+    --step-text: #f3f3f3;
+    --step-copy: #888888;
+    --step-muted: #666666;
 
-  .step-label,
-  .eyebrow,
-  .website-type span,
-  .summary-label,
-  .summary-item > span,
-  .selected-purpose-banner span {
-    color: #777777;
-    font-size: 9px;
-    font-weight: 700;
-    line-height: 1.3;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-  }
+    --step-border: #2c2c2c;
+    --step-border-hover: #505050;
 
-  .step-label,
-  .eyebrow {
-    display: block;
-    margin-bottom: 9px;
-    color: #0043ff;
-  }
+    --step-accent: #0043ff;
+    --step-accent-hover: #1b56ff;
+    --step-accent-soft: rgba(0, 67, 255, 0.08);
 
-  .compact-hero h2 {
-    margin: 0 0 8px;
-    color: #eeeeee;
-    font-size: clamp(27px, 3vw, 42px);
-    font-weight: 600;
-    line-height: 1.05;
-    letter-spacing: -0.035em;
-  }
+    width: 100%;
 
-  .compact-hero p,
-  .question-copy p {
-    max-width: 660px;
     margin: 0;
-    color: #858585;
-    font-size: 12px;
-    line-height: 1.6;
-  }
+    padding: 0;
 
-  .website-type {
-    padding: 14px 0;
-    border-top: 1px solid #303030;
-    border-bottom: 1px solid #303030;
-  }
+    background: var(--step-bg);
 
-  .website-type span {
-    display: block;
-    margin-bottom: 6px;
-  }
+    color: var(--step-text);
 
-  .website-type strong {
-    color: #4f76ff;
-    font-size: 12px;
-    font-weight: 600;
-  }
+    font-family: "DM Sans", Arial, sans-serif;
 
-  .micro-progress {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    margin: 18px 0 28px;
-    border: 1px solid #292929;
-  }
-
-  .micro-progress button {
-    min-height: 54px;
-    padding: 11px 13px;
-    display: flex;
-    align-items: center;
-    gap: 9px;
-    border: 0;
-    border-right: 1px solid #292929;
-    border-radius: 0;
-    background: #090909;
-    color: #666666;
-    font-family: inherit;
-    text-align: left;
-  }
-
-  .micro-progress button:last-child {
-    border-right: 0;
-  }
-  .micro-progress button:not(:disabled) {
-    cursor: pointer;
-  }
-  .micro-progress button.active {
-    background: #101010;
-    color: #eeeeee;
-  }
-  .micro-progress button.complete {
-    color: #4f76ff;
-  }
-
-  .micro-progress button span {
-    color: #0043ff;
-    font-size: 9px;
-    font-weight: 700;
-  }
-
-  .micro-progress button small {
-    overflow: hidden;
-    font-size: 10px;
-    font-weight: 600;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-
-  .content-layout {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(220px, 280px);
-    gap: clamp(28px, 4vw, 56px);
-    align-items: start;
-  }
-
-  .screen {
-    min-height: 430px;
-  }
-  .question-copy {
-    margin-bottom: 22px;
-  }
-
-  .question-copy h3 {
-    max-width: 720px;
-    margin: 0 0 8px;
-    color: #eeeeee;
-    font-size: clamp(22px, 2.4vw, 32px);
-    font-weight: 600;
-    line-height: 1.12;
-    letter-spacing: -0.025em;
-  }
-
-  .purpose-grid,
-  .extras-grid,
-  .language-grid {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 9px;
-  }
-
-  .purpose-option,
-  .extra-option,
-  .language-option,
-  .detail-option {
-    border: 1px solid #292929;
-    border-radius: 0;
-    background: #0b0b0b;
-    color: inherit;
-    font-family: inherit;
-    text-align: left;
-    cursor: pointer;
-  }
-
-  .purpose-option {
-    min-height: 105px;
-    padding: 17px;
-    display: grid;
-    grid-template-columns: auto minmax(0, 1fr);
-    gap: 12px;
-    align-items: start;
-    outline: none;
-  }
-
-  .purpose-option:hover,
-  .purpose-option:focus-visible,
-  .purpose-option.selected,
-  .extra-option:hover,
-  .extra-option.selected,
-  .language-option:hover,
-  .language-option.selected,
-  .detail-option:hover,
-  .detail-option.selected {
-    border-color: #bdbdbd;
-  }
-
-  .radio,
-  .check {
-    display: grid;
-    width: 17px;
-    height: 17px;
-    place-items: center;
-    margin-top: 1px;
-    border: 1px solid #575757;
     box-sizing: border-box;
   }
 
-  .radio,
-  .radio span {
-    border-radius: 50%;
-  }
+  /* =========================================================
+     QUESTION
+  ========================================================= */
 
-  .radio span,
-  .check span {
-    width: 7px;
-    height: 7px;
-    background: transparent;
-  }
-
-  .selected .radio,
-  .selected .check {
-    border-color: #d0d0d0;
-  }
-  .selected .radio span,
-  .selected .check span {
-    background: #0043ff;
-  }
-
-  .purpose-option strong,
-  .detail-option strong,
-  .extra-option strong,
-  .language-option strong {
-    display: block;
-    color: #e4e4e4;
-    font-size: 12px;
-    font-weight: 600;
-    line-height: 1.35;
-  }
-
-  .purpose-option strong {
-    margin-bottom: 5px;
-    font-size: 13px;
-  }
-  .selected strong {
-    color: #4f76ff;
-  }
-
-  .purpose-option small,
-  .detail-option small {
-    display: block;
-    color: #7d7d7d;
-    font-size: 10px;
-    line-height: 1.5;
-  }
-
-  .selected-purpose-banner {
-    margin-bottom: 10px;
-    padding: 14px 16px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 18px;
-    border: 1px solid #292929;
-    background: #090909;
-  }
-
-  .selected-purpose-banner strong {
-    color: #4f76ff;
-    font-size: 12px;
-  }
-
-  .detail-list {
-    display: grid;
-    gap: 8px;
-  }
-
-  .detail-option {
+  .question-panel {
     width: 100%;
-    min-height: 78px;
-    padding: 15px 17px;
-    display: grid;
-    grid-template-columns: auto minmax(0, 1fr);
-    gap: 12px;
-    align-items: start;
   }
 
-  .extra-option,
-  .language-option {
-    min-height: 74px;
-    padding: 15px;
-    display: grid;
-    grid-template-columns: auto minmax(0, 1fr);
-    gap: 11px;
-    align-items: center;
-  }
-
-  .no-extra {
-    grid-column: 1 / -1;
-  }
-
-  .validation {
-    margin: 10px 0 0;
-    color: #777777;
-    font-size: 10px;
-  }
-
-  .screen-actions {
-    min-height: 62px;
-    margin-top: 25px;
-    padding-top: 18px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 16px;
-    border-top: 1px solid #292929;
-  }
-
-  .back-button,
-  .continue-button {
-    min-height: 44px;
-    padding: 0 18px;
-    border-radius: 0;
-    font-family: inherit;
-    font-size: 11px;
-    font-weight: 700;
-    cursor: pointer;
-  }
-
-  .back-button {
-    border: 1px solid #343434;
-    background: transparent;
-    color: #b4b4b4;
-  }
-
-  .continue-button {
-    border: 1px solid #0043ff;
-    background: #0043ff;
-    color: #ffffff;
-  }
-
-  .continue-button:disabled {
-    border-color: #292929;
-    background: #151515;
-    color: #555555;
-    cursor: not-allowed;
-  }
-
-  .final-message {
-    margin-left: auto;
-    min-height: 44px;
-    padding: 0 15px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    border: 1px solid #343434;
-    color: #777777;
-  }
-
-  .final-message.complete {
-    border-color: #0043ff;
-    color: #eeeeee;
-  }
-
-  .final-message span {
-    color: #0043ff;
-  }
-
-  .completion-action {
+  .question-header {
     width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    gap: 16px;
+
+    margin: 0 0 20px;
   }
 
-  .completion-status {
-    display: inline-flex;
-    align-items: center;
-    gap: 9px;
-    color: #d8d8d8;
-    font-size: 10px;
-    line-height: 1.4;
-  }
+  .substep-label {
+    display: block;
 
-  .completion-status > span {
-    color: #0043ff;
-    font-size: 14px;
+    margin: 0 0 9px;
+
+    color: var(--step-accent);
+
+    font-size: 9px;
     font-weight: 700;
+
+    line-height: 1;
+
+    letter-spacing: 0.08em;
+
+    text-transform: uppercase;
   }
 
-  .completion-status strong {
+  .question-header h1 {
+    max-width: 900px;
+
+    margin: 0 0 6px;
+
+    color: var(--step-text);
+
+    font-size: clamp(26px, 2.5vw, 36px);
+
     font-weight: 600;
+
+    line-height: 1.08;
+
+    letter-spacing: -0.035em;
   }
 
-  .timeline-button {
-    min-width: 190px;
-  }
+  .question-header p {
+    max-width: 760px;
 
-  .summary-panel {
-    position: sticky;
-    top: 110px;
-    padding: 20px;
-    border: 1px solid #292929;
-    background: #090909;
-  }
+    margin: 0;
 
-  .summary-label {
-    display: block;
-    margin-bottom: 12px;
-  }
+    color: var(--step-copy);
 
-  .summary-item {
-    padding: 14px 0;
-    border-top: 1px solid #242424;
-  }
+    font-size: 12px;
 
-  .summary-item > span {
-    display: block;
-    margin-bottom: 7px;
-  }
-
-  .summary-item > strong,
-  .summary-list strong {
-    display: block;
-    color: #4f76ff;
-    font-size: 11px;
-    font-weight: 500;
     line-height: 1.45;
   }
 
-  .summary-list {
+  /* =========================================================
+     GRIDS
+  ========================================================= */
+
+  .purpose-grid {
     display: grid;
-    gap: 5px;
-  }
-  .summary-list strong::before {
-    content: "✓";
-    margin-right: 7px;
-  }
-  .muted {
-    color: #666666 !important;
-    font-weight: 400 !important;
+
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+
+    gap: 9px;
   }
 
-  .change-note {
+  .feature-grid,
+  .extras-grid {
+    display: grid;
+
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    gap: 9px;
+  }
+
+  .language-grid {
+    display: grid;
+
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+
+    gap: 9px;
+  }
+
+  /* =========================================================
+     CARDS
+  ========================================================= */
+
+  .selection-card {
+    position: relative;
+
+    display: flex;
+
+    width: 100%;
+
+    min-width: 0;
+    min-height: 142px;
+
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    padding: 15px 16px 14px;
+
+    border: 1px solid var(--step-border);
+
+    border-radius: 0;
+
+    background: var(--step-card);
+
+    color: inherit;
+
+    font-family: inherit;
+
+    text-align: left;
+
+    cursor: pointer;
+
+    box-sizing: border-box;
+
+    outline: none;
+
+    transition:
+      border-color 150ms ease,
+      background 150ms ease;
+  }
+
+  .purpose-card {
+    min-height: 150px;
+  }
+
+  .feature-card {
+    min-height: 138px;
+  }
+
+  .extra-card {
+    min-height: 120px;
+  }
+
+  .language-card {
+    min-height: 144px;
+  }
+
+  .selection-card:hover {
+    border-color: var(--step-border-hover);
+
+    background: var(--step-card-hover);
+  }
+
+  .selection-card.selected {
+    border-color: var(--step-accent);
+
+    background: var(--step-accent-soft);
+  }
+
+  .selection-card:focus-visible {
+    outline: 2px solid var(--step-accent);
+
+    outline-offset: 2px;
+  }
+
+  /* =========================================================
+     ICON
+  ========================================================= */
+
+  .option-icon,
+  .language-icon {
+    display: grid;
+
+    width: 45px;
+    height: 45px;
+
+    place-items: center;
+
+    margin-bottom: 11px;
+
+    color: var(--step-text);
+  }
+
+  .option-icon svg,
+  .language-icon svg {
+    width: 39px;
+    height: 39px;
+
+    fill: none;
+
+    stroke: currentColor;
+
+    stroke-width: 1.45;
+
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .selection-card.selected .option-icon,
+  .selection-card.selected .language-icon {
+    color: var(--step-accent);
+  }
+
+  /* =========================================================
+     COPY
+  ========================================================= */
+
+  .option-copy {
+    width: 100%;
+
+    min-width: 0;
+
+    padding-right: 26px;
+  }
+
+  .option-copy h2 {
     margin: 0;
-    padding-top: 14px;
-    border-top: 1px solid #242424;
-    color: #686868;
+
+    color: var(--step-text);
+
+    font-size: 13px;
+    font-weight: 600;
+
+    line-height: 1.25;
+
+    overflow-wrap: anywhere;
+  }
+
+  .option-copy p {
+    display: -webkit-box;
+
+    margin: 5px 0 0;
+
+    overflow: hidden;
+
+    color: var(--step-copy);
+
+    font-size: 9.5px;
+
+    line-height: 1.4;
+
+    overflow-wrap: anywhere;
+
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+
+  /* =========================================================
+     SELECTION STATE
+  ========================================================= */
+
+  .selection-state {
+    position: absolute;
+
+    top: 14px;
+    right: 14px;
+
+    display: grid;
+
+    width: 19px;
+    height: 19px;
+
+    place-items: center;
+
+    border: 1px solid #4b4b4b;
+
+    border-radius: 0;
+
+    box-sizing: border-box;
+  }
+
+  .selection-state svg {
+    width: 12px;
+    height: 12px;
+
+    fill: none;
+
+    stroke: #ffffff;
+
+    stroke-width: 1.8;
+
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .selection-card.selected .selection-state {
+    border-color: var(--step-accent);
+
+    background: var(--step-accent);
+  }
+
+  /* =========================================================
+     PURPOSE CONTEXT
+  ========================================================= */
+
+  .purpose-context {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 16px;
+
+    margin: -6px 0 12px;
+
+    padding: 10px 12px;
+
+    border: 1px solid var(--step-border);
+
+    background: var(--step-card);
+  }
+
+  .purpose-context span {
+    color: var(--step-muted);
+
+    font-size: 8px;
+    font-weight: 700;
+
+    letter-spacing: 0.07em;
+
+    text-transform: uppercase;
+  }
+
+  .purpose-context strong {
+    color: var(--step-accent);
+
     font-size: 10px;
-    line-height: 1.55;
+    font-weight: 600;
   }
 
-  @media (max-width: 900px) {
-    .content-layout {
-      grid-template-columns: 1fr;
-    }
-    .summary-panel {
-      position: static;
-    }
-    .screen {
-      min-height: 0;
-    }
+  /* =========================================================
+     NAVIGATION
+  ========================================================= */
+
+  .internal-navigation {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 20px;
+
+    margin-top: 20px;
   }
 
-  @media (max-width: 680px) {
-    .compact-hero {
-      grid-template-columns: 1fr;
-      gap: 18px;
-    }
-    .micro-progress button {
-      min-height: 47px;
-      justify-content: center;
-      padding: 9px 5px;
-    }
-    .micro-progress button small {
-      display: none;
-    }
+  .continue-area {
+    display: flex;
+
+    align-items: center;
+    justify-content: flex-end;
+
+    gap: 12px;
+  }
+
+  .hint {
+    max-width: 220px;
+
+    color: var(--step-muted);
+
+    font-size: 9px;
+
+    line-height: 1.35;
+
+    text-align: right;
+  }
+
+  .continue-button,
+  .back-button {
+    display: inline-flex;
+
+    min-height: 44px;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 8px;
+
+    border-radius: 0;
+
+    font-family: inherit;
+
+    font-size: 10px;
+    font-weight: 650;
+
+    cursor: pointer;
+
+    box-sizing: border-box;
+  }
+
+  .continue-button svg,
+  .back-button svg {
+    width: 16px;
+    height: 16px;
+
+    fill: none;
+
+    stroke: currentColor;
+
+    stroke-width: 1.6;
+
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .continue-button {
+    min-width: 145px;
+
+    padding: 0 16px;
+
+    border: 1px solid var(--step-accent);
+
+    background: var(--step-accent);
+
+    color: #ffffff;
+  }
+
+  .continue-button:hover:not(:disabled) {
+    border-color: var(--step-accent-hover);
+
+    background: var(--step-accent-hover);
+  }
+
+  .continue-button:disabled {
+    border-color: var(--step-border);
+
+    background: #151515;
+
+    color: #555555;
+
+    cursor: default;
+  }
+
+  .back-button {
+    padding: 0 4px;
+
+    border: 0;
+
+    background: transparent;
+
+    color: #999999;
+  }
+
+  .back-button:hover {
+    color: #ffffff;
+  }
+
+  .continue-button:focus-visible,
+  .back-button:focus-visible {
+    outline: 2px solid var(--step-accent);
+
+    outline-offset: 3px;
+  }
+
+  /* =========================================================
+     LARGE TABLET
+  ========================================================= */
+
+  @media (max-width: 1050px) {
     .purpose-grid,
+    .language-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  /* =========================================================
+     TABLET
+  ========================================================= */
+
+  @media (max-width: 760px) {
+    .question-header {
+      margin-bottom: 17px;
+    }
+
+    .question-header h1 {
+      font-size: clamp(23px, 6vw, 30px);
+    }
+
+    .question-header p {
+      font-size: 11px;
+    }
+
+    .selection-card {
+      min-height: 132px;
+
+      padding: 14px;
+    }
+
+    .purpose-card {
+      min-height: 140px;
+    }
+
+    .extra-card {
+      min-height: 112px;
+    }
+
+    .option-icon,
+    .language-icon {
+      width: 42px;
+      height: 42px;
+
+      margin-bottom: 9px;
+    }
+
+    .option-icon svg,
+    .language-icon svg {
+      width: 36px;
+      height: 36px;
+    }
+
+    .selection-state {
+      top: 13px;
+      right: 13px;
+
+      width: 18px;
+      height: 18px;
+    }
+  }
+
+  /* =========================================================
+     MOBILE
+  ========================================================= */
+
+  @media (max-width: 560px) {
+    .purpose-grid,
+    .feature-grid,
     .extras-grid,
     .language-grid {
       grid-template-columns: 1fr;
-    }
-    .purpose-option {
-      min-height: 92px;
-    }
-    .no-extra {
-      grid-column: auto;
-    }
-    .back-button,
-    .continue-button {
-      flex: 1;
-    }
-    .final-message {
-      width: 100%;
-      justify-content: center;
+
+      gap: 7px;
     }
 
-    .completion-action {
-      align-items: stretch;
+    .selection-card,
+    .purpose-card,
+    .feature-card,
+    .extra-card,
+    .language-card {
+      min-height: 118px;
+    }
+
+    .purpose-context {
+      align-items: flex-start;
+
       flex-direction: column;
+
+      gap: 4px;
     }
 
-    .completion-status {
-      justify-content: center;
-      text-align: center;
+    .internal-navigation {
+      align-items: stretch;
+
+      flex-direction: column-reverse;
+
+      gap: 8px;
+
+      margin-top: 16px;
     }
 
-    .timeline-button {
+    .continue-area {
       width: 100%;
+
+      align-items: stretch;
+
+      flex-direction: column;
+
+      gap: 7px;
+    }
+
+    .hint {
+      max-width: none;
+
+      text-align: left;
+    }
+
+    .continue-button {
+      width: 100%;
+
+      min-height: 46px;
+    }
+
+    .back-button {
+      width: fit-content;
+
+      min-height: 38px;
+    }
+  }
+
+  /* =========================================================
+     REDUCED MOTION
+  ========================================================= */
+
+  @media (prefers-reduced-motion: reduce) {
+    .selection-card,
+    .continue-button {
+      transition: none;
     }
   }
 </style>
