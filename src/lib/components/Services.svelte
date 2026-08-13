@@ -460,7 +460,7 @@
             <h3>{toolsMarqueeTitle}</h3>
           </div>
 
-          <div class="tools-marquee" aria-label={toolsAlt}>
+          <div class="tools-marquee">
             <div class="tools-marquee-track">
               {#each marqueeTools as tool, index}
                 <div
