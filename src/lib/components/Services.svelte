@@ -221,7 +221,7 @@
               {#each normalizedStats as stat}
                 <article class="experience-item">
                   <div class="experience-copy">
-                    <h3>{stat.title}</h3>
+                    <p class="experience-title">{stat.title}</p>
                     <p>{stat.label}</p>
                   </div>
                 </article>
@@ -635,7 +635,7 @@
   /* =========================================================
      EXPERIENCE TITLE
   ========================================================= */
-  .experience-copy h3 {
+  .experience-title {
     width: 100%;
     max-width: 100%;
     margin: 0;
@@ -650,7 +650,7 @@
     text-transform: uppercase;
   }
 
-  .experience-copy h3::after {
+  .experience-copy .experience-title::after {
     content: "";
     width: 26%;
     height: 1px;
@@ -659,11 +659,13 @@
     background: #0043ff;
   }
 
-  :global(body.light) .experience-copy h3 {
+  :global(body.light) .experience-title {
     color: #111111;
   }
 
-  .experience-copy p {
+  /* IMPORTANT:
+     Do not style .experience-title with the small paragraph styles */
+  .experience-copy p:not(.experience-title) {
     margin: 8px 0 0;
     color: #8f8f8f;
     font-size: 12px;
@@ -672,7 +674,7 @@
     letter-spacing: 0.025em;
   }
 
-  :global(body.light) .experience-copy p {
+  :global(body.light) .experience-copy p:not(.experience-title) {
     color: rgba(0, 0, 0, 0.58);
   }
 
@@ -759,7 +761,7 @@
   .about-kicker {
     display: block;
     margin: 0 0 18px;
-    color: rgba(255, 255, 255, 0.7);
+    color: rgba(255, 255, 255, 0.88);
     font-size: var(--type-label);
     font-weight: var(--weight-bold);
     line-height: 1;
@@ -832,7 +834,7 @@
 
   .profile-role {
     max-width: 100%;
-    color: rgba(255, 255, 255, 0.68);
+    color: rgba(255, 255, 255, 0.86);
     font-size: 11px;
     font-weight: var(--weight-semibold);
     line-height: 1.45;
@@ -842,7 +844,7 @@
   }
 
   :global(body.light) .profile-role {
-    color: rgba(255, 255, 255, 0.68);
+    color: rgba(255, 255, 255, 0.86);
   }
 
   /* =========================================================
@@ -1028,11 +1030,15 @@
   }
 
   .problem-item-number {
-    color: #0043ff;
+    color: #6f8cff;
     font-size: var(--type-label);
     font-weight: var(--weight-bold);
     line-height: 1;
     letter-spacing: 0.08em;
+  }
+
+  :global(body.light) .problem-item-number {
+    color: #0043ff;
   }
 
   .problem-item-title {
@@ -1247,6 +1253,22 @@
     margin-top: 18px;
   }
 
+  /*
+   * DESKTOP + TABLET
+   * Keep every service tag row aligned at the same vertical position,
+   * regardless of paragraph length.
+   */
+  @media (min-width: 768px) {
+    .service-content {
+      height: 100%;
+    }
+
+    .service-tags {
+      margin-top: auto;
+      padding-top: 18px;
+    }
+  }
+
   .service-tags span {
     min-height: 30px;
     display: inline-flex;
@@ -1282,12 +1304,16 @@
   }
 
   .free-tools-heading > span {
-    color: #0043ff;
+    color: #6f8cff;
     font-size: var(--type-label);
     font-weight: var(--weight-bold);
     line-height: 1;
     letter-spacing: 0.15em;
     text-transform: uppercase;
+  }
+
+  :global(body.light) .free-tools-heading > span {
+    color: #0043ff;
   }
 
   .free-tools-heading h2 {
@@ -1363,12 +1389,16 @@
   .website-tool-eyebrow {
     display: block;
     margin-bottom: 16px;
-    color: #0043ff;
+    color: #6f8cff;
     font-size: var(--type-label);
     font-weight: var(--weight-bold);
     line-height: 1;
     letter-spacing: 0.13em;
     text-transform: uppercase;
+  }
+
+  :global(body.light) .website-tool-eyebrow {
+    color: #0043ff;
   }
 
   .website-tool-copy h3 {
@@ -1545,14 +1575,19 @@
       border-left: 0;
     }
 
-    .experience-copy h3 {
+    .experience-title {
       font-size: 14px;
       font-weight: 700;
       line-height: 1.35;
       padding: 0;
+      color: #ffffff;
     }
 
-    .experience-copy p {
+    :global(body.light) .experience-title {
+      color: #111111;
+    }
+
+    .experience-copy p:not(.experience-title) {
       margin-top: 6px;
       font-size: 11px;
     }
@@ -1792,7 +1827,7 @@
       text-align: center;
     }
 
-    .experience-copy h3 {
+    .experience-title {
       width: 100%;
 
       max-width: 100%;
@@ -1814,17 +1849,17 @@
       text-align: center;
     }
 
-    .experience-copy h3::after {
+    .experience-copy .experience-title::after {
       width: 30%;
 
       margin: 6px auto 0;
     }
 
-    :global(body.light) .experience-copy h3 {
+    :global(body.light) .experience-title {
       color: #111111;
     }
 
-    .experience-copy p {
+    .experience-copy p:not(.experience-title) {
       display: none;
     }
 
@@ -2009,7 +2044,16 @@
     }
 
     .service-content {
+      height: auto;
       justify-content: flex-end;
+    }
+
+    /*
+     * Mobile keeps its original natural tag position.
+     */
+    .service-tags {
+      margin-top: 18px;
+      padding-top: 0;
     }
 
     .service-content p {
@@ -2133,13 +2177,13 @@
       text-align: center;
     }
 
-    .experience-copy h3 {
+    .experience-copy .experience-title {
       font-size: 10px;
 
       text-align: center;
     }
 
-    .experience-copy h3::after {
+    .experience-copy .experience-title::after {
       margin-left: auto;
       margin-right: auto;
     }
@@ -2225,11 +2269,11 @@
       text-align: center;
     }
 
-    .experience-copy h3 {
+    .experience-title {
       text-align: center;
     }
 
-    .experience-copy h3::after {
+    .experience-title::after {
       margin-left: auto;
       margin-right: auto;
     }
