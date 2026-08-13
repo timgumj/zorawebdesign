@@ -808,10 +808,10 @@
     images={processImages}
     steps={processSteps}
     imageCredits={[
-      "With Ines and Andy, JUBS",
-      "With Isabella, reSOMA",
-      "UI design phase",
-      "Website maintenance phase",
+      "First meeting with Ines and Andy – JUBS",
+      "Concept Stage: Structure, Layout & Design Direction",
+      "Successful Website Launch with Isabella Pfoser – reSOMA",
+      "Support & Maintenance – Secure, Updated & Reliable",
     ]}
   />
 

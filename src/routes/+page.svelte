@@ -514,13 +514,12 @@
   <Process
     title="PROJEKTABLAUF"
     subtitle="Ein klarer Website Prozess vom ersten Gespräch über Konzept und Design bis zum Launch und optionalen WordPress Support."
-    images={processImages}
     steps={processSteps}
     imageCredits={[
-      "Mit Ines und Andy - JUBS",
-      "Mit Isabella - reSOMA",
-      "Designphase",
-      "Supportphase",
+      "Erstes Treffen mit Ines und Andy – JUBS",
+      "Konzeptphase: Struktur, Layout & Designrichtung",
+      "Website Launch mit Isabella Pfoser – reSOMA",
+      "Support- & Wartungsphase – Sicher, aktuell & zuverlässig",
     ]}
   />
 

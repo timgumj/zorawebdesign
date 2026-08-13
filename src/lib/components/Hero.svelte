@@ -994,6 +994,7 @@
     font-weight: 600;
 
     letter-spacing: -0.025em;
+    text-transform: uppercase;
 
     text-wrap: balance;
 

@@ -7,6 +7,7 @@
 
 <svelte:head>
   <title>Blog | Zora Web Design</title>
+
   <meta
     name="description"
     content="Articles and guides about web design, websites, and digital projects from Zora Web Design."
@@ -20,6 +21,7 @@
 
       <a href="/blog/" class="blog-language-link"> GERMAN </a>
     </div>
+
     <header class="blog-archive-header">
       <h1>Blog</h1>
     </header>
@@ -34,6 +36,30 @@
               </a>
             </h2>
 
+            <div class="blog-archive-meta" aria-label="Article information">
+              {#if post.published}
+                <span>
+                  {post.published}
+                </span>
+              {/if}
+
+              {#if post.author}
+                <span class="blog-meta-separator" aria-hidden="true"> / </span>
+
+                <span>
+                  {post.author}
+                </span>
+              {/if}
+
+              {#if post.readingTime}
+                <span class="blog-meta-separator" aria-hidden="true"> / </span>
+
+                <span>
+                  {post.readingTime} MIN READ
+                </span>
+              {/if}
+            </div>
+
             {#if post.description}
               <p>{post.description}</p>
             {/if}
@@ -41,7 +67,12 @@
 
           {#if post.image}
             <div class="blog-archive-image">
-              <img src={post.image} alt={post.imageAlt || ""} loading="lazy" />
+              <img
+                src={post.image}
+                alt={post.imageAlt || ""}
+                loading="lazy"
+                decoding="async"
+              />
             </div>
           {/if}
         </article>

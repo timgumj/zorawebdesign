@@ -16,7 +16,7 @@
     "/images/support-700.webp",
   ];
 
-  const defaultImageCredits = ["Ines and Andy JUBS", "Isabella reSOMA", "", ""];
+  const defaultImageCredits = ["Ines and Andy JUBS", "", "Isabella reSOMA", ""];
 
   function getImageCredit(index) {
     return imageCredits[index] ?? defaultImageCredits[index] ?? "";
@@ -89,7 +89,10 @@
 
     updateLine();
 
-    window.addEventListener("scroll", updateLine, { passive: true });
+    window.addEventListener("scroll", updateLine, {
+      passive: true,
+    });
+
     window.addEventListener("resize", updateLine);
 
     return {
@@ -170,7 +173,12 @@
                   />
 
                   {#if getImageCredit(index)}
-                    <p class="image-credit">{getImageCredit(index)}</p>
+                    <div class="image-credit">
+                      <span class="image-credit-line" aria-hidden="true"></span>
+                      <span class="image-credit-text">
+                        {getImageCredit(index)}
+                      </span>
+                    </div>
                   {/if}
                 </div>
               {/if}
@@ -191,7 +199,6 @@
     background: #111111;
     color: #ffffff;
     font-family: "Space Grotesk", Arial, sans-serif;
-
     transition:
       background 0.3s ease,
       color 0.3s ease;
@@ -208,12 +215,10 @@
     position: relative;
     width: min(1540px, calc(100% - 32px));
     margin: 0 auto;
-
     padding-top: 140px;
     padding-right: var(--shell-x);
     padding-bottom: 140px;
     padding-left: var(--shell-x);
-
     box-sizing: border-box;
   }
 
@@ -228,7 +233,6 @@
     background: rgba(255, 255, 255, 0.08);
     pointer-events: none;
     z-index: 0;
-
     transition: background 0.3s ease;
   }
 
@@ -274,10 +278,8 @@
     box-sizing: border-box;
     background: #0043ff;
     color: #ffffff;
-
     opacity: 0;
     transform: translateY(18px);
-
     transition:
       opacity 0.7s ease,
       transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
@@ -292,16 +294,12 @@
     width: 100%;
     min-height: 280px;
     box-sizing: border-box;
-
     display: grid;
-
     grid-template-columns:
       minmax(0, 1.15fr)
       minmax(320px, 0.85fr);
-
     align-items: center;
     gap: 80px;
-
     padding: 58px 64px;
   }
 
@@ -378,18 +376,13 @@
 
   .process-stage {
     position: relative;
-
     display: grid;
-
     grid-template-columns:
       minmax(0, 1fr)
       minmax(320px, 0.75fr);
-
     gap: 80px;
     align-items: start;
-
     min-height: 320px;
-
     padding-top: 54px;
     padding-bottom: 54px;
   }
@@ -407,7 +400,6 @@
     height: 1px;
     background: rgba(255, 255, 255, 0.12);
     pointer-events: none;
-
     transition: background 0.3s ease;
   }
 
@@ -430,13 +422,10 @@
   ========================================================= */
   .stage-left {
     display: grid;
-
     grid-template-columns:
       58px
       minmax(0, 1fr);
-
     gap: 34px;
-
     min-height: 320px;
   }
 
@@ -455,7 +444,6 @@
     letter-spacing: 0.04em;
     font-weight: 700;
     padding-top: 0;
-
     transition: color 0.3s ease;
   }
 
@@ -473,13 +461,9 @@
     top: 36px;
     bottom: 10px;
     left: 50%;
-
     width: 1px;
-
     background: transparent;
-
     transform: translateX(-50%);
-
     overflow: hidden;
   }
 
@@ -488,10 +472,8 @@
     width: 100%;
     height: 100%;
     background: #0043ff;
-
     transform: scaleY(var(--line-progress));
     transform-origin: top;
-
     will-change: transform;
   }
 
@@ -510,7 +492,6 @@
     letter-spacing: 0.04em;
     text-transform: uppercase;
     font-weight: 700;
-
     transition: color 0.3s ease;
   }
 
@@ -524,7 +505,6 @@
     color: #9a9a9a;
     font-size: 16px;
     line-height: 1.7;
-
     transition: color 0.3s ease;
   }
 
@@ -544,19 +524,14 @@
     width: 100%;
     max-width: 460px;
     margin: 0 auto;
-
     overflow: hidden;
-
     opacity: 0.4;
-
     transform: scale(0.6);
     transform-origin: center;
-
     transition:
       opacity 0.9s ease,
       transform 1.2s cubic-bezier(0.16, 1, 0.3, 1),
       background 0.3s ease;
-
     will-change: opacity, transform;
   }
 
@@ -569,14 +544,14 @@
     display: block;
     width: 100%;
     height: 300px;
-
     object-fit: cover;
     object-position: center center;
   }
 
   /* =========================================================
      THIRD IMAGE
-     ORIGINAL COLOUR + SLIGHTLY HIGHER CROP
+     ISABELLA / reSOMA
+     SPECIAL IMAGE TREATMENT
   ========================================================= */
   .stage-right img.process-feature-image {
     filter: none;
@@ -584,18 +559,35 @@
     object-position: center 35%;
   }
 
+  /* =========================================================
+     IMAGE CAPTION
+  ========================================================= */
   .image-credit {
-    margin: 8px 0 0;
-    color: #9a9a9a;
-    font-size: 12px;
-    line-height: 1.4;
-    letter-spacing: 0.03em;
-
-    transition: color 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 12px 0 0;
+    min-height: 18px;
   }
 
-  :global(body.light) .image-credit {
-    color: rgba(0, 0, 0, 0.58);
+  .image-credit-line {
+    width: 22px;
+    height: 1px;
+    flex: 0 0 auto;
+    background: #0043ff;
+  }
+
+  .image-credit-text {
+    color: #b3b3b3;
+    font-size: 11px;
+    line-height: 1.35;
+    font-weight: 600;
+    letter-spacing: 0.055em;
+    text-transform: uppercase;
+  }
+
+  :global(body.light) .image-credit-text {
+    color: rgba(0, 0, 0, 0.62);
   }
 
   .process-stage:last-child .stage-left {
@@ -616,13 +608,10 @@
 
     .process-header-inner {
       min-height: 240px;
-
       grid-template-columns:
         minmax(0, 1fr)
         minmax(280px, 0.9fr);
-
       gap: 48px;
-
       padding: 48px 52px;
     }
 
@@ -637,18 +626,13 @@
 
     .process-stage {
       display: grid;
-
       grid-template-columns:
         58px
         minmax(0, 1fr);
-
       gap: 34px;
-
       min-height: auto;
-
       padding-top: 46px;
       padding-bottom: 46px;
-
       align-items: stretch;
     }
 
@@ -668,14 +652,10 @@
     .stage-number-wrap {
       grid-column: 1;
       grid-row: 1 / span 2;
-
       position: relative;
-
       display: flex;
       justify-content: center;
-
       align-self: stretch;
-
       min-height: 100%;
     }
 
@@ -692,7 +672,6 @@
     .stage-content {
       grid-column: 2;
       grid-row: 1;
-
       width: 100%;
       max-width: none;
     }
@@ -704,21 +683,36 @@
     .stage-right {
       grid-column: 2;
       grid-row: 2;
-
-      min-height: auto;
-
-      padding-left: 0;
-
       width: 100%;
+      min-height: auto;
+      padding-left: 0;
     }
 
     .stage-image-wrap {
+      width: 100%;
       max-width: none;
       margin-left: 0;
     }
 
-    .stage-right img {
+    /*
+     * ALL TABLET IMAGES:
+     * EXACT SAME WIDTH + HEIGHT
+     */
+    .stage-right img,
+    .stage-right img.process-feature-image {
+      display: block;
+      width: 100%;
       height: 330px;
+      object-fit: cover;
+      object-position: center center;
+    }
+
+    /*
+     * Isabella keeps only the slightly higher crop.
+     * Size remains identical to every other image.
+     */
+    .stage-right img.process-feature-image {
+      object-position: center 35%;
     }
 
     .process-stage:last-child .stage-number-wrap {
@@ -745,7 +739,6 @@
       --shell-x: 32px;
 
       width: min(1540px, calc(100% - 28px));
-
       padding-top: 110px;
       padding-right: var(--shell-x);
       padding-bottom: 82px;
@@ -758,13 +751,10 @@
 
     .process-header-inner {
       min-height: 220px;
-
       grid-template-columns:
         minmax(0, 1fr)
         minmax(260px, 0.9fr);
-
       gap: 38px;
-
       padding: 42px 44px;
     }
 
@@ -781,6 +771,15 @@
     .process-subtitle {
       font-size: 13px;
       line-height: 1.55;
+    }
+
+    .image-credit {
+      margin-top: 11px;
+    }
+
+    .image-credit-text {
+      font-size: 10px;
+      letter-spacing: 0.05em;
     }
   }
 
@@ -803,14 +802,10 @@
 
     .process-header-inner {
       min-height: 0;
-
       display: flex;
       flex-direction: column;
-
       align-items: flex-start;
-
       gap: 24px;
-
       padding: 38px 30px;
     }
 
@@ -840,9 +835,7 @@
       grid-template-columns:
         42px
         minmax(0, 1fr);
-
       gap: 20px;
-
       padding-top: 46px;
       padding-bottom: 46px;
     }
@@ -861,10 +854,13 @@
     }
 
     .stage-right {
+      width: 100%;
       padding-left: 0;
     }
 
     .stage-image-wrap {
+      width: 100%;
+      max-width: none;
       background: #111111;
     }
 
@@ -872,24 +868,42 @@
       background: #ffffff;
     }
 
-    /* All mobile images use the exact same dimensions */
-    .stage-right img {
+    /*
+     * ALL MOBILE IMAGES:
+     * SAME WIDTH
+     * SAME HEIGHT
+     * SAME CROPPING METHOD
+     */
+    .stage-right img,
+    .stage-right img.process-feature-image {
       display: block;
-
       width: 100%;
       height: 250px;
-
-      object-fit: contain;
+      object-fit: cover;
       object-position: center center;
     }
 
     /*
-     * Only remove the colour filter from image 03.
-     * Width, height, object-fit and positioning are inherited
-     * from the exact same rule as every other image.
+     * Isabella can keep the slightly higher crop,
+     * but still has exactly the same dimensions.
      */
     .stage-right img.process-feature-image {
-      filter: none;
+      object-position: center 35%;
+    }
+
+    .image-credit {
+      gap: 9px;
+      margin-top: 10px;
+    }
+
+    .image-credit-line {
+      width: 18px;
+    }
+
+    .image-credit-text {
+      font-size: 9px;
+      line-height: 1.4;
+      letter-spacing: 0.05em;
     }
 
     .stage-line {
@@ -910,23 +924,29 @@
       padding-left: 0;
     }
 
-    /* All small-mobile images use the same exact dimensions */
-    .stage-right img {
+    /*
+     * ALL SMALL MOBILE IMAGES:
+     * EXACT SAME DIMENSIONS
+     */
+    .stage-right img,
+    .stage-right img.process-feature-image {
       display: block;
-
       width: 100%;
       height: 230px;
-
-      object-fit: contain;
+      object-fit: cover;
       object-position: center center;
     }
 
-    /*
-     * Image 03 remains original colour only.
-     * No special sizing or positioning.
-     */
     .stage-right img.process-feature-image {
-      filter: none;
+      object-position: center 35%;
+    }
+
+    .image-credit {
+      margin-top: 9px;
+    }
+
+    .image-credit-text {
+      font-size: 9px;
     }
   }
 
@@ -948,12 +968,15 @@
       font-size: 14px;
     }
 
-    /*
-     * Keep the exact same image sizing inherited
-     * from the 480px breakpoint.
-     */
+    .stage-right img,
     .stage-right img.process-feature-image {
-      filter: none;
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+    }
+
+    .stage-right img.process-feature-image {
+      object-position: center 35%;
     }
   }
 
