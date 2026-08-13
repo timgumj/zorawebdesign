@@ -869,7 +869,7 @@
 
   .services-header-inner {
     width: 100%;
-    min-height: 280px;
+    min-height: 140px;
     box-sizing: border-box;
     display: grid;
     grid-template-columns:
@@ -1254,7 +1254,7 @@
     justify-content: center;
     padding: 6px 12px;
     border: 1px solid rgba(255, 255, 255, 0.28);
-    border-radius: 999px;
+    border-radius: 0;
     color: #ffffff;
     font-size: 12px;
     font-weight: 600;
@@ -1613,7 +1613,7 @@
     }
 
     .services-header-inner {
-      min-height: 220px;
+      min-height: 140px;
       grid-template-columns:
         minmax(0, 1fr)
         minmax(260px, 0.9fr);

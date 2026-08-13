@@ -480,7 +480,7 @@
     },
     {
       name: "Dr Bosede Baldauf",
-      role: "Urologist FECSM Vienna",
+      role: "UROLOGIST FECSM VIENNA",
       image: "/images/dr_bosede_baldauf.webp",
       alt: "Dr Bosede Baldauf",
       title: "Dr Bosede Baldauf",
@@ -507,7 +507,7 @@
     },
     {
       name: "Benjamin Wüllenweber",
-      role: "Hypnotherapist DHV | NGH",
+      role: "HYPNOTHERAPIST DHV | NGH",
       image: "/images/ben_wüllenweber.webp",
       alt: "Benjamin Wüllenweber",
       title: "Benjamin Wüllenweber",
@@ -516,7 +516,7 @@
     },
     {
       name: "Anna Hofbauer",
-      role: "Artist",
+      role: "ARTIST",
       image: "/images/Anna_Artist.jpg",
       alt: "Anna Hofbauer",
       title: "Anna Hofbauer",

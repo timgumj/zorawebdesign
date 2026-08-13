@@ -163,7 +163,7 @@
 
   .reviews-header-inner {
     width: 100%;
-    min-height: 280px;
+    min-height: 140px;
     box-sizing: border-box;
     display: grid;
     grid-template-columns:
@@ -384,7 +384,7 @@
     }
 
     .reviews-header-inner {
-      min-height: 220px;
+      min-height: 140px;
       grid-template-columns:
         minmax(0, 1fr)
         minmax(260px, 0.9fr);

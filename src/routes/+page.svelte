@@ -241,7 +241,7 @@
     },
     {
       name: "Dr Bosede Baldauf",
-      role: "Urologin FECSM Wien",
+      role: "UROLOGIN FECSM WIEN",
       image: "/images/dr_bosede_baldauf.webp",
       alt: "Portrait von Dr Bosede Baldauf, Kundin für WordPress Webdesign in Wien",
       stars: 5,
@@ -265,7 +265,7 @@
     },
     {
       name: "Benjamin Wüllenweber",
-      role: "Hypnosetherapeut DHV | NGH",
+      role: "HYPNOSETHERAPEUT DHV | NGH",
       image: "/images/ben_wüllenweber.webp",
       alt: "Portrait von Benjamin Wüllenweber, Kunde für professionelle Website Erstellung",
       stars: 5,
@@ -273,7 +273,7 @@
     },
     {
       name: "Anna Hofbauer",
-      role: "Künstlerin",
+      role: "KÜNSTLERIN",
       image: "/images/Anna_Artist.jpg",
       alt: "Portrait von Anna Hofbauer, Kundin für Kunst Portfolio Website",
       stars: 5,
