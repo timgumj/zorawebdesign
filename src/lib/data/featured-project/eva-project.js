@@ -32,8 +32,8 @@ export const evaProjectContent = {
         "Eva Eichinger Referenzprojekt | Webdesign Wien – Julius Timgum",
       description:
         "Website-Redesign für die Wiener Künstlerin Eva Eichinger mit SvelteKit, Headless WordPress und Vercel.",
-      canonical: "https://zorawebdesign.com/referenzprojekt/",
-      alternate: "https://zorawebdesign.com/en-2/featured-project/",
+      canonical: "https://www.zorawebdesign.com/referenzprojekt/",
+      alternate: "https://www.zorawebdesign.com/en-2/featured-project/",
     },
     hero: {
       eyebrow: "REFERENZPROJEKT",

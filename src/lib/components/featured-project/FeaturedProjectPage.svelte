@@ -116,7 +116,7 @@
   <meta property="og:url" content={content.seo.canonical} />
   <meta
     property="og:image"
-    content="https://zorawebdesign.com/images/new_website_design_result.webp"
+    content="https://www.zorawebdesign.com/images/new_website_design_result.webp"
   />
 </svelte:head>
 

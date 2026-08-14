@@ -10,7 +10,7 @@
     content="Impressum von Zora Web Design, Julius Timgum, Webdesigner und WordPress Entwickler in Wien."
   />
 
-  <link rel="canonical" href="https://zorawebdesign.com/impressum/" />
+  <link rel="canonical" href="https://www.zorawebdesign.com/impressum/" />
 
   <meta name="robots" content="index, follow" />
 </svelte:head>

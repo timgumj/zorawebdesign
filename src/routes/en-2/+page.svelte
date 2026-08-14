@@ -139,7 +139,7 @@
 
   let CookieConsent = $state(null);
   let currentUrl = $derived(
-    page.url?.href || "https://zorawebdesign.com/en-2/",
+    page.url?.href || "https://www.zorawebdesign.com/en-2/",
   );
 
   onMount(() => {
@@ -654,9 +654,9 @@
     "@context": "https://schema.org",
     "@type": "ProfessionalService",
     name: "Zora Web Design",
-    image: "https://zorawebdesign.com/images/julius-256.webp",
-    "@id": "https://zorawebdesign.com/en-2/#website",
-    url: "https://zorawebdesign.com/en-2/",
+    image: "https://www.zorawebdesign.com/images/julius-256.webp",
+    "@id": "https://www.zorawebdesign.com/en-2/#website",
+    url: "https://www.zorawebdesign.com/en-2/",
     telephone: "+4367764859839",
     email: "info@zorawebdesign.com",
     priceRange: "$$",
@@ -703,52 +703,69 @@
     content="Web Designer Vienna, Freelance Web Designer Vienna, WordPress Expert Vienna, WordPress Developer Vienna, Web Design Vienna, Website Design Vienna, Website Development Vienna, Professional Web Design Austria, WordPress Website Vienna, WordPress Development Austria, Small Business Website Vienna, Website Designer Austria, Freelance Developer Austria, SEO Friendly Website Vienna, Responsive Web Design Vienna, E Commerce Website Vienna, WooCommerce Developer Vienna, Shopify Website Vienna, WordPress Maintenance Vienna, Website Support Vienna, Hire Web Designer Vienna, Hire WordPress Developer Vienna, Zora Web Design, Julius Timgum"
   />
 
-  <link rel="canonical" href="https://zorawebdesign.com/en-2/" />
+  <link rel="canonical" href="https://www.zorawebdesign.com/en-2/" />
 
   <meta name="robots" content="index, follow" />
   <meta name="author" content="Julius Timgum" />
   <meta name="publisher" content="Zora Web Design" />
 
-  <link rel="alternate" hreflang="de" href="https://zorawebdesign.com/" />
-  <link rel="alternate" hreflang="en" href="https://zorawebdesign.com/en-2/" />
+  <link rel="alternate" hreflang="de" href="https://www.zorawebdesign.com/" />
+
+  <link
+    rel="alternate"
+    hreflang="en"
+    href="https://www.zorawebdesign.com/en-2/"
+  />
+
   <link
     rel="alternate"
     hreflang="x-default"
-    href="https://zorawebdesign.com/"
+    href="https://www.zorawebdesign.com/"
   />
 
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://zorawebdesign.com/en-2/" />
+  <meta property="og:url" content="https://www.zorawebdesign.com/en-2/" />
+
   <meta
     property="og:title"
     content="Freelance Web Designer & WordPress Expert Vienna | Julius Timgum"
   />
+
   <meta
     property="og:description"
     content="Professional web design and WordPress development in Vienna. Over 100 successful projects for freelancers and businesses."
   />
+
   <meta
     property="og:image"
-    content="https://zorawebdesign.com/images/meet-700.webp"
+    content="https://www.zorawebdesign.com/images/meet-700.webp"
   />
+
   <meta property="og:locale" content="en_US" />
 
   <meta property="twitter:card" content="summary_large_image" />
-  <meta property="twitter:url" content="https://zorawebdesign.com/en-2/" />
+
+  <meta property="twitter:url" content="https://www.zorawebdesign.com/en-2/" />
+
   <meta
     property="twitter:title"
     content="Freelance Web Designer & WordPress Expert Vienna | Julius Timgum"
   />
+
   <meta
     property="twitter:description"
     content="Professional web design and WordPress development in Vienna."
   />
+
   <meta
     property="twitter:image"
-    content="https://zorawebdesign.com/images/meet-700.webp"
+    content="https://www.zorawebdesign.com/images/meet-700.webp"
   />
 
-  <link rel="image_src" href="https://zorawebdesign.com/images/meet-700.webp" />
+  <link
+    rel="image_src"
+    href="https://www.zorawebdesign.com/images/meet-700.webp"
+  />
 
   {@html `<script type="application/ld+json">${JSON.stringify(localBusinessSchema)}</script>`}
 </svelte:head>

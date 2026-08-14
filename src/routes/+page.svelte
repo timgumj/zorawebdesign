@@ -125,7 +125,6 @@
       title: "WEBENTWICKLUNG",
       text: "Technische Umsetzung moderner Websites mit WordPress und individuellen Lösungen. Von maßgeschneiderten Funktionen und API-Integrationen bis hin zu barrierefreien Anwendungen und einer technisch sauberen Umsetzung.",
     },
-
     {
       icon: "/images/shopping-bag.webp",
       alt: "Webshop erstellen mit WooCommerce und Shopify für Selbstständige und Unternehmen",
@@ -382,34 +381,66 @@
     bookCallTitle: "Kostenloses Gespräch mit Webdesigner Julius Timgum buchen",
   };
 
-  const localBusinessSchema = {
+  const structuredData = {
     "@context": "https://schema.org",
-    "@type": "ProfessionalService",
-    name: "Zora Web Design - Julius Timgum",
-    image: "https://zorawebdesign.com/images/meet-700.webp",
-    "@id": "https://zorawebdesign.com/#website",
-    url: "https://zorawebdesign.com/",
-    telephone: "+4367764859839",
-    priceRange: "$$",
-    address: {
-      "@type": "PostalAddress",
-      streetAddress: "Hackengasse 22",
-      addressLocality: "Wien",
-      postalCode: "1150",
-      addressCountry: "AT",
-    },
-    geo: {
-      "@type": "GeoCoordinates",
-      latitude: "48.1979",
-      longitude: "16.3356",
-    },
-    openingHoursSpecification: {
-      "@type": "OpeningHoursSpecification",
-      dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-      opens: "09:00",
-      closes: "18:00",
-    },
-    sameAs: ["https://calendly.com/timgum-julius"],
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": "https://www.zorawebdesign.com/#website",
+        url: "https://www.zorawebdesign.com/",
+        name: "Zora Web Design",
+        inLanguage: "de-AT",
+        publisher: {
+          "@id": "https://www.zorawebdesign.com/#business",
+        },
+      },
+      {
+        "@type": "ProfessionalService",
+        "@id": "https://www.zorawebdesign.com/#business",
+        name: "Zora Web Design",
+        alternateName: "Zora Web Design - Julius Timgum",
+        url: "https://www.zorawebdesign.com/",
+        image: "https://www.zorawebdesign.com/images/meet-700.webp",
+        telephone: "+4367764859839",
+        email: "info@zorawebdesign.com",
+        priceRange: "$$",
+        description:
+          "Selbstständiger Webdesigner und WordPress Entwickler in Wien für moderne, responsive Websites, Webshops, SEO, Hosting und WordPress Support.",
+        founder: {
+          "@type": "Person",
+          name: "Julius Timgum",
+        },
+        address: {
+          "@type": "PostalAddress",
+          streetAddress: "Hackengasse 22",
+          addressLocality: "Wien",
+          postalCode: "1150",
+          addressCountry: "AT",
+        },
+        geo: {
+          "@type": "GeoCoordinates",
+          latitude: 48.1979,
+          longitude: 16.3356,
+        },
+        openingHoursSpecification: {
+          "@type": "OpeningHoursSpecification",
+          dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+          opens: "09:00",
+          closes: "18:00",
+        },
+        areaServed: [
+          {
+            "@type": "City",
+            name: "Wien",
+          },
+          {
+            "@type": "Country",
+            name: "Österreich",
+          },
+        ],
+        sameAs: ["https://calendly.com/timgum-julius"],
+      },
+    ],
   };
 </script>
 
@@ -426,23 +457,33 @@
     content="Webdesigner Wien, WordPress Freelancer Wien, WordPress Webdesigner Wien, WordPress Experte Wien, WordPress Entwickler Wien, Webdesign Wien, Website erstellen lassen Wien, Homepage erstellen Wien, WordPress Website Wien, Webdesign für Selbstständige, Webdesign für kleine Unternehmen, Webdesign für Unternehmen Wien, Freelance Webdesigner Wien, Responsive Webdesign Wien, Webshop erstellen Wien, WooCommerce Wien, WordPress Wartung Wien, SEO Webdesign Wien, Zora Web Design, Julius Timgum"
   />
 
-  <link rel="canonical" href="https://zorawebdesign.com/" />
+  <link rel="canonical" href="https://www.zorawebdesign.com/" />
 
   <meta name="robots" content="index, follow" />
   <meta name="author" content="Julius Timgum" />
   <meta name="publisher" content="Zora Web Design" />
 
-  <link rel="alternate" hreflang="de" href="https://zorawebdesign.com/" />
-  <link rel="alternate" hreflang="en" href="https://zorawebdesign.com/en-2/" />
+  <link
+    rel="alternate"
+    hreflang="de-AT"
+    href="https://www.zorawebdesign.com/"
+  />
+
+  <link
+    rel="alternate"
+    hreflang="en"
+    href="https://www.zorawebdesign.com/en-2/"
+  />
 
   <link
     rel="alternate"
     hreflang="x-default"
-    href="https://zorawebdesign.com/"
+    href="https://www.zorawebdesign.com/"
   />
 
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://zorawebdesign.com/" />
+  <meta property="og:site_name" content="Zora Web Design" />
+  <meta property="og:url" content="https://www.zorawebdesign.com/" />
 
   <meta
     property="og:title"
@@ -454,22 +495,46 @@
     content="Selbstständiger Webdesigner und WordPress Freelancer in Wien. Moderne, responsive Websites für Selbstständige, kleine Unternehmen und Organisationen."
   />
 
-  <meta property="og:locale" content="de_AT" />
-
-  <meta property="twitter:card" content="summary_large_image" />
-  <meta property="twitter:url" content="https://zorawebdesign.com/" />
+  <meta
+    property="og:image"
+    content="https://www.zorawebdesign.com/images/meet-700.webp"
+  />
 
   <meta
-    property="twitter:title"
+    property="og:image:alt"
+    content="Julius Timgum, selbstständiger Webdesigner und WordPress Entwickler in Wien"
+  />
+
+  <meta property="og:locale" content="de_AT" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <meta
+    name="twitter:title"
     content="Webdesigner Wien | WordPress Freelancer Julius Timgum"
   />
 
   <meta
-    property="twitter:description"
+    name="twitter:description"
     content="Moderne WordPress Websites für Selbstständige, kleine Unternehmen und Organisationen in Wien."
   />
 
-  {@html `<script type="application/ld+json">${JSON.stringify(localBusinessSchema)}</script>`}
+  <meta
+    name="twitter:image"
+    content="https://www.zorawebdesign.com/images/meet-700.webp"
+  />
+
+  <meta
+    name="twitter:image:alt"
+    content="Julius Timgum, selbstständiger Webdesigner und WordPress Entwickler in Wien"
+  />
+
+  <link
+    rel="image_src"
+    href="https://www.zorawebdesign.com/images/meet-700.webp"
+  />
+
+  {@html `<script type="application/ld+json">${JSON.stringify(structuredData)}</script>`}
 </svelte:head>
 
 <Header {nav} />

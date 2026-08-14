@@ -481,41 +481,63 @@
 </script>
 
 <svelte:head>
-  <title>
-    {content.documentTitle}
-  </title>
+  <title>{content.documentTitle}</title>
 
   <meta name="description" content={content.metaDescription} />
 
-  <link rel="canonical" href="https://zorawebdesign.com/website-audit/" />
+  <meta name="robots" content="index, follow" />
+  <meta name="author" content="Julius Timgum" />
+  <meta name="publisher" content="Zora Web Design" />
+
+  <link rel="canonical" href="https://www.zorawebdesign.com/website-audit/" />
 
   <link
     rel="alternate"
-    hreflang="de"
-    href="https://zorawebdesign.com/website-audit/"
+    hreflang="de-AT"
+    href="https://www.zorawebdesign.com/website-audit/"
   />
 
   <link
     rel="alternate"
     hreflang="en"
-    href="https://zorawebdesign.com/en-2/website-audit/"
+    href="https://www.zorawebdesign.com/en-2/website-audit/"
   />
 
   <link
     rel="alternate"
     hreflang="x-default"
-    href="https://zorawebdesign.com/website-audit/"
+    href="https://www.zorawebdesign.com/website-audit/"
+  />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Zora Web Design" />
+
+  <meta
+    property="og:url"
+    content="https://www.zorawebdesign.com/website-audit/"
   />
 
   <meta property="og:title" content={content.documentTitle} />
 
   <meta property="og:description" content={content.metaDescription} />
 
-  <meta property="og:type" content="website" />
+  <meta
+    property="og:image"
+    content="https://www.zorawebdesign.com/images/meet-700.webp"
+  />
 
-  <meta property="og:url" content="https://zorawebdesign.com/website-audit/" />
+  <meta property="og:locale" content="de_AT" />
 
-  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <meta name="twitter:title" content={content.documentTitle} />
+
+  <meta name="twitter:description" content={content.metaDescription} />
+
+  <meta
+    name="twitter:image"
+    content="https://www.zorawebdesign.com/images/meet-700.webp"
+  />
 </svelte:head>
 
 <Header {nav} />

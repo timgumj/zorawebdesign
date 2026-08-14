@@ -1,7 +1,9 @@
 <script>
   let { data } = $props();
 
-  let canonicalUrl = $derived(`https://zorawebdesign.com/${data.post.slug}/`);
+  let canonicalUrl = $derived(
+    `https://www.zorawebdesign.com/${data.post.slug}/`,
+  );
 </script>
 
 <svelte:head>
