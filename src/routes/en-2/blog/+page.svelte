@@ -6,11 +6,74 @@
 </script>
 
 <svelte:head>
-  <title>Blog | Zora Web Design</title>
+  <title>Web Design Blog | WordPress & SEO Guides | Zora Web Design</title>
 
   <meta
     name="description"
-    content="Articles and guides about web design, websites, and digital projects from Zora Web Design."
+    content="Articles and practical guides about web design, WordPress, SEO, website performance and digital projects from Zora Web Design in Vienna."
+  />
+
+  <meta name="robots" content="index, follow" />
+  <meta name="author" content="Julius Timgum" />
+  <meta name="publisher" content="Zora Web Design" />
+
+  <link rel="canonical" href="https://www.zorawebdesign.com/en-2/blog/" />
+
+  <link
+    rel="alternate"
+    hreflang="de-AT"
+    href="https://www.zorawebdesign.com/blog/"
+  />
+
+  <link
+    rel="alternate"
+    hreflang="en"
+    href="https://www.zorawebdesign.com/en-2/blog/"
+  />
+
+  <link
+    rel="alternate"
+    hreflang="x-default"
+    href="https://www.zorawebdesign.com/blog/"
+  />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Zora Web Design" />
+
+  <meta property="og:url" content="https://www.zorawebdesign.com/en-2/blog/" />
+
+  <meta
+    property="og:title"
+    content="Web Design Blog | WordPress & SEO Guides | Zora Web Design"
+  />
+
+  <meta
+    property="og:description"
+    content="Articles and practical guides about web design, WordPress, SEO, website performance and digital projects from Zora Web Design in Vienna."
+  />
+
+  <meta
+    property="og:image"
+    content="https://www.zorawebdesign.com/images/meet-700.webp"
+  />
+
+  <meta property="og:locale" content="en_GB" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <meta
+    name="twitter:title"
+    content="Web Design Blog | WordPress & SEO Guides | Zora Web Design"
+  />
+
+  <meta
+    name="twitter:description"
+    content="Articles and practical guides about web design, WordPress, SEO, website performance and digital projects from Zora Web Design in Vienna."
+  />
+
+  <meta
+    name="twitter:image"
+    content="https://www.zorawebdesign.com/images/meet-700.webp"
   />
 </svelte:head>
 
