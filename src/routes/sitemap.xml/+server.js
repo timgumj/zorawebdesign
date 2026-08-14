@@ -1,4 +1,6 @@
 import { blogPosts } from "$lib/content/blog.js";
+import { blogPostsDe } from "$lib/content/blog-de.js";
+import { blogPostsEn } from "$lib/content/blog-en.js";
 
 export const prerender = true;
 
@@ -10,14 +12,32 @@ export function GET() {
     "en-2/website-configurator/",
     "website-audit/",
     "en-2/website-audit/",
+    "blog/",
+    "en-2/blog/",
     "impressum/",
   ];
 
-  const blogPages = Object.values(blogPosts).map(
+  // Existing technical/tutorial blog posts.
+  const legacyBlogPages = Object.values(blogPosts).map(
     (post) => `${post.slug}/`,
   );
 
-  const pages = [...staticPages, ...blogPages];
+  // German blog articles.
+  const germanBlogPages = Object.values(blogPostsDe).map(
+    (post) => `blog/${post.slug}/`,
+  );
+
+  // English blog articles.
+  const englishBlogPages = Object.values(blogPostsEn).map(
+    (post) => `en-2/blog/${post.slug}/`,
+  );
+
+  const pages = [
+    ...staticPages,
+    ...legacyBlogPages,
+    ...germanBlogPages,
+    ...englishBlogPages,
+  ];
 
   // Updated whenever npm run build is executed.
   const buildDate = new Date().toISOString();
@@ -31,11 +51,15 @@ ${pages
       : "https://zorawebdesign.com/";
 
     let priority = "0.7";
+    let changefreq = "monthly";
 
     if (page === "") {
       priority = "1.0";
     } else if (page === "en-2/") {
       priority = "0.9";
+    } else if (page === "blog/" || page === "en-2/blog/") {
+      priority = "0.8";
+      changefreq = "weekly";
     } else if (
       page.includes("website-audit") ||
       page.includes("website-konfigurator") ||
@@ -49,7 +73,7 @@ ${pages
     return `  <url>
     <loc>${loc}</loc>
     <lastmod>${buildDate}</lastmod>
-    <changefreq>monthly</changefreq>
+    <changefreq>${changefreq}</changefreq>
     <priority>${priority}</priority>
   </url>`;
   })
