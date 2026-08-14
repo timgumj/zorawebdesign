@@ -47,8 +47,8 @@ export function GET() {
 ${pages
   .map((page) => {
     const loc = page
-      ? `https://zorawebdesign.com/${page}`
-      : "https://zorawebdesign.com/";
+      ? `https://www.zorawebdesign.com/${page}`
+: "https://www.zorawebdesign.com/";
 
     let priority = "0.7";
     let changefreq = "monthly";
