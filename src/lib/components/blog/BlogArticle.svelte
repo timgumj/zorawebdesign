@@ -2,11 +2,52 @@
   import "$lib/styles/blog-article.css";
 
   let { post } = $props();
+
+  const canonicalUrl = $derived(
+    post.language === "en"
+      ? `https://www.zorawebdesign.com/en-2/blog/${post.slug}/`
+      : `https://www.zorawebdesign.com/blog/${post.slug}/`,
+  );
 </script>
 
 <svelte:head>
-  <title>{post.title} | Zora Web Design</title>
+  <title>{post.seoTitle || post.title}</title>
+
   <meta name="description" content={post.description} />
+
+  <meta name="robots" content="index, follow" />
+
+  <meta name="author" content={post.author || "Julius Timgum"} />
+
+  <link rel="canonical" href={canonicalUrl} />
+
+  <meta property="og:type" content="article" />
+
+  <meta property="og:title" content={post.seoTitle || post.title} />
+
+  <meta property="og:description" content={post.description} />
+
+  <meta property="og:url" content={canonicalUrl} />
+
+  {#if post.image}
+    <meta
+      property="og:image"
+      content={`https://www.zorawebdesign.com${post.image}`}
+    />
+  {/if}
+
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <meta name="twitter:title" content={post.seoTitle || post.title} />
+
+  <meta name="twitter:description" content={post.description} />
+
+  {#if post.image}
+    <meta
+      name="twitter:image"
+      content={`https://www.zorawebdesign.com${post.image}`}
+    />
+  {/if}
 </svelte:head>
 
 <main class="blog-article">
@@ -110,7 +151,6 @@
 
       <!-- ===================================================
            ARTICLE BODY
-           Sidebar will appear here once post.toc is added.
       ==================================================== -->
 
       <div class="blog-article-body">

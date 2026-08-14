@@ -236,4 +236,579 @@ imageAlt:
       </section>
     `,
   },
+
+  "wordpress-website-launch-checklist": {
+  language: "de",
+
+  title:
+    "WordPress Website Launch Checkliste: Was ich vor dem Go-Live immer prüfe",
+
+  description:
+    "Eine praktische WordPress Launch Checkliste für SEO, Weiterleitungen, Formulare, Performance, Backups, Sicherheit, mobile Tests und den finalen Check nach einem Relaunch.",
+
+  slug: "wordpress-website-launch-checklist",
+
+  published: "August 2026",
+
+  author: "Julius Timgum",
+
+  readingTime: 8,
+
+  toc: [
+    {
+      id: "vor-dem-launch",
+      label: "Vor dem Launch",
+    },
+    {
+      id: "alte-urls-weiterleiten",
+      label: "Weiterleitungen",
+    },
+    {
+      id: "seo-indexierung",
+      label: "SEO und Indexierung",
+    },
+    {
+      id: "formulare-emails",
+      label: "Formulare und E-Mails",
+    },
+    {
+      id: "mobile-browser-tests",
+      label: "Mobile und Browser",
+    },
+    {
+      id: "website-performance",
+      label: "Performance",
+    },
+    {
+      id: "wordpress-caching",
+      label: "Caching",
+    },
+    {
+      id: "bilder-optimieren",
+      label: "Bilder",
+    },
+    {
+      id: "analytics-search-console",
+      label: "Analytics und Search Console",
+    },
+    {
+      id: "barrierefreiheit",
+      label: "Barrierefreiheit",
+    },
+    {
+      id: "wordpress-backups",
+      label: "Backups",
+    },
+    {
+      id: "wordpress-sicherheit",
+      label: "Sicherheit",
+    },
+    {
+      id: "wordpress-plugins-auswaehlen",
+      label: "Plugins auswählen",
+    },
+    {
+      id: "cookie-consent",
+      label: "Cookie Consent",
+    },
+    {
+      id: "mehrsprachige-websites",
+      label: "Mehrsprachige Websites",
+    },
+    {
+      id: "letzte-checks",
+      label: "Letzte Checks",
+    },
+    {
+      id: "nach-dem-launch",
+      label: "Nach dem Launch",
+    },
+  ],
+
+  image: "/images/wordpress_launch_checklist-700.webp",
+
+  imageAlt:
+    "Illustration einer WordPress Launch Checkliste mit Laptop und Checkliste",
+
+  content: `
+    <p>Eine Website kann fertig aussehen und trotzdem noch nicht wirklich bereit für den Launch sein.</p>
+
+    <p>Das Design steht, die Texte sind drin und auf dem eigenen Laptop sieht alles gut aus. Aber dann gibt es noch die Dinge, die man im Frontend nicht sofort sieht: <strong style="color: #ffffff; font-weight: 700;">Weiterleitungen, Formulare, SEO-Einstellungen, Backups, Performance, Sicherheit und die ganzen kleinen technischen Details im Hintergrund.</strong></p>
+
+    <p>Für mich ist eine Website deshalb nicht fertig, nur weil sie gut aussieht. Vor dem Go-Live prüfe ich immer noch einmal die wichtigsten Punkte.</p>
+
+
+    <section aria-labelledby="vor-dem-launch">
+      <h2 id="vor-dem-launch">1. Vor dem Launch einmal sauber aufräumen</h2>
+
+      <p>Während der Entwicklung sammelt sich schnell einiges an, das später nicht auf der fertigen Website bleiben sollte.</p>
+
+      <p>Vor dem Launch gehe ich deshalb noch einmal durch und entferne zum Beispiel:</p>
+
+      <ul>
+        <li>Testseiten und Dummy-Beiträge</li>
+        <li>Platzhaltertexte und Testbilder</li>
+        <li>Temporäre Benutzer</li>
+        <li>Alte Entwürfe</li>
+        <li>Nicht mehr benötigte Plugins</li>
+        <li>Staging-Links</li>
+        <li>Entwicklungs-Hinweise</li>
+        <li>Seiten, die noch auf noindex stehen</li>
+      </ul>
+
+      <p>Gerade der letzte Punkt ist wichtig. Während der Entwicklung ist es sinnvoll, die Website für Suchmaschinen zu sperren. Beim Launch darf diese Sperre natürlich nicht bestehen bleiben.</p>
+
+      <div class="article-highlight">
+        <span class="article-highlight-label">Kurzer Check</span>
+
+        <h3>Die Website muss nach dem Launch auch wirklich indexierbar sein.</h3>
+
+        <p>Eine schöne Website bringt wenig, wenn Google sie nicht finden darf. <strong style="color: #ffffff; font-weight: 700;">Ich prüfe die Indexierung deshalb immer separat und nicht nur nebenbei.</strong></p>
+      </div>
+    </section>
+
+
+    <section aria-labelledby="alte-urls-weiterleiten">
+      <h2 id="alte-urls-weiterleiten">2. Alte URLs bei einem Relaunch richtig weiterleiten</h2>
+
+      <p>Wenn eine bestehende Website ersetzt wird, sollte man immer schauen, was mit den alten URLs passiert.</p>
+
+      <p>Wenn eine alte Seite zum Beispiel unter einer neuen Adresse weiterläuft, sollte die alte URL normalerweise per 301-Weiterleitung auf die passende neue Seite zeigen.</p>
+
+      <p>Das ist wichtig, weil alte URLs bereits bei Google gelistet sein können, Backlinks haben oder von Besuchern direkt aufgerufen werden.</p>
+
+      <p>Für kleinere WordPress-Websites kann dafür zum Beispiel <a href="https://wordpress.org/plugins/eps-301-redirects/" target="_blank" rel="noopener noreferrer">301 Redirects</a> praktisch sein.</p>
+
+      <p>Wichtig ist aber auch hier: <strong style="color: #ffffff; font-weight: 700;">Die Weiterleitungen danach wirklich testen.</strong> Nur weil sie eingetragen sind, heißt das noch nicht automatisch, dass alles korrekt funktioniert.</p>
+    </section>
+
+
+    <section aria-labelledby="seo-indexierung">
+      <h2 id="seo-indexierung">3. SEO, Indexierung und Sitemap prüfen</h2>
+
+      <p>Ein SEO-Plugin zu installieren bedeutet noch nicht, dass die SEO-Grundlagen automatisch erledigt sind.</p>
+
+      <p>Ich prüfe normalerweise:</p>
+
+      <ul>
+        <li>Die XML-Sitemap</li>
+        <li>Welche Seiten indexierbar sind</li>
+        <li>Seitentitel</li>
+        <li>Meta Descriptions</li>
+        <li>Canonical URLs, falls relevant</li>
+        <li>robots.txt</li>
+        <li>Google Search Console</li>
+      </ul>
+
+      <p>Für WordPress kann ein Plugin wie <a href="https://yoast.com/wordpress/plugins/seo/" target="_blank" rel="noopener noreferrer">Yoast SEO</a> viele technische Grundlagen abdecken.</p>
+
+      <p>Trotzdem sollten die wichtigen Seiten ihre eigenen sinnvollen Titel und Beschreibungen bekommen.</p>
+
+      <p>Eine Seite, die einfach nur <em>Leistungen</em> heißt, sagt Google und dem Nutzer deutlich weniger als ein klarer Titel, der beschreibt, worum es auf der Seite wirklich geht.</p>
+
+      <div class="article-highlight">
+        <span class="article-highlight-label">Mein Grundsatz</span>
+
+        <h3>Ein installiertes SEO-Plugin ist noch keine fertige SEO-Einrichtung.</h3>
+
+        <p>Sitemap öffnen, wichtige Seiten prüfen und kontrollieren, was die Website tatsächlich an Google übermittelt.</p>
+      </div>
+
+      <p>Wenn du bereits eine Website hast und nicht sicher bist, wo technische oder SEO-Probleme liegen, kannst du auch meinen <a href="/website-audit/">kostenlosen Website Audit</a> nutzen. Das ist oft ein guter erster Schritt, bevor man gleich alles neu baut.</p>
+    </section>
+
+
+    <section aria-labelledby="formulare-emails">
+      <h2 id="formulare-emails">4. Formulare und E-Mails wirklich testen</h2>
+
+      <p>Nur weil ein Kontaktformular gut aussieht, heißt das noch nicht, dass es funktioniert.</p>
+
+      <p>Ich sende jedes wichtige Formular selbst einmal ab.</p>
+
+      <ul>
+        <li>Kontaktformulare</li>
+        <li>Anfrageformulare</li>
+        <li>Newsletter-Anmeldungen</li>
+        <li>Buchungsformulare</li>
+        <li>Registrierungen</li>
+        <li>Datei-Uploads</li>
+        <li>Passwort-Reset</li>
+        <li>WooCommerce Checkout</li>
+      </ul>
+
+      <p>Danach prüfe ich auch, was wirklich passiert. Kommt die Nachricht beim richtigen Empfänger an? Bekommt der Nutzer eine Bestätigung? Landet die E-Mail im Spam? Funktionieren Pflichtfelder und Fehlermeldungen?</p>
+
+      <div class="article-highlight">
+        <span class="article-highlight-label">Wichtig</span>
+
+        <h3>Ein Formular ist für mich erst getestet, wenn die Nachricht wirklich angekommen ist.</h3>
+
+        <p>Ich prüfe den kompletten Weg von <strong style="color: #ffffff; font-weight: 700;">Besucher → Website → richtiges Postfach</strong>.</p>
+      </div>
+    </section>
+
+
+    <section aria-labelledby="mobile-browser-tests">
+      <h2 id="mobile-browser-tests">5. Nicht nur auf dem eigenen Laptop testen</h2>
+
+      <p>Desktop allein reicht nicht.</p>
+
+      <p>Ich teste Websites immer separat auf Desktop, Tablet und Smartphone.</p>
+
+      <p>Besonders anfällig sind meistens die interaktiven Bereiche:</p>
+
+      <ul>
+        <li>Navigation und Menüs</li>
+        <li>Dropdowns</li>
+        <li>Formulare</li>
+        <li>Slider</li>
+        <li>Popups</li>
+        <li>Cookie Banner</li>
+        <li>Sticky Elemente</li>
+        <li>Custom JavaScript</li>
+      </ul>
+
+      <p>Zusätzlich prüfe ich die wichtigsten Browser, vor allem Chrome, Safari, Firefox und Edge.</p>
+
+      <p>Wenn man Geräte oder Browser testen möchte, die man selbst nicht zur Verfügung hat, ist <a href="https://www.browserstack.com/" target="_blank" rel="noopener noreferrer">BrowserStack</a> eine gute Hilfe.</p>
+    </section>
+
+
+    <section aria-labelledby="website-performance">
+      <h2 id="website-performance">6. Die echte Website-Performance testen</h2>
+
+      <p>Den finalen Performance-Test mache ich am liebsten erst dann, wenn die Website auf dem echten Server läuft.</p>
+
+      <p>Denn genau dort wird sie später auch von den Besuchern genutzt.</p>
+
+      <p>Ein guter Startpunkt ist <a href="https://pagespeed.web.dev/" target="_blank" rel="noopener noreferrer">Google PageSpeed Insights</a>.</p>
+
+      <p>Ich versuche dabei nicht zwanghaft, überall einen perfekten 100er-Score zu erreichen. Viel wichtiger ist für mich, die offensichtlichen Bremsen zu finden.</p>
+
+      <ul>
+        <li>Zu große Bilder</li>
+        <li>Unnötige Scripts</li>
+        <li>Zu viele Drittanbieter-Dienste</li>
+        <li>Schlecht eingerichtetes Caching</li>
+        <li>Langsames Hosting</li>
+        <li>Plugins, die deutlich mehr machen als nötig</li>
+      </ul>
+
+      <p>Das sind meistens die sogenannten Low-Hanging Fruits und dort beginne ich normalerweise.</p>
+
+      <div class="article-highlight">
+        <span class="article-highlight-label">Schon eine Website?</span>
+
+        <h3>Erst prüfen, dann umbauen.</h3>
+
+        <p>Mein Website Audit überprüft einige der wichtigsten Bereiche rund um <strong style="color: #ffffff; font-weight: 700;">SEO, Performance, Accessibility und technische Qualität</strong> und gibt dir einen ersten Überblick.</p>
+
+        <p>
+          <a href="/website-audit/">
+            Kostenlosen Website Audit starten →
+          </a>
+        </p>
+      </div>
+    </section>
+
+
+    <section aria-labelledby="wordpress-caching">
+      <h2 id="wordpress-caching">7. Caching einrichten, aber nicht übertreiben</h2>
+
+      <p>Caching kann bei WordPress einen großen Unterschied machen, weil Seiten nicht bei jedem Aufruf komplett neu aufgebaut werden müssen.</p>
+
+      <p>Ein Plugin, das ich dafür häufig nutze, ist <a href="https://wp-rocket.me/" target="_blank" rel="noopener noreferrer">WP Rocket</a>.</p>
+
+      <p>Damit lassen sich unter anderem Page Caching, Lazy Loading und weitere Performance-Optimierungen umsetzen.</p>
+
+      <p>Bei aggressiveren JavaScript-Optimierungen würde ich allerdings immer testen. <strong style="color: #ffffff; font-weight: 700;">Ein schnellerer Score bringt nichts, wenn danach das Menü oder der Slider nicht mehr funktioniert.</strong></p>
+
+      <div class="article-highlight">
+        <span class="article-highlight-label">Was ich vermeiden würde</span>
+
+        <h3>Nicht mehrere Caching-Plugins gleichzeitig installieren.</h3>
+
+        <p>Auch dein Hoster kann bereits ein eigenes Caching-System haben. Zwei Caching-Plugins bedeuten nicht doppelte Geschwindigkeit, sondern oft einfach mehr Fehlerquellen.</p>
+      </div>
+    </section>
+
+
+    <section aria-labelledby="bilder-optimieren">
+      <h2 id="bilder-optimieren">8. Bilder optimieren</h2>
+
+      <p>Bilder sind einer der häufigsten Gründe dafür, dass eine eigentlich gute Website unnötig schwer wird.</p>
+
+      <p>Ein Foto mit 5000 Pixel Breite muss nicht heruntergeladen werden, wenn es später nur in einer kleinen Karte angezeigt wird.</p>
+
+      <p>Ich prüfe deshalb vor allem Bildgröße, Kompression und Format.</p>
+
+      <p>Für WordPress ist <a href="https://imagify.io/" target="_blank" rel="noopener noreferrer">Imagify</a> eine mögliche Lösung, um Bilder zu optimieren und Dateigrößen zu reduzieren.</p>
+    </section>
+
+
+    <section aria-labelledby="analytics-search-console">
+      <h2 id="analytics-search-console">9. Search Console und Analytics einrichten</h2>
+
+      <p>Nach dem Launch möchte ich grundsätzlich zwei Dinge wissen:</p>
+
+      <p><strong style="color: #ffffff; font-weight: 700;">Kann Google die Website finden?</strong></p>
+
+      <p>Und:</p>
+
+      <p><strong style="color: #ffffff; font-weight: 700;">Wird die Website tatsächlich genutzt?</strong></p>
+
+      <p>Google Search Console hilft beim ersten Punkt. Analytics kann beim zweiten helfen.</p>
+
+      <p>Für WordPress kann <a href="https://wordpress.org/plugins/google-site-kit/" target="_blank" rel="noopener noreferrer">Site Kit by Google</a> Dienste wie Search Console und Google Analytics direkt mit WordPress verbinden.</p>
+
+      <p>Trotzdem schaue ich zusätzlich direkt in die Search Console. Gerade nach einem Relaunch ist sie für mich eine der wichtigsten Stellen, um zu sehen, ob Google mit der neuen Website zurechtkommt.</p>
+    </section>
+
+
+    <section aria-labelledby="barrierefreiheit">
+      <h2 id="barrierefreiheit">10. Einen grundlegenden Accessibility-Check machen</h2>
+
+      <p>Barrierefreiheit sollte nicht erst Monate nach dem Launch ein Thema werden.</p>
+
+      <p>Zumindest die Grundlagen prüfe ich immer:</p>
+
+      <ul>
+        <li>Überschriftenstruktur</li>
+        <li>Sinnvolle Alt-Texte, wo sie notwendig sind</li>
+        <li>Tastatur-Navigation</li>
+        <li>Beschriftete Formularfelder</li>
+        <li>Sichtbare Fokuszustände</li>
+        <li>Ausreichender Farbkontrast</li>
+        <li>Klare Links und Buttons</li>
+      </ul>
+
+      <p>Ein einfacher Test ist, die Website einmal nur mit der Tastatur zu bedienen. <strong style="color: #ffffff; font-weight: 700;">Dabei merkt man erstaunlich schnell, wo etwas nicht sauber funktioniert.</strong></p>
+    </section>
+
+
+    <section aria-labelledby="wordpress-backups">
+      <h2 id="wordpress-backups">11. Backups sinnvoll einrichten</h2>
+
+      <p>Jede Website sollte Backups haben.</p>
+
+      <p>Viele Hoster erstellen bereits eigene Sicherungen. Das ist gut, aber ich würde mich nicht ausschließlich darauf verlassen.</p>
+
+      <p>Ein WordPress-Plugin, das ich regelmäßig nutze, ist <a href="https://wordpress.org/plugins/updraftplus/" target="_blank" rel="noopener noreferrer">UpdraftPlus</a>.</p>
+
+      <p>Damit lassen sich automatische Backups planen und zum Beispiel in Google Drive, Dropbox oder Amazon S3 speichern.</p>
+
+      <div class="article-highlight">
+        <span class="article-highlight-label">Backup-Regel</span>
+
+        <h3>Das Backup sollte nicht nur auf demselben Server wie die Website liegen.</h3>
+
+        <p>Wenn genau dieser Server ausfällt, sollte das Backup nicht gleich mit verschwinden.</p>
+      </div>
+    </section>
+
+
+    <section aria-labelledby="wordpress-sicherheit">
+      <h2 id="wordpress-sicherheit">12. Sicherheit, WordPress und PHP prüfen</h2>
+
+      <p>WordPress-Sicherheit lässt sich nicht mit einem einzigen Plugin erledigen.</p>
+
+      <p>Ich prüfe normalerweise:</p>
+
+      <ul>
+        <li>WordPress Core</li>
+        <li>Plugins</li>
+        <li>Das aktive Theme</li>
+        <li>PHP-Version</li>
+        <li>Administrator-Konten</li>
+        <li>Nicht mehr benötigte Benutzer</li>
+        <li>Unbenutzte Plugins</li>
+        <li>Sichere Passwörter</li>
+        <li>Backups</li>
+      </ul>
+
+      <p>Wenn ich zusätzlich eine WordPress-Sicherheitslösung einsetzen möchte, ist <a href="https://wordpress.org/plugins/wordfence/" target="_blank" rel="noopener noreferrer">Wordfence</a> eine Möglichkeit.</p>
+
+      <p>Ich sehe solche Plugins aber immer nur als eine zusätzliche Sicherheitsschicht und nicht als komplette Sicherheitsstrategie.</p>
+    </section>
+
+
+    <section aria-labelledby="wordpress-plugins-auswaehlen">
+      <h2 id="wordpress-plugins-auswaehlen">13. Plugins bewusst auswählen</h2>
+
+      <p>WordPress macht es extrem einfach, für jedes Problem schnell ein neues Plugin zu installieren.</p>
+
+      <p>Das ist praktisch, kann aber auch schnell unübersichtlich werden.</p>
+
+      <p>Bevor ich ein Plugin auf einer Kundenwebsite einsetze, schaue ich mir normalerweise an:</p>
+
+      <ul>
+        <li>Wann es zuletzt aktualisiert wurde</li>
+        <li>Ob der Support aktiv wirkt</li>
+        <li>Wie etabliert das Plugin ist</li>
+        <li>Wer es entwickelt und betreut</li>
+        <li>Ob ich es überhaupt wirklich brauche</li>
+      </ul>
+
+      <p>Ich finde nicht, dass wenige Plugins automatisch eine gute Website bedeuten. <strong style="color: #ffffff; font-weight: 700;">Ein gutes Plugin, das ein klares Problem löst, ist oft genau die richtige Lösung.</strong></p>
+
+      <p>Was ich vermeiden möchte, sind viele überlappende Plugins, bei denen später niemand mehr genau weiß, welches Plugin eigentlich was macht.</p>
+    </section>
+
+
+    <section aria-labelledby="cookie-consent">
+      <h2 id="cookie-consent">14. Cookie Consent wirklich prüfen</h2>
+
+      <p>Wenn die Website Analytics, Marketing-Scripts, eingebettete Inhalte oder andere zustimmungspflichtige Dienste verwendet, sollte der Cookie Banner nicht nur sichtbar sein, sondern auch korrekt funktionieren.</p>
+
+      <p>Eine Lösung, die ich bei einigen WordPress-Projekten nutze, ist <a href="https://www.cookiebot.com/" target="_blank" rel="noopener noreferrer">Cookiebot</a>.</p>
+
+      <p>Ich prüfe dabei den Banner, die Kategorien, die Darstellung auf Mobilgeräten und vor allem, ob zustimmungspflichtige Scripts wirklich erst nach der Zustimmung geladen werden.</p>
+
+      <p>Automatische Cookie-Scans sind hilfreich, aber ich würde sie nicht als Rechtsberatung betrachten. Wenn Datenschutz besonders kritisch ist, sollte die finale Einrichtung entsprechend geprüft werden.</p>
+    </section>
+
+
+    <section aria-labelledby="mehrsprachige-websites">
+      <h2 id="mehrsprachige-websites">15. Mehrsprachige Websites Sprache für Sprache testen</h2>
+
+      <p>Bei mehrsprachigen Websites reicht es nicht, nur den Sprachumschalter zu testen.</p>
+
+      <p>Ich gehe jede Sprache separat durch und prüfe:</p>
+
+      <ul>
+        <li>Fehlende Übersetzungen</li>
+        <li>Falsche Navigationslinks</li>
+        <li>Nicht übersetzte Buttons</li>
+        <li>Formularmeldungen</li>
+        <li>Meta Titel und Beschreibungen</li>
+        <li>URL-Struktur</li>
+        <li>Cookie-Banner</li>
+        <li>Bestätigungs-E-Mails</li>
+      </ul>
+
+      <p>Für größere klassische WordPress-Projekte mit mehreren Sprachen nutze ich unter anderem <a href="https://wpml.org/" target="_blank" rel="noopener noreferrer">WPML</a>.</p>
+
+      <p>Egal welches Übersetzungssystem verwendet wird: <strong style="color: #ffffff; font-weight: 700;">Beim finalen Test behandle ich jede Sprache wie eine eigene Website.</strong></p>
+    </section>
+
+
+    <section aria-labelledby="letzte-checks">
+      <h2 id="letzte-checks">16. Die kleinen Dinge prüfen, die sofort auffallen</h2>
+
+      <p>Dann gibt es noch eine Reihe kleiner Punkte, die beim Launch leicht vergessen werden.</p>
+
+      <ul>
+        <li>Ist das Favicon korrekt?</li>
+        <li>Funktioniert die 404-Seite?</li>
+        <li>Gibt es kaputte interne Links?</li>
+        <li>Ist das richtige Vorschaubild beim Teilen hinterlegt?</li>
+        <li>Verlinkt das Logo korrekt auf die Startseite?</li>
+        <li>Sind Telefonnummern am Smartphone anklickbar?</li>
+        <li>Funktionieren E-Mail-Links?</li>
+        <li>Sind die Footer-Links korrekt?</li>
+        <li>Sind Datenschutz und Impressum erreichbar?</li>
+        <li>Wurden Testkonten und Testbestellungen entfernt?</li>
+      </ul>
+
+      <p>Einzeln sind das Kleinigkeiten. Zusammen machen sie aber einen großen Unterschied darin, ob sich eine Website wirklich fertig anfühlt.</p>
+
+      <div class="article-highlight">
+        <span class="article-highlight-label">Neue Website geplant?</span>
+
+        <h3>Erst den Umfang klären, dann über das Design sprechen.</h3>
+
+        <p>Mein Website Planner führt dich Schritt für Schritt durch <strong style="color: #ffffff; font-weight: 700;">Ziele, Seiten, Inhalte und Funktionen</strong> und hilft dabei, ein klareres Bild vom Projekt zu bekommen.</p>
+
+        <p>
+          <a href="/website-konfigurator/">
+            Website Planner öffnen →
+          </a>
+        </p>
+      </div>
+    </section>
+
+
+    <section aria-labelledby="nach-dem-launch">
+      <h2 id="nach-dem-launch">17. Nach dem Launch noch einmal nachsehen</h2>
+
+      <p>Der Launch ist für mich nicht der letzte Zeitpunkt, an dem ich eine Website prüfe.</p>
+
+      <p>Nachdem sie eine Weile live ist, schaue ich noch einmal nach:</p>
+
+      <ul>
+        <li>Indexiert Google die wichtigen Seiten?</li>
+        <li>Gibt es unerwartete 404-Fehler?</li>
+        <li>Kommen Formulare weiterhin korrekt an?</li>
+        <li>Ist die Performance stabil?</li>
+        <li>Erreichen Besucher die wichtigen Seiten?</li>
+        <li>Gibt es auf Mobilgeräten Probleme, die vorher nicht aufgefallen sind?</li>
+      </ul>
+
+      <p>Echte Besucher nutzen eine Website immer ein bisschen anders als die Person, die sie gebaut hat. <strong style="color: #ffffff; font-weight: 700;">Deshalb gehört die erste Zeit nach dem Launch für mich noch zum eigentlichen Launch-Prozess.</strong></p>
+
+      <blockquote>
+        <p>Der Launch ist nicht der letzte Qualitätscheck.</p>
+      </blockquote>
+    </section>
+
+
+    <section aria-labelledby="wordpress-launch-checkliste">
+      <h2 id="wordpress-launch-checkliste">Meine kurze WordPress Launch Checkliste</h2>
+
+      <ul>
+        <li>Test- und Staging-Inhalte entfernen</li>
+        <li>Indexierung für Suchmaschinen aktivieren</li>
+        <li>Sitemap und robots.txt prüfen</li>
+        <li>Notwendige 301-Weiterleitungen einrichten</li>
+        <li>Seitentitel und Meta Descriptions prüfen</li>
+        <li>HTTPS und SSL kontrollieren</li>
+        <li>Alle Formulare testen</li>
+        <li>Website-E-Mails testen</li>
+        <li>Mobil und Tablet testen</li>
+        <li>Wichtige Browser testen</li>
+        <li>Grundlegende Barrierefreiheit prüfen</li>
+        <li>Performance-Test durchführen</li>
+        <li>Caching einrichten</li>
+        <li>Bilder optimieren</li>
+        <li>Google Search Console verbinden</li>
+        <li>Analytics einrichten, wenn sinnvoll</li>
+        <li>Externe Backups einrichten</li>
+        <li>WordPress, Plugins und PHP aktualisieren</li>
+        <li>Unbenutzte Plugins und Benutzer entfernen</li>
+        <li>Sicherheit prüfen</li>
+        <li>Cookie Consent testen</li>
+        <li>Bei Mehrsprachigkeit jede Sprache testen</li>
+        <li>404-Seite und interne Links prüfen</li>
+        <li>Favicon hinzufügen</li>
+        <li>Social-Sharing-Vorschau prüfen</li>
+        <li>Website nach dem Launch noch einmal kontrollieren</li>
+      </ul>
+    </section>
+
+
+    <section aria-labelledby="website-wirklich-fertig">
+      <h2 id="website-wirklich-fertig">Eine Website ist nicht fertig, nur weil sie fertig aussieht</h2>
+
+      <p>Die sichtbare Website ist nur ein Teil der Arbeit.</p>
+
+      <p>Weiterleitungen, SEO, Performance, Sicherheit, Backups, Formulare und Tests sind weniger spannend anzusehen, aber genau diese Dinge machen aus einem Design eine Website, die wirklich zuverlässig funktioniert.</p>
+
+      <p>Wenn du diese Punkte selbst durchgehen möchtest, hast du mit dieser Liste schon eine gute Grundlage.</p>
+
+      <p>Und wenn du lieber möchtest, dass jemand die technische Seite gemeinsam mit dir übernimmt, ist genau das auch ein großer Teil meiner Arbeit.</p>
+
+      <div class="article-highlight">
+        <span class="article-highlight-label">Wie geht es weiter?</span>
+
+        <h3>Starte dort, wo du gerade mit deiner Website stehst.</h3>
+
+        <p>Du hast bereits eine Website? Dann kannst du mit meinem <a href="/website-audit/">kostenlosen Website Audit</a> einen ersten Überblick bekommen.</p>
+
+        <p>Du planst eine neue Website oder einen Relaunch? Dann hilft dir der <a href="/website-konfigurator/">Website Planner</a> dabei, Seiten, Funktionen und Umfang vorab zu strukturieren.</p>
+
+        <p>Und wenn du schon weißt, dass du Unterstützung brauchst, kannst du mir einfach über <a href="/#contact">das Kontaktformular</a> schreiben und kurz erzählen, worum es bei deinem Projekt geht.</p>
+      </div>
+    </section>
+  `,
+},
 };
