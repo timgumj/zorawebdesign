@@ -801,4 +801,537 @@ imageAlt:
       </section>
     `,
   },
+
+    "how-to-choose-web-hosting": {
+    language: "en",
+
+    title:
+      "How Do I Choose the Right Web Hosting? A Practical Guide for Your Website",
+
+    description:
+      "How to choose web hosting for your website, what hosting package you actually need, how much hosting should cost and what to look for in performance, security, backups and support.",
+
+    slug: "how-to-choose-web-hosting",
+
+    published: "August 2026",
+
+    author: "Julius Timgum",
+
+    readingTime: 8,
+
+    toc: [
+      {
+        id: "what-is-web-hosting",
+        label: "What is web hosting?",
+      },
+      {
+        id: "what-hosting-do-i-need",
+        label: "What hosting do I need?",
+      },
+      {
+        id: "hosting-package",
+        label: "Choosing a package",
+      },
+      {
+        id: "hosting-performance",
+        label: "Performance",
+      },
+      {
+        id: "hosting-security-backups",
+        label: "Security and backups",
+      },
+      {
+        id: "hosting-support",
+        label: "Customer support",
+      },
+      {
+        id: "hosting-dashboard",
+        label: "Ease of use",
+      },
+      {
+        id: "hosting-price",
+        label: "Hosting costs",
+      },
+      {
+        id: "best-hosting-providers",
+        label: "Hosting providers",
+      },
+      {
+        id: "austrian-hosting",
+        label: "Austrian hosting",
+      },
+      {
+        id: "hosting-final-choice",
+        label: "Making the decision",
+      },
+    ],
+
+    image: "/images/web-hosting-700.webp",
+
+    imageAlt:
+      "Illustration about choosing the right web hosting for a business website",
+
+    content: `
+      <p>Choosing web hosting can become confusing very quickly. One company offers 20 GB of storage, another offers 200 GB, another talks about cloud servers, managed WordPress, VPS hosting and unlimited traffic.</p>
+
+      <p>For most people building a business website, <strong style="color: #ffffff; font-weight: 700;">you do not need the biggest hosting package. You need one that matches the website you are actually building.</strong></p>
+
+      <p>A five-page website for a local business has very different requirements from an online shop or a platform with thousands of users.</p>
+
+      <p>So before comparing hosting companies or prices, I would first work out what your website actually needs.</p>
+
+
+      <section aria-labelledby="what-is-web-hosting">
+        <h2 id="what-is-web-hosting">What is web hosting?</h2>
+
+        <p>Your website is made up of files, images, code and, in many cases, a database. Those files need somewhere to live so people can access them online.</p>
+
+        <p>That is essentially what your hosting provider gives you: <strong style="color: #ffffff; font-weight: 700;">space and resources on a server that keeps your website available on the internet.</strong></p>
+
+        <p>Your domain and hosting are related, but they are not the same thing.</p>
+
+        <blockquote>
+          <p>Your domain is the address. Your hosting is where the website lives.</p>
+        </blockquote>
+
+        <p>You can buy your domain and hosting from the same company, but you do not have to. Your website can be hosted with one provider while your domain is registered somewhere else.</p>
+      </section>
+
+
+      <section aria-labelledby="what-hosting-do-i-need">
+        <h2 id="what-hosting-do-i-need">What kind of hosting does my website actually need?</h2>
+
+        <p>This is the first question I would answer before looking at prices.</p>
+
+        <p>For a normal small-business website, portfolio or relatively simple WordPress website, <strong style="color: #ffffff; font-weight: 700;">good shared hosting is usually enough.</strong></p>
+
+        <p>You probably do not need a dedicated server, complicated cloud infrastructure or an expensive managed platform.</p>
+
+        <p>If you are running a larger WordPress website, WooCommerce shop, membership site or platform with a lot of traffic, stronger hosting starts to become more important.</p>
+
+        <div class="article-highlight">
+          <span class="article-highlight-label">Simple guide</span>
+
+          <h3>Match the hosting to the website.</h3>
+
+          <p><strong style="color: #ffffff; font-weight: 700;">Small business website:</strong> shared hosting is normally enough.</p>
+
+          <p><strong style="color: #ffffff; font-weight: 700;">Growing WordPress website:</strong> stronger shared hosting or managed WordPress hosting.</p>
+
+          <p><strong style="color: #ffffff; font-weight: 700;">WooCommerce shop:</strong> better server resources, backups and support.</p>
+
+          <p><strong style="color: #ffffff; font-weight: 700;">Large platform:</strong> VPS, cloud or managed infrastructure may make more sense.</p>
+        </div>
+
+        <p>The important thing is not buying the most impressive-sounding package. It is choosing infrastructure that makes sense for the website you actually have.</p>
+      </section>
+
+
+      <section aria-labelledby="hosting-package">
+        <h2 id="hosting-package">What should I look for in a hosting package?</h2>
+
+        <p>Hosting companies often advertise enormous storage limits because they are easy to compare.</p>
+
+        <p>But a normal business website may never get close to using 100 GB of storage.</p>
+
+        <p>I would pay more attention to whether the package includes:</p>
+
+        <ul>
+          <li>SSL</li>
+          <li>Automatic backups</li>
+          <li>Enough databases for your website</li>
+          <li>Current PHP versions</li>
+          <li>Good server resources</li>
+          <li>Email accounts if you need them</li>
+          <li>SFTP or FTP access</li>
+          <li>Easy DNS management</li>
+          <li>Good customer support</li>
+          <li>An easy way to upgrade later</li>
+        </ul>
+
+        <p>For WordPress in particular, <strong style="color: #ffffff; font-weight: 700;">server resources and PHP limits can matter much more than having hundreds of gigabytes of storage.</strong></p>
+
+        <p>You should also check how many websites, domains and databases are allowed in the package. This may not matter when you only have one website, but it becomes useful if your business grows or you want to add another project later.</p>
+      </section>
+
+
+      <section aria-labelledby="hosting-performance">
+        <h2 id="hosting-performance">How important is hosting for website speed?</h2>
+
+        <p>Hosting is one part of website performance.</p>
+
+        <p>A slow server can make a well-built website feel sluggish, but expensive hosting will not magically fix a badly optimised website.</p>
+
+        <p>If the homepage contains enormous images, unnecessary scripts and badly configured plugins, moving it to a more powerful server only solves part of the problem.</p>
+
+        <p>I would look for modern SSD or NVMe storage, sensible server resources, caching options and servers reasonably close to your main audience.</p>
+
+        <p>If most of your customers are in Austria, Germany or elsewhere in Europe, a European server location generally makes sense.</p>
+
+        <blockquote>
+          <p>Good hosting and good website optimisation should work together.</p>
+        </blockquote>
+
+        <div class="article-highlight">
+          <span class="article-highlight-label">Already have a website?</span>
+
+          <h3>Find out whether hosting is actually the problem first.</h3>
+
+          <p>My free Website Audit checks some of the main <strong style="color: #ffffff; font-weight: 700;">performance, SEO, accessibility and technical areas</strong> so you can get a better idea of what may need attention before paying for different hosting.</p>
+
+          <p>
+            <a href="/en-2/website-audit/">
+              Run the free website audit →
+            </a>
+          </p>
+        </div>
+      </section>
+
+
+      <section aria-labelledby="hosting-security-backups">
+        <h2 id="hosting-security-backups">What about security and backups?</h2>
+
+        <p>I would not host a business website somewhere that does not provide a sensible backup and security setup.</p>
+
+        <p>At minimum, I would look for:</p>
+
+        <ul>
+          <li>Free SSL</li>
+          <li>Automatic server backups</li>
+          <li>Secure account login</li>
+          <li>Two-factor authentication where available</li>
+          <li>Server monitoring</li>
+          <li>Protection against common attacks</li>
+        </ul>
+
+        <p>Backups are especially important.</p>
+
+        <p>Do not only check whether the package says "backups included". Find out <strong style="color: #ffffff; font-weight: 700;">how often they are created, how long they are stored and how easy they are to restore.</strong></p>
+
+        <p>A simple company website that changes only occasionally has different backup requirements from an online shop receiving orders throughout the day.</p>
+
+        <p>For important WordPress websites, I also like having an additional backup stored somewhere outside the hosting account rather than depending entirely on one provider.</p>
+
+        <div class="article-highlight">
+          <span class="article-highlight-label">Backup rule</span>
+
+          <h3>A backup is only useful if you can restore it.</h3>
+
+          <p>Do not only check whether a provider says backups are included. Check what that actually means and how you would recover the website if something went wrong.</p>
+        </div>
+      </section>
+
+
+      <section aria-labelledby="hosting-support">
+        <h2 id="hosting-support">How important is customer support?</h2>
+
+        <p>Very important — especially if you are not managing servers every day.</p>
+
+        <p>You may barely think about your hosting company when everything works. The quality of the service becomes much more obvious when your website suddenly stops loading or your email stops working.</p>
+
+        <p>Before choosing a provider, I would check:</p>
+
+        <ul>
+          <li>Can you contact them by phone?</li>
+          <li>Do they offer live chat or only support tickets?</li>
+          <li>Is support available outside normal office hours?</li>
+          <li>Can they support you in German or English?</li>
+          <li>Do they help with WordPress problems or only server issues?</li>
+          <li>Is technical support included in your package?</li>
+        </ul>
+
+        <p><strong style="color: #ffffff; font-weight: 700;">This is one area where paying a little more can easily be worth it.</strong></p>
+
+        <p>For an Austrian small business, a local provider with German-speaking support may sometimes be more useful than a cheaper international service where you have difficulty getting help when you need it.</p>
+      </section>
+
+
+      <section aria-labelledby="hosting-dashboard">
+        <h2 id="hosting-dashboard">Does the hosting dashboard matter?</h2>
+
+        <p>Yes, particularly if you plan to manage parts of the website yourself.</p>
+
+        <p>A good hosting dashboard should make everyday tasks reasonably easy.</p>
+
+        <ul>
+          <li>Managing domains</li>
+          <li>Changing DNS records</li>
+          <li>Creating email addresses</li>
+          <li>Managing SSL certificates</li>
+          <li>Accessing databases</li>
+          <li>Changing PHP versions</li>
+          <li>Creating or restoring backups</li>
+          <li>Managing FTP or SFTP users</li>
+          <li>Viewing invoices</li>
+          <li>Contacting support</li>
+        </ul>
+
+        <p><strong style="color: #ffffff; font-weight: 700;">Convenience is a real hosting feature.</strong></p>
+
+        <p>A slightly cheaper provider is not necessarily better if every basic task becomes unnecessarily complicated.</p>
+
+        <p>I also prefer hosting setups where the website owner remains in control and a developer can be given the access they need without taking ownership of the client's entire account.</p>
+      </section>
+
+
+      <section aria-labelledby="hosting-price">
+        <h2 id="hosting-price">How much should web hosting cost?</h2>
+
+        <p>There is no fixed price for hosting because a small company website and a busy online shop require very different resources.</p>
+
+        <p>But it helps to have some kind of reference.</p>
+
+        <div class="article-highlight">
+          <span class="article-highlight-label">Price guide</span>
+
+          <h3>A rough monthly hosting scale</h3>
+
+          <p><strong style="color: #ffffff; font-weight: 700;">Cheap / basic hosting: around €2–€8 per month.</strong></p>
+
+          <p>This is where I would normally look for a small portfolio, simple company website, landing page or relatively lightweight WordPress site.</p>
+
+          <p><strong style="color: #ffffff; font-weight: 700;">Mid-range hosting: around €8–€25 per month.</strong></p>
+
+          <p>This is a sensible range for more demanding WordPress websites, businesses that want better resources and support, multiple websites or smaller WooCommerce projects.</p>
+
+          <p><strong style="color: #ffffff; font-weight: 700;">Premium / managed hosting: around €25–€60+ per month.</strong></p>
+
+          <p>This is where managed WordPress platforms, stronger cloud hosting and hosting for more commercially important websites start to appear.</p>
+        </div>
+
+        <p>These are only rough categories rather than rules. Larger shops, high-traffic websites and custom platforms can easily cost much more.</p>
+
+        <p>For a normal small-business website, however, <strong style="color: #ffffff; font-weight: 700;">I would not automatically assume you need €30, €50 or €100 per month hosting.</strong></p>
+
+        <p>A good €5–€15 hosting package can be perfectly suitable if the website itself is reasonably lightweight and well built.</p>
+
+        <p>The mistake I would avoid is choosing entirely by the promotional price.</p>
+
+        <p>A package may advertise a very low price for the first few months and then become considerably more expensive when it renews.</p>
+
+        <p>Before buying, check:</p>
+
+        <ul>
+          <li>The normal renewal price</li>
+          <li>Domain renewal costs</li>
+          <li>Whether SSL is included</li>
+          <li>Whether backups cost extra</li>
+          <li>Whether email is included</li>
+          <li>Whether VAT is included in the advertised price</li>
+          <li>Cancellation periods</li>
+          <li>Whether the price requires a long contract</li>
+        </ul>
+
+        <blockquote>
+          <p>Compare what the hosting will cost over two or three years, not just what it costs today.</p>
+        </blockquote>
+
+        <p>Cheap hosting is not automatically bad hosting. The important thing is understanding what you are actually getting for the price.</p>
+      </section>
+
+
+      <section aria-labelledby="best-hosting-providers">
+        <h2 id="best-hosting-providers">Which hosting providers are worth considering?</h2>
+
+        <p>There is no single hosting company that I would recommend for every project.</p>
+
+        <p>Different providers are useful for different types of websites, budgets and levels of technical experience.</p>
+
+
+        <h3>ALL-INKL</h3>
+
+        <p><a href="https://all-inkl.com/en/" target="_blank" rel="noopener noreferrer">ALL-INKL</a> is a traditional German hosting provider and one I would consider for normal company websites and WordPress projects.</p>
+
+        <p>It offers the kind of conventional hosting setup that works well when you want domains, databases, email and website hosting without immediately moving into expensive managed infrastructure.</p>
+
+        <p><strong style="color: #ffffff; font-weight: 700;">Good for:</strong> small and medium businesses, WordPress websites and conventional website projects.</p>
+
+
+        <h3>Hetzner</h3>
+
+        <p><a href="https://www.hetzner.com/webhosting/" target="_blank" rel="noopener noreferrer">Hetzner</a> offers normal web hosting as well as cloud servers, managed servers and much larger infrastructure.</p>
+
+        <p>I like the flexibility here because a relatively simple website does not need to start on complicated infrastructure, but there are considerably more powerful options available if the project grows.</p>
+
+        <p><strong style="color: #ffffff; font-weight: 700;">Good for:</strong> developers, WordPress, custom websites and projects that may need more flexibility later.</p>
+
+
+        <h3>SiteGround</h3>
+
+        <p><a href="https://www.siteground.com/wordpress-hosting.htm" target="_blank" rel="noopener noreferrer">SiteGround</a> focuses strongly on WordPress and managed hosting features.</p>
+
+        <p>It can be attractive if you want a more guided WordPress environment with hosting tools, caching, backups and support brought together.</p>
+
+        <p><strong style="color: #ffffff; font-weight: 700;">Good for:</strong> WordPress websites, small businesses and people who value convenience and support.</p>
+
+
+        <h3>Kinsta</h3>
+
+        <p><a href="https://kinsta.com/wordpress-hosting/" target="_blank" rel="noopener noreferrer">Kinsta</a> sits much more clearly in the premium managed WordPress category.</p>
+
+        <p>For a simple five-page company website it may be more hosting than you need. For a commercially important WordPress website, WooCommerce shop or website receiving substantial traffic, managed infrastructure can be worth considering.</p>
+
+        <p><strong style="color: #ffffff; font-weight: 700;">Good for:</strong> larger WordPress websites, WooCommerce, agencies and businesses where the website is particularly important.</p>
+
+
+        <h3>Cloudways</h3>
+
+        <p><a href="https://www.cloudways.com/en/" target="_blank" rel="noopener noreferrer">Cloudways</a> provides managed cloud hosting and sits somewhere between conventional shared hosting and managing a cloud server yourself.</p>
+
+        <p>It can make sense when a project needs stronger or more scalable infrastructure but you do not want to manage every part of the server yourself.</p>
+
+        <p><strong style="color: #ffffff; font-weight: 700;">Good for:</strong> larger WordPress websites, WooCommerce, agencies and growing projects.</p>
+
+
+        <div class="article-highlight">
+          <span class="article-highlight-label">My shortlist</span>
+
+          <h3>There is no single "best" host — I would choose according to the project.</h3>
+
+          <p><strong style="color: #ffffff; font-weight: 700;">ALL-INKL</strong> for straightforward traditional hosting.</p>
+
+          <p><strong style="color: #ffffff; font-weight: 700;">Hetzner</strong> for flexibility and technical value.</p>
+
+          <p><strong style="color: #ffffff; font-weight: 700;">SiteGround</strong> for WordPress convenience.</p>
+
+          <p><strong style="color: #ffffff; font-weight: 700;">Kinsta</strong> for premium managed WordPress.</p>
+
+          <p><strong style="color: #ffffff; font-weight: 700;">Cloudways</strong> for managed cloud hosting.</p>
+        </div>
+      </section>
+
+
+      <section aria-labelledby="austrian-hosting">
+        <h2 id="austrian-hosting">What are good hosting options in Austria?</h2>
+
+        <p>If your business is based in Austria, there are also good reasons to look at local providers.</p>
+
+        <p>Local hosting can be attractive if you prefer German-speaking support, Austrian infrastructure or simply want to deal with a company closer to your business.</p>
+
+        <p>Providers I would compare include:</p>
+
+        <ul>
+          <li>
+            <a href="https://www.world4you.com/en/hosting/web-hosting" target="_blank" rel="noopener noreferrer">
+              World4You
+            </a>
+          </li>
+
+          <li>
+            <a href="https://www.easyname.at/" target="_blank" rel="noopener noreferrer">
+              easyname
+            </a>
+          </li>
+
+          <li>
+            <a href="https://www.domaintechnik.at/webhosting/" target="_blank" rel="noopener noreferrer">
+              Domaintechnik
+            </a>
+          </li>
+
+          <li>
+            <a href="https://domainion.at/" target="_blank" rel="noopener noreferrer">
+              Domainion
+            </a>
+          </li>
+
+          <li>
+            <a href="https://www.hosttech.at/" target="_blank" rel="noopener noreferrer">
+              hosttech
+            </a>
+          </li>
+        </ul>
+
+        <p>For a small Austrian business website, <strong style="color: #ffffff; font-weight: 700;">I would compare these local options with providers such as ALL-INKL and Hetzner before automatically choosing one of the largest international hosting companies.</strong></p>
+
+        <p>Local support and an easier working relationship can sometimes matter more than saving another euro or two per month.</p>
+
+
+        <div class="article-highlight">
+          <span class="article-highlight-label">Looking for affordable hosting?</span>
+
+          <h3>You do not need premium hosting for every website.</h3>
+
+          <p>For a smaller company website or WordPress project, I would start by comparing <strong style="color: #ffffff; font-weight: 700;">Hetzner, ALL-INKL, Domainion, easyname and hosttech</strong> alongside the other Austrian providers.</p>
+
+          <p>The important thing is still to check the complete package rather than simply choosing whichever provider displays the lowest monthly price.</p>
+        </div>
+      </section>
+
+
+      <section aria-labelledby="hosting-final-choice">
+        <h2 id="hosting-final-choice">So which web hosting should I choose?</h2>
+
+        <p>For a small business website, I would normally start with good shared hosting.</p>
+
+        <p>For a larger WordPress website or WooCommerce shop, I would look for stronger resources, better backups and more hands-on support.</p>
+
+        <p>For a large platform or custom application, hosting becomes a more technical decision and should normally be discussed with whoever is building the application.</p>
+
+        <p>Whatever provider you choose, I would prioritise:</p>
+
+        <ul>
+          <li>Reliability</li>
+          <li>Performance</li>
+          <li>Automatic backups</li>
+          <li>Security</li>
+          <li>Customer support</li>
+          <li>An easy dashboard</li>
+          <li>Sensible long-term pricing</li>
+          <li>The ability to upgrade later</li>
+        </ul>
+
+        <p><strong style="color: #ffffff; font-weight: 700;">The best hosting package is not the one with the biggest numbers. It is the one that gives your website what it actually needs.</strong></p>
+
+
+        <div class="article-highlight">
+          <span class="article-highlight-label">Planning a new website?</span>
+
+          <h3>Work out what you are building before deciding what you need to host it.</h3>
+
+          <p>My Website Planner takes you through a few simple questions about <strong style="color: #ffffff; font-weight: 700;">your goals, pages, content and functionality</strong> and gives you a clearer idea of the type of website you actually need.</p>
+
+          <p>
+            <a href="/en-2/website-configurator/">
+              Use the Website Planner →
+            </a>
+          </p>
+        </div>
+
+
+        <h3>And if you do not want to deal with the hosting yourself?</h3>
+
+        <p>You do not have to.</p>
+
+        <p>When I build a website for a client, I can also <strong style="color: #ffffff; font-weight: 700;">help choose the hosting, set it up, connect the domain, configure SSL, create the website environment and take care of the technical side.</strong></p>
+
+        <p>I can also provide and manage the hosting as part of the website service if that is easier for you.</p>
+
+        <p>What is important to me is that <strong style="color: #ffffff; font-weight: 700;">you still own your domain and your website.</strong> The domain can be registered in your name, you can have access to the relevant accounts and you are not locked into working with me simply because I built the website.</p>
+
+        <p>Some clients want to manage their own hosting. Others would rather have someone take care of it and only contact one person when something needs to be changed. Both approaches are completely fine.</p>
+
+        <p>If you are still working out what you need, you can start with the <a href="/en-2/website-configurator/">Website Planner</a>.</p>
+
+        <p>If you already have a website and want to understand what may need improvement, you can <a href="/en-2/website-audit/">run my free Website Audit</a>.</p>
+
+        <p>And if you would rather discuss the website, hosting and the technical setup together, you can <a href="/en-2/#contact">send me a message</a> and tell me a little about the project.</p>
+
+        <div class="article-highlight">
+          <span class="article-highlight-label">Need the website and hosting handled together?</span>
+
+          <h3>You can focus on the business. I can take care of the technical setup.</h3>
+
+          <p>From choosing suitable hosting to building the website, connecting the domain and getting everything online, <strong style="color: #ffffff; font-weight: 700;">I can handle the complete setup while keeping the website and domain under your ownership.</strong></p>
+
+          <p>
+            <a href="/en-2/#contact">
+              Tell me about your website →
+            </a>
+          </p>
+        </div>
+      </section>
+    `,
+  },
+  
 };
