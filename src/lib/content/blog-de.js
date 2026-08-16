@@ -1329,7 +1329,7 @@ imageAlt:
 
         <p>Wenn bereits eine Website vorhanden ist und Sie wissen möchten, wo es technisch noch Verbesserungspotenzial gibt, können Sie meinen <a href="/website-audit/">kostenlosen Website Audit</a> nutzen.</p>
 
-        <p>Und wenn Sie Website, Hosting und technische Umsetzung lieber gemeinsam besprechen möchten, können Sie mir einfach <a href="/#kontakt">eine Nachricht schicken</a> und kurz erzählen, was Sie vorhaben.</p>
+        <p>Und wenn Sie Website, Hosting und technische Umsetzung lieber gemeinsam besprechen möchten, können Sie mir einfach <a href="/#contact">eine Nachricht schicken</a> und kurz erzählen, was Sie vorhaben.</p>
 
         <div class="article-highlight">
           <span class="article-highlight-label">Website und Hosting aus einer Hand?</span>
@@ -1339,7 +1339,7 @@ imageAlt:
           <p>Von der Auswahl des passenden Hostings über die Entwicklung der Website bis zur Domain-Verbindung und Veröffentlichung kann ich <strong style="color: #ffffff; font-weight: 700;">die komplette technische Einrichtung übernehmen – während Domain und Website in Ihrem Besitz bleiben.</strong></p>
 
           <p>
-            <a href="/#kontakt">
+            <a href="/#contact">
               Website-Projekt anfragen →
             </a>
           </p>
