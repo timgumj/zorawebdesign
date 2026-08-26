@@ -947,6 +947,10 @@
       padding: 110px 0 82px;
     }
 
+    .faq-container {
+      width: 90%;
+    }
+
     .faq-header {
       margin-bottom: 56px;
     }
@@ -1054,6 +1058,10 @@
   @media (max-width: 767px) {
     .faq {
       padding: 110px 20px;
+    }
+
+    .faq-container {
+      width: 100%;
     }
 
     .faq-header {

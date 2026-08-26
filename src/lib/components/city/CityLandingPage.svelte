@@ -306,4 +306,16 @@
       width: min(1440px, 92%);
     }
   }
+
+  @media (min-width: 768px) and (max-width: 1024px) {
+    :global(.container) {
+      width: 90%;
+    }
+  }
+
+  @media (max-width: 767px) {
+    :global(.container) {
+      width: calc(100% - 40px);
+    }
+  }
 </style>

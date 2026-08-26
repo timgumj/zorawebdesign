@@ -736,9 +736,9 @@
   ========================================================= */
   @media (min-width: 768px) and (max-width: 1024px) {
     .process-shell {
-      --shell-x: 32px;
+      --shell-x: 0px;
 
-      width: min(1540px, calc(100% - 28px));
+      width: 90%;
       padding-top: 110px;
       padding-right: var(--shell-x);
       padding-bottom: 82px;
@@ -788,7 +788,9 @@
   ========================================================= */
   @media (max-width: 767px) {
     .process-shell {
-      --shell-x: 18px;
+      --shell-x: 0px;
+
+      width: calc(100% - 40px);
 
       padding-top: 110px;
       padding-right: var(--shell-x);

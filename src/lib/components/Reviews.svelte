@@ -371,8 +371,8 @@
   ========================================================= */
   @media (min-width: 768px) and (max-width: 1100px) {
     .reviews-shell {
-      --shell-x: 32px;
-      width: min(1540px, calc(100% - 28px));
+      --shell-x: 0px;
+      width: 90%;
       padding-top: 110px;
       padding-right: var(--shell-x);
       padding-bottom: 82px;
@@ -454,9 +454,9 @@
   ========================================================= */
   @media (max-width: 767px) {
     .reviews-shell {
-      --shell-x: 40px;
-      width: 100%;
-      padding: 110px 40px;
+      --shell-x: 0px;
+      width: calc(100% - 40px);
+      padding: 110px 0;
     }
 
     .reviews-header {

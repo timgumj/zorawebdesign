@@ -547,6 +547,10 @@
             class="lang-link active"
             onclick={handleDropdownItemClick}
           >
+            <svg class="language-globe" viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="12" cy="12" r="9"></circle>
+              <path d="M3 12h18M12 3c2.4 2.45 3.6 5.45 3.6 9S14.4 18.55 12 21M12 3c-2.4 2.45-3.6 5.45-3.6 9S9.6 18.55 12 21"></path>
+            </svg>
             <span>
               {clean(nav.languageLabel)}
             </span>
@@ -573,12 +577,27 @@
     : "Switch to the English version"}
   onclick={handleDropdownItemClick}
 >
+  <svg class="language-globe" viewBox="0 0 24 24" aria-hidden="true">
+    <circle cx="12" cy="12" r="9"></circle>
+    <path d="M3 12h18M12 3c2.4 2.45 3.6 5.45 3.6 9S14.4 18.55 12 21M12 3c-2.4 2.45-3.6 5.45-3.6 9S9.6 18.55 12 21"></path>
+  </svg>
   <span>{clean(nav.languageLabel)}</span>
 </a>
 
 <style>
   .mobile-language-switcher {
     display: none;
+  }
+
+  .language-globe {
+    width: 16px;
+    height: 16px;
+    flex: 0 0 auto;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.6;
+    stroke-linecap: round;
+    stroke-linejoin: round;
   }
 
   /* =========================================================
@@ -1346,6 +1365,7 @@
     display: inline-flex;
 
     align-items: center;
+    gap: 7px;
 
     color: #ffffff;
 
@@ -1658,13 +1678,16 @@
 
       bottom: max(14px, env(safe-area-inset-bottom));
 
-      width: 42px;
+      width: auto;
+      min-width: 48px;
       height: 42px;
+      padding: 0 10px;
 
       display: inline-flex;
 
       align-items: center;
       justify-content: center;
+      gap: 5px;
 
       border: 1px solid rgba(0, 67, 255, 0.82);
 

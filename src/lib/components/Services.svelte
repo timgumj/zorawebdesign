@@ -1528,9 +1528,9 @@
   ========================================================= */
   @media (min-width: 768px) and (max-width: 1024px) {
     .services-shell {
-      --shell-x: 32px;
+      --shell-x: 0px;
 
-      width: min(1540px, calc(100% - 28px));
+      width: 90%;
 
       padding: 110px var(--shell-x) 96px;
     }
@@ -1757,9 +1757,9 @@
   ========================================================= */
   @media (max-width: 767px) {
     .services-shell {
-      --shell-x: 22px;
+      --shell-x: 0px;
 
-      width: min(1540px, calc(100% - 20px));
+      width: calc(100% - 40px);
 
       margin: 0 auto;
 
@@ -2131,9 +2131,9 @@
   ========================================================= */
   @media (max-width: 480px) {
     .services-shell {
-      --shell-x: 18px;
+      --shell-x: 0px;
 
-      width: min(1540px, calc(100% - 16px));
+      width: calc(100% - 40px);
 
       padding: 100px var(--shell-x) 64px;
     }

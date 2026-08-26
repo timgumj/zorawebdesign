@@ -3,7 +3,7 @@
 
   /*
    * The static website and send-mail.php are both hosted on
-   * https://zorawebdesign.com, so use the same-domain endpoint.
+   * https://www.zorawebdesign.com, so use the same-domain endpoint.
    */
   const mailEndpoint = "/api/send-mail";
   let {

@@ -1021,6 +1021,18 @@
     }
   }
 
+  @media (min-width: 768px) and (max-width: 1024px) {
+    :global(.container) {
+      width: 90%;
+    }
+  }
+
+  @media (max-width: 767px) {
+    :global(.container) {
+      width: calc(100% - 40px);
+    }
+  }
+
   @media (max-width: 1024px) {
     :global(.imprint-content) {
       grid-template-columns: 1fr 1fr;

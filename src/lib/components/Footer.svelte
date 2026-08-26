@@ -27,6 +27,11 @@
 
 <footer class="site-footer">
   <div class="container footer-row">
+    <div class="footer-meta">
+      <p>{copyright}</p>
+      <p>{location}</p>
+    </div>
+
     <div class="footer-service-areas">
       <p>{language === "de" ? "WEBDESIGN REGIONEN" : "WEB DESIGN SERVICE AREAS"}</p>
       <nav aria-label={language === "de" ? "Webdesign Regionen" : "Web design service areas"}>
@@ -38,11 +43,6 @@
           >{area.label}</a>
         {/each}
       </nav>
-    </div>
-
-    <div class="footer-meta">
-      <p>{copyright}</p>
-      <p>{location}</p>
     </div>
 
     <a href="/impressum/" class="footer-imprint-link">
@@ -86,17 +86,20 @@
 
   .footer-row {
     display: grid;
-    grid-template-columns: minmax(360px, 1.8fr) minmax(220px, 1fr) auto auto;
+    grid-template-areas: "meta imprint wko regions";
+    grid-template-columns: minmax(250px, 1.15fr) auto auto minmax(360px, 1.7fr);
     align-items: center;
     gap: clamp(28px, 3.5vw, 64px);
     padding: 36px 0;
   }
 
   .footer-service-areas {
+    grid-area: regions;
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: flex-end;
     gap: 12px;
+    min-width: 0;
   }
 
   .footer-service-areas p {
@@ -114,12 +117,15 @@
     display: flex;
     flex-wrap: wrap;
     align-items: center;
+    justify-content: flex-end;
     gap: clamp(14px, 1.5vw, 26px);
   }
 
   .footer-service-areas a {
+    display: inline-block;
+    width: fit-content;
     padding-bottom: 4px;
-    border-bottom: 1px solid transparent;
+    border-bottom: 1px solid #0043ff;
     color: #fff;
     font-size: 13px;
     letter-spacing: 0.14em;
@@ -136,6 +142,7 @@
   }
 
   .footer-meta {
+    grid-area: meta;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -156,6 +163,10 @@
   }
 
   .footer-imprint-link {
+    grid-area: imprint;
+    display: inline-block;
+    width: fit-content;
+    justify-self: start;
     background: transparent;
     color: #fff;
     font: inherit;
@@ -176,6 +187,7 @@
   }
 
   .footer-wko-link {
+    grid-area: wko;
     display: flex;
     align-items: center;
     margin: 0;
@@ -201,14 +213,28 @@
 
   @media (max-width: 1024px) {
     .footer-row {
+      grid-template-areas:
+        "meta"
+        "regions"
+        "imprint"
+        "wko";
       grid-template-columns: 1fr;
       align-items: start;
       gap: 24px;
       padding: 34px 0;
     }
 
+    .footer-service-areas {
+      align-items: flex-start;
+    }
+
     .footer-service-areas nav {
       justify-content: flex-start;
+    }
+
+    .footer-imprint-link,
+    .footer-wko-link {
+      justify-self: start;
     }
 
     .footer-meta p,

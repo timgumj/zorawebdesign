@@ -176,7 +176,7 @@ add_shortcode('author_box', 'custom_author_box');</code></pre>
       <h1>Hamburger menu desktop/mobile</h1>
 
       <h2>Download JSON zipped Theme header</h2>
-      <p><a href="https://zorawebdesign.com/wp-content/uploads/2025/04/Hamburger-desktop-menu.zip" target="_blank" rel="noopener noreferrer">DOWNLOAD HERE</a></p>
+      <p><a href="https://www.zorawebdesign.com/wp-content/uploads/2025/04/Hamburger-desktop-menu.zip" target="_blank" rel="noopener noreferrer">DOWNLOAD HERE</a></p>
 
       <p><strong>Hamburger menu desktop mobile</strong> is the goal of this guide. You want one menu. It should look slick on desktop. It should feel smooth on mobile. This tutorial shows how to do that in Divi with a shortcode, Bootstrap 5, and lightweight CSS.</p>
 
@@ -885,7 +885,7 @@ a.et_pb_button {
   content: `
     <h1>How to Style Your Divi Theme Buttons with Hover Animations</h1>
 
-    <p><a href="https://zorawebdesign.com/wp-content/uploads/2024/11/Divi-button-animations-3-2-1.json" target="_blank" rel="noopener noreferrer">Download Divi Button Animations JSON</a></p>
+    <p><a href="https://www.zorawebdesign.com/wp-content/uploads/2024/11/Divi-button-animations-3-2-1.json" target="_blank" rel="noopener noreferrer">Download Divi Button Animations JSON</a></p>
 
     <p><a href="https://www.youtube.com/watch?v=TRKVmVQreUA&t=9s" target="_blank" rel="noopener noreferrer">Watch the video tutorial on YouTube</a></p>
 
@@ -935,13 +935,13 @@ a.et_pb_button {
 
     <p>Well-timed motion guides attention. Consequently, visitors notice key actions like <strong>Buy Now</strong>, <strong>Sign Up</strong>, or <strong>Learn More</strong>. Furthermore, tasteful micro-interactions elevate brand polish without adding heavy scripts or plugins. In short, <strong>Divi button hover animations</strong> improve clarity, focus, and conversions.</p>
 
-    <p><img src="https://zorawebdesign.com/wp-content/uploads/2024/11/botton-ani.png" alt="Divi button animations overview" width="1100" height="395"></p>
+    <p><img src="https://www.zorawebdesign.com/wp-content/uploads/2024/11/botton-ani.png" alt="Divi button animations overview" width="1100" height="395"></p>
 
     <h2>Part 1: Styling the Button</h2>
 
     <p>We'll use the <strong>Wave Button Animation</strong> as an example for this tutorial. This animation makes a vibrant wave of color slide over the button when hovered.</p>
 
-    <p><img src="https://zorawebdesign.com/wp-content/uploads/2024/11/wave-left.png" alt="Wave button hover effect" width="260" height="129"></p>
+    <p><img src="https://www.zorawebdesign.com/wp-content/uploads/2024/11/wave-left.png" alt="Wave button hover effect" width="260" height="129"></p>
 
     <h3>Part 2: Adding the CSS to Your Divi Theme</h3>
 
@@ -951,7 +951,7 @@ a.et_pb_button {
       <li>Paste the CSS code into the Custom CSS box and save your changes.</li>
     </ol>
 
-    <p><img src="https://zorawebdesign.com/wp-content/uploads/2024/11/Wave-css.png" alt="Divi custom CSS panel" width="477" height="423"></p>
+    <p><img src="https://www.zorawebdesign.com/wp-content/uploads/2024/11/Wave-css.png" alt="Divi custom CSS panel" width="477" height="423"></p>
 
     <h2>Copy CSS to clipboard</h2>
 
@@ -996,7 +996,7 @@ color: #ffffff;
 
     <p><code>wave-button</code></p>
 
-    <p><img src="https://zorawebdesign.com/wp-content/uploads/2024/11/wave-css-class.png" alt="Assign wave-button class in Divi" width="460" height="492"></p>
+    <p><img src="https://www.zorawebdesign.com/wp-content/uploads/2024/11/wave-css-class.png" alt="Assign wave-button class in Divi" width="460" height="492"></p>
 
     <h2>Other Animations CSS and Class</h2>
 

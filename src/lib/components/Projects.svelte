@@ -800,7 +800,8 @@
     }
 
     .projects-shell {
-      padding: 110px 24px;
+      width: 90%;
+      padding: 110px 0;
     }
 
     .projects-header {
@@ -853,8 +854,8 @@
   ========================================================= */
   @media (max-width: 767px) {
     .projects-shell {
-      width: min(1540px, calc(100% - 32px));
-      padding: 110px 18px;
+      width: calc(100% - 40px);
+      padding: 110px 0;
     }
 
     .projects-header {
