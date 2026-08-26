@@ -12,6 +12,12 @@ export function GET() {
     "en-2/website-configurator/",
     "website-audit/",
     "en-2/website-audit/",
+    "webdesign/salzburg/",
+    "webdesign/graz/",
+    "webdesign/muenchen/",
+    "en-2/web-design/salzburg/",
+    "en-2/web-design/graz/",
+    "en-2/web-design/munich/",
     "blog/",
     "en-2/blog/",
     "impressum/",
@@ -60,6 +66,8 @@ ${pages
     } else if (page === "blog/" || page === "en-2/blog/") {
       priority = "0.8";
       changefreq = "weekly";
+    } else if (page.includes("webdesign/") || page.includes("web-design/")) {
+      priority = "0.8";
     } else if (
       page.includes("website-audit") ||
       page.includes("website-konfigurator") ||

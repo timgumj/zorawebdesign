@@ -31,6 +31,24 @@
 
   const isGerman = $derived(hero.language === "de" || hero.lang === "de");
 
+  const heroSocialLinks = [
+    {
+      type: "linkedin",
+      label: "LinkedIn",
+      href: "https://at.linkedin.com/in/juliustimgum",
+    },
+    {
+      type: "instagram",
+      label: "Instagram",
+      href: "https://www.instagram.com/zorawebdesign/",
+    },
+    {
+      type: "whatsapp",
+      label: "WhatsApp",
+      href: "https://wa.me/4367764859839",
+    },
+  ];
+
   function formatHeroTitle(text = "") {
     const locale = isGerman ? "de-DE" : "en-US";
 
@@ -218,6 +236,44 @@
       {/each}
     </div>
 
+    <nav
+      class="hero-social-rail"
+      aria-label={isGerman ? "Social Media und Messenger" : "Social media and messaging"}
+    >
+      <span class="hero-social-line hero-social-line-top" aria-hidden="true"></span>
+
+      <div class="hero-social-links">
+        {#each heroSocialLinks as social}
+          <a
+            href={social.href}
+            aria-label={social.label}
+            title={social.label}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {#if social.type === "linkedin"}
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M5.2 8.1v10.7M5.2 5.2v.1M9.7 18.8v-6.1c0-2.2 1.3-4 3.7-4s3.4 1.6 3.4 4v6.1M9.7 9v9.8" />
+              </svg>
+            {:else if social.type === "instagram"}
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <rect x="3.5" y="3.5" width="17" height="17" rx="4.5" />
+                <circle cx="12" cy="12" r="4" />
+                <circle cx="17.5" cy="6.8" r=".7" fill="currentColor" stroke="none" />
+              </svg>
+            {:else}
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M20 11.6a8 8 0 0 1-11.8 7l-4.2 1.1 1.1-4A8 8 0 1 1 20 11.6Z" />
+                <path d="M8.4 7.8c.3-.4.6-.4.9-.1l1.1 1.5c.2.3.1.6-.1.9l-.5.6c.8 1.5 1.9 2.6 3.5 3.4l.6-.7c.2-.3.5-.3.8-.2l1.7.8c.3.2.4.5.3.8-.3 1.2-1.3 1.8-2.5 1.7-3.8-.5-7.1-3.5-7.6-7.1-.1-.6.7-1.6 1.8-1.6Z" />
+              </svg>
+            {/if}
+          </a>
+        {/each}
+      </div>
+
+      <span class="hero-social-line hero-social-line-bottom" aria-hidden="true"></span>
+    </nav>
+
     <div class="hero-bg-stage" aria-hidden="true">
       {#if isDesktop}
         <div
@@ -342,9 +398,7 @@
           {#if isMobile}
             {#if mobileHeroTitle}
               <h1 class="hero-title">
-                <span class="sr-only">{fullHeroTitle}</span>
-
-                <span class="hero-title-visual" aria-hidden="true">
+                <span class="hero-title-visual">
                   <span class="hero-line hero-line-mobile-title">
                     <span class="hero-word hero-word-mobile">
                       {mobileHeroTitle}
@@ -362,9 +416,7 @@
           {:else}
             {#if desktopHeroTitleLines.length}
               <h1 class="hero-title">
-                <span class="sr-only">{fullHeroTitle}</span>
-
-                <span class="hero-title-visual" aria-hidden="true">
+                <span class="hero-title-visual">
                   {#each desktopHeroTitleLines as titleLine, index}
                     <span class="hero-line">
                       <span
@@ -372,7 +424,9 @@
                         class:hero-word-wien={index ===
                           desktopHeroTitleLines.length - 1}
                       >
-                        {titleLine}
+                        {titleLine}{index < desktopHeroTitleLines.length - 1
+                          ? " "
+                          : ""}
                       </span>
                     </span>
                   {/each}
@@ -558,6 +612,10 @@
 
   :global(body.light) .hero-v-line {
     background: rgba(0, 0, 0, 0.08);
+  }
+
+  .hero-social-rail {
+    display: none;
   }
 
   /* =========================================================
@@ -838,24 +896,6 @@
     align-items: flex-start;
 
     text-align: left;
-  }
-
-  .sr-only {
-    position: absolute;
-
-    width: 1px;
-    height: 1px;
-
-    padding: 0;
-    margin: -1px;
-
-    overflow: hidden;
-
-    clip: rect(0, 0, 0, 0);
-
-    white-space: nowrap;
-
-    border: 0;
   }
 
   /* =========================================================
@@ -2231,6 +2271,173 @@
 
     .connection-popover {
       width: min(225px, calc(100vw - 24px));
+    }
+  }
+
+  /* =========================================================
+     DESKTOP REFERENCE DETAILS
+     Kept outside tablet and mobile layouts.
+  ========================================================= */
+  @media (min-width: 1101px) {
+    .hero-social-rail {
+      position: absolute;
+      z-index: 5;
+      top: 50%;
+      left: clamp(4px, 0.8vw, 14px);
+
+      width: 34px;
+      height: min(610px, 72%);
+
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 22px;
+
+      transform: translateY(-50%);
+    }
+
+    .hero-social-line {
+      position: relative;
+
+      width: 1px;
+      min-height: 38px;
+      flex: 1;
+
+      background: rgba(255, 255, 255, 0.28);
+    }
+
+    .hero-social-line-top::after {
+      content: "";
+      position: absolute;
+      right: 0;
+      bottom: 0;
+
+      width: 1px;
+      height: 34px;
+
+      background: #0043ff;
+    }
+
+    .hero-social-links {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 18px;
+    }
+
+    .hero-social-links a {
+      width: 30px;
+      height: 30px;
+
+      display: grid;
+      place-items: center;
+
+      color: rgba(255, 255, 255, 0.78);
+      text-decoration: none;
+
+      transition: color 0.2s ease;
+    }
+
+    .hero-social-links a:hover,
+    .hero-social-links a:focus-visible {
+      color: #0043ff;
+    }
+
+    .hero-social-links a:focus-visible {
+      outline: 1px solid #0043ff;
+      outline-offset: 3px;
+    }
+
+    .hero-social-links svg {
+      width: 19px;
+      height: 19px;
+
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 1.6;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    :global(body.light) .hero-social-line {
+      background: rgba(0, 0, 0, 0.24);
+    }
+
+    :global(body.light) .hero-social-line-top::after {
+      background: #0043ff;
+    }
+
+    :global(body.light) .hero-social-links a {
+      color: rgba(0, 0, 0, 0.66);
+    }
+
+    :global(body.light) .hero-social-links a:hover,
+    :global(body.light) .hero-social-links a:focus-visible {
+      color: #0043ff;
+    }
+
+    .hero-content {
+      padding-left: clamp(62px, 5.6vw, 88px);
+    }
+
+    .hero-inner {
+      width: min(680px, 90%);
+      gap: clamp(13px, 1.2vw, 18px);
+    }
+
+    .hero-heading {
+      gap: clamp(9px, 0.8vw, 13px);
+    }
+
+    .hero-person {
+      margin-bottom: clamp(8px, 0.8vw, 12px);
+    }
+
+    .hero-title {
+      width: min(88%, 520px);
+    }
+
+    .hero-title,
+    .hero-title-visual {
+      gap: clamp(3px, 0.45vw, 7px);
+    }
+
+    .hero-word {
+      font-size: clamp(2.1rem, 3.2vw, 3.35rem);
+      line-height: 0.98;
+      font-weight: 500;
+      letter-spacing: -0.045em;
+      text-transform: none;
+    }
+
+    .hero-word-wien::after {
+      content: ".";
+      margin-left: 0.06em;
+      color: #0043ff;
+    }
+
+    .hero-text-accent {
+      width: min(88%, 520px);
+      max-width: none;
+      margin-top: clamp(8px, 0.8vh, 12px);
+      padding: 0 0 0 16px;
+
+      background: transparent;
+      border-left: 2px solid #0043ff;
+    }
+
+    .hero-text {
+      color: rgba(255, 255, 255, 0.66);
+      font-size: clamp(15px, 0.9vw, 17px);
+      line-height: 1.62;
+    }
+
+    :global(body.light) .hero-text-accent {
+      background: transparent;
+    }
+
+    :global(body.light) .hero-text {
+      color: rgba(0, 0, 0, 0.64);
     }
   }
 

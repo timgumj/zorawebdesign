@@ -5,14 +5,45 @@
     copyright = `ZORA DESIGN © COPYRIGHT ${currentYear}`,
     location = "VIENNA / AUSTRIA",
     imprintText = "IMPRINT",
+    language = "en",
+    currentArea = "",
   } = $props();
+
+  const areaLinks = {
+    de: [
+      { key: "salzburg", label: "SALZBURG", href: "/webdesign/salzburg/" },
+      { key: "graz", label: "GRAZ", href: "/webdesign/graz/" },
+      { key: "munich", label: "MÜNCHEN", href: "/webdesign/muenchen/" },
+    ],
+    en: [
+      { key: "salzburg", label: "SALZBURG", href: "/en-2/web-design/salzburg/" },
+      { key: "graz", label: "GRAZ", href: "/en-2/web-design/graz/" },
+      { key: "munich", label: "MUNICH", href: "/en-2/web-design/munich/" },
+    ],
+  };
+
+  let serviceAreas = $derived(areaLinks[language] ?? areaLinks.en);
 </script>
 
 <footer class="site-footer">
-  <div class="container footer-bar">
-    <p>{copyright}</p>
+  <div class="container footer-row">
+    <div class="footer-service-areas">
+      <p>{language === "de" ? "WEBDESIGN REGIONEN" : "WEB DESIGN SERVICE AREAS"}</p>
+      <nav aria-label={language === "de" ? "Webdesign Regionen" : "Web design service areas"}>
+        {#each serviceAreas as area}
+          <a
+            href={area.href}
+            class:active={area.key === currentArea}
+            aria-current={area.key === currentArea ? "page" : undefined}
+          >{area.label}</a>
+        {/each}
+      </nav>
+    </div>
 
-    <p>{location}</p>
+    <div class="footer-meta">
+      <p>{copyright}</p>
+      <p>{location}</p>
+    </div>
 
     <a href="/impressum/" class="footer-imprint-link">
       {imprintText}
@@ -53,18 +84,65 @@
     border-top-color: rgba(0, 0, 0, 0.12);
   }
 
-  .footer-bar {
-    width: 90%;
-    max-width: 1560px;
-    min-height: 90px;
-    margin: 0 auto;
+  .footer-row {
     display: grid;
-    grid-template-columns: 1fr auto auto auto;
+    grid-template-columns: minmax(360px, 1.8fr) minmax(220px, 1fr) auto auto;
     align-items: center;
-    gap: 32px;
+    gap: clamp(28px, 3.5vw, 64px);
+    padding: 36px 0;
   }
 
-  .footer-bar p {
+  .footer-service-areas {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .footer-service-areas p {
+    margin: 0;
+    color: rgba(255, 255, 255, 0.62);
+    font-size: 12px;
+    letter-spacing: 0.16em;
+  }
+
+  :global(body.light) .footer-service-areas p {
+    color: rgba(17, 17, 17, 0.62);
+  }
+
+  .footer-service-areas nav {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: clamp(14px, 1.5vw, 26px);
+  }
+
+  .footer-service-areas a {
+    padding-bottom: 4px;
+    border-bottom: 1px solid transparent;
+    color: #fff;
+    font-size: 13px;
+    letter-spacing: 0.14em;
+    text-decoration: none;
+  }
+
+  .footer-service-areas a:hover,
+  .footer-service-areas a.active {
+    border-bottom-color: #0043ff;
+  }
+
+  :global(body.light) .footer-service-areas a {
+    color: #111;
+  }
+
+  .footer-meta {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .footer-meta p {
     margin: 0;
     color: #fff;
     font-size: 14px;
@@ -73,20 +151,11 @@
     transition: color 0.3s ease;
   }
 
-  :global(body.light) .footer-bar p {
+  :global(body.light) .footer-meta p {
     color: #111111;
   }
 
-  .footer-bar p:first-child {
-    justify-self: start;
-  }
-
-  .footer-bar p:nth-child(2) {
-    justify-self: center;
-  }
-
   .footer-imprint-link {
-    justify-self: end;
     background: transparent;
     color: #fff;
     font: inherit;
@@ -107,10 +176,9 @@
   }
 
   .footer-wko-link {
-    justify-self: end;
     display: flex;
     align-items: center;
-    margin-left: 20px; /* Moves logo further right */
+    margin: 0;
   }
 
   .footer-wko-logo {
@@ -132,32 +200,20 @@
   }
 
   @media (max-width: 1024px) {
-    .footer-bar {
+    .footer-row {
       grid-template-columns: 1fr;
-      gap: 18px;
-      padding: 28px 0;
-      text-align: left;
+      align-items: start;
+      gap: 24px;
+      padding: 34px 0;
     }
-    .footer-bar {
-      width: 92%;
-      grid-template-columns: 1fr;
-      gap: 18px;
-      padding: 28px 0;
-      text-align: left;
+
+    .footer-service-areas nav {
+      justify-content: flex-start;
     }
-    .footer-bar p,
+
+    .footer-meta p,
     .footer-imprint-link {
       font-size: 16px;
-      justify-self: start;
-    }
-
-    .footer-bar p:nth-child(2) {
-      justify-self: start;
-    }
-
-    .footer-wko-link {
-      justify-self: start;
-      margin-left: 0;
     }
 
     .footer-wko-logo {
@@ -170,7 +226,7 @@
       margin-top: 80px;
     }
 
-    .footer-bar p,
+    .footer-meta p,
     .footer-imprint-link {
       font-size: 14px;
       letter-spacing: 0.12em;

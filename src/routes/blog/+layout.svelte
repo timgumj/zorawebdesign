@@ -26,4 +26,4 @@
 
 {@render children()}
 
-<Footer />
+<Footer language="de" />

@@ -575,6 +575,7 @@
 <Footer
   location={footerContent.location}
   imprintText={footerContent.imprintText}
+  language={content.language}
 />
 
 <style>

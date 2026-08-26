@@ -1030,7 +1030,7 @@
   }
 
   .problem-item-number {
-    color: #6f8cff;
+    color: #0043ff;
     font-size: var(--type-label);
     font-weight: var(--weight-bold);
     line-height: 1;
@@ -1304,7 +1304,7 @@
   }
 
   .free-tools-heading > span {
-    color: #6f8cff;
+    color: #0043ff;
     font-size: var(--type-label);
     font-weight: var(--weight-bold);
     line-height: 1;
@@ -1389,7 +1389,7 @@
   .website-tool-eyebrow {
     display: block;
     margin-bottom: 16px;
-    color: #6f8cff;
+    color: #0043ff;
     font-size: var(--type-label);
     font-weight: var(--weight-bold);
     line-height: 1;

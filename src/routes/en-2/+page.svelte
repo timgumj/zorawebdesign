@@ -892,6 +892,7 @@
     copyright="ZORA WEB DESIGN © COPYRIGHT 2026"
     location="HACKENGASSE 22, 1150 VIENNA"
     imprintText="IMPRINT"
+    language="en"
   />
 </main>
 

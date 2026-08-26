@@ -734,7 +734,7 @@
   />
 {/if}
 
-<Footer />
+<Footer language="en" />
 
 <style>
   :global(:root) {
