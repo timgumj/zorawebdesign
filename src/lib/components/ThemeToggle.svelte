@@ -48,8 +48,8 @@
     align-items: center;
     gap: 10px;
     padding: 10px 14px;
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    background: rgba(5, 5, 5, 0.78);
+    border: 1px solid #0043ff;
+    background: #0043ff;
     color: #ffffff;
     font-family: "DM Sans", Arial, sans-serif;
     cursor: pointer;
@@ -71,15 +71,15 @@
   }
 
   .theme-side-toggle.is-light {
-    background: rgba(255, 255, 255, 0.84);
-    color: #111111;
-    border-color: rgba(0, 0, 0, 0.16);
+    background: #000000;
+    color: #ffffff;
+    border-color: #000000;
   }
 
   .theme-side-toggle.is-light:hover {
-    background: #111111;
+    background: #000000;
     color: #ffffff;
-    border-color: #111111;
+    border-color: #000000;
   }
 
   .theme-icon {

@@ -211,6 +211,13 @@
     filter: none;
   }
 
+  @media (min-width: 1025px) {
+    .footer-row {
+      width: min(1560px, 94%);
+      grid-template-columns: minmax(0, 1fr) auto auto minmax(0, 1fr);
+    }
+  }
+
   @media (max-width: 1024px) {
     .footer-row {
       grid-template-areas:
@@ -244,6 +251,30 @@
 
     .footer-wko-logo {
       width: 100px;
+    }
+  }
+
+  @media (min-width: 768px) and (max-width: 1024px) {
+    .footer-row {
+      grid-template-areas:
+        "meta regions"
+        "wko imprint";
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      column-gap: 48px;
+      row-gap: 28px;
+    }
+
+    .footer-service-areas {
+      align-items: flex-end;
+      text-align: right;
+    }
+
+    .footer-service-areas nav {
+      justify-content: flex-end;
+    }
+
+    .footer-imprint-link {
+      justify-self: end;
     }
   }
 
