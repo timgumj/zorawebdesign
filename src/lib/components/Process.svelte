@@ -122,7 +122,10 @@
         use:observeHeader
       >
         <div class="process-header-inner">
-          <div class="process-header-main">
+          <div
+            class="process-header-main"
+            class:has-eyebrow={Boolean(eyebrow)}
+          >
             {#if eyebrow}
               <span class="process-eyebrow">{eyebrow}</span>
             {/if}
@@ -174,7 +177,7 @@
 
                   {#if getImageCredit(index)}
                     <div class="image-credit">
-                      <span class="image-credit-line" aria-hidden="true"></span>
+                      <span class="image-credit-dot" aria-hidden="true"></span>
                       <span class="image-credit-text">
                         {getImageCredit(index)}
                       </span>
@@ -270,14 +273,15 @@
   }
 
   /* =========================================================
-     BLUE SECTION HEADER
+     SECTION HEADER
   ========================================================= */
   .process-header {
     width: 100%;
     margin-bottom: 80px;
     box-sizing: border-box;
-    background: #0043ff;
-    color: #ffffff;
+    border-bottom: 1px solid #0043ff;
+    background: transparent;
+    color: #f2f2f2;
     opacity: 0;
     transform: translateY(18px);
     transition:
@@ -292,7 +296,7 @@
 
   .process-header-inner {
     width: 100%;
-    min-height: 140px;
+    min-height: 0;
     box-sizing: border-box;
     display: grid;
     grid-template-columns:
@@ -300,11 +304,48 @@
       minmax(320px, 0.85fr);
     align-items: center;
     gap: 80px;
-    padding: 58px 64px;
+    padding: 44px 0;
   }
 
   .process-header-main {
+    --section-title-marker-size: clamp(12px, 1.075vw, 17px);
+
     min-width: 0;
+    display: grid;
+    grid-template-columns: var(--section-title-marker-size) minmax(0, 1fr);
+    align-items: start;
+    column-gap: 16px;
+  }
+
+  .process-header-main::before {
+    width: var(--section-title-marker-size);
+    height: var(--section-title-marker-size);
+    margin-top: 0.48em;
+    border-radius: 50%;
+    background: #0043ff;
+    content: "";
+    grid-column: 1;
+    grid-row: 1;
+    transform-origin: center;
+    animation: section-title-pulse 1.65s ease-in-out infinite;
+    will-change: transform, box-shadow;
+  }
+
+  .process-header-main.has-eyebrow::before {
+    grid-row: 2;
+  }
+
+  @keyframes section-title-pulse {
+    0%,
+    100% {
+      transform: scale(0.82);
+      box-shadow: 0 0 0 0 rgba(0, 67, 255, 0);
+    }
+
+    50% {
+      transform: scale(1.18);
+      box-shadow: 0 0 0 8px rgba(0, 67, 255, 0.16);
+    }
   }
 
   /* =========================================================
@@ -312,8 +353,9 @@
   ========================================================= */
   .process-eyebrow {
     display: block;
+    grid-column: 2;
     margin: 0 0 18px;
-    color: rgba(255, 255, 255, 0.78);
+    color: rgba(255, 255, 255, 0.58);
     font-size: 11px;
     line-height: 1.2;
     font-weight: 700;
@@ -325,10 +367,11 @@
      HEADER TITLE
   ========================================================= */
   .process-header h2 {
+    grid-column: 2;
     max-width: 720px;
     margin: 0;
-    color: #ffffff;
-    font-size: clamp(26px, 2.5vw, 40px);
+    color: #f2f2f2;
+    font-size: clamp(24px, 2.15vw, 34px);
     line-height: 1.12;
     letter-spacing: -0.035em;
     font-weight: 500;
@@ -342,7 +385,7 @@
     max-width: 520px;
     margin: 0;
     padding: 0;
-    color: rgba(255, 255, 255, 0.82);
+    color: rgba(255, 255, 255, 0.62);
     font-size: 16px;
     line-height: 1.65;
     letter-spacing: 0;
@@ -350,20 +393,31 @@
   }
 
   :global(body.light) .process-header {
-    background: #0043ff;
-    color: #ffffff;
+    background: transparent;
+    color: #111111;
   }
 
   :global(body.light) .process-header h2 {
-    color: #ffffff;
+    color: #111111;
   }
 
   :global(body.light) .process-eyebrow {
-    color: rgba(255, 255, 255, 0.78);
+    color: rgba(0, 0, 0, 0.58);
   }
 
   :global(body.light) .process-subtitle {
-    color: rgba(255, 255, 255, 0.82);
+    color: rgba(0, 0, 0, 0.62);
+  }
+
+  @media (min-width: 1025px) {
+    .process-subtitle {
+      width: min(460px, 100%);
+      justify-self: end;
+      margin-left: auto;
+      margin-right: 0;
+      padding-right: 0;
+      text-align: left;
+    }
   }
 
   /* =========================================================
@@ -570,10 +624,11 @@
     min-height: 18px;
   }
 
-  .image-credit-line {
-    width: 22px;
-    height: 1px;
+  .image-credit-dot {
+    width: 6px;
+    height: 6px;
     flex: 0 0 auto;
+    border-radius: 50%;
     background: #0043ff;
   }
 
@@ -607,16 +662,16 @@
     }
 
     .process-header-inner {
-      min-height: 140px;
+      min-height: 0;
       grid-template-columns:
         minmax(0, 1fr)
         minmax(280px, 0.9fr);
       gap: 48px;
-      padding: 48px 52px;
+      padding: 36px 0;
     }
 
     .process-header h2 {
-      font-size: clamp(24px, 3vw, 34px);
+      font-size: 24px;
     }
 
     .process-subtitle {
@@ -750,12 +805,12 @@
     }
 
     .process-header-inner {
-      min-height: 140px;
+      min-height: 0;
       grid-template-columns:
         minmax(0, 1fr)
         minmax(260px, 0.9fr);
       gap: 38px;
-      padding: 42px 44px;
+      padding: 36px 0;
     }
 
     .process-eyebrow {
@@ -764,7 +819,7 @@
     }
 
     .process-header h2 {
-      font-size: 26px;
+      font-size: 24px;
       line-height: 1.15;
     }
 
@@ -808,10 +863,12 @@
       flex-direction: column;
       align-items: flex-start;
       gap: 24px;
-      padding: 38px 30px;
+      padding: 32px 0;
     }
 
     .process-header-main {
+      --section-title-marker-size: clamp(11px, 3vw, 13.5px);
+
       width: 100%;
     }
 
@@ -823,7 +880,7 @@
 
     .process-header h2 {
       max-width: 100%;
-      font-size: clamp(24px, 7vw, 30px);
+      font-size: clamp(22px, 6vw, 27px);
       line-height: 1.15;
     }
 
@@ -898,8 +955,9 @@
       margin-top: 10px;
     }
 
-    .image-credit-line {
-      width: 18px;
+    .image-credit-dot {
+      width: 5px;
+      height: 5px;
     }
 
     .image-credit-text {
@@ -919,7 +977,7 @@
   ========================================================= */
   @media (max-width: 480px) {
     .process-header-inner {
-      padding: 34px 24px;
+      padding: 28px 0;
     }
 
     .stage-right {
@@ -959,11 +1017,11 @@
 
     .process-header-inner {
       gap: 20px;
-      padding: 30px 22px;
+      padding: 28px 0;
     }
 
     .process-header h2 {
-      font-size: 23px;
+      font-size: 22px;
     }
 
     .process-subtitle {
@@ -990,6 +1048,10 @@
       opacity: 1;
       transform: none;
       transition: none;
+    }
+
+    .process-header-main::before {
+      animation: none;
     }
   }
 </style>

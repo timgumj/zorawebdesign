@@ -144,7 +144,7 @@
   }
 
   /* =========================================================
-     BLUE SECTION HEADER
+     SECTION HEADER
   ========================================================= */
 
   .faq-header {
@@ -154,9 +154,11 @@
 
     box-sizing: border-box;
 
-    background: #0043ff;
+    border-bottom: 1px solid #0043ff;
 
-    color: #ffffff;
+    background: transparent;
+
+    color: #f2f2f2;
 
     opacity: 0;
 
@@ -176,7 +178,7 @@
   .faq-header-inner {
     width: 100%;
 
-    min-height: 140px;
+    min-height: 0;
 
     box-sizing: border-box;
 
@@ -190,11 +192,56 @@
 
     gap: 80px;
 
-    padding: 58px 64px;
+    padding: 44px 0;
   }
 
   .faq-header-main {
+    --section-title-marker-size: clamp(12px, 1.075vw, 17px);
+
     min-width: 0;
+
+    display: grid;
+
+    grid-template-columns: var(--section-title-marker-size) minmax(0, 1fr);
+
+    align-items: start;
+
+    gap: 16px;
+  }
+
+  .faq-header-main::before {
+    width: var(--section-title-marker-size);
+
+    height: var(--section-title-marker-size);
+
+    margin-top: 0.48em;
+
+    border-radius: 50%;
+
+    background: #0043ff;
+
+    content: "";
+
+    transform-origin: center;
+
+    animation: section-title-pulse 1.65s ease-in-out infinite;
+
+    will-change: transform, box-shadow;
+  }
+
+  @keyframes section-title-pulse {
+    0%,
+    100% {
+      transform: scale(0.82);
+
+      box-shadow: 0 0 0 0 rgba(0, 67, 255, 0);
+    }
+
+    50% {
+      transform: scale(1.18);
+
+      box-shadow: 0 0 0 8px rgba(0, 67, 255, 0.16);
+    }
   }
 
   /* =========================================================
@@ -206,9 +253,9 @@
 
     margin: 0;
 
-    color: #ffffff;
+    color: #f2f2f2;
 
-    font-size: clamp(26px, 2.5vw, 40px);
+    font-size: clamp(24px, 2.15vw, 34px);
 
     line-height: 1.12;
 
@@ -230,7 +277,7 @@
 
     padding: 0;
 
-    color: rgba(255, 255, 255, 0.82);
+    color: rgba(255, 255, 255, 0.62);
 
     font-size: 16px;
 
@@ -242,17 +289,33 @@
   }
 
   :global(body.light) .faq-header {
-    background: #0043ff;
+    background: transparent;
 
-    color: #ffffff;
+    color: #111111;
   }
 
   :global(body.light) .faq-header h2 {
-    color: #ffffff;
+    color: #111111;
   }
 
   :global(body.light) .faq-subtitle {
-    color: rgba(255, 255, 255, 0.82);
+    color: rgba(0, 0, 0, 0.62);
+  }
+
+  @media (min-width: 1025px) {
+    .faq-subtitle {
+      width: min(460px, 100%);
+
+      justify-self: end;
+
+      margin-left: auto;
+
+      margin-right: 0;
+
+      padding-right: 0;
+
+      text-align: left;
+    }
   }
 
   /* =========================================================
@@ -520,7 +583,7 @@
     }
 
     .faq-header-inner {
-      min-height: 140px;
+      min-height: 0;
 
       grid-template-columns:
         minmax(0, 1fr)
@@ -528,11 +591,11 @@
 
       gap: 38px;
 
-      padding: 42px 44px;
+      padding: 36px 0;
     }
 
     .faq-header h2 {
-      font-size: 26px;
+      font-size: 24px;
 
       line-height: 1.15;
     }
@@ -589,17 +652,19 @@
 
       gap: 24px;
 
-      padding: 38px 30px;
+      padding: 32px 0;
     }
 
     .faq-header-main {
+      --section-title-marker-size: clamp(11px, 3vw, 13.5px);
+
       width: 100%;
     }
 
     .faq-header h2 {
       max-width: 100%;
 
-      font-size: clamp(24px, 7vw, 30px);
+      font-size: clamp(22px, 6vw, 27px);
 
       line-height: 1.15;
     }
@@ -677,7 +742,7 @@
 
   @media (max-width: 480px) {
     .faq-header-inner {
-      padding: 34px 24px;
+      padding: 28px 0;
     }
   }
 
@@ -693,11 +758,11 @@
     .faq-header-inner {
       gap: 20px;
 
-      padding: 30px 22px;
+      padding: 28px 0;
     }
 
     .faq-header h2 {
-      font-size: 23px;
+      font-size: 22px;
     }
 
     .faq-subtitle {
@@ -750,6 +815,10 @@
       transform: none;
 
       transition: none;
+    }
+
+    .faq-header-main::before {
+      animation: none;
     }
 
     .faq-icon::before,

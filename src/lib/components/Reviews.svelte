@@ -141,14 +141,15 @@
   }
 
   /* =========================================================
-     BLUE SECTION HEADER
+     SECTION HEADER
   ========================================================= */
   .reviews-header {
     width: 100%;
     margin-bottom: 80px;
     box-sizing: border-box;
-    background: #0043ff;
-    color: #ffffff;
+    border-bottom: 1px solid #0043ff;
+    background: transparent;
+    color: #f2f2f2;
     opacity: 0;
     transform: translateY(18px);
     transition:
@@ -163,7 +164,7 @@
 
   .reviews-header-inner {
     width: 100%;
-    min-height: 140px;
+    min-height: 0;
     box-sizing: border-box;
     display: grid;
     grid-template-columns:
@@ -171,11 +172,42 @@
       minmax(320px, 0.85fr);
     align-items: center;
     gap: 80px;
-    padding: 58px 64px;
+    padding: 44px 0;
   }
 
   .reviews-header-main {
+    --section-title-marker-size: clamp(12px, 1.075vw, 17px);
+
     min-width: 0;
+    display: grid;
+    grid-template-columns: var(--section-title-marker-size) minmax(0, 1fr);
+    align-items: start;
+    gap: 16px;
+  }
+
+  .reviews-header-main::before {
+    width: var(--section-title-marker-size);
+    height: var(--section-title-marker-size);
+    margin-top: 0.48em;
+    border-radius: 50%;
+    background: #0043ff;
+    content: "";
+    transform-origin: center;
+    animation: section-title-pulse 1.65s ease-in-out infinite;
+    will-change: transform, box-shadow;
+  }
+
+  @keyframes section-title-pulse {
+    0%,
+    100% {
+      transform: scale(0.82);
+      box-shadow: 0 0 0 0 rgba(0, 67, 255, 0);
+    }
+
+    50% {
+      transform: scale(1.18);
+      box-shadow: 0 0 0 8px rgba(0, 67, 255, 0.16);
+    }
   }
 
   /* =========================================================
@@ -184,8 +216,8 @@
   .reviews-header h2 {
     max-width: 720px;
     margin: 0;
-    color: #ffffff;
-    font-size: clamp(26px, 2.5vw, 40px);
+    color: #f2f2f2;
+    font-size: clamp(24px, 2.15vw, 34px);
     line-height: 1.12;
     letter-spacing: -0.035em;
     font-weight: 500;
@@ -199,7 +231,7 @@
     max-width: 520px;
     margin: 0;
     padding: 0;
-    color: rgba(255, 255, 255, 0.82);
+    color: rgba(255, 255, 255, 0.62);
     font-size: 16px;
     line-height: 1.65;
     letter-spacing: 0;
@@ -207,16 +239,27 @@
   }
 
   :global(body.light) .reviews-header {
-    background: #0043ff;
-    color: #ffffff;
+    background: transparent;
+    color: #111111;
   }
 
   :global(body.light) .reviews-header h2 {
-    color: #ffffff;
+    color: #111111;
   }
 
   :global(body.light) .reviews-subtitle {
-    color: rgba(255, 255, 255, 0.82);
+    color: rgba(0, 0, 0, 0.62);
+  }
+
+  @media (min-width: 1025px) {
+    .reviews-subtitle {
+      width: min(460px, 100%);
+      justify-self: end;
+      margin-left: auto;
+      margin-right: 0;
+      padding-right: 0;
+      text-align: left;
+    }
   }
 
   /* =========================================================
@@ -384,16 +427,16 @@
     }
 
     .reviews-header-inner {
-      min-height: 140px;
+      min-height: 0;
       grid-template-columns:
         minmax(0, 1fr)
         minmax(260px, 0.9fr);
       gap: 38px;
-      padding: 42px 44px;
+      padding: 36px 0;
     }
 
     .reviews-header h2 {
-      font-size: 26px;
+      font-size: 24px;
       line-height: 1.15;
     }
 
@@ -469,16 +512,18 @@
       flex-direction: column;
       align-items: flex-start;
       gap: 24px;
-      padding: 38px 30px;
+      padding: 32px 0;
     }
 
     .reviews-header-main {
+      --section-title-marker-size: clamp(11px, 3vw, 13.5px);
+
       width: 100%;
     }
 
     .reviews-header h2 {
       max-width: 100%;
-      font-size: clamp(24px, 7vw, 30px);
+      font-size: clamp(22px, 6vw, 27px);
       line-height: 1.15;
     }
 
@@ -512,7 +557,7 @@
   ========================================================= */
   @media (max-width: 480px) {
     .reviews-header-inner {
-      padding: 34px 24px;
+      padding: 28px 0;
     }
   }
 
@@ -523,11 +568,11 @@
 
     .reviews-header-inner {
       gap: 20px;
-      padding: 30px 22px;
+      padding: 28px 0;
     }
 
     .reviews-header h2 {
-      font-size: 23px;
+      font-size: 22px;
     }
 
     .reviews-subtitle {
@@ -547,6 +592,10 @@
       opacity: 1;
       transform: none;
       transition: none;
+    }
+
+    .reviews-header-main::before {
+      animation: none;
     }
   }
 </style>

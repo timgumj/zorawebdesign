@@ -494,8 +494,6 @@
             use:autoplayExperience
           >
             <div class="experience-toolbar">
-              <span class="experience-progress-line" aria-hidden="true"></span>
-
               <div class="experience-controls">
                 <button
                   type="button"
@@ -602,7 +600,7 @@
 
       <!-- =====================================================
 
-           BLUE SECTION HEADER
+           SECTION HEADER
 
       ====================================================== -->
 
@@ -728,6 +726,7 @@
             {#each reorderedServices as service, index}
               <article
                 class="service-detail-panel"
+                class:active={activeServiceIndex === index}
                 id={"service-" + index}
                 use:observeServicePanel={index}
               >
@@ -1015,13 +1014,7 @@
 
     padding: 0 0 92px;
 
-    border-bottom: 1px solid rgba(255, 255, 255, 0.11);
-
     box-sizing: border-box;
-  }
-
-  :global(body.light) .premium-about {
-    border-bottom-color: rgba(0, 0, 0, 0.11);
   }
 
   /* =========================================================
@@ -1065,13 +1058,13 @@
 
     min-width: 0;
 
-    min-height: 148px;
+    min-height: 13px;
 
     display: flex;
 
     align-items: center;
 
-    padding: 22px 24px;
+    padding: 20px 24px;
 
     border: 1px solid rgba(255, 255, 255, 0.16);
 
@@ -1307,7 +1300,7 @@
 
     will-change: transform;
 
-    animation: aboutTitleMarquee 28s linear infinite;
+    animation: aboutTitleMarquee 25s linear infinite;
   }
 
   .about-title-run {
@@ -1508,7 +1501,7 @@
 
   /* =========================================================
 
-     BLUE SERVICES HEADER
+     SERVICES HEADER
 
   ========================================================= */
 
@@ -1519,9 +1512,11 @@
 
     box-sizing: border-box;
 
-    background: var(--accent-blue);
+    border-bottom: 1px solid var(--accent-blue);
 
-    color: #ffffff;
+    background: transparent;
+
+    color: #f2f2f2;
 
     opacity: 0;
 
@@ -1541,7 +1536,7 @@
   .services-header-inner {
     width: 100%;
 
-    min-height: 140px;
+    min-height: 0;
 
     box-sizing: border-box;
 
@@ -1555,11 +1550,56 @@
 
     gap: 80px;
 
-    padding: 58px 64px;
+    padding: 44px 0;
   }
 
   .services-header-main {
+    --services-title-marker-size: clamp(12px, 1.075vw, 17px);
+
     min-width: 0;
+
+    display: grid;
+
+    grid-template-columns: var(--services-title-marker-size) minmax(0, 1fr);
+
+    align-items: start;
+
+    gap: 16px;
+  }
+
+  .services-header-main::before {
+    width: var(--services-title-marker-size);
+
+    height: var(--services-title-marker-size);
+
+    margin-top: 0.48em;
+
+    border-radius: 50%;
+
+    background: var(--accent-blue);
+
+    content: "";
+
+    transform-origin: center;
+
+    animation: services-title-pulse 1.65s ease-in-out infinite;
+
+    will-change: transform, box-shadow;
+  }
+
+  @keyframes services-title-pulse {
+    0%,
+    100% {
+      transform: scale(0.82);
+
+      box-shadow: 0 0 0 0 rgba(0, 67, 255, 0);
+    }
+
+    50% {
+      transform: scale(1.18);
+
+      box-shadow: 0 0 0 8px rgba(0, 67, 255, 0.16);
+    }
   }
 
   .services-header h2 {
@@ -1567,9 +1607,9 @@
 
     margin: 0;
 
-    color: #ffffff;
+    color: #f2f2f2;
 
-    font-size: clamp(26px, 2.5vw, 40px);
+    font-size: clamp(24px, 2.15vw, 34px);
 
     line-height: 1.12;
 
@@ -1587,7 +1627,7 @@
 
     padding: 0;
 
-    color: rgba(255, 255, 255, 0.82);
+    color: rgba(255, 255, 255, 0.62);
 
     font-size: 16px;
 
@@ -1599,17 +1639,33 @@
   }
 
   :global(body.light) .services-header {
-    background: var(--accent-blue);
+    background: transparent;
 
-    color: #ffffff;
+    color: #111111;
   }
 
   :global(body.light) .services-header h2 {
-    color: #ffffff;
+    color: #111111;
   }
 
   :global(body.light) .services-subtitle {
-    color: rgba(255, 255, 255, 0.82);
+    color: rgba(0, 0, 0, 0.62);
+  }
+
+  @media (min-width: 1025px) {
+    .services-subtitle {
+      width: min(460px, 100%);
+
+      justify-self: end;
+
+      margin-left: auto;
+
+      margin-right: 0;
+
+      padding-right: 0;
+
+      text-align: left;
+    }
   }
 
   /* =========================================================
@@ -1851,7 +1907,7 @@
 
     gap: 34px;
 
-    margin-left: 54px;
+    margin-left: 28px;
 
     padding: 10px 0 34px;
 
@@ -1871,11 +1927,11 @@
   }
 
   .problem-solution-row:first-child {
-    border-left: 2px solid #f2c94c;
+    border-left: 1px solid #f2c94c;
   }
 
   .problem-solution-row:last-child {
-    border-left: 2px solid var(--accent-blue);
+    border-left: 1px solid var(--accent-blue);
   }
 
   .problem-solution-marker {
@@ -2096,12 +2152,27 @@
     padding: 38px 94px 38px 22px;
     overflow: hidden;
     border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+    background: transparent;
+    box-shadow: inset 0 0 0 rgba(255, 255, 255, 0);
     box-sizing: border-box;
     scroll-margin-top: 110px;
+    transition:
+      background-color 0.25s ease,
+      box-shadow 0.25s ease;
+  }
+
+  .service-detail-panel.active {
+    background: rgba(255, 255, 255, 0.045);
+    box-shadow: inset 1px 0 0 rgba(255, 255, 255, 0.5);
   }
 
   :global(body.light) .service-detail-panel {
     border-bottom-color: rgba(0, 0, 0, 0.14);
+  }
+
+  :global(body.light) .service-detail-panel.active {
+    background: rgba(0, 0, 0, 0.035);
+    box-shadow: inset 1px 0 0 rgba(0, 0, 0, 0.4);
   }
 
   .service-detail-heading {
@@ -2115,15 +2186,24 @@
   .service-detail-heading h3 {
     max-width: 680px;
     margin: 0;
-    color: #ffffff;
+    color: #737373;
     font-size: 20px;
     font-weight: 700;
     line-height: 1.15;
     letter-spacing: 0.04em;
     text-transform: uppercase;
+    transition: color 0.25s ease;
   }
 
   :global(body.light) .service-detail-heading h3 {
+    color: rgba(0, 0, 0, 0.44);
+  }
+
+  .service-detail-panel.active .service-detail-heading h3 {
+    color: #ffffff;
+  }
+
+  :global(body.light) .service-detail-panel.active .service-detail-heading h3 {
     color: #111111;
   }
 
@@ -2132,15 +2212,24 @@
     z-index: 1;
     max-width: 720px;
     margin: 18px 0 0;
-    color: #989898;
+    color: #6f6f6f;
     font-size: 16px;
     font-weight: 400;
     line-height: 1.5;
     text-wrap: pretty;
+    transition: color 0.25s ease;
   }
 
   :global(body.light) .service-detail-text {
-    color: rgba(0, 0, 0, 0.68);
+    color: rgba(0, 0, 0, 0.46);
+  }
+
+  .service-detail-panel.active .service-detail-text {
+    color: rgba(255, 255, 255, 0.62);
+  }
+
+  :global(body.light) .service-detail-panel.active .service-detail-text {
+    color: rgba(0, 0, 0, 0.78);
   }
 
   @media (min-width: 1025px) {
@@ -2344,10 +2433,34 @@
     font-size: 12px;
     font-weight: 400;
     line-height: 1;
+    text-transform: uppercase;
   }
 
   :global(body.light) .service-tags span {
     border-color: rgba(0, 0, 0, 0.28);
+    color: #111111;
+  }
+
+  .service-detail-panel:not(.active) .service-detail-tags span {
+    border-color: rgba(255, 255, 255, 0.16);
+    color: rgba(255, 255, 255, 0.44);
+  }
+
+  .service-detail-panel.active .service-detail-tags span {
+    border-color: rgba(255, 255, 255, 0.42);
+    color: #ffffff;
+  }
+
+  :global(body.light)
+    .service-detail-panel:not(.active)
+    .service-detail-tags
+    span {
+    border-color: rgba(0, 0, 0, 0.16);
+    color: rgba(0, 0, 0, 0.44);
+  }
+
+  :global(body.light) .service-detail-panel.active .service-detail-tags span {
+    border-color: rgba(0, 0, 0, 0.32);
     color: #111111;
   }
 
@@ -2675,21 +2788,11 @@
 
       align-items: center;
 
-      justify-content: space-between;
+      justify-content: flex-end;
 
       gap: 24px;
 
       margin-bottom: 16px;
-    }
-
-    .experience-progress-line {
-      width: 28px;
-
-      height: 2px;
-
-      display: inline-block;
-
-      background: var(--accent-blue);
     }
 
     .experience-controls {
@@ -2761,13 +2864,13 @@
     }
 
     .experience-item {
-      min-height: 154px;
+      min-height: 16px;
 
       flex: 0 0 calc((100% - 14px) / 2);
 
       align-items: center;
 
-      padding: 22px;
+      padding: 21px 22px;
 
       scroll-snap-align: start;
     }
@@ -2863,7 +2966,7 @@
     }
 
     .services-header-inner {
-      min-height: 140px;
+      min-height: 0;
 
       grid-template-columns:
         minmax(0, 1fr)
@@ -2871,11 +2974,11 @@
 
       gap: 38px;
 
-      padding: 42px 44px;
+      padding: 36px 0;
     }
 
     .services-header h2 {
-      font-size: 26px;
+      font-size: 24px;
 
       line-height: 1.15;
     }
@@ -2951,7 +3054,7 @@
 
       gap: 20px;
 
-      margin-left: 40px;
+      margin-left: 20px;
 
       padding: 10px 0 30px;
     }
@@ -3084,21 +3187,11 @@
 
       align-items: center;
 
-      justify-content: space-between;
+      justify-content: flex-end;
 
       gap: 20px;
 
       margin-bottom: 14px;
-    }
-
-    .experience-progress-line {
-      width: 24px;
-
-      height: 2px;
-
-      display: inline-block;
-
-      background: var(--accent-blue);
     }
 
     .experience-controls {
@@ -3172,13 +3265,13 @@
     }
 
     .experience-item {
-      min-height: 148px;
+      min-height: 14px;
 
       flex: 0 0 calc((100% - 12px) / 2);
 
       align-items: center;
 
-      padding: 20px;
+      padding: 19px 20px;
 
       scroll-snap-align: start;
     }
@@ -3189,6 +3282,12 @@
       font-weight: 700;
 
       line-height: 1.18;
+    }
+
+    .experience-title-first {
+      font-size: 0.88em;
+
+      font-weight: 700;
     }
 
     .experience-copy p:not(.experience-title) {
@@ -3256,7 +3355,7 @@
     }
 
     .about-title-track {
-      animation-duration: 23s;
+      animation-duration: 21s;
     }
 
     .about-below-copy {
@@ -3341,17 +3440,19 @@
 
       gap: 24px;
 
-      padding: 38px 30px;
+      padding: 32px 0;
     }
 
     .services-header-main {
+      --services-title-marker-size: clamp(11px, 3vw, 13.5px);
+
       width: 100%;
     }
 
     .services-header h2 {
       max-width: 100%;
 
-      font-size: clamp(24px, 7vw, 30px);
+      font-size: clamp(22px, 6vw, 27px);
 
       line-height: 1.15;
     }
@@ -3447,7 +3548,7 @@
 
       gap: 20px;
 
-      margin-left: 35px;
+      margin-left: 0;
 
       padding: 8px 0 28px;
     }
@@ -3614,9 +3715,9 @@
     }
 
     .experience-item {
-      min-height: 100px;
+      min-height: 15px;
 
-      padding: 18px;
+      padding: 17px 18px;
     }
 
     .experience-title {
@@ -3650,7 +3751,7 @@
     }
 
     .services-header-inner {
-      padding: 34px 24px;
+      padding: 28px 0;
     }
 
     .service-content h3 {
@@ -3702,11 +3803,11 @@
     .services-header-inner {
       gap: 20px;
 
-      padding: 30px 22px;
+      padding: 28px 0;
     }
 
     .services-header h2 {
-      font-size: 23px;
+      font-size: 22px;
     }
 
     .services-subtitle {
@@ -3727,6 +3828,10 @@
       transform: none;
 
       transition: none;
+    }
+
+    .services-header-main::before {
+      animation: none;
     }
 
     .about-title-track {

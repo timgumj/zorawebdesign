@@ -34,6 +34,8 @@
 
   let headerVisible = $state(false);
 
+  let expandedProjectDescription = $state(null);
+
   const LOAD_MORE_COUNT = 2;
 
   function cleanNumber(value) {
@@ -130,6 +132,11 @@
   function loadMoreProjects() {
     visibleCount = Math.min(visibleCount + LOAD_MORE_COUNT, projects.length);
   }
+
+  function toggleProjectDescription(index) {
+    expandedProjectDescription =
+      expandedProjectDescription === index ? null : index;
+  }
 </script>
 
 <section id="projects" class="projects">
@@ -201,9 +208,26 @@
                 <div class="project-copy">
                   <div class="project-title-wrap">
                     <h3>{project.title}</h3>
+
+                    <button
+                      type="button"
+                      class="project-description-toggle"
+                      aria-controls={`project-description-${index}`}
+                      aria-expanded={expandedProjectDescription === index}
+                      aria-label={`Toggle description for ${project.title}`}
+                      onclick={() => toggleProjectDescription(index)}
+                    >
+                      <span aria-hidden="true">
+                        {expandedProjectDescription === index ? "−" : "+"}
+                      </span>
+                    </button>
                   </div>
 
-                  <p class="project-description">
+                  <p
+                    class="project-description"
+                    class:expanded={expandedProjectDescription === index}
+                    id={`project-description-${index}`}
+                  >
                     {getDescription(project)}
                   </p>
                 </div>
@@ -393,7 +417,7 @@
   }
 
   /* =========================================================
-     BLUE SECTION HEADER
+     SECTION HEADER
   ========================================================= */
 
   .projects-header {
@@ -403,9 +427,11 @@
 
     box-sizing: border-box;
 
-    background: #0043ff;
+    border-bottom: 1px solid #0043ff;
 
-    color: #ffffff;
+    background: transparent;
+
+    color: #f2f2f2;
 
     opacity: 0;
 
@@ -425,7 +451,7 @@
   .projects-header-inner {
     width: 100%;
 
-    min-height: 140px;
+    min-height: 0;
 
     box-sizing: border-box;
 
@@ -439,11 +465,56 @@
 
     gap: 80px;
 
-    padding: 58px 64px;
+    padding: 44px 0;
   }
 
   .projects-header-main {
+    --section-title-marker-size: clamp(12px, 1.075vw, 17px);
+
     min-width: 0;
+
+    display: grid;
+
+    grid-template-columns: var(--section-title-marker-size) minmax(0, 1fr);
+
+    align-items: start;
+
+    gap: 16px;
+  }
+
+  .projects-header-main::before {
+    width: var(--section-title-marker-size);
+
+    height: var(--section-title-marker-size);
+
+    margin-top: 0.48em;
+
+    border-radius: 50%;
+
+    background: #0043ff;
+
+    content: "";
+
+    transform-origin: center;
+
+    animation: section-title-pulse 1.65s ease-in-out infinite;
+
+    will-change: transform, box-shadow;
+  }
+
+  @keyframes section-title-pulse {
+    0%,
+    100% {
+      transform: scale(0.82);
+
+      box-shadow: 0 0 0 0 rgba(0, 67, 255, 0);
+    }
+
+    50% {
+      transform: scale(1.18);
+
+      box-shadow: 0 0 0 8px rgba(0, 67, 255, 0.16);
+    }
   }
 
   /* =========================================================
@@ -455,9 +526,9 @@
 
     margin: 0;
 
-    color: #ffffff;
+    color: #f2f2f2;
 
-    font-size: clamp(26px, 2.5vw, 40px);
+    font-size: clamp(24px, 2.15vw, 34px);
 
     line-height: 1.12;
 
@@ -479,7 +550,7 @@
 
     padding: 0;
 
-    color: rgba(255, 255, 255, 0.82);
+    color: rgba(255, 255, 255, 0.62);
 
     font-size: 16px;
 
@@ -491,17 +562,33 @@
   }
 
   :global(body.light) .projects-header {
-    background: #0043ff;
+    background: transparent;
 
-    color: #ffffff;
+    color: #111111;
   }
 
   :global(body.light) .projects-header h2 {
-    color: #ffffff;
+    color: #111111;
   }
 
   :global(body.light) .projects-subtitle {
-    color: rgba(255, 255, 255, 0.82);
+    color: rgba(0, 0, 0, 0.62);
+  }
+
+  @media (min-width: 1025px) {
+    .projects-subtitle {
+      width: min(460px, 100%);
+
+      justify-self: end;
+
+      margin-left: auto;
+
+      margin-right: 0;
+
+      padding-right: 0;
+
+      text-align: left;
+    }
   }
 
   /* =========================================================
@@ -774,6 +861,10 @@
     text-wrap: balance;
   }
 
+  .project-description-toggle {
+    display: none;
+  }
+
   :global(body.light) .project-title-wrap h3 {
     color: #111111;
   }
@@ -911,6 +1002,11 @@
   }
 
   @media (min-width: 768px) {
+    .project-tags span {
+      font-weight: 400;
+      text-transform: uppercase;
+    }
+
     .project-card:hover .project-image-wrap img {
       transform: scale(1);
     }
@@ -1028,7 +1124,7 @@
     }
 
     .projects-header-inner {
-      min-height: 140px;
+      min-height: 0;
 
       grid-template-columns:
         minmax(0, 1fr)
@@ -1036,11 +1132,11 @@
 
       gap: 38px;
 
-      padding: 42px 44px;
+      padding: 36px 0;
     }
 
     .projects-header h2 {
-      font-size: 26px;
+      font-size: 24px;
 
       line-height: 1.15;
     }
@@ -1107,17 +1203,19 @@
 
       gap: 24px;
 
-      padding: 38px 30px;
+      padding: 32px 0;
     }
 
     .projects-header-main {
+      --section-title-marker-size: clamp(11px, 3vw, 13.5px);
+
       width: 100%;
     }
 
     .projects-header h2 {
       max-width: 100%;
 
-      font-size: clamp(24px, 7vw, 30px);
+      font-size: clamp(22px, 6vw, 27px);
 
       line-height: 1.15;
     }
@@ -1160,13 +1258,15 @@
     }
 
     .project-content {
-      min-height: 220px;
+      min-height: 0;
 
       padding: 18px 14px 16px;
     }
 
     .project-tags {
-      gap: 6px;
+      flex-wrap: nowrap;
+
+      gap: 4px;
 
       margin-bottom: 16px;
     }
@@ -1174,25 +1274,85 @@
     .project-tags span {
       min-height: 23px;
 
-      padding: 4px 7px;
+      padding: 4px 5px;
 
-      font-size: 10px;
+      font-size: 8px;
+
+      letter-spacing: 0.035em;
+
+      text-transform: uppercase;
+
+      white-space: nowrap;
     }
 
-    /*
-     * Mobile description remains 2px smaller
-     * than desktop and uses normal font weight.
-     */
+    .project-title-wrap {
+      display: grid;
+
+      grid-template-columns: minmax(0, 1fr) 36px;
+
+      align-items: start;
+
+      gap: 12px;
+
+      margin-bottom: 0;
+    }
+
+    .project-description-toggle {
+      width: 36px;
+
+      height: 36px;
+
+      display: inline-grid;
+
+      place-items: center;
+
+      justify-self: end;
+
+      margin: -7px 0 0;
+
+      padding: 0;
+
+      border: 0;
+
+      background: transparent;
+
+      color: #0043ff;
+
+      font: inherit;
+
+      font-size: 25px;
+
+      font-weight: 400;
+
+      line-height: 1;
+
+      cursor: pointer;
+
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    :global(body.light) .project-description-toggle {
+      color: #0043ff;
+    }
+
     .project-description {
       width: 100%;
 
       max-width: none;
+
+      display: none;
+
+      margin-top: 12px;
 
       font-size: 14px;
 
       font-weight: 400;
 
       line-height: 1.55;
+    }
+
+    .project-description.expanded {
+      display: block;
     }
 
     .project-footer {
@@ -1225,7 +1385,7 @@
 
   @media (max-width: 480px) {
     .projects-header-inner {
-      padding: 34px 24px;
+      padding: 28px 0;
     }
   }
 
@@ -1237,11 +1397,11 @@
     .projects-header-inner {
       gap: 20px;
 
-      padding: 30px 22px;
+      padding: 28px 0;
     }
 
     .projects-header h2 {
-      font-size: 23px;
+      font-size: 22px;
     }
 
     .projects-subtitle {
@@ -1269,6 +1429,10 @@
       transform: none;
 
       transition: none;
+    }
+
+    .projects-header-main::before {
+      animation: none;
     }
   }
 </style>

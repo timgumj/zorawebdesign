@@ -118,18 +118,24 @@
   @media (max-width: 767px) {
     .theme-side-toggle {
       left: 8px;
+      display: inline-grid;
+      grid-template-columns: 10px auto 10px;
+      justify-content: center;
       padding: 8px 8px;
-      gap: 4px;
+      column-gap: 4px;
       opacity: 0.92;
     }
 
     .theme-icon {
+      grid-column: 1;
       font-size: 10px;
     }
 
     .theme-text {
+      grid-column: 2;
       font-size: 10px;
       letter-spacing: 0.05em;
+      text-align: center;
     }
   }
 
@@ -138,8 +144,9 @@
   @media (max-width: 480px) {
     .theme-side-toggle {
       left: 6px;
-      padding: 6px 7px;
-      gap: 3px;
+      grid-template-columns: 9px auto 9px;
+      padding: 7px;
+      column-gap: 3px;
     }
 
     .theme-icon {

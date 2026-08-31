@@ -28,7 +28,7 @@
 <footer class="site-footer">
   <div class="container footer-row">
     <div class="footer-meta">
-      <p>{copyright}</p>
+      <p class="footer-copyright">{copyright}</p>
       <p>{location}</p>
     </div>
 
@@ -156,6 +156,10 @@
     letter-spacing: 0.18em;
     text-transform: uppercase;
     transition: color 0.3s ease;
+  }
+
+  .footer-meta .footer-copyright {
+    font-weight: 300;
   }
 
   :global(body.light) .footer-meta p {
