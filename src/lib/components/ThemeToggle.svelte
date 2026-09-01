@@ -2,6 +2,7 @@
   import { onMount } from "svelte";
 
   let theme = $state("dark");
+  let mobileHeroVisible = $state(true);
 
   function applyTheme(selectedTheme) {
     theme = selectedTheme;
@@ -19,6 +20,35 @@
   onMount(() => {
     const savedTheme = localStorage.getItem("site-theme") || "dark";
     applyTheme(savedTheme);
+
+    const mobileQuery = window.matchMedia("(max-width: 767px)");
+    const hero = document.querySelector(".hero, .project-hero");
+
+    function updateMobileHeroVisibility() {
+      if (!mobileQuery.matches || !hero) {
+        mobileHeroVisible = true;
+        return;
+      }
+
+      const heroBounds = hero.getBoundingClientRect();
+      const togglePosition = window.innerHeight / 2;
+
+      mobileHeroVisible =
+        heroBounds.top <= togglePosition && heroBounds.bottom >= togglePosition;
+    }
+
+    updateMobileHeroVisibility();
+    window.addEventListener("scroll", updateMobileHeroVisibility, {
+      passive: true,
+    });
+    window.addEventListener("resize", updateMobileHeroVisibility);
+    mobileQuery.addEventListener("change", updateMobileHeroVisibility);
+
+    return () => {
+      window.removeEventListener("scroll", updateMobileHeroVisibility);
+      window.removeEventListener("resize", updateMobileHeroVisibility);
+      mobileQuery.removeEventListener("change", updateMobileHeroVisibility);
+    };
   });
 </script>
 
@@ -26,6 +56,7 @@
   type="button"
   class="theme-side-toggle"
   class:is-light={theme === "light"}
+  class:mobile-hero-hidden={!mobileHeroVisible}
   onclick={toggleTheme}
   aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
 >
@@ -61,7 +92,8 @@
       background 0.3s ease,
       color 0.3s ease,
       border-color 0.3s ease,
-      transform 0.3s ease;
+      transform 0.3s ease,
+      opacity 0.2s ease;
   }
 
   .theme-side-toggle:hover {
@@ -98,7 +130,7 @@
 
   @media (max-width: 1024px) {
     .theme-side-toggle {
-      left: 20px;
+      left: 12px;
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -139,13 +171,19 @@
 
   @media (max-width: 767px) {
     .theme-side-toggle {
-      left: 22px;
+      left: 14px;
       display: inline-flex;
       align-items: center;
       justify-content: center;
       padding: 8px;
       gap: 4px;
       opacity: 0.92;
+    }
+
+    .theme-side-toggle.mobile-hero-hidden {
+      visibility: hidden;
+      pointer-events: none;
+      opacity: 0;
     }
 
     .theme-icon {
@@ -167,7 +205,7 @@
 
   @media (max-width: 480px) {
     .theme-side-toggle {
-      left: 19px;
+      left: 13px;
       padding: 7px;
       gap: 3px;
     }

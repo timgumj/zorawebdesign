@@ -192,7 +192,7 @@
 
   let activeServiceIndex = $state(0);
 
-  let experienceViewport;
+  let experienceViewport = $state(null);
 
   function moveExperience(direction) {
     if (!experienceViewport) return;

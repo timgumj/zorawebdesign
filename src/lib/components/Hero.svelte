@@ -1612,7 +1612,7 @@
       max-width: 100%;
       margin: 0;
       color: rgba(255, 255, 255, 0.72);
-      font-size: 16px;
+      font-size: 14px;
       font-weight: 300;
       line-height: 1.48;
       text-align: left;
@@ -1746,7 +1746,7 @@
     .hero-text {
       width: 100%;
       max-width: 100%;
-      font-size: 15px;
+      font-size: 13px;
       font-weight: 300;
       line-height: 1.48;
       text-align: left;
