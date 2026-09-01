@@ -15,8 +15,23 @@ export const projects = [
     
   ],
   },
-   {
+  {
     number: "02/",
+    title: "Dr. Bosede Baldauf",
+    description:
+      "Ein klares digitales Projekt mit starker visueller Präsentation und einfacher Nutzerführung.",
+    image: "/images/dr.baldauf-700.webp",
+    alt: "Website Projekt für Dr. Bosede Oluwatoyin Baldauf",
+    link: "https://www.baldauf-uro.at/",
+    tags: [
+    "Webdesign/Dev",
+    "Wordpress",
+    "SvelteKit",
+    "2 Jahre Support",
+  ],
+  },
+   {
+    number: "03/",
     title: "ARC NETWORK",
     description:
       "ARC Network. Konzeption, Design und Entwicklung einer modernen, mehrsprachigen Website mit individuellen Funktionen.",
@@ -32,7 +47,7 @@ export const projects = [
   },
   
   {
-    number: "03/",
+    number: "04/",
     title: "JUBS VEREIN",
     description:
       "JUBS - Verein Jugendförderung Neunkirchen unterstützt junge Menschen durch Beratung, Schulprogramme und soziale Dienstleistungen.",
@@ -47,7 +62,7 @@ export const projects = [
   ],
   },
   {
-    number: "04/",
+    number: "05/",
     title: "JAHSON The Scientist",
     description:
       "Jahson ist Musiker, Künstler und Wissenschaftler und verbindet Wissenschaft, Spiritualität und Musik, um Bewusstsein und Heilung zu erforschen.",
@@ -62,7 +77,7 @@ export const projects = [
   ],
   },
   {
-    number: "05/",
+    number: "06/",
     title: "ONLINE-HYPNOSE",
     description:
       "Professionelle Online Hypnose und Coaching zur Bewältigung von Stress, Ängsten und persönlichen Herausforderungen bequem von zu Hause aus.",
@@ -74,21 +89,6 @@ export const projects = [
     "Wordpress",
     "1 Jahr Support",
     "DIVI Theme",
-  ],
-  },
-  {
-    number: "06/",
-    title: "KATHRIN SIEDER",
-    description:
-      "Der Online Shop bietet spirituelle Begleitung durch Tiersymbolik, Coaching und kreative Produkte zur Unterstützung von persönlichem Wachstum und Transformation",
-    image: "/images/kathrin-700.webp",
-    alt: "Portfolio Website für Kathrin Sieder",
-    link: "https://kathrinsieder.at/",
-    tags: [
-    "Webdesign/Dev",
-    "Wordpress",
-    "WooCommerce",
-    "3 Jahre Support",
   ],
   },
   {
@@ -108,17 +108,17 @@ export const projects = [
   },
   {
     number: "08/",
-    title: "Dr. Bosede Baldauf",
+    title: "KATHRIN SIEDER",
     description:
-      "Ein klares digitales Projekt mit starker visueller Präsentation und einfacher Nutzerführung.",
-    image: "/images/dr.baldauf-700.webp",
-    alt: "Website Projekt für Dr. Bosede Oluwatoyin Baldauf",
-    link: "https://www.baldauf-uro.at/",
+      "Der Online Shop bietet spirituelle Begleitung durch Tiersymbolik, Coaching und kreative Produkte zur Unterstützung von persönlichem Wachstum und Transformation",
+    image: "/images/kathrin-700.webp",
+    alt: "Portfolio Website für Kathrin Sieder",
+    link: "https://kathrinsieder.at/",
     tags: [
     "Webdesign/Dev",
     "Wordpress",
-    "SvelteKit",
-    "2 Jahre Support",
+    "WooCommerce",
+    "3 Jahre Support",
   ],
   },
 

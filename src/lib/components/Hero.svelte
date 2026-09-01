@@ -339,10 +339,12 @@
                 decoding="async"
               />
             {/if}
-            <span class="hero-greeting-text">{greetingText}</span>
-            {#if hero.name}
-              <span class="hero-name">{hero.name.toUpperCase()}</span>
-            {/if}
+            <span class="hero-person-copy">
+              <span class="hero-greeting-text">{greetingText}</span>
+              {#if hero.name}
+                <span class="hero-name">{hero.name.toUpperCase()}</span>
+              {/if}
+            </span>
           </div>
           {#if visibleHeroTitleLines.length}
             <h1 class="hero-title">
@@ -672,12 +674,14 @@
     padding-bottom: var(--hero-block-pad);
   }
   .hero-inner {
+    --hero-item-gap: clamp(12px, 1.4vw, 20px);
+
     width: min(var(--hero-content-width), 90%);
     max-height: 100%;
     padding-left: var(--hero-inner-pad);
     padding-right: var(--hero-inner-pad);
     display: grid;
-    gap: clamp(12px, 1.4vw, 20px);
+    gap: var(--hero-item-gap);
     justify-items: start;
   }
   .hero-heading {
@@ -757,6 +761,11 @@
   }
   :global(body.light) .hero-meta-icon {
     filter: brightness(0);
+  }
+  .hero-person-copy {
+    display: inline-flex;
+    align-items: center;
+    gap: clamp(8px, 1vw, 12px);
   }
   .hero-greeting-text {
     color: rgba(246, 246, 242, 0.78);
@@ -845,7 +854,7 @@
     max-width: 100%;
     margin: 0;
     color: #ffffff;
-    font-size: 18px;
+    font-size: 20px;
     font-weight: 300;
     line-height: 1.5;
     letter-spacing: 0;
@@ -863,7 +872,7 @@
   ========================================================= */
   .hero-actions {
     width: 100%;
-    margin-top: 0;
+    margin-top: max(0px, calc(20px - var(--hero-item-gap)));
     display: flex;
     justify-content: flex-start;
     gap: clamp(10px, 1.2vw, 16px);
@@ -1118,7 +1127,7 @@
       width: clamp(34%, 39vw, 46%);
     }
     .hero-text {
-      font-size: 17px;
+      font-size: 19px;
     }
   }
   /* =========================================================
@@ -1191,8 +1200,10 @@
       padding-bottom: var(--hero-block-pad);
     }
     .hero-inner {
+      --hero-item-gap: clamp(12px, 1.6vh, 18px);
+
       width: min(640px, 72%);
-      gap: clamp(12px, 1.6vh, 18px);
+      gap: var(--hero-item-gap);
       justify-items: start;
       align-content: center;
     }
@@ -1265,7 +1276,7 @@
     .hero-text {
       max-width: 100%;
       margin: 0;
-      font-size: 17px;
+      font-size: 19px;
       font-weight: 300;
       line-height: 1.5;
       text-align: left;
@@ -1279,7 +1290,6 @@
     .hero-actions {
       justify-content: flex-start;
       gap: clamp(10px, 1.5vh, 16px);
-      margin-top: clamp(2px, 0.6vh, 8px);
     }
     .hero-connection-strip {
       margin: clamp(4px, 0.9vh, 9px) 0 0;
@@ -1513,8 +1523,10 @@
       justify-content: flex-start;
     }
     .hero-inner {
+      --hero-item-gap: clamp(10px, 1.5vh, 15px);
+
       width: min(68%, 360px);
-      gap: clamp(10px, 1.5vh, 15px);
+      gap: var(--hero-item-gap);
       justify-items: start;
       align-content: center;
     }
@@ -1525,6 +1537,7 @@
       text-align: left;
     }
     .hero-person {
+      display: inline-flex;
       gap: 7px;
       max-width: 100%;
       margin: 0 0 clamp(3px, 0.7vh, 7px);
@@ -1538,14 +1551,23 @@
       width: 13px;
       height: 13px;
     }
+    .hero-person-copy {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+      gap: 1px;
+    }
     .hero-greeting-text {
       font-size: 0.72rem;
+      line-height: 1.1;
       letter-spacing: 0.05em;
       text-transform: none;
       font-weight: 300;
     }
     .hero-name {
       font-size: 0.68rem;
+      line-height: 1.1;
       text-transform: uppercase;
     }
     .hero-title {
@@ -1590,7 +1612,7 @@
       max-width: 100%;
       margin: 0;
       color: rgba(255, 255, 255, 0.72);
-      font-size: 14px;
+      font-size: 16px;
       font-weight: 300;
       line-height: 1.48;
       text-align: left;
@@ -1605,7 +1627,6 @@
       width: 100%;
       justify-content: flex-start;
       gap: clamp(8px, 1.2vh, 12px);
-      margin-top: clamp(2px, 0.6vh, 8px);
     }
     .cta-link {
       min-height: 38px;
@@ -1725,7 +1746,7 @@
     .hero-text {
       width: 100%;
       max-width: 100%;
-      font-size: 13px;
+      font-size: 15px;
       font-weight: 300;
       line-height: 1.48;
       text-align: left;
@@ -1826,8 +1847,13 @@
       padding-left: clamp(62px, 5.6vw, 88px);
     }
     .hero-inner {
+      --hero-item-gap: clamp(13px, 1.2vw, 18px);
+
       width: min(680px, 90%);
-      gap: clamp(13px, 1.2vw, 18px);
+      gap: var(--hero-item-gap);
+    }
+    .hero-actions {
+      margin-top: max(0px, calc(40px - var(--hero-item-gap)));
     }
     .hero-heading {
       gap: clamp(9px, 0.8vw, 13px);
@@ -1864,7 +1890,7 @@
     }
     .hero-text {
       color: rgba(255, 255, 255, 0.66);
-      font-size: clamp(15px, 0.9vw, 17px);
+      font-size: clamp(17px, calc(0.9vw + 2px), 19px);
       line-height: 1.62;
     }
     :global(body.light) .hero-text-accent {

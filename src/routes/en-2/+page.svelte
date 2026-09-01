@@ -807,7 +807,7 @@
     loadMoreCopy="Load more"
     loadMoreText="Load additional website projects"
     loadMoreAria="Load additional website projects"
-    viewProjectText="View project"
+    viewProjectText="LIVE SITE"
     viewDetailsText="View details"
     viewDetailsLink="/en-2/reference-project/"
     projectTagsLabel="Project services"

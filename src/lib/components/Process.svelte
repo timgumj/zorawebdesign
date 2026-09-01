@@ -308,13 +308,13 @@
   }
 
   .process-header-main {
-    --section-title-marker-size: clamp(12px, 1.075vw, 17px);
+    --section-title-marker-size: clamp(18px, 1.6125vw, 25.5px);
 
     min-width: 0;
     display: grid;
     grid-template-columns: var(--section-title-marker-size) minmax(0, 1fr);
     align-items: start;
-    column-gap: 16px;
+    column-gap: 18px;
   }
 
   .process-header-main::before {
@@ -374,7 +374,7 @@
     font-size: clamp(24px, 2.15vw, 34px);
     line-height: 1.12;
     letter-spacing: -0.035em;
-    font-weight: 500;
+    font-weight: 600;
     text-transform: none;
   }
 
@@ -733,6 +733,7 @@
 
     .stage-content p {
       max-width: none;
+      font-size: 14px;
     }
 
     .stage-right {
@@ -790,6 +791,10 @@
      TABLET
   ========================================================= */
   @media (min-width: 768px) and (max-width: 1024px) {
+    .process-header-main {
+      --section-title-marker-size: 28.8px;
+    }
+
     .process-shell {
       --shell-x: 0px;
 
@@ -867,7 +872,7 @@
     }
 
     .process-header-main {
-      --section-title-marker-size: clamp(11px, 3vw, 13.5px);
+      --section-title-marker-size: clamp(26.4px, 7.2vw, 32.4px);
 
       width: 100%;
     }
@@ -908,7 +913,7 @@
     }
 
     .stage-content p {
-      font-size: 16px;
+      font-size: 14px;
       line-height: 1.4;
     }
 

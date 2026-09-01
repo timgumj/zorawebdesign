@@ -196,7 +196,7 @@
   }
 
   .faq-header-main {
-    --section-title-marker-size: clamp(12px, 1.075vw, 17px);
+    --section-title-marker-size: clamp(18px, 1.6125vw, 25.5px);
 
     min-width: 0;
 
@@ -206,7 +206,7 @@
 
     align-items: start;
 
-    gap: 16px;
+    gap: 18px;
   }
 
   .faq-header-main::before {
@@ -261,7 +261,7 @@
 
     letter-spacing: -0.035em;
 
-    font-weight: 500;
+    font-weight: 600;
 
     text-transform: none;
   }
@@ -570,6 +570,10 @@
   ========================================================= */
 
   @media (min-width: 768px) and (max-width: 1024px) {
+    .faq-header-main {
+      --section-title-marker-size: 28.8px;
+    }
+
     .faq {
       padding: 110px 0 82px;
     }
@@ -656,7 +660,7 @@
     }
 
     .faq-header-main {
-      --section-title-marker-size: clamp(11px, 3vw, 13.5px);
+      --section-title-marker-size: clamp(26.4px, 7.2vw, 32.4px);
 
       width: 100%;
     }

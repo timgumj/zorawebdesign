@@ -98,16 +98,38 @@
 
   @media (max-width: 1024px) {
     .theme-side-toggle {
-      left: 8px;
+      left: 20px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
       padding: 5px 10px;
       gap: 5px;
+      box-sizing: border-box;
+      line-height: 1;
+      text-align: center;
+      transform: rotate(-90deg) translate(-50%, -50%);
+      transform-origin: left top;
+    }
+
+    .theme-side-toggle:hover {
+      transform: rotate(-90deg) translate(-50%, -50%);
     }
 
     .theme-icon {
+      width: 12px;
+      height: 12px;
+      flex: 0 0 12px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
       font-size: 12px;
     }
 
     .theme-text {
+      min-height: 12px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
       font-size: 10px;
       letter-spacing: 0.08em;
     }
@@ -117,22 +139,24 @@
 
   @media (max-width: 767px) {
     .theme-side-toggle {
-      left: 8px;
-      display: inline-grid;
-      grid-template-columns: 10px auto 10px;
+      left: 22px;
+      display: inline-flex;
+      align-items: center;
       justify-content: center;
-      padding: 8px 8px;
-      column-gap: 4px;
+      padding: 8px;
+      gap: 4px;
       opacity: 0.92;
     }
 
     .theme-icon {
-      grid-column: 1;
+      width: 10px;
+      height: 10px;
+      flex-basis: 10px;
       font-size: 10px;
     }
 
     .theme-text {
-      grid-column: 2;
+      min-height: 10px;
       font-size: 10px;
       letter-spacing: 0.05em;
       text-align: center;
@@ -143,13 +167,15 @@
 
   @media (max-width: 480px) {
     .theme-side-toggle {
-      left: 6px;
-      grid-template-columns: 9px auto 9px;
+      left: 19px;
       padding: 7px;
-      column-gap: 3px;
+      gap: 3px;
     }
 
     .theme-icon {
+      width: 9px;
+      height: 9px;
+      flex-basis: 9px;
       font-size: 9px;
     }
 

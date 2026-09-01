@@ -7,7 +7,7 @@
     loadMoreCopy = "Want to see more",
     loadMoreText = "Load more projects",
     loadMoreAria = "Load more projects",
-    viewProjectText = "View Project",
+    viewProjectText = "LIVE SITE",
     viewDetailsText = "View Details",
     viewDetailsLink = "featured-project/",
     projectTagsLabel = "Project services",
@@ -195,16 +195,6 @@
               </div>
 
               <div class="project-content">
-                <div
-                  class="project-tags"
-                  role="list"
-                  aria-label={projectTagsLabel}
-                >
-                  {#each getProjectTags(project) as tag}
-                    <span role="listitem">{tag}</span>
-                  {/each}
-                </div>
-
                 <div class="project-copy">
                   <div class="project-title-wrap">
                     <h3>{project.title}</h3>
@@ -230,6 +220,16 @@
                   >
                     {getDescription(project)}
                   </p>
+                </div>
+
+                <div
+                  class="project-tags"
+                  role="list"
+                  aria-label={projectTagsLabel}
+                >
+                  {#each getProjectTags(project) as tag}
+                    <span role="listitem">{tag}</span>
+                  {/each}
                 </div>
 
                 <div class="project-footer" class:has-details={index === 0}>
@@ -469,7 +469,7 @@
   }
 
   .projects-header-main {
-    --section-title-marker-size: clamp(12px, 1.075vw, 17px);
+    --section-title-marker-size: clamp(18px, 1.6125vw, 25.5px);
 
     min-width: 0;
 
@@ -479,7 +479,7 @@
 
     align-items: start;
 
-    gap: 16px;
+    gap: 18px;
   }
 
   .projects-header-main::before {
@@ -534,7 +534,7 @@
 
     letter-spacing: -0.035em;
 
-    font-weight: 500;
+    font-weight: 600;
 
     text-transform: none;
   }
@@ -786,7 +786,7 @@
 
     gap: 7px;
 
-    margin-bottom: 18px;
+    margin: 18px 0 0;
   }
 
   .project-tags span {
@@ -1109,6 +1109,10 @@
   ========================================================= */
 
   @media (min-width: 768px) and (max-width: 1024px) {
+    .projects-header-main {
+      --section-title-marker-size: 28.8px;
+    }
+
     .project-v-line {
       display: none;
     }
@@ -1207,7 +1211,7 @@
     }
 
     .projects-header-main {
-      --section-title-marker-size: clamp(11px, 3vw, 13.5px);
+      --section-title-marker-size: clamp(26.4px, 7.2vw, 32.4px);
 
       width: 100%;
     }
@@ -1268,7 +1272,7 @@
 
       gap: 4px;
 
-      margin-bottom: 16px;
+      margin: 16px 0 0;
     }
 
     .project-tags span {

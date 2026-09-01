@@ -808,9 +808,19 @@
 
         <div class="free-tools-grid">
           {#each toolLinks as tool}
-            <a class="website-tool-card" href={tool.href} title={tool.title}>
+            <article class="website-tool-card">
               <div class="website-tool-card-inner">
-                <div class="website-tool-topline">
+                <div class="website-tool-copy">
+                  <h3>{tool.title}</h3>
+
+                  <p>{tool.text}</p>
+                </div>
+
+                <div class="website-tool-cta-row">
+                  <a class="website-tool-cta" href={tool.href} title={tool.title}>
+                    {tool.linkLabel}
+                  </a>
+
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 16 16"
@@ -819,31 +829,21 @@
                     aria-hidden="true"
                   >
                     <path
-                      d="M4.3418 11.6582L11.6587 4.3413"
+                      d="M2 8H14"
                       stroke="currentColor"
                       stroke-linecap="round"
                       stroke-linejoin="round"
                     ></path>
                     <path
-                      d="M4.58714 4.34104H11.6582V11.4121"
+                      d="M10 4L14 8L10 12"
                       stroke="currentColor"
                       stroke-linecap="round"
                       stroke-linejoin="round"
                     ></path>
                   </svg>
                 </div>
-
-                <div class="website-tool-copy">
-                  <h3>{tool.title}</h3>
-
-                  <p>{tool.text}</p>
-                </div>
-
-                <span class="website-tool-cta">
-                  {tool.linkLabel}
-                </span>
               </div>
-            </a>
+            </article>
           {/each}
         </div>
 
@@ -1278,7 +1278,7 @@
 
     color: #ffffff;
 
-    font-size: clamp(36px, 4.455vw, 70px);
+    font-size: clamp(28.8px, 3.564vw, 56px);
 
     font-weight: 500;
 
@@ -1554,7 +1554,7 @@
   }
 
   .services-header-main {
-    --services-title-marker-size: clamp(12px, 1.075vw, 17px);
+    --services-title-marker-size: clamp(18px, 1.6125vw, 25.5px);
 
     min-width: 0;
 
@@ -1564,7 +1564,7 @@
 
     align-items: start;
 
-    gap: 16px;
+    gap: 18px;
   }
 
   .services-header-main::before {
@@ -1615,7 +1615,7 @@
 
     letter-spacing: -0.035em;
 
-    font-weight: 500;
+    font-weight: 600;
 
     text-transform: none;
   }
@@ -2163,7 +2163,7 @@
 
   .service-detail-panel.active {
     background: rgba(255, 255, 255, 0.045);
-    box-shadow: inset 1px 0 0 rgba(255, 255, 255, 0.5);
+    box-shadow: none;
   }
 
   :global(body.light) .service-detail-panel {
@@ -2172,7 +2172,7 @@
 
   :global(body.light) .service-detail-panel.active {
     background: rgba(0, 0, 0, 0.035);
-    box-shadow: inset 1px 0 0 rgba(0, 0, 0, 0.4);
+    box-shadow: none;
   }
 
   .service-detail-heading {
@@ -2537,9 +2537,9 @@
   .website-tool-card {
     min-width: 0;
 
-    min-height: 390px;
+    min-height: 195px;
 
-    display: block;
+    display: flex;
 
     padding: 34px;
 
@@ -2563,17 +2563,13 @@
   .website-tool-card-inner {
     height: 100%;
 
+    width: 100%;
+
     display: flex;
 
     flex-direction: column;
-  }
 
-  .website-tool-topline {
-    display: flex;
-
-    justify-content: flex-end;
-
-    align-items: flex-start;
+    justify-content: center;
   }
 
   .website-tool-arrow {
@@ -2589,7 +2585,7 @@
   }
 
   .website-tool-copy {
-    margin-top: 58px;
+    margin-top: 0;
   }
 
   .website-tool-copy h3 {
@@ -2628,16 +2624,28 @@
     color: rgba(0, 0, 0, 0.68);
   }
 
+  .website-tool-cta-row {
+    width: fit-content;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    margin-top: 22px;
+  }
+
   .website-tool-cta {
     width: fit-content;
 
-    margin-top: auto;
-
-    padding: 30px 0 5px;
+    padding: 0 0 5px;
 
     border-bottom: 1px solid var(--accent-blue);
 
     color: #ffffff;
+
+    text-decoration: none;
 
     font-size: 12px;
 
@@ -2744,6 +2752,10 @@
   ========================================================= */
 
   @media (min-width: 768px) and (max-width: 1024px) {
+    .services-header-main {
+      --services-title-marker-size: 28.8px;
+    }
+
     .services-shell {
       --shell-x: 0px;
 
@@ -3126,13 +3138,9 @@
     }
 
     .website-tool-card {
-      min-height: 330px;
+      min-height: 165px;
 
       padding: 28px;
-    }
-
-    .website-tool-copy {
-      margin-top: 54px;
     }
 
     .tools-marquee-track {
@@ -3444,7 +3452,7 @@
     }
 
     .services-header-main {
-      --services-title-marker-size: clamp(11px, 3vw, 13.5px);
+      --services-title-marker-size: clamp(26.4px, 7.2vw, 32.4px);
 
       width: 100%;
     }
@@ -3655,13 +3663,9 @@
     }
 
     .website-tool-card {
-      min-height: 300px;
+      min-height: 150px;
 
       padding: 26px 22px;
-    }
-
-    .website-tool-copy {
-      margin-top: 44px;
     }
 
     .website-tool-copy h3 {
@@ -3763,7 +3767,7 @@
     }
 
     .website-tool-card {
-      min-height: 280px;
+      min-height: 140px;
     }
 
     .website-tool-copy h3 {

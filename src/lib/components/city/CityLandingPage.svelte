@@ -215,7 +215,7 @@
     loadMoreCopy={isGerman ? "Mehr sehen" : "Load more"}
     loadMoreText={isGerman ? "Weitere Projekte laden" : "Load additional projects"}
     loadMoreAria={isGerman ? "Weitere Projekte laden" : "Load additional projects"}
-    viewProjectText={isGerman ? "Projekt ansehen" : "View project"}
+    viewProjectText="LIVE SITE"
     viewDetailsText={isGerman ? "Details ansehen" : "View details"}
     viewDetailsLink={isGerman ? "/referenzprojekt/" : "/en-2/reference-project/"}
     projectTagsLabel={isGerman ? "Projektleistungen" : "Project services"}

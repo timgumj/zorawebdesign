@@ -564,7 +564,7 @@
     loadMoreCopy="Mehr sehen"
     loadMoreText="Weitere Projekte laden"
     loadMoreAria="Weitere Projekte laden"
-    viewProjectText="Projekt ansehen"
+    viewProjectText="LIVE SITE"
     viewDetailsText="Details ansehen"
     viewDetailsLink="referenzprojekt/"
     projectTagsLabel="Projektleistungen"
