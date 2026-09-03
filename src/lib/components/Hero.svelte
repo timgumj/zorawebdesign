@@ -154,6 +154,53 @@
     if (isDesktop) return;
     activePopover = activePopover === index ? null : index;
   }
+
+  function trackCenteredThumbnail(node) {
+    const thumbnails = Array.from(node.querySelectorAll(".hero-project-thumb"));
+    let activeThumbnail = null;
+    let animationFrame = 0;
+    let lastMeasurement = 0;
+
+    function updateActiveThumbnail(timestamp) {
+      if (timestamp - lastMeasurement >= 60) {
+        const marqueeRect = node.getBoundingClientRect();
+        const marqueeCenter = marqueeRect.top + marqueeRect.height / 2;
+        let closestThumbnail = null;
+        let closestDistance = Infinity;
+
+        for (const thumbnail of thumbnails) {
+          const thumbnailRect = thumbnail.getBoundingClientRect();
+          const thumbnailCenter = thumbnailRect.top + thumbnailRect.height / 2;
+          const distance = Math.abs(thumbnailCenter - marqueeCenter);
+
+          if (distance < closestDistance) {
+            closestDistance = distance;
+            closestThumbnail = thumbnail;
+          }
+        }
+
+        if (closestThumbnail !== activeThumbnail) {
+          activeThumbnail?.classList.remove("is-centered");
+          closestThumbnail?.classList.add("is-centered");
+          activeThumbnail = closestThumbnail;
+        }
+
+        lastMeasurement = timestamp;
+      }
+
+      animationFrame = requestAnimationFrame(updateActiveThumbnail);
+    }
+
+    animationFrame = requestAnimationFrame(updateActiveThumbnail);
+
+    return {
+      destroy() {
+        cancelAnimationFrame(animationFrame);
+        activeThumbnail?.classList.remove("is-centered");
+      },
+    };
+  }
+
   onMount(() => {
     updateViewportState();
     updateGreeting();
@@ -238,7 +285,7 @@
           class="hero-bg-wall hero-bg-wall-desktop"
           class:visible={showMarquee}
         >
-          <div class="hero-marquee hero-marquee-up">
+          <div class="hero-marquee hero-marquee-up" use:trackCenteredThumbnail>
             <div class="hero-marquee-track">
               {#each heroColumnOneRender as project, index}
                 <div class="hero-project-thumb">
@@ -258,7 +305,10 @@
               {/each}
             </div>
           </div>
-          <div class="hero-marquee hero-marquee-down">
+          <div
+            class="hero-marquee hero-marquee-down"
+            use:trackCenteredThumbnail
+          >
             <div class="hero-marquee-track">
               {#each heroColumnTwoRender as project, index}
                 <div class="hero-project-thumb">
@@ -288,7 +338,7 @@
           class:tablet-wall={isTablet}
           class:visible={showMarquee}
         >
-          <div class="hero-marquee hero-marquee-up">
+          <div class="hero-marquee hero-marquee-up" use:trackCenteredThumbnail>
             <div class="hero-marquee-track">
               {#each heroSingleColumnRender as project, index}
                 <div class="hero-project-thumb">
@@ -471,12 +521,7 @@
   :global(body.light) .hero {
     color: #111111;
     border-bottom: 1px solid rgba(0, 0, 0, 0.12);
-    background: radial-gradient(
-        circle at 90% 80%,
-        rgba(0, 67, 255, 0.06),
-        transparent 34%
-      ),
-      #ffffff;
+    background: #ffffff;
   }
   .hero-shell {
     position: relative;
@@ -556,11 +601,23 @@
     opacity: 1;
   }
   .hero-bg-wall.visible .hero-project-thumb img {
-    opacity: 1;
-    filter: brightness(0.34) saturate(0.85);
+    opacity: 0.34;
+    filter: grayscale(1) brightness(0.58) saturate(0.2);
   }
   :global(body.light) .hero-bg-wall.visible .hero-project-thumb img {
-    filter: brightness(0.92) saturate(1);
+    opacity: 0.38;
+    filter: grayscale(1) brightness(1) saturate(0.15);
+  }
+  .hero-bg-wall.visible .hero-project-thumb:global(.is-centered) img {
+    opacity: 1;
+    filter: grayscale(0) brightness(0.9) saturate(1);
+  }
+  :global(body.light)
+    .hero-bg-wall.visible
+    .hero-project-thumb:global(.is-centered)
+    img {
+    opacity: 1;
+    filter: grayscale(0) brightness(1) saturate(1);
   }
   .hero-bg-wall-desktop {
     width: clamp(36%, 42vw, 50%);
@@ -572,8 +629,14 @@
     width: clamp(24%, 28vw, 34%);
     display: block;
   }
+  :global(body.light) .hero-bg-wall,
+  :global(body.light) .hero-marquee,
+  :global(body.light) .hero-marquee-track {
+    background: #ffffff;
+  }
   .hero-marquee {
     position: relative;
+    z-index: 1;
     height: 100%;
     overflow: hidden;
     line-height: 0;
@@ -621,7 +684,8 @@
     background: #0b0b0b;
     transition:
       background 0.3s ease,
-      filter 0.3s ease;
+      filter 0.45s ease,
+      opacity 0.45s ease;
   }
   :global(body.light) .hero-project-thumb img {
     background: #ffffff;
@@ -629,6 +693,7 @@
   .hero-bg-fade {
     position: absolute;
     inset: 0;
+    z-index: 0;
     pointer-events: none;
     background: linear-gradient(
         to left,
@@ -1148,16 +1213,6 @@
     .hero-shell {
       width: min(var(--hero-max-width), calc(100% - 20px));
     }
-    .hero-bg-wall.visible {
-      opacity: 0.7;
-    }
-    .hero-bg-wall.visible .hero-project-thumb img {
-      opacity: 1;
-      filter: brightness(0.58) saturate(0.95);
-    }
-    :global(body.light) .hero-bg-wall.visible .hero-project-thumb img {
-      filter: brightness(0.92) saturate(1);
-    }
     .hero-bg-wall-single {
       width: clamp(36%, 43vw, 50%);
       right: 12px;
@@ -1480,16 +1535,6 @@
     }
     .hero-project-thumb img {
       height: clamp(170px, 34vw, 240px);
-    }
-    .hero-bg-wall.mobile-wall.visible {
-      opacity: 0.64;
-    }
-    .hero-bg-wall.visible .hero-project-thumb img {
-      opacity: 1;
-      filter: brightness(0.58) saturate(0.95);
-    }
-    :global(body.light) .hero-bg-wall.visible .hero-project-thumb img {
-      filter: brightness(0.9) saturate(1);
     }
     .hero-bg-fade {
       background: linear-gradient(
@@ -1918,5 +1963,51 @@
     .connection-popover {
       transition: none;
     }
+  }
+
+  /* =========================================================
+   LIGHT MODE ONLY — WHITE MARQUEE + SUBTLE CONNECTING LINES
+========================================================= */
+
+  :global(body.light) .hero-bg-wall,
+  :global(body.light) .hero-bg-wall-desktop,
+  :global(body.light) .hero-bg-wall-single,
+  :global(body.light) .hero-marquee,
+  :global(body.light) .hero-marquee-track,
+  :global(body.light) .hero-project-thumb,
+  :global(body.light) .hero-project-thumb img {
+    background: #ffffff !important;
+  }
+
+  /* Very faint outline around each image */
+  :global(body.light) .hero-project-thumb {
+    position: relative;
+    overflow: visible;
+    border: 1px solid #f8f8f8 !important;
+    box-shadow: none !important;
+  }
+
+  /* Vertical connector from each image to the next */
+  :global(body.light) .hero-project-thumb::after {
+    content: "";
+    position: absolute;
+
+    left: 50%;
+    top: 100%;
+
+    width: 1px;
+    height: var(--hero-track-gap);
+
+    transform: translateX(-50%);
+
+    background: #f8f8f8;
+
+    pointer-events: none;
+  }
+
+  /* Make sure there is NO divider between the two columns */
+  :global(body.light) .hero-bg-wall-desktop::after {
+    content: none !important;
+    display: none !important;
   }
 </style>

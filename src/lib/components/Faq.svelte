@@ -130,7 +130,7 @@
   }
 
   :global(body.light) .faq {
-    background: #f7f7f4;
+    background: #ffffff;
 
     color: #111111;
   }
@@ -227,6 +227,17 @@
     animation: section-title-pulse 1.65s ease-in-out infinite;
 
     will-change: transform, box-shadow;
+  }
+
+  @media (max-width: 1100px) {
+    .faq-header-main {
+      align-items: center;
+    }
+
+    .faq-header-main::before {
+      align-self: center;
+      margin-top: 0;
+    }
   }
 
   @keyframes section-title-pulse {

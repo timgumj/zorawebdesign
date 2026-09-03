@@ -198,6 +198,8 @@
      SECTION
   ========================================================= */
   .process {
+    --accent-blue: #0043ff;
+
     padding: 0;
     background: #111111;
     color: #ffffff;
@@ -208,7 +210,7 @@
   }
 
   :global(body.light) .process {
-    background: #f7f7f4;
+    background: #ffffff;
     color: #111111;
   }
 
@@ -223,6 +225,11 @@
     padding-bottom: 140px;
     padding-left: var(--shell-x);
     box-sizing: border-box;
+  }
+
+  :global(body.light) .process-shell {
+    border-top: 1px solid rgba(0, 0, 0, 0.08);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
   }
 
   /* =========================================================
@@ -333,6 +340,17 @@
 
   .process-header-main.has-eyebrow::before {
     grid-row: 2;
+  }
+
+  @media (max-width: 1100px) {
+    .process-header-main {
+      align-items: center;
+    }
+
+    .process-header-main::before {
+      align-self: center;
+      margin-top: 0;
+    }
   }
 
   @keyframes section-title-pulse {
@@ -514,10 +532,9 @@
     position: absolute;
     top: 36px;
     bottom: 10px;
-    left: 50%;
+    left: calc(50% - 0.5px);
     width: 1px;
     background: transparent;
-    transform: translateX(-50%);
     overflow: hidden;
   }
 
@@ -629,7 +646,7 @@
     height: 6px;
     flex: 0 0 auto;
     border-radius: 50%;
-    background: #0043ff;
+    background: var(--accent-blue);
   }
 
   .image-credit-text {

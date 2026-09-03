@@ -518,20 +518,16 @@
             <div class="experience-list" bind:this={experienceViewport}>
               {#each normalizedStats as stat}
                 <article class="experience-item">
-                  <div class="experience-copy">
-                    <p class="experience-title">
-                      <span class="experience-title-first"
-                        >{stat.title.split(/\s+/)[0]}</span
-                      >{#if stat.title.split(/\s+/).slice(1).length}
-                        {" "}
-                        <span class="experience-title-rest">
-                          {stat.title.split(/\s+/).slice(1).join(" ")}</span
-                        >
-                      {/if}
-                    </p>
-
-                    <p>{stat.label}</p>
-                  </div>
+                  <p class="experience-title">
+                    <span class="experience-title-first"
+                      >{stat.title.split(/\s+/)[0]}</span
+                    >{#if stat.title.split(/\s+/).slice(1).length}
+                      {" "}
+                      <span class="experience-title-rest">
+                        {stat.title.split(/\s+/).slice(1).join(" ")}</span
+                      >
+                    {/if}
+                  </p>
                 </article>
               {/each}
             </div>
@@ -914,7 +910,7 @@
   }
 
   :global(body.light) .services {
-    background: #f7f7f4;
+    background: #ffffff;
 
     color: #111111;
   }
@@ -1082,19 +1078,7 @@
 
     border-top-color: rgba(0, 0, 0, 0.28);
 
-    background: rgba(0, 0, 0, 0.012);
-  }
-
-  .experience-copy {
-    width: 100%;
-
-    min-width: 0;
-
-    display: flex;
-
-    flex-direction: column;
-
-    align-items: flex-start;
+    background: #ffffff;
   }
 
   .experience-title {
@@ -1135,26 +1119,6 @@
 
   :global(body.light) .experience-title {
     color: #111111;
-  }
-
-  .experience-copy p:not(.experience-title) {
-    max-width: 280px;
-
-    margin: 11px 0 0;
-
-    color: #8f8f8f;
-
-    font-size: 12px;
-
-    font-weight: 400;
-
-    line-height: 1.5;
-
-    letter-spacing: 0.015em;
-  }
-
-  :global(body.light) .experience-copy p:not(.experience-title) {
-    color: rgba(0, 0, 0, 0.58);
   }
 
   /* =========================================================
@@ -1587,6 +1551,17 @@
     will-change: transform, box-shadow;
   }
 
+  @media (max-width: 1100px) {
+    .services-header-main {
+      align-items: center;
+    }
+
+    .services-header-main::before {
+      align-self: center;
+      margin-top: 0;
+    }
+  }
+
   @keyframes services-title-pulse {
     0%,
     100% {
@@ -2008,7 +1983,7 @@
   }
 
   :global(body.light) .services-showcase {
-    background: rgba(0, 0, 0, 0.025);
+    background: #ffffff;
   }
 
   .services-desktop-workspace {
@@ -2171,7 +2146,7 @@
   }
 
   :global(body.light) .service-detail-panel.active {
-    background: rgba(0, 0, 0, 0.035);
+    background: #ffffff;
     box-shadow: none;
   }
 
@@ -2345,6 +2320,10 @@
 
   :global(body.light) .service-bg-number {
     color: rgba(0, 0, 0, 0.07);
+  }
+
+  :global(body.light) .service-detail-panel.active .service-bg-number {
+    color: rgba(0, 0, 0, 0.18);
   }
 
   .service-content {
@@ -2895,12 +2874,6 @@
       line-height: 1.18;
     }
 
-    .experience-copy p:not(.experience-title) {
-      margin-top: 9px;
-
-      font-size: 11px;
-    }
-
     .about-profile {
       padding: 0;
     }
@@ -3296,14 +3269,6 @@
       font-size: 0.88em;
 
       font-weight: 700;
-    }
-
-    .experience-copy p:not(.experience-title) {
-      display: block;
-
-      margin-top: 9px;
-
-      font-size: 11px;
     }
 
     .about-editorial {

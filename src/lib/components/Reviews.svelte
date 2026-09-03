@@ -197,6 +197,17 @@
     will-change: transform, box-shadow;
   }
 
+  @media (max-width: 1100px) {
+    .reviews-header-main {
+      align-items: center;
+    }
+
+    .reviews-header-main::before {
+      align-self: center;
+      margin-top: 0;
+    }
+  }
+
   @keyframes section-title-pulse {
     0%,
     100% {
@@ -296,7 +307,7 @@
   :global(body.light) .review-card {
     background: #ffffff;
     border-color: rgba(0, 0, 0, 0.1);
-    box-shadow: 0 18px 45px rgba(0, 0, 0, 0.06);
+    box-shadow: none;
   }
 
   .review-card::before {

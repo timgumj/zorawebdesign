@@ -209,22 +209,6 @@ tags: [
 
 {
 number: "14/",
-title: "BOTANG RECORDS",
-description:
-"A non-profit organisation promoting African art, music and culture while supporting artists and young people through mentoring and community programmes.",
-image: "/images/BotangRecords.webp",
-alt: "Website project for Botang Records",
-link: "https://botangrecords.com/",
-tags: [
-"Webdesign/Dev",
-"Wordpress",
-"2 Years Support",
-"DIVI Theme",
-],
-},
-
-{
-number: "15/",
 title: "Pro-Move Transport",
 description:
 "ProMove Transport provides professional moving and transport services throughout Austria, including private and business relocations as well as logistics services.",
@@ -240,7 +224,7 @@ tags: [
 },
 
 {
-number: "16/",
+number: "15/",
 title: "Afrieurotext",
 description:
 "AFRIEUROTEXT is a Vienna-based non-profit organisation promoting cultural exchange between African and European communities through art, education and events.",
@@ -256,7 +240,7 @@ tags: [
 },
 
 {
-number: "17/",
+number: "16/",
 title: "Afrieurotext Bookshop",
 description:
 "AFRIEUROTEXT operates an online bookshop and promotes cultural exchange between African and European communities through literature, art, education and events.",
@@ -272,7 +256,7 @@ tags: [
 },
 
 {
-number: "18/",
+number: "17/",
 title: "AEWTASS VEREIN",
 description:
 "Webdesign project for AEWTASS, a non-profit organisation in Vienna, Austria, committed to equality, diversity and inclusive education in schools.",
@@ -288,7 +272,7 @@ tags: [
 },
 
 {
-number: "19/",
+number: "18/",
 title: "BEAT FEURER",
 description:
 "Webdesign project for BEAT FEURER, a Swiss architecture company specialising in innovative and sustainable architectural solutions.",
@@ -304,7 +288,7 @@ tags: [
 },
 
 {
-number: "20/",
+number: "19/",
 title: "NEDRET VEREIN",
 description:
 "Webdesign project for NEDRET, a non-profit organisation dedicated to supporting socially disadvantaged people.",

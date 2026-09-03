@@ -79,9 +79,9 @@
   }
 
   :global(body.light) .site-footer {
-    background: #ffffff;
+    background: #f7f7f4;
     color: #111111;
-    border-top-color: rgba(0, 0, 0, 0.12);
+    border-top: 0;
   }
 
   .footer-row {
@@ -105,7 +105,7 @@
   .footer-service-areas p {
     margin: 0;
     color: rgba(255, 255, 255, 0.62);
-    font-size: 12px;
+    font-size: 9.72px;
     letter-spacing: 0.16em;
   }
 
@@ -127,7 +127,7 @@
     padding-bottom: 4px;
     border-bottom: 1px solid #0043ff;
     color: #fff;
-    font-size: 13px;
+    font-size: 10.53px;
     letter-spacing: 0.14em;
     text-decoration: none;
   }
@@ -152,7 +152,7 @@
   .footer-meta p {
     margin: 0;
     color: #fff;
-    font-size: 14px;
+    font-size: 11.34px;
     letter-spacing: 0.18em;
     text-transform: uppercase;
     transition: color 0.3s ease;
@@ -174,7 +174,7 @@
     background: transparent;
     color: #fff;
     font: inherit;
-    font-size: 14px;
+    font-size: 11.34px;
     letter-spacing: 0.18em;
     text-transform: uppercase;
     text-decoration: none;
@@ -250,7 +250,7 @@
 
     .footer-meta p,
     .footer-imprint-link {
-      font-size: 16px;
+      font-size: 12.96px;
     }
 
     .footer-wko-logo {
@@ -289,7 +289,7 @@
 
     .footer-meta p,
     .footer-imprint-link {
-      font-size: 14px;
+      font-size: 11.34px;
       letter-spacing: 0.12em;
     }
 

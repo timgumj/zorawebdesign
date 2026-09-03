@@ -15,23 +15,8 @@ export const projects = [
     
   ],
   },
-  {
-    number: "02/",
-    title: "Dr. Bosede Baldauf",
-    description:
-      "Ein klares digitales Projekt mit starker visueller Präsentation und einfacher Nutzerführung.",
-    image: "/images/dr.baldauf-700.webp",
-    alt: "Website Projekt für Dr. Bosede Oluwatoyin Baldauf",
-    link: "https://www.baldauf-uro.at/",
-    tags: [
-    "Webdesign/Dev",
-    "Wordpress",
-    "SvelteKit",
-    "2 Jahre Support",
-  ],
-  },
    {
-    number: "03/",
+    number: "02/",
     title: "ARC NETWORK",
     description:
       "ARC Network. Konzeption, Design und Entwicklung einer modernen, mehrsprachigen Website mit individuellen Funktionen.",
@@ -47,7 +32,7 @@ export const projects = [
   },
   
   {
-    number: "04/",
+    number: "03/",
     title: "JUBS VEREIN",
     description:
       "JUBS - Verein Jugendförderung Neunkirchen unterstützt junge Menschen durch Beratung, Schulprogramme und soziale Dienstleistungen.",
@@ -59,6 +44,21 @@ export const projects = [
     "Wordpress",
     "PHP",
     "3 Jahre Support",
+  ],
+  },
+  {
+    number: "04/",
+    title: "RESOMA",
+    description:
+      "Eine Plattform, die somatisches Coaching, Breathwork und Resilienztraining anbietet, um Stressregulation und persönliches Wohlbefinden zu fördern.",
+    image: "/images/resoma-700.webp",
+    alt: "Website Projekt für reSOMA in Wien",
+    link: "https://resoma.org/",
+    tags: [
+    "Webdesign/Dev",
+    "Wordpress",
+    "2 Jahre Support",
+    "DIVI Theme",
   ],
   },
   {
@@ -93,17 +93,17 @@ export const projects = [
   },
   {
     number: "07/",
-    title: "RESOMA",
+    title: "Dr. Bosede Baldauf",
     description:
-      "Eine Plattform, die somatisches Coaching, Breathwork und Resilienztraining anbietet, um Stressregulation und persönliches Wohlbefinden zu fördern.",
-    image: "/images/resoma-700.webp",
-    alt: "Website Projekt für reSOMA in Wien",
-    link: "https://resoma.org/",
+      "Ein klares digitales Projekt mit starker visueller Präsentation und einfacher Nutzerführung.",
+    image: "/images/dr.baldauf-700.webp",
+    alt: "Website Projekt für Dr. Bosede Oluwatoyin Baldauf",
+    link: "https://www.baldauf-uro.at/",
     tags: [
     "Webdesign/Dev",
     "Wordpress",
+    "SvelteKit",
     "2 Jahre Support",
-    "DIVI Theme",
   ],
   },
   {
@@ -203,22 +203,6 @@ export const projects = [
 
   {
     number: "14/",
-    title: "BOTANG RECORDS",
-    description:
-      "Gemeinnützige Organisation, die afrikanische Kunst, Musik und Kultur fördert und Künstlerinnen, Künstler sowie Jugendliche durch Mentoring und Gemeinschaftsprogramme unterstützt.",
-    image: "/images/BotangRecords.webp",
-    alt: "Website Projekt für Botang Records",
-    link: "https://botangrecords.com/",
-    tags: [
-    "Webdesign/Dev",
-    "Wordpress",
-    "2 Jahre Support",
-    "DIVI Theme",
-  ],
-  },
-
-  {
-    number: "15/",
     title: "Pro-Move Transport",
     description:
       "ProMove Transport bietet professionelle Umzugs und Transportdienstleistungen in Österreich an, einschließlich privater und geschäftlicher Übersiedlungen sowie Logistikservices.",
@@ -234,7 +218,7 @@ export const projects = [
   },
 
   {
-    number: "16/",
+    number: "15/",
     title: "Afrieurotext",
     description:
       "AFRIEUROTEXT ist eine in Wien ansässige gemeinnützige Organisation, die den kulturellen Austausch zwischen afrikanischen und europäischen Gemeinschaften durch Kunst, Bildung und Veranstaltungen fördert.",
@@ -250,7 +234,7 @@ export const projects = [
   },
 
   {
-    number: "17/",
+    number: "16/",
     title: "Afrieurotext Bookshop",
     description:
       "AFRIEUROTEXT betreibt einen Online Buchshop und fördert den kulturellen Austausch zwischen afrikanischen und europäischen Gemeinschaften durch Literatur, Kunst, Bildung und Veranstaltungen.",
@@ -266,7 +250,7 @@ export const projects = [
   },
 
   {
-    number: "18/",
+    number: "17/",
     title: "AEWTASS VEREIN",
     description:
       "Webdesign Projekt für AEWTASS, eine gemeinnützige Organisation in Wien, Österreich, die sich für Gleichberechtigung, Vielfalt und inklusive Bildung in Schulen einsetzt.",
@@ -282,7 +266,7 @@ export const projects = [
   },
 
    {
-    number: "19/",
+    number: "18/",
     title: "BEAT FEURER",
     description:
       "Webdesign Projekt für BEAT FEURER, ein Architekturunternehmen aus Der Schweiz, das sich auf innovative und nachhaltige architektonische Lösungen spezialisiert hat.",
@@ -298,7 +282,7 @@ export const projects = [
   },
 
     {
-    number: "20/",
+    number: "19/",
     title: "NEDRET VEREIN",
     description:
       "Webdesign Projekt für NEDRET, eine Verein zur Förderung sozial benachteiligter Menschen",

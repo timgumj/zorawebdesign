@@ -16,7 +16,7 @@
     document.body.classList.remove("light", "dark");
 
     if (isHomepage) {
-      const savedTheme = localStorage.getItem("site-theme") || "dark";
+      const savedTheme = localStorage.getItem("site-theme") || "light";
       document.body.classList.add(savedTheme);
     }
   });

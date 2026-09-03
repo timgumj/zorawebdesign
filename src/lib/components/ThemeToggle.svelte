@@ -1,11 +1,14 @@
 <script>
   import { onMount } from "svelte";
 
-  let theme = $state("dark");
+  let theme = $state("light");
   let mobileHeroVisible = $state(true);
 
   function applyTheme(selectedTheme) {
     theme = selectedTheme;
+
+    document.documentElement.classList.remove("light", "dark");
+    document.documentElement.classList.add(selectedTheme);
 
     document.body.classList.remove("light", "dark");
     document.body.classList.add(selectedTheme);
@@ -18,7 +21,7 @@
   }
 
   onMount(() => {
-    const savedTheme = localStorage.getItem("site-theme") || "dark";
+    const savedTheme = localStorage.getItem("site-theme") || "light";
     applyTheme(savedTheme);
 
     const mobileQuery = window.matchMedia("(max-width: 767px)");

@@ -514,7 +514,7 @@
      SECTION
   ========================================================= */
   .contact {
-    padding: 130px 0 1px;
+    padding: 130px 0;
 
     background: #000000;
 
@@ -622,6 +622,17 @@
     animation: section-title-pulse 1.65s ease-in-out infinite;
 
     will-change: transform, box-shadow;
+  }
+
+  @media (max-width: 1100px) {
+    .contact-header-main {
+      align-items: center;
+    }
+
+    .contact-header-main::before {
+      align-self: center;
+      margin-top: 0;
+    }
   }
 
   @keyframes section-title-pulse {
@@ -1446,7 +1457,7 @@
     }
 
     .contact {
-      padding: 110px 0 1px;
+      padding: 110px 0;
     }
 
     .contact-container {
@@ -1530,7 +1541,7 @@
   ========================================================= */
   @media (max-width: 767px) {
     .contact {
-      padding: 110px 20px 10px;
+      padding: 110px 20px;
     }
 
     .contact-container {
@@ -1672,7 +1683,7 @@
   ========================================================= */
   @media (max-width: 420px) {
     .contact {
-      padding: 100px 20px 10px;
+      padding: 100px 20px;
     }
 
     .contact-header {

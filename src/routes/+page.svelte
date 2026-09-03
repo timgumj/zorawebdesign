@@ -255,6 +255,13 @@
       stars: 5,
     },
     {
+      name: "Shanan Delp",
+      role: "THE AUSTRIAN RESTORED CITIZENSHIP NETWORK",
+      text: "My team was developing a nonprofit community website to help establish our identity, both virtually and in the real world. We had a loose definition of our vision, and a lot of stakeholders. Julius was an instrumental part of making the vision concrete, both in terms of scope, but also in terms of user experience, visual design and information architecture. He is also an enthusiastic and collaborative team member, always ready to go above and beyond.",
+      image: "/images/shanan-700.webp",
+      stars: 5,
+    },
+    {
       name: "IMANI RAMESES",
       role: "COGNITIVE NEUROSCIENTIST",
       image: "/images/Imani-Rameses.webp",

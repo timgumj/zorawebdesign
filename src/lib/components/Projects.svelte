@@ -502,6 +502,17 @@
     will-change: transform, box-shadow;
   }
 
+  @media (max-width: 1100px) {
+    .projects-header-main {
+      align-items: center;
+    }
+
+    .projects-header-main::before {
+      align-self: center;
+      margin-top: 0;
+    }
+  }
+
   @keyframes section-title-pulse {
     0%,
     100% {
@@ -647,7 +658,7 @@
 
     border-color: rgba(0, 0, 0, 0.08);
 
-    box-shadow: 0 18px 45px rgba(0, 0, 0, 0.04);
+    box-shadow: none;
   }
 
   .project-card:hover {
@@ -656,6 +667,11 @@
     border-color: rgba(255, 255, 255, 0.18);
 
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+  }
+
+  :global(body.light) .project-card:hover {
+    border-color: rgba(0, 0, 0, 0.12);
+    box-shadow: none;
   }
 
   /* =========================================================
@@ -927,11 +943,9 @@
 
     flex: 0 0 auto;
 
-    padding: 0 0 7px;
+    padding: 0;
 
     border: 0;
-
-    border-bottom: 1px solid #0043ff;
 
     display: inline-flex;
 
@@ -958,14 +972,17 @@
     text-decoration: none;
 
     transition:
-      border-color 0.25s ease,
       color 0.25s ease;
+  }
+
+  .project-view-link > span,
+  .project-details-link > span {
+    padding-bottom: 7px;
+    border-bottom: 1px solid #0043ff;
   }
 
   .project-view-link:hover,
   .project-details-link:hover {
-    border-bottom-color: #0043ff;
-
     background: transparent;
 
     color: #0043ff;
@@ -973,8 +990,6 @@
 
   :global(body.light) .project-view-link,
   :global(body.light) .project-details-link {
-    border-bottom-color: #0043ff;
-
     background: transparent;
 
     color: #111111;
@@ -982,8 +997,6 @@
 
   :global(body.light) .project-view-link:hover,
   :global(body.light) .project-details-link:hover {
-    border-bottom-color: #0043ff;
-
     background: transparent;
 
     color: #0043ff;
@@ -999,6 +1012,10 @@
     display: block;
 
     color: #0043ff;
+  }
+
+  .project-link-arrow path {
+    stroke: #0043ff;
   }
 
   @media (min-width: 768px) {
@@ -1055,7 +1072,7 @@
   :global(body.light) .project-load-card {
     border-color: rgba(0, 0, 0, 0.08);
 
-    background: linear-gradient(180deg, #fff, #f4f4f1);
+    background: #ffffff;
 
     color: #111;
   }
@@ -1371,7 +1388,7 @@
     .project-details-link {
       min-height: auto;
 
-      padding: 0 0 7px;
+      padding: 0;
 
       font-size: 12px;
 
