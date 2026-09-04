@@ -2,6 +2,11 @@
   import "../app.css";
   import { browser } from "$app/environment";
   import { page } from "$app/state";
+  import {
+    getStoredTheme,
+    getThemeSettings,
+    isThemeEnabledPath,
+  } from "$lib/theme.js";
 
   let { children } = $props();
 
@@ -10,15 +15,20 @@
 
     const pathname = page.url.pathname;
 
-    const isHomepage =
-      pathname === "/" || pathname === "/en-2" || pathname === "/en-2/";
-
+    document.documentElement.classList.remove("light", "dark");
     document.body.classList.remove("light", "dark");
 
-    if (isHomepage) {
-      const savedTheme = localStorage.getItem("site-theme") || "light";
-      document.body.classList.add(savedTheme);
-    }
+    if (!isThemeEnabledPath(pathname)) return;
+
+    const { defaultTheme, storageKey } = getThemeSettings(pathname);
+    const selectedTheme = getStoredTheme(
+      localStorage,
+      storageKey,
+      defaultTheme,
+    );
+
+    document.documentElement.classList.add(selectedTheme);
+    document.body.classList.add(selectedTheme);
   });
 
   $effect(() => {

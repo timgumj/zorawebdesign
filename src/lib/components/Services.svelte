@@ -20,6 +20,9 @@
 
     serviceKeywordsLabel = "Service keywords",
 
+    serviceDescriptionToggleLabel =
+      "Leistungsbeschreibung ein- oder ausblenden",
+
     extraExperienceItems = [
       { title: "All in one solution" },
 
@@ -191,6 +194,12 @@
   });
 
   let activeServiceIndex = $state(0);
+
+  let openServiceIndex = $state(-1);
+
+  function toggleServiceDescription(index) {
+    openServiceIndex = openServiceIndex === index ? -1 : index;
+  }
 
   let experienceViewport = $state(null);
 
@@ -469,13 +478,9 @@
 
 <section id="services" class="services">
   <div class="services-shell">
-    <div class="shell-line edge-left"></div>
+    <div class="shell-line edge-left" aria-hidden="true"></div>
 
-    <div class="shell-line col-1"></div>
-
-    <div class="shell-line col-2"></div>
-
-    <div class="shell-line edge-right"></div>
+    <div class="shell-line edge-right" aria-hidden="true"></div>
 
     <div class="shell-bottom-line"></div>
 
@@ -771,8 +776,31 @@
                   />
                 {/if}
 
-                <h3>{service.title}</h3>
-                <p>{service.text}</p>
+                <div class="service-mobile-heading">
+                  <h3>{service.title}</h3>
+
+                  <button
+                    class="service-description-toggle"
+                    type="button"
+                    aria-expanded={openServiceIndex === index}
+                    aria-controls={`service-description-${index}`}
+                    aria-label={`${serviceDescriptionToggleLabel}: ${service.title}`}
+                    onclick={() => toggleServiceDescription(index)}
+                  >
+                    <span aria-hidden="true">
+                      {openServiceIndex === index ? "−" : "+"}
+                    </span>
+                  </button>
+                </div>
+
+                {#if openServiceIndex === index}
+                  <p
+                    class="service-mobile-description"
+                    id={`service-description-${index}`}
+                  >
+                    {service.text}
+                  </p>
+                {/if}
 
                 <div
                   class="service-tags"
@@ -975,14 +1003,6 @@
 
   .edge-right {
     right: 0;
-  }
-
-  .col-1 {
-    left: calc(var(--shell-x) + ((100% - (var(--shell-x) * 2)) / 3));
-  }
-
-  .col-2 {
-    left: calc(var(--shell-x) + (((100% - (var(--shell-x) * 2)) / 3) * 2));
   }
 
   .services-container {
@@ -1224,21 +1244,39 @@
   }
 
   .about-editorial-title {
+    --about-marquee-edge-fade: 16px;
+
     position: absolute;
 
-    right: 0;
+    right: 20px;
 
     bottom: 16px;
 
-    left: 0;
+    left: 20px;
 
     z-index: 3;
 
-    width: 100%;
+    width: auto;
 
     margin: 0;
 
     overflow: hidden;
+
+    -webkit-mask-image: linear-gradient(
+      to right,
+      transparent 0,
+      #000 var(--about-marquee-edge-fade),
+      #000 calc(100% - var(--about-marquee-edge-fade)),
+      transparent 100%
+    );
+
+    mask-image: linear-gradient(
+      to right,
+      transparent 0,
+      #000 var(--about-marquee-edge-fade),
+      #000 calc(100% - var(--about-marquee-edge-fade)),
+      transparent 100%
+    );
 
     color: #ffffff;
 
@@ -1356,7 +1394,7 @@
 
     max-width: 680px;
 
-    margin: 18px 0 0;
+    margin: 9px 0 0;
 
     color: #9a9a9a;
 
@@ -1390,7 +1428,7 @@
 
     align-items: flex-start;
 
-    gap: 5px;
+    gap: 3px;
 
     margin: 0;
 
@@ -2002,7 +2040,7 @@
     display: flex;
     flex-direction: column;
     align-items: stretch;
-    gap: 2px;
+    gap: 4px;
   }
 
   .service-trigger {
@@ -2225,11 +2263,34 @@
     }
 
     .about-below-copy {
+      grid-template-columns: minmax(0, 1fr) minmax(300px, 360px);
+      gap: clamp(36px, 5vw, 80px);
       align-items: start;
+      padding-top: 30px;
+    }
+
+    .about-top-copy {
+      display: grid;
+      grid-template-rows: auto auto;
+      align-content: start;
+      row-gap: 7px;
+    }
+
+    .about-editorial-text {
+      max-width: 720px;
+      margin-top: 0;
+      line-height: 1.58;
     }
 
     .about-editorial-figure {
+      width: 100%;
+      max-width: 360px;
+      justify-self: end;
       align-self: start;
+      display: grid;
+      grid-template-rows: auto auto;
+      align-content: start;
+      row-gap: 7px;
     }
 
     .profile-name {
@@ -2237,12 +2298,22 @@
     }
 
     .profile-role {
-      margin-top: 18px;
-      line-height: 1.68;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 4px 8px;
+      margin-top: 0;
+      line-height: 1.45;
     }
 
     .profile-role > span {
-      display: block;
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .profile-role > span:not(:last-child)::after {
+      content: "·";
+      margin-left: 8px;
     }
 
     .service-detail-panel {
@@ -2542,7 +2613,7 @@
   .website-tool-card-inner {
     height: 100%;
 
-    width: 100%;
+    width: auto;
 
     display: flex;
 
@@ -2743,17 +2814,9 @@
       padding: 110px var(--shell-x) 96px;
     }
 
-    .edge-left,
-    .edge-right,
-    .col-2,
+    .shell-line,
     .shell-bottom-line {
       display: none;
-    }
-
-    .col-1 {
-      left: 50%;
-
-      opacity: 0.55;
     }
 
     .premium-about {
@@ -2903,7 +2966,7 @@
     .about-below-copy {
       grid-template-columns: 1fr;
       align-items: start;
-      gap: 24px;
+      gap: 20px;
       padding-top: 28px;
     }
 
@@ -2914,7 +2977,7 @@
     .about-editorial-text {
       max-width: 100%;
 
-      margin-top: 14px;
+      margin-top: 7px;
 
       font-size: 15px;
 
@@ -3320,7 +3383,13 @@
     }
 
     .about-editorial-title {
+      --about-marquee-edge-fade: 8px;
+
+      right: 10px;
+
       bottom: 8px;
+
+      left: 10px;
 
       font-size: clamp(21px, 6.3vw, 31px);
 
@@ -3336,7 +3405,7 @@
 
       align-items: start;
 
-      gap: 24px;
+      gap: 18px;
 
       padding-top: 24px;
     }
@@ -3354,7 +3423,7 @@
     .about-editorial-text {
       max-width: 100%;
 
-      margin-top: 12px;
+      margin-top: 6px;
 
       font-size: 12.5px;
 
@@ -3365,7 +3434,7 @@
       max-width: none;
       justify-self: start;
       align-self: start;
-      gap: 4px;
+      gap: 2px;
       padding-left: 0;
     }
 
@@ -3558,7 +3627,7 @@
     .services-grid > .service-card:nth-child(3n + 2),
     .services-grid > .service-card:nth-child(3n + 3),
     .services-grid > .service-card:nth-child(2n + 2) {
-      min-height: 280px;
+      min-height: 0;
 
       padding: 28px 18px 30px 10px;
 
@@ -3582,7 +3651,56 @@
     .service-content {
       height: auto;
 
-      justify-content: flex-end;
+      justify-content: flex-start;
+    }
+
+    .service-mobile-heading {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 18px;
+    }
+
+    .service-mobile-heading h3 {
+      margin-bottom: 0;
+    }
+
+    .service-description-toggle {
+      width: 26px;
+      height: 26px;
+      flex: 0 0 26px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin: -3px 0 0;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      color: var(--accent-blue);
+      font: inherit;
+      font-size: 22px;
+      font-weight: 300;
+      line-height: 1;
+      cursor: pointer;
+      transition: opacity 0.2s ease;
+    }
+
+    .service-description-toggle:hover,
+    .service-description-toggle[aria-expanded="true"] {
+      color: var(--accent-blue);
+      background: transparent;
+      opacity: 0.72;
+    }
+
+    .service-description-toggle:focus-visible {
+      outline: 1px solid currentColor;
+      outline-offset: 2px;
+    }
+
+    .service-mobile-description {
+      margin-top: 16px;
     }
 
     /*
@@ -3702,7 +3820,7 @@
     }
 
     .about-below-copy {
-      gap: 22px;
+      gap: 18px;
 
       padding-top: 22px;
     }

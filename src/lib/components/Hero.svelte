@@ -156,22 +156,23 @@
   }
 
   function trackCenteredThumbnail(node) {
-    const thumbnails = Array.from(node.querySelectorAll(".hero-project-thumb"));
     let activeThumbnail = null;
     let animationFrame = 0;
     let lastMeasurement = 0;
 
     function updateActiveThumbnail(timestamp) {
       if (timestamp - lastMeasurement >= 60) {
-        const marqueeRect = node.getBoundingClientRect();
-        const marqueeCenter = marqueeRect.top + marqueeRect.height / 2;
+        const thumbnails = Array.from(
+          node.querySelectorAll(".hero-project-thumb"),
+        );
+        const viewportCenter = window.innerHeight / 2;
         let closestThumbnail = null;
         let closestDistance = Infinity;
 
         for (const thumbnail of thumbnails) {
           const thumbnailRect = thumbnail.getBoundingClientRect();
           const thumbnailCenter = thumbnailRect.top + thumbnailRect.height / 2;
-          const distance = Math.abs(thumbnailCenter - marqueeCenter);
+          const distance = Math.abs(thumbnailCenter - viewportCenter);
 
           if (distance < closestDistance) {
             closestDistance = distance;
@@ -223,11 +224,7 @@
 
 <section class="hero">
   <div class="container hero-shell">
-    <div class="hero-vertical-lines" aria-hidden="true">
-      {#each Array(8) as _, index}
-        <span class="hero-v-line" style={`left:${(index / 7) * 100}%`}></span>
-      {/each}
-    </div>
+    <span class="hero-edge-line" aria-hidden="true"></span>
     <nav
       class="hero-social-rail"
       aria-label={isGerman
@@ -536,26 +533,18 @@
     isolation: isolate;
     overflow: visible;
   }
-  /* =========================================================
-     BACKGROUND GRID
-  ========================================================= */
-  .hero-vertical-lines {
+  .hero-edge-line {
     position: absolute;
-    inset: 0;
     z-index: -1;
-    pointer-events: none;
-    overflow: hidden;
-  }
-  .hero-v-line {
-    position: absolute;
     top: 0;
     bottom: 0;
+    left: 0;
     width: 0.1px;
     background: rgba(255, 255, 255, 0.08);
-    transform: translateX(-50%);
+    pointer-events: none;
     transition: background 0.3s ease;
   }
-  :global(body.light) .hero-v-line {
+  :global(body.light) .hero-edge-line {
     background: rgba(0, 0, 0, 0.08);
   }
   .hero-social-rail {
@@ -601,12 +590,12 @@
     opacity: 1;
   }
   .hero-bg-wall.visible .hero-project-thumb img {
-    opacity: 0.34;
-    filter: grayscale(1) brightness(0.58) saturate(0.2);
+    opacity: 0.52;
+    filter: grayscale(0.5) brightness(0.72) saturate(0.68);
   }
   :global(body.light) .hero-bg-wall.visible .hero-project-thumb img {
-    opacity: 0.38;
-    filter: grayscale(1) brightness(1) saturate(0.15);
+    opacity: 0.55;
+    filter: grayscale(0.5) brightness(1) saturate(0.68);
   }
   .hero-bg-wall.visible .hero-project-thumb:global(.is-centered) img {
     opacity: 1;
@@ -1530,7 +1519,7 @@
       padding-right: var(--hero-side-pad);
     }
     .hero-bg-wall-single {
-      width: 53%;
+      width: 48%;
       right: 0;
     }
     .hero-project-thumb img {
@@ -1657,7 +1646,7 @@
       max-width: 100%;
       margin: 0;
       color: rgba(255, 255, 255, 0.72);
-      font-size: 14px;
+      font-size: 15px;
       font-weight: 300;
       line-height: 1.48;
       text-align: left;
@@ -1791,7 +1780,7 @@
     .hero-text {
       width: 100%;
       max-width: 100%;
-      font-size: 13px;
+      font-size: 14px;
       font-weight: 300;
       line-height: 1.48;
       text-align: left;

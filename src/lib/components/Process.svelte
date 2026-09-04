@@ -107,9 +107,6 @@
 <section class="process" id="process">
   <div class="process-shell">
     <div class="shell-line edge-left"></div>
-    <div class="shell-line col-1"></div>
-    <div class="shell-line col-2"></div>
-    <div class="shell-line col-3"></div>
     <div class="shell-line edge-right"></div>
 
     <div class="container process-container">
@@ -256,18 +253,6 @@
 
   .edge-right {
     right: 0;
-  }
-
-  .col-1 {
-    left: calc(var(--shell-x) + ((100% - (var(--shell-x) * 2)) / 4));
-  }
-
-  .col-2 {
-    left: calc(var(--shell-x) + (((100% - (var(--shell-x) * 2)) / 4) * 2));
-  }
-
-  .col-3 {
-    left: calc(var(--shell-x) + (((100% - (var(--shell-x) * 2)) / 4) * 3));
   }
 
   .process-container {

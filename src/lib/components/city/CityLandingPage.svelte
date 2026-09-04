@@ -177,6 +177,9 @@
     toolsLabel={isGerman ? "TOOLS" : "TOOLS"}
     toolsAlt={isGerman ? "Werkzeuge" : "Tools"}
     serviceKeywordsLabel={isGerman ? "Leistungsmerkmale" : "Service keywords"}
+    serviceDescriptionToggleLabel={isGerman
+      ? "Leistungsbeschreibung ein- oder ausblenden"
+      : "Show or hide service description"}
     extraExperienceItems={[]}
     serviceKeywords={page.serviceKeywords}
     fallbackServiceTags={isGerman

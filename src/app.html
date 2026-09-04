@@ -6,11 +6,32 @@
 
     <link rel="icon" type="image/png" href="/images/zora_design_fav11.png" />
 
-    <!-- Apply the saved theme before the first paint -->
+    <!-- Apply the route-specific theme before the first paint -->
     <script>
       (function () {
-        const savedTheme = localStorage.getItem("site-theme") || "light";
-        document.documentElement.classList.add(savedTheme);
+        const rawPath = window.location.pathname;
+        const pathname =
+          rawPath === "/" || rawPath.endsWith("/") ? rawPath : `${rawPath}/`;
+        const cityPaths = new Set([
+          "/webdesign/salzburg/",
+          "/en-2/web-design/salzburg/",
+          "/webdesign/graz/",
+          "/en-2/web-design/graz/",
+          "/webdesign/muenchen/",
+          "/en-2/web-design/munich/",
+        ]);
+        const defaultTheme =
+          pathname === "/webdesign/salzburg/" ? "dark" : "light";
+        const storageKey = cityPaths.has(pathname)
+          ? `site-theme:${pathname}`
+          : "site-theme";
+        const savedTheme = localStorage.getItem(storageKey);
+        const selectedTheme =
+          savedTheme === "light" || savedTheme === "dark"
+            ? savedTheme
+            : defaultTheme;
+
+        document.documentElement.classList.add(selectedTheme);
       })();
     </script>
 

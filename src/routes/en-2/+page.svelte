@@ -788,6 +788,7 @@
     toolsLabel="TOOLS"
     toolsAlt="Tools"
     serviceKeywordsLabel="Service keywords"
+    serviceDescriptionToggleLabel="Show or hide service description"
     extraExperienceItems={[]}
     {serviceKeywords}
     fallbackServiceTags={["Strategy", "Design", "Build", "Optimize"]}

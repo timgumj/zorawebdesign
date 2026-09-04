@@ -1,10 +1,14 @@
 <script>
+  import { browser } from "$app/environment";
+  import { page } from "$app/state";
+  import { getStoredTheme, getThemeSettings } from "$lib/theme.js";
   import { onMount } from "svelte";
 
-  let theme = $state("light");
+  let themeSettings = $derived(getThemeSettings(page.url.pathname));
+  let theme = $state(getThemeSettings(page.url.pathname).defaultTheme);
   let mobileHeroVisible = $state(true);
 
-  function applyTheme(selectedTheme) {
+  function applyTheme(selectedTheme, persist = true) {
     theme = selectedTheme;
 
     document.documentElement.classList.remove("light", "dark");
@@ -13,17 +17,29 @@
     document.body.classList.remove("light", "dark");
     document.body.classList.add(selectedTheme);
 
-    localStorage.setItem("site-theme", selectedTheme);
+    if (persist) {
+      localStorage.setItem(themeSettings.storageKey, selectedTheme);
+    }
   }
 
   function toggleTheme() {
     applyTheme(theme === "dark" ? "light" : "dark");
   }
 
-  onMount(() => {
-    const savedTheme = localStorage.getItem("site-theme") || "light";
-    applyTheme(savedTheme);
+  $effect(() => {
+    if (!browser) return;
 
+    const { defaultTheme, storageKey } = themeSettings;
+    const selectedTheme = getStoredTheme(
+      localStorage,
+      storageKey,
+      defaultTheme,
+    );
+
+    applyTheme(selectedTheme, false);
+  });
+
+  onMount(() => {
     const mobileQuery = window.matchMedia("(max-width: 767px)");
     const hero = document.querySelector(".hero, .project-hero");
 

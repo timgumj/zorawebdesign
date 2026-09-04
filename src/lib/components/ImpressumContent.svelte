@@ -12,9 +12,9 @@
   </div>
 
   <div class="imprint-block">
-    <h3>E Mail</h3>
+    <h3>E-Mail</h3>
     <p>
-      <a href="mailto:timjay08@gmail.com">timjay08@gmail.com</a>
+      <a href="mailto:info@zorawebdesign.com">info@zorawebdesign.com</a>
     </p>
   </div>
 
