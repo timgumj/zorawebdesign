@@ -1736,7 +1736,7 @@
     ====================================================== */
     .hero-text-accent {
       width: fit-content;
-      max-width: min(70%, 250px);
+      max-width: min(82%, 290px);
       margin-top: 3px;
       margin-right: auto;
       padding: 0 0 0 11px;
@@ -1880,7 +1880,7 @@
       font-size: clamp(1.15rem, 5.4vw, 1.65rem);
     }
     .hero-text-accent {
-      max-width: min(70%, 210px);
+      max-width: min(82%, 240px);
       padding: 0 0 0 10px;
     }
     .hero-text {
