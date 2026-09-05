@@ -119,10 +119,7 @@
         use:observeHeader
       >
         <div class="process-header-inner">
-          <div
-            class="process-header-main"
-            class:has-eyebrow={Boolean(eyebrow)}
-          >
+          <div class="process-header-main" class:has-eyebrow={Boolean(eyebrow)}>
             {#if eyebrow}
               <span class="process-eyebrow">{eyebrow}</span>
             {/if}
@@ -157,7 +154,20 @@
 
               <div class="stage-content">
                 <h3>{step.title}</h3>
-                <p>{step.text}</p>
+
+                <p>
+                  {step.text}
+
+                  {#if step.linkText && step.linkHref}
+                    {step.linkBefore ?? " "}
+
+                    <a class="stage-inline-link" href={step.linkHref}>
+                      {step.linkText}
+                    </a>
+
+                    {step.linkAfter ?? ""}
+                  {/if}
+                </p>
               </div>
             </div>
 
@@ -562,6 +572,19 @@
     font-size: 16px;
     line-height: 1.7;
     transition: color 0.3s ease;
+  }
+
+  .stage-inline-link {
+    color: inherit;
+    text-decoration-line: underline;
+    text-decoration-color: #0043ff;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 4px;
+    transition: color 0.2s ease;
+  }
+
+  .stage-inline-link:hover {
+    color: #0043ff;
   }
 
   :global(body.light) .stage-content p {

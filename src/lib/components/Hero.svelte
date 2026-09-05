@@ -1519,8 +1519,8 @@
       padding-right: var(--hero-side-pad);
     }
     .hero-bg-wall-single {
-      width: 48%;
-      right: 0;
+      width: 39%;
+      right: 14px;
     }
     .hero-project-thumb img {
       height: clamp(170px, 34vw, 240px);
@@ -1633,13 +1633,16 @@
     ====================================================== */
     .hero-text-accent {
       width: fit-content;
-      max-width: min(100%, 290px);
+      max-width: min(70%, 250px);
       margin-top: 3px;
+      margin-right: auto;
       padding: 0 0 0 11px;
       align-self: flex-start;
       justify-self: start;
       background: transparent;
       border-left: 1px solid #0043ff;
+      position: relative;
+      z-index: 4;
     }
     .hero-text {
       width: 100%;
@@ -1774,7 +1777,7 @@
       font-size: clamp(1.15rem, 5.4vw, 1.65rem);
     }
     .hero-text-accent {
-      max-width: 100%;
+      max-width: min(70%, 210px);
       padding: 0 0 0 10px;
     }
     .hero-text {

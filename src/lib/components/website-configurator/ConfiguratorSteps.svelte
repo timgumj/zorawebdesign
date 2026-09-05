@@ -43,6 +43,7 @@
     finalRequirementNote = $bindable(""),
 
     onReviewFeatures = () => {},
+    onSubstepChange = () => {},
     onBack = () => {},
     onContinue = () => {},
   } = $props();
@@ -173,6 +174,7 @@
           {selectedWebsiteType}
           bind:selectedGoals
           bind:projectStatus
+          {onSubstepChange}
           onBack={handleBack}
           onContinue={handleContinue}
         />
@@ -187,6 +189,7 @@
           bind:designReferenceLinks
           bind:supportNeeds
           bind:contentStage
+          {onSubstepChange}
         />
       {:else if currentStep === 4}
         <StepPages
@@ -195,16 +198,19 @@
           bind:selectedPages
           bind:pageVolume
           bind:customPageNames
+          {onSubstepChange}
           onBack={handleBack}
           onContinue={handleContinue}
         />
       {:else if currentStep === 5}
         <StepFeatures
+          <StepFeatures
           {language}
           {selectedWebsiteType}
           bind:selectedFeatures
           bind:websiteLanguages
           bind:customIntegration
+          {onSubstepChange}
           onBack={handleBack}
           onContinue={handleContinue}
         />
@@ -220,6 +226,7 @@
           bind:finalFeatureAdditions
           bind:finalRequirementNote
           {onReviewFeatures}
+          {onSubstepChange}
           onContinue={handleContinue}
         />
       {/if}

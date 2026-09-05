@@ -14,6 +14,7 @@
     finalRequirementNote = $bindable(""),
 
     onReviewFeatures = () => {},
+    onSubstepChange = () => {},
     onContinue = () => {},
   } = $props();
 
@@ -241,6 +242,9 @@
 
     if (screen < screenCount) {
       screen += 1;
+
+      onSubstepChange();
+
       return;
     }
 
@@ -250,6 +254,9 @@
   function goBack() {
     if (screen > 1) {
       screen -= 1;
+
+      onSubstepChange();
+
       return;
     }
 

@@ -424,11 +424,11 @@
     {
       title: "INQUIRY",
       text: "We start with a strategy session. I listen to your goals, visual ideas, and launch priorities. This gives the project a clear structure from the beginning.",
-      linkText: "Book a call.",
+      linkBefore: " Please use my ",
+      linkText: "Website Planner",
+      linkHref: "/en-2/website-configurator/",
+      linkAfter: " to help me understand the scope of your project.",
       showArrow: true,
-      icon: "/images/meet-700.webp",
-      iconAlt: "Inquiry meeting icon",
-      iconTitle: "Inquiry meeting",
     },
     {
       title: "CONCEPT",
@@ -449,6 +449,11 @@
     {
       title: "SUPPORT",
       text: "After launch, I can support you with updates, security, backups, performance checks, and content changes whenever needed.",
+      linkBefore: " You can also use my ",
+      linkText: "Free Audit Tool",
+      linkHref: "/en-2/website-audit/",
+      linkAfter:
+        " to audit your website for SEO, performance, security and accessibility.",
       showArrow: false,
       icon: "/images/support-700.webp",
       iconAlt: "Website support icon",

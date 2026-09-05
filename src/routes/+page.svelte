@@ -201,7 +201,11 @@
     {
       title: "ANFRAGE",
       text: "Wir starten mit einem Gespräch über deine Ziele, deine Zielgruppe, deine Inhalte und die gewünschte Wirkung deiner Website. So entsteht eine klare Grundlage für ein Webdesign, das wirklich zu dir und deinem Angebot passt.",
-      linkText: "Gespräch buchen.",
+      linkBefore: " Nutze meinen ",
+      linkText: "Website Projekt Planer",
+      linkHref: "/website-konfigurator/",
+      linkAfter:
+        ", damit ich den Umfang deines Projekts besser verstehen kann.",
       showArrow: true,
     },
     {
@@ -217,6 +221,11 @@
     {
       title: "SUPPORT",
       text: "Nach dem Launch unterstütze ich dich auf Wunsch mit WordPress Wartung, Updates, Sicherheit, Performance Optimierung, Backups und technischem Support.",
+      linkBefore: " Nutze auch mein ",
+      linkText: "Kostenloses Audit Tool",
+      linkHref: "/website-audit/",
+      linkAfter:
+        ", um deine Website auf SEO, Performance, Sicherheit und Barrierefreiheit zu prüfen.",
       showArrow: false,
     },
   ];

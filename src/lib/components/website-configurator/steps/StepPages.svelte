@@ -10,6 +10,7 @@
     selectedPages = $bindable([]),
     pageVolume = $bindable(""),
     customPageNames = $bindable(["", "", ""]),
+    onSubstepChange = () => {},
     onContinue = () => {},
   } = $props();
 
@@ -183,11 +184,17 @@
       }
 
       pagesStage = "additional";
+
+      onSubstepChange();
+
       return;
     }
 
     if (pagesStage === "additional") {
       pagesStage = "volume";
+
+      onSubstepChange();
+
       return;
     }
 
@@ -201,11 +208,16 @@
   function goBack() {
     if (pagesStage === "volume") {
       pagesStage = "additional";
+
+      onSubstepChange();
+
       return;
     }
 
     if (pagesStage === "additional") {
       pagesStage = "recommended";
+
+      onSubstepChange();
     }
   }
 

@@ -10,6 +10,7 @@
     selectedGoals = $bindable([]),
     projectStatus = $bindable(""),
     goalsStage = $bindable("goals"),
+    onSubstepChange = () => {},
     onBack = () => {},
     onContinue = () => {},
   } = $props();
@@ -90,10 +91,14 @@
     }
 
     goalsStage = "status";
+
+    onSubstepChange();
   }
 
   function showGoals() {
     goalsStage = "goals";
+
+    onSubstepChange();
   }
 
   function finishStep() {

@@ -11,6 +11,7 @@
     selectedFeatures = $bindable([]),
     websiteLanguages = $bindable(""),
     customIntegration = $bindable(""),
+    onSubstepChange = () => {},
     onBack = () => {},
     onContinue = () => {},
   } = $props();
@@ -442,15 +443,20 @@
 
     if (screen < 4) {
       screen += 1;
+
+      onSubstepChange();
+
       return;
     }
 
     onContinue();
   }
-
   function goBack() {
     if (screen > 1) {
       screen -= 1;
+
+      onSubstepChange();
+
       return;
     }
 

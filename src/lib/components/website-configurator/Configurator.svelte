@@ -483,6 +483,7 @@
             bind:finalFeatureAdditions
             bind:finalRequirementNote
             onReviewFeatures={reviewFeatures}
+            onSubstepChange={scrollToTop}
             onBack={handleBack}
             onContinue={handleContinue}
           />

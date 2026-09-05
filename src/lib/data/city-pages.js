@@ -151,11 +151,14 @@ const reviewsEn = [
 
 const processDe = [
   {
-    title: "ANFRAGE",
-    text: "Wir starten mit einem Gespräch über deine Ziele, deine Zielgruppe, deine Inhalte und die gewünschte Wirkung deiner Website. So entsteht eine klare Grundlage für ein Webdesign, das wirklich zu dir und deinem Angebot passt.",
-    linkText: "Gespräch buchen.",
-    showArrow: true,
-  },
+  title: "ANFRAGE",
+  text: "Wir starten mit einem Gespräch über deine Ziele, deine Zielgruppe, deine Inhalte und die gewünschte Wirkung deiner Website. So entsteht eine klare Grundlage für ein Webdesign, das wirklich zu dir und deinem Angebot passt.",
+  linkBefore: " Nutze meinen ",
+  linkText: "Website-Planer",
+  linkHref: "/website-konfigurator/",
+  linkAfter: ", damit ich den Umfang deines Projekts besser verstehen kann.",
+  showArrow: true,
+},
   {
     title: "KONZEPT",
     text: "Auf Basis unseres Gesprächs entwickle ich Struktur, Designrichtung und erste Ideen für deine Website. Danach verfeinern wir gemeinsam das Konzept, bis es sich stimmig, professionell und authentisch anfühlt.",
@@ -167,19 +170,26 @@ const processDe = [
     showArrow: false,
   },
   {
-    title: "SUPPORT",
-    text: "Nach dem Launch unterstütze ich dich auf Wunsch mit WordPress Wartung, Updates, Sicherheit, Performance Optimierung, Backups und technischem Support.",
-    showArrow: false,
-  },
+  title: "SUPPORT",
+  text: "Nach dem Launch unterstütze ich dich auf Wunsch mit WordPress Wartung, Updates, Sicherheit, Performance Optimierung, Backups und technischem Support.",
+  linkBefore: " Nutze auch mein ",
+  linkText: "Kostenloses Audit Tool",
+  linkHref: "/website-audit/",
+  linkAfter: ", um deine Website auf SEO, Performance, Sicherheit und Barrierefreiheit zu prüfen.",
+  showArrow: false,
+},
 ];
 
 const processEn = [
   {
-    title: "INQUIRY",
-    text: "We start with a strategy session. I listen to your goals, visual ideas, and launch priorities. This gives the project a clear structure from the beginning.",
-    linkText: "Book a call.",
-    showArrow: true,
-  },
+  title: "INQUIRY",
+  text: "We start with a strategy session. I listen to your goals, visual ideas, and launch priorities. This gives the project a clear structure from the beginning.",
+  linkBefore: " Please use my ",
+  linkText: "Website Planner",
+  linkHref: "/en-2/website-configurator/",
+  linkAfter: " to help me understand the scope of your project.",
+  showArrow: true,
+},
   {
     title: "CONCEPT",
     text: "We define the website structure, layout direction, and content flow. Clear feedback rounds make sure the final design matches your goals and brand personality.",
@@ -190,11 +200,15 @@ const processEn = [
     text: "Code, images, mobile layouts, performance, and caching are checked carefully. Once everything runs smoothly, your website goes live.",
     showArrow: false,
   },
-  {
-    title: "SUPPORT",
-    text: "After launch, I can support you with updates, security, backups, performance checks, and content changes whenever needed.",
-    showArrow: false,
-  },
+ {
+  title: "SUPPORT",
+  text: "After launch, I can support you with updates, security, backups, performance checks, and content changes whenever needed.",
+  linkBefore: " You can also use my ",
+  linkText: "Free Audit Tool",
+  linkHref: "/en-2/website-audit/",
+  linkAfter: " to audit your website for SEO, performance, security and accessibility.",
+  showArrow: false,
+},
 ];
 
 const sharedStatsDe = {

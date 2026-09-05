@@ -23,3 +23,5 @@ vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 # Logs
 *.log
+# Playwright
+test-results

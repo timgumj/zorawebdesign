@@ -15,6 +15,7 @@
     designReferenceLinks = $bindable(["", ""]),
     supportNeeds = $bindable([]),
     contentStage = $bindable("content"),
+    onSubstepChange = () => {},
   } = $props();
 
   const text = $derived(getContentReadinessContent(language));
@@ -251,6 +252,8 @@
     }
 
     contentStage = nextStage.id;
+
+    onSubstepChange();
   }
 
   function goToPreviousStage() {
@@ -261,6 +264,8 @@
     }
 
     contentStage = previousStage.id;
+
+    onSubstepChange();
   }
 
   function handleSelectableKeydown(event, callback) {
