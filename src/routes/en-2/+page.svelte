@@ -314,10 +314,16 @@
   ];
 
   const serviceKeywords = {
-    "web design": ["UX Design", "Responsive", "Branding", "Wireframes"],
-    wordpress: ["Themes", "Plugins", "CMS", "Clean Code"],
-    "web shop": ["Shopify", "WooCommerce", "Checkout", "Payments"],
-    hosting: ["Servers", "SSL", "Backups", "Caching", "DNS"],
+    "web design": ["UX/UI", "Responsive", "Branding", "CMS"],
+
+    "wordpress development": ["Fullstack", "Performance", "API", "Core Vitals"],
+
+    "web shop": ["WooCommerce", "Shopify", "Payments"],
+
+    seo: ["Semantic SEO", "Keywords", "On-Page SEO", "Schema"],
+
+    hosting: ["Server", "SSL", "Backups", "DNS"],
+
     support: ["Updates", "Security", "Support", "Backups"],
   };
 

@@ -152,9 +152,12 @@
   ];
 
   const serviceKeywords = {
-    webdesign: ["UX/UI", "Responsive", "Benutzerfreundlich", "Wireframes"],
-    webentwicklung: ["WordPress", "Performance", "API", "Core Web Vitals"],
+    webdesign: ["UX/UI", "Responsive", "Branding", "CMS"],
+    webentwicklung: ["Fullstack", "Performance", "API", "Core Vitals"],
     webshop: ["WooCommerce", "Shopify", "Zahlungen"],
+
+    seo: ["Semantic SEO", "Keywords", "On-Page SEO", "Schema"],
+
     hosting: ["Server", "SSL", "Backups", "DNS"],
     wartung: ["Sicherheit", "Updates", "Backups", "Support"],
     support: ["Updates", "Sicherheit", "Support", "Backups"],

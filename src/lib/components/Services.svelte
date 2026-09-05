@@ -20,8 +20,7 @@
 
     serviceKeywordsLabel = "Service keywords",
 
-    serviceDescriptionToggleLabel =
-      "Leistungsbeschreibung ein- oder ausblenden",
+    serviceDescriptionToggleLabel = "Leistungsbeschreibung ein- oder ausblenden",
 
     extraExperienceItems = [
       { title: "All in one solution" },
@@ -841,7 +840,11 @@
                 </div>
 
                 <div class="website-tool-cta-row">
-                  <a class="website-tool-cta" href={tool.href} title={tool.title}>
+                  <a
+                    class="website-tool-cta"
+                    href={tool.href}
+                    title={tool.title}
+                  >
                     {tool.linkLabel}
                   </a>
 
@@ -2446,7 +2449,7 @@
   .service-tags {
     display: flex;
     flex-wrap: wrap;
-    gap: 8px;
+    gap: 7px;
     margin-top: 18px;
   }
 
@@ -2472,17 +2475,18 @@
   }
 
   .service-tags span {
-    min-height: 30px;
+    min-height: 25px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 6px 12px;
+    padding: 4px 8px;
     border: 1px solid rgba(255, 255, 255, 0.28);
     border-radius: 0;
     color: #ffffff;
-    font-size: 12px;
+    font-size: 11px;
     font-weight: 400;
     line-height: 1;
+    letter-spacing: 0.035em;
     text-transform: uppercase;
   }
 
@@ -3722,7 +3726,7 @@
     }
 
     .service-tags span {
-      font-size: 11px;
+      font-size: 10px;
     }
 
     .free-tools-section {
@@ -3859,6 +3863,15 @@
 
     .website-tool-copy p {
       font-size: 14px;
+    }
+
+    .service-tags span {
+      font-size: 8px;
+    }
+
+    .service-tags {
+      width: 100%;
+      max-width: none;
     }
   }
 
