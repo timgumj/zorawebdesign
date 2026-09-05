@@ -375,23 +375,28 @@
                 decoding="async"
               />
             {/if}
-            {#if greetingIcon}
-              <img
-                class="hero-meta-icon"
-                src={greetingIcon}
-                alt={greetingAlt}
-                width="20"
-                height="20"
-                loading="eager"
-                decoding="async"
-              />
-            {/if}
-            <span class="hero-person-copy">
-              <span class="hero-greeting-text">{greetingText}</span>
-              {#if hero.name}
-                <span class="hero-name">{hero.name.toUpperCase()}</span>
+
+            <div class="hero-person-info">
+              {#if greetingIcon}
+                <img
+                  class="hero-meta-icon"
+                  src={greetingIcon}
+                  alt={greetingAlt}
+                  width="20"
+                  height="20"
+                  loading="eager"
+                  decoding="async"
+                />
               {/if}
-            </span>
+
+              <span class="hero-person-copy">
+                <span class="hero-greeting-text">{greetingText}</span>
+
+                {#if hero.name}
+                  <span class="hero-name">{hero.name.toUpperCase()}</span>
+                {/if}
+              </span>
+            </div>
           </div>
           {#if visibleHeroTitleLines.length}
             <h1 class="hero-title">
@@ -829,6 +834,12 @@
   :global(body.light) .hero-meta-icon {
     filter: brightness(0);
   }
+  .hero-person-info {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: clamp(8px, 1vw, 12px);
+  }
   .hero-person-copy {
     display: inline-flex;
     align-items: center;
@@ -836,9 +847,9 @@
   }
   .hero-greeting-text {
     color: rgba(246, 246, 242, 0.78);
-    font-size: clamp(0.9rem, 0.4vw + 0.8rem, 1.1rem);
+    font-size: clamp(0.76rem, 0.3vw + 0.72rem, 0.9rem);
     line-height: 1.2;
-    font-weight: 300;
+    font-weight: 400;
     letter-spacing: 0.08em;
     text-transform: none;
     transition: color 0.3s ease;
@@ -848,14 +859,140 @@
   }
   .hero-name {
     color: #ffffff;
-    font-size: clamp(0.84rem, 0.32vw + 0.78rem, 1rem);
+    font-size: clamp(0.74rem, 0.26vw + 0.7rem, 0.86rem);
     line-height: 1.1;
-    font-weight: 500;
+    font-weight: 600;
     text-transform: uppercase;
     transition: color 0.3s ease;
   }
   :global(body.light) .hero-name {
     color: #111111;
+  }
+
+  /* =========================================================
+   GREETING LABEL — ALL DEVICES
+========================================================= */
+
+  .hero-person {
+    align-items: center;
+    border: 0;
+    background: transparent;
+  }
+
+  .hero-person-info {
+    --greeting-border: rgba(255, 255, 255, 0.42);
+
+    position: relative;
+    min-height: 58px;
+
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+
+    padding: 8px 18px;
+
+    background: transparent;
+    border: 0;
+    border-radius: 0;
+  }
+
+  /* LEFT BRACKET */
+  .hero-person-info::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+
+    width: 24px;
+
+    border-left: 1px solid var(--greeting-border);
+    border-top: 1px solid var(--greeting-border);
+    border-bottom: 1px solid var(--greeting-border);
+
+    pointer-events: none;
+  }
+
+  /* RIGHT BRACKET */
+  .hero-person-info::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+
+    width: 24px;
+
+    border-right: 1px solid var(--greeting-border);
+    border-top: 1px solid var(--greeting-border);
+    border-bottom: 1px solid var(--greeting-border);
+
+    pointer-events: none;
+  }
+
+  .hero-person-copy {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 2px;
+  }
+
+  /* LIGHT MODE */
+  :global(body.light) .hero-person-info {
+    --greeting-border: rgba(0, 0, 0, 0.4);
+    background: transparent;
+  }
+
+  /* =========================================================
+   TABLET
+========================================================= */
+
+  @media (max-width: 1100px) {
+    .hero-person-info {
+      min-height: 56px;
+      padding: 8px 16px;
+      gap: 9px;
+    }
+
+    .hero-person-info::before,
+    .hero-person-info::after {
+      width: 22px;
+    }
+  }
+
+  /* =========================================================
+   MOBILE
+========================================================= */
+
+  @media (max-width: 767px) {
+    .hero-person-info {
+      min-height: 46px;
+      padding: 6px 11px;
+      gap: 7px;
+    }
+
+    .hero-person-info::before,
+    .hero-person-info::after {
+      width: 17px;
+    }
+  }
+
+  /* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+  @media (max-width: 420px) {
+    .hero-person-info {
+      min-height: 43px;
+      padding: 5px 9px;
+      gap: 6px;
+    }
+
+    .hero-person-info::before,
+    .hero-person-info::after {
+      width: 15px;
+    }
   }
   /* =========================================================
      H1 WORDS
