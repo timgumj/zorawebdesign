@@ -290,7 +290,6 @@
           <h3 class="card-eyebrow">
             {formEyebrow}
           </h3>
-
         </div>
 
         <input
@@ -387,7 +386,6 @@
           <h3 class="card-eyebrow">
             {contactEyebrow}
           </h3>
-
         </div>
 
         <div class="contact-details">
