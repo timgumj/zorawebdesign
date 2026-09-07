@@ -442,12 +442,14 @@
         class:brand-clicked={brandClicked}
         onclick={animateBrand}
       >
-        <span class="brand">
-          ZORA<span class="brand-dot"></span>WEBDESIGN
-        </span>
+        <span class="brand-frame">
+          <span class="brand">
+            ZORA<span class="brand-dot"></span>WEBDESIGN
+          </span>
 
-        <span class="brand-subtext">
-          {clean(nav.tagline)}
+          <span class="brand-subtext">
+            {clean(nav.tagline)}
+          </span>
         </span>
       </a>
     </div>
@@ -549,7 +551,9 @@
           >
             <svg class="language-globe" viewBox="0 0 24 24" aria-hidden="true">
               <circle cx="12" cy="12" r="9"></circle>
-              <path d="M3 12h18M12 3c2.4 2.45 3.6 5.45 3.6 9S14.4 18.55 12 21M12 3c-2.4 2.45-3.6 5.45-3.6 9S9.6 18.55 12 21"></path>
+              <path
+                d="M3 12h18M12 3c2.4 2.45 3.6 5.45 3.6 9S14.4 18.55 12 21M12 3c-2.4 2.45-3.6 5.45-3.6 9S9.6 18.55 12 21"
+              ></path>
             </svg>
             <span>
               {clean(nav.languageLabel)}
@@ -579,7 +583,9 @@
 >
   <svg class="language-globe" viewBox="0 0 24 24" aria-hidden="true">
     <circle cx="12" cy="12" r="9"></circle>
-    <path d="M3 12h18M12 3c2.4 2.45 3.6 5.45 3.6 9S14.4 18.55 12 21M12 3c-2.4 2.45-3.6 5.45-3.6 9S9.6 18.55 12 21"></path>
+    <path
+      d="M3 12h18M12 3c2.4 2.45 3.6 5.45 3.6 9S14.4 18.55 12 21M12 3c-2.4 2.45-3.6 5.45-3.6 9S9.6 18.55 12 21"
+    ></path>
   </svg>
   <span>{clean(nav.languageLabel)}</span>
 </a>
@@ -773,28 +779,6 @@
     text-decoration: none;
   }
 
-  .brand-block::before {
-    content: "";
-
-    position: absolute;
-
-    z-index: -1;
-
-    inset: -12px -16px;
-
-    border-radius: 0;
-
-    background: rgba(255, 255, 255, 0.06);
-
-    opacity: 0;
-
-    transform: scale(0.94);
-
-    transition:
-      transform 0.25s ease,
-      opacity 0.25s ease;
-  }
-
   :global(body.light) .brand-block::before {
     background: rgba(0, 0, 0, 0.05);
   }
@@ -813,8 +797,8 @@
 
     color: #ffffff;
 
-    font-size: 1.27rem;
-    font-weight: 700;
+    font-size: 1.18rem;
+    font-weight: 600;
     line-height: 1;
 
     letter-spacing: 0.015em;
@@ -872,7 +856,7 @@
 
     color: rgba(255, 255, 255, 0.46);
 
-    font-size: 0.72rem;
+    font-size: 0.66rem;
     line-height: 1.2;
 
     letter-spacing: 0.08em;
@@ -978,6 +962,85 @@
 
       transform: translateY(-50%) scale(1.35);
     }
+  }
+
+  /* =========================================================
+   BRAND OPEN BRACKETS
+   SAME BORDER LANGUAGE AS REVIEW CARDS
+========================================================= */
+
+  .brand-frame {
+    --brand-frame-border: rgba(255, 255, 255, 0.34);
+
+    position: relative;
+
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: center;
+
+    gap: 5px;
+
+    padding: 2px 0;
+  }
+
+  /*
+ * Each side draws:
+ * - one vertical line
+ * - a short top line
+ * - a short bottom line
+ *
+ * There is deliberately NO complete top/bottom border.
+ */
+  .brand-frame::before,
+  .brand-frame::after {
+    content: "";
+
+    position: absolute;
+
+    top: -9px;
+    bottom: -9px;
+
+    width: 18px;
+
+    box-sizing: border-box;
+
+    border-top: 1px solid var(--brand-frame-border);
+    border-bottom: 1px solid var(--brand-frame-border);
+
+    pointer-events: none;
+
+    transition:
+      border-color 0.3s ease,
+      width 0.25s ease;
+  }
+
+  /* LEFT OPEN BRACKET */
+
+  .brand-frame::before {
+    left: -15px;
+
+    border-left: 1px solid var(--brand-frame-border);
+  }
+
+  /* RIGHT OPEN BRACKET */
+
+  .brand-frame::after {
+    right: -15px;
+
+    border-right: 1px solid var(--brand-frame-border);
+  }
+
+  /* LIGHT MODE */
+
+  :global(body.light) .brand-frame {
+    --brand-frame-border: rgba(0, 0, 0, 0.34);
+  }
+
+  /* SUBTLE HOVER EXPANSION */
+
+  .brand-block:hover .brand-frame::before,
+  .brand-block:hover .brand-frame::after {
+    width: 22px;
   }
 
   /* =========================================================
@@ -1559,7 +1622,18 @@
 
       flex: 0 0 auto;
     }
+    /* TABLET */
 
+    .brand {
+      font-size: 1.05rem;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .brand-subtext {
+      font-size: 0.63rem;
+      text-align: center;
+    }
     .lang-link {
       padding: 0;
 
@@ -1598,14 +1672,18 @@
       padding: 0;
     }
 
+    /* MOBILE */
+
     .brand {
-      font-size: 0.95rem;
+      font-size: 0.88rem;
+      justify-content: center;
+      text-align: center;
     }
 
     .brand-subtext {
-      font-size: 0.66rem;
-
+      font-size: 0.61rem;
       letter-spacing: 0.06em;
+      text-align: center;
     }
 
     .main-nav {
