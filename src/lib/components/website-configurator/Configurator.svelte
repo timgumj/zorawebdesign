@@ -5,7 +5,6 @@
   import ConfiguratorIntro from "./ConfiguratorIntro.svelte";
   import ConfiguratorSteps from "./ConfiguratorSteps.svelte";
   import ConfiguratorReport from "./ConfiguratorReport.svelte";
-  import QuoteModal from "./QuoteModal.svelte";
 
   import { getRecommendedPageIds } from "$lib/data/website-configurator/pages-data.js";
   import { getRecommendedFeatureIds } from "$lib/data/website-configurator/features-data.js";
@@ -18,6 +17,15 @@
 
   let activeScreen = $state("intro");
   let currentStep = $state(1);
+
+  /*
+   * The planner is NOT considered complete when the user
+   * reaches the recommendation screen.
+   *
+   * It only becomes complete after the contact form has
+   * successfully been submitted.
+   */
+  let plannerSubmitted = $state(false);
 
   /* =========================================================
      STEP 1 — WEBSITE TYPE
@@ -64,7 +72,7 @@
   let featuresInitialised = $state(false);
 
   /* =========================================================
-     STEP 6 — TIMELINE
+     STEP 6 — TIMELINE / FINAL REQUIREMENTS
   ========================================================= */
 
   let projectStart = $state("");
@@ -74,20 +82,15 @@
   let trainingPreference = $state("");
   let timelineNote = $state("");
 
-  /* =========================================================
-     STEP 6 — FINAL ADDITIONS
-  ========================================================= */
-
   let finalFeatureAdditions = $state([]);
   let finalRequirementNote = $state("");
 
   /* =========================================================
-     REPORT / QUOTE
+     REPORT / PROJECT SCOPE
   ========================================================= */
 
   let selectedPackage = $state("");
   let recommendedPackage = $state("growth");
-  let quoteModalOpen = $state(false);
 
   /* =========================================================
      PAGE UI
@@ -99,53 +102,17 @@
           plannerLabel: "Website Planner",
           step: "Step",
           of: "of",
-          report: "Recommendation",
+          contact: "Contact",
+          complete: "Planner complete",
         }
       : {
           plannerLabel: "Website Planner",
           step: "Schritt",
           of: "von",
-          report: "Empfehlung",
+          contact: "Kontakt",
+          complete: "Planner abgeschlossen",
         },
   );
-
-  /* =========================================================
-     QUOTE ANSWERS
-  ========================================================= */
-
-  const quoteAnswers = $derived({
-    selectedWebsiteType,
-    selectedGoals,
-    projectStatus,
-
-    contentReadiness,
-    visualReadiness,
-    brandingReadiness,
-    designDirection,
-    designReferenceLinks,
-    supportNeeds,
-
-    selectedPages,
-    pageVolume,
-    customPageNames,
-
-    selectedFeatures,
-    websiteLanguages,
-    customIntegration,
-
-    projectStart,
-    launchTimeline,
-    collaborationModel,
-    ongoingSupport,
-    trainingPreference,
-    timelineNote,
-
-    finalFeatureAdditions,
-    finalRequirementNote,
-
-    selectedPackage,
-    recommendedPackage,
-  });
 
   /* =========================================================
      HEADER NAVIGATION
@@ -245,6 +212,7 @@
   function startConfigurator() {
     activeScreen = "steps";
     currentStep = 1;
+    plannerSubmitted = false;
 
     scrollToTop();
   }
@@ -261,6 +229,14 @@
   ========================================================= */
 
   function editAnswers() {
+    /*
+     * Editing is only intended before the completed planner
+     * has been submitted.
+     */
+    if (plannerSubmitted) {
+      return;
+    }
+
     activeScreen = "steps";
     currentStep = 6;
 
@@ -275,19 +251,13 @@
   }
 
   /* =========================================================
-     QUOTE
+     FINAL SUBMISSION
   ========================================================= */
 
-  function requestQuote() {
-    if (!selectedPackage) {
-      return;
-    }
+  function handlePlannerSubmitted() {
+    plannerSubmitted = true;
 
-    quoteModalOpen = true;
-  }
-
-  function closeQuoteModal() {
-    quoteModalOpen = false;
+    scrollToTop();
   }
 
   /* =========================================================
@@ -379,7 +349,10 @@
     }
 
     /*
-     * STEP 6 → REPORT
+     * STEP 6 → STEP 7
+     *
+     * Step 7 is the recommendation teaser + contact form.
+     * The full planner is not considered complete yet.
      */
     if (currentStep === 6) {
       activeScreen = "report";
@@ -391,10 +364,6 @@
 
 <svelte:window
   onkeydown={(event) => {
-    if (quoteModalOpen) {
-      return;
-    }
-
     if (event.key !== "Escape" || activeScreen !== "steps") {
       return;
     }
@@ -417,11 +386,7 @@
   <main class="configurator-main">
     <div class="page-container">
       <!-- ===================================================
-           COMPACT PLANNER STATUS
-
-           No progress bar.
-           No separator.
-           No duplicate horizontal lines.
+           PLANNER STATUS
       ==================================================== -->
 
       {#if activeScreen !== "intro"}
@@ -430,14 +395,20 @@
             {pageUi.plannerLabel}
           </span>
 
-          <span class="planner-step">
+          <span class="planner-step" class:planner-complete={plannerSubmitted}>
             {#if activeScreen === "steps"}
               {pageUi.step}
               {currentStep}
               {pageUi.of}
-              6
+              7
+            {:else if plannerSubmitted}
+              {pageUi.complete} ✓
             {:else}
-              {pageUi.report}
+              {pageUi.step}
+              7
+              {pageUi.of}
+              7 ·
+              {pageUi.contact}
             {/if}
           </span>
         </div>
@@ -514,9 +485,10 @@
             {finalFeatureAdditions}
             {finalRequirementNote}
             {recommendedPackage}
+            {plannerSubmitted}
             bind:selectedPackage
             onEditAnswers={editAnswers}
-            onRequestQuote={requestQuote}
+            onSubmitted={handlePlannerSubmitted}
           />
         {/if}
       </div>
@@ -525,15 +497,6 @@
 
   <Footer {language} />
 </div>
-
-{#if quoteModalOpen}
-  <QuoteModal
-    open={true}
-    {language}
-    answers={quoteAnswers}
-    onClose={closeQuoteModal}
-  />
-{/if}
 
 <style>
   /* =========================================================
@@ -645,14 +608,22 @@
   .planner-step {
     color: #5f80ff;
 
-    font-size: 9px;
+    /*
+     * Previously 9px.
+     * Increased to 12px for readability/accessibility.
+     */
+    font-size: 12px;
     font-weight: 700;
 
-    line-height: 1;
+    line-height: 1.2;
 
     letter-spacing: 0.06em;
 
     text-transform: uppercase;
+  }
+
+  .planner-step.planner-complete {
+    color: #f5f5f5;
   }
 
   /* =========================================================
@@ -722,12 +693,16 @@
       margin-bottom: 16px;
     }
 
+    /*
+     * These were previously 9px and 8px.
+     * Both are now 12px.
+     */
     .planner-label {
-      font-size: 9px;
+      font-size: 12px;
     }
 
     .planner-step {
-      font-size: 8px;
+      font-size: 12px;
     }
   }
 
@@ -765,8 +740,13 @@
 
      One place to control readable text sizes across:
      - Steps 1–6
+     - Step 7
      - Report
      - Package cards
+
+     IMPORTANT:
+     Existing sizing is preserved.
+     Only text that previously fell below 10px is raised.
   ========================================================= */
 
   /* MICRO LABELS / EYEBROWS */
@@ -837,6 +817,7 @@
     font-size: 10px !important;
   }
 
+  /* BUTTONS */
   .screen-shell :global(button),
   .screen-shell :global(.select-button),
   .screen-shell :global(.continue-button),
@@ -852,5 +833,26 @@
   .configurator-page :global(.quote-hint),
   .configurator-page :global(.edit-area small) {
     font-size: 10px !important;
+  }
+
+  /*
+   * Safety net for specific micro-elements in the report/form
+   * that previously used 8px or 9px internally.
+   *
+   * We do NOT globally enlarge everything.
+   * Only the smallest UI text is prevented from dropping
+   * below 12px.
+   */
+  .configurator-page :global(.recommendation-stat > span),
+  .configurator-page :global(.recommendation-reason > span),
+  .configurator-page :global(.lean-scope-copy > span),
+  .configurator-page :global(.package-summary span),
+  .configurator-page :global(.optional-label),
+  .configurator-page :global(.required-label),
+  .configurator-page :global(.submit-note),
+  .configurator-page :global(.security-note),
+  .configurator-page :global(.privacy-note),
+  .configurator-page :global(.form-privacy-note) {
+    font-size: 12px !important;
   }
 </style>
