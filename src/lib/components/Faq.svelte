@@ -377,16 +377,8 @@
     border-radius: 0;
   }
 
-  .faq-item:first-child {
-    border-top: 1px solid rgba(255, 255, 255, 0.22);
-  }
-
   :global(body.light) .faq-item {
     border-bottom-color: rgba(0, 0, 0, 0.2);
-  }
-
-  :global(body.light) .faq-item:first-child {
-    border-top-color: rgba(0, 0, 0, 0.2);
   }
 
   /* =========================================================

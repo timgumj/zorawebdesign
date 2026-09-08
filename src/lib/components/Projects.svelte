@@ -32,7 +32,7 @@
    */
   let visibleCount = $state(7);
   let headerVisible = $state(false);
-  let expandedProjectDescription = $state(null);
+  let expandedProjectDescription = $state(0);
 
   const LOAD_MORE_COUNT = 2;
 
@@ -702,10 +702,10 @@
    * very slightly darker than pure white.
    *
    * Page background = #ffffff
-   * Project content = #fafafa
+   * Project content = #f5f5f5
    */
   :global(body.light) .project-content {
-    background: #fafafa;
+    background: #f5f5f5;
     border: 0;
   }
 
@@ -850,6 +850,16 @@
     text-decoration: none;
 
     transition: color 0.25s ease;
+  }
+
+  .project-view-link {
+    margin-bottom: 6px;
+  }
+
+  @media (min-width: 1025px) {
+    .project-view-link {
+      margin-bottom: 10px;
+    }
   }
 
   .project-view-link > span,
@@ -1169,7 +1179,7 @@
       color: #0043ff;
 
       font: inherit;
-      font-size: 25px;
+      font-size: 32.5px;
       font-weight: 400;
       line-height: 1;
 

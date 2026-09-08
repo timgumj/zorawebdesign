@@ -194,7 +194,7 @@
 
   let activeServiceIndex = $state(0);
 
-  let openServiceIndex = $state(-1);
+  let openServiceIndex = $state(0);
 
   function toggleServiceDescription(index) {
     openServiceIndex = openServiceIndex === index ? -1 : index;
@@ -2258,7 +2258,7 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding: 38px 94px 38px 22px;
+    padding: 38px 0;
     overflow: hidden;
     border-bottom: 1px solid rgba(255, 255, 255, 0.15);
     background: transparent;
@@ -2293,7 +2293,7 @@
   }
 
   .service-detail-heading h3 {
-    max-width: 680px;
+    max-width: 100%;
     margin: 0;
     color: #737373;
     font-size: 20px;
@@ -2319,7 +2319,7 @@
   .service-detail-text {
     position: relative;
     z-index: 1;
-    max-width: 720px;
+    max-width: 100%;
     margin: 18px 0 0;
     color: #6f6f6f;
     font-size: 16px;
@@ -2486,7 +2486,7 @@
     }
 
     .service-detail-text {
-      width: min(620px, calc(100% - 110px));
+      width: 100%;
       max-width: none;
       text-wrap: pretty;
       text-align: left;
@@ -3344,7 +3344,7 @@
     .service-detail-panel {
       min-height: 230px;
 
-      padding: 32px 76px 32px 18px;
+      padding: 32px 0;
 
       scroll-margin-top: 88px;
     }
@@ -3882,7 +3882,7 @@
       background: transparent;
       color: var(--accent-blue);
       font: inherit;
-      font-size: 22px;
+      font-size: 32.5px;
       font-weight: 300;
       line-height: 1;
       cursor: pointer;
