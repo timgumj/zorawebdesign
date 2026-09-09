@@ -35,6 +35,35 @@
       })();
     </script>
 
+    <!-- Load Google Analytics after the visitor allows analytics cookies. -->
+    <script>
+      (function () {
+        const measurementId = "G-BP3ZTYHMEC";
+        let loaded = false;
+        window["ga-disable-" + measurementId] = true;
+
+        window.addEventListener("zora:consentchange", function (event) {
+          const allowed = event.detail?.analytics === true;
+          window["ga-disable-" + measurementId] = !allowed;
+          if (!allowed || loaded) return;
+
+          loaded = true;
+          window.dataLayer = window.dataLayer || [];
+          window.gtag = function () {
+            window.dataLayer.push(arguments);
+          };
+          window.gtag("js", new Date());
+          window.gtag("config", measurementId);
+
+          const script = document.createElement("script");
+          script.async = true;
+          script.src =
+            "https://www.googletagmanager.com/gtag/js?id=" + measurementId;
+          document.head.appendChild(script);
+        });
+      })();
+    </script>
+
     %sveltekit.head%
   </head>
 
@@ -44,6 +73,7 @@
         document.documentElement.classList.contains("dark") ? "dark" : "light",
       );
     </script>
+
     <div style="display: contents">%sveltekit.body%</div>
   </body>
 </html>
