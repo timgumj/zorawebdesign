@@ -21,20 +21,29 @@
 
   /*
    * 7 projects + Load More = 8 cards on initial load.
+   * Every click adds 2 projects.
    *
-   * Every click adds 2 projects:
-   * 7 projects + Load More = 8 cards
-   * 9 projects + Load More = 10 cards
-   * 11 projects + Load More = 12 cards
-   *
-   * This keeps Load More in the right-hand column
-   * on desktop and tablet.
+   * Performance change:
+   * only the projects the visitor can actually see are rendered.
+   * Previously all 19 cards existed in the DOM and the remaining
+   * cards were hidden with CSS.
    */
   let visibleCount = $state(7);
   let headerVisible = $state(false);
   let expandedProjectDescription = $state(0);
 
   const LOAD_MORE_COUNT = 2;
+
+  /*
+   * A tiny transparent pixel prevents the browser from downloading the
+   * real project image too early. The real src is assigned shortly before
+   * the card approaches the viewport.
+   *
+   * This is stricter than native loading="lazy", which can preload images
+   * more than a screen away on slow mobile connections.
+   */
+  const EMPTY_IMAGE =
+    "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==";
 
   function cleanNumber(value) {
     return String(value ?? "")
@@ -119,7 +128,82 @@
     };
   }
 
+  /*
+   * Performance-focused project image loader.
+   *
+   * The real image starts loading 500px before the image enters the
+   * viewport. That is early enough for normal scrolling while preventing
+   * the Projects images from competing with the Hero/LCP during the
+   * initial mobile load.
+   */
+  function observeProjectImage(node, imageUrl) {
+    let currentUrl = imageUrl;
+    let observer;
+
+    function loadImage(url = currentUrl) {
+      if (!url || node.dataset.imageLoaded === "true") {
+        return;
+      }
+
+      node.dataset.imageLoaded = "true";
+      node.src = url;
+    }
+
+    if (typeof IntersectionObserver === "undefined") {
+      loadImage();
+
+      return {
+        update(nextUrl) {
+          currentUrl = nextUrl;
+
+          if (node.dataset.imageLoaded === "true" && nextUrl) {
+            node.src = nextUrl;
+          }
+        },
+
+        destroy() {},
+      };
+    }
+
+    observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          loadImage();
+          observer.disconnect();
+        }
+      },
+      {
+        threshold: 0.01,
+        rootMargin: "500px 0px",
+      },
+    );
+
+    observer.observe(node);
+
+    return {
+      update(nextUrl) {
+        currentUrl = nextUrl;
+
+        if (node.dataset.imageLoaded === "true" && nextUrl) {
+          node.src = nextUrl;
+        }
+      },
+
+      destroy() {
+        observer?.disconnect();
+      },
+    };
+  }
+
   const hasMoreProjects = $derived(visibleCount < projects.length);
+
+  /*
+   * Rendering only the visible projects reduces initial DOM size while
+   * preserving the exact same visible grid and Load More behaviour.
+   */
+  const visibleProjects = $derived(
+    projects.slice(0, Math.min(visibleCount, projects.length)),
+  );
 
   const visibleProgress = $derived(
     `${Math.min(visibleCount, projects.length)}/${projects.length}`,
@@ -167,10 +251,9 @@
 
       <div class="projects-grid-view">
         <div class="projects-grid">
-          {#each projects as project, index}
+          {#each visibleProjects as project, index}
             <article
               class="project-card"
-              class:seo-hidden={index >= visibleCount}
               style={`--card-accent:${getAccent(index)};`}
             >
               <div class="project-bg-number">
@@ -179,13 +262,16 @@
 
               <div class="project-image-wrap">
                 <img
-                  src={project.image}
+                  src={EMPTY_IMAGE}
+                  data-original-src={project.image}
                   alt={project.alt ??
                     `Webdesign Referenzprojekt ${project.title}`}
                   loading="lazy"
+                  fetchpriority="low"
                   decoding="async"
                   width="625"
                   height="352"
+                  use:observeProjectImage={project.image}
                 />
               </div>
 
@@ -341,10 +427,6 @@
     transition:
       background 0.3s ease,
       color 0.3s ease;
-  }
-
-  :global(.project-card.seo-hidden) {
-    display: none !important;
   }
 
   :global(body.light) .projects {
@@ -571,7 +653,6 @@
 
     overflow: hidden;
 
-    /* No border in either theme */
     border: 0;
 
     background: #121214;
@@ -626,13 +707,10 @@
     top: -4px;
     left: 16px;
     z-index: 4;
-
     color: rgba(170, 170, 170, 0.08);
-
     font-size: clamp(6rem, 10vw, 9rem);
     line-height: 0.85;
     font-weight: 800;
-
     pointer-events: none;
   }
 
@@ -646,14 +724,10 @@
 
   .project-image-wrap {
     position: relative;
-
     display: block;
-
     height: 400px;
     padding: 18px;
-
     background: var(--card-accent, #151515);
-
     overflow: hidden;
     flex-shrink: 0;
   }
@@ -661,16 +735,11 @@
   .project-image-wrap img {
     position: relative;
     z-index: 1;
-
     width: 100%;
     height: 100%;
-
     display: block;
-
     object-fit: contain;
-
     transform: scale(0.94);
-
     transition: transform 0.35s ease;
   }
 
@@ -681,29 +750,15 @@
   .project-content {
     min-height: 240px;
     padding: 24px 22px;
-
     display: flex;
     flex: 1;
     flex-direction: column;
-
-    /* Keep current dark mode */
     background: #141416;
-
     color: inherit;
-
     box-sizing: border-box;
-
-    /* No separation border */
     border: 0;
   }
 
-  /*
-   * Light mode:
-   * very slightly darker than pure white.
-   *
-   * Page background = #ffffff
-   * Project content = #f5f5f5
-   */
   :global(body.light) .project-content {
     background: #f5f5f5;
     border: 0;
@@ -723,15 +778,11 @@
   .project-tags span {
     min-height: 25px;
     padding: 4px 8px;
-
     border: 1px solid rgba(255, 255, 255, 0.28);
-
     display: inline-flex;
     align-items: center;
-
     background: transparent;
     color: #ffffff;
-
     font-size: 11px;
     font-weight: 500;
     line-height: 1;
@@ -762,14 +813,11 @@
   .project-title-wrap h3 {
     width: 100%;
     margin: 0;
-
     color: #ffffff;
-
     font-size: 20px;
     line-height: 1.22;
     font-weight: 700;
     letter-spacing: 0.03em;
-
     text-transform: uppercase;
     text-decoration: none;
     text-wrap: balance;
@@ -787,14 +835,11 @@
     width: 100%;
     max-width: none;
     margin: 0;
-
     color: #9a9a9a;
-
     font-size: 16px;
     font-weight: 500;
     line-height: 1.55;
     letter-spacing: 0;
-
     text-wrap: pretty;
   }
 
@@ -810,11 +855,9 @@
     width: 100%;
     margin-top: auto;
     padding-top: 32px;
-
     display: flex;
     align-items: flex-end;
     justify-content: flex-start;
-
     gap: 24px;
   }
 
@@ -826,29 +869,20 @@
   .project-details-link {
     min-height: auto;
     flex: 0 0 auto;
-
     padding: 0;
     border: 0;
-
     display: inline-flex;
     align-items: center;
     justify-content: center;
-
     gap: 9px;
-
     background: transparent;
     color: #ffffff;
-
     font-size: 14px;
     font-weight: 600;
-
     text-transform: uppercase;
-
     line-height: 1;
     letter-spacing: 0.015em;
-
     text-decoration: none;
-
     transition: color 0.25s ease;
   }
 
@@ -890,9 +924,7 @@
     width: 16px;
     height: 16px;
     flex: 0 0 16px;
-
     display: block;
-
     color: #0043ff;
   }
 
@@ -918,30 +950,20 @@
   .project-load-card {
     min-height: 520px;
     height: 100%;
-
     margin: 0;
     padding: 28px;
-
-    /* No border */
     border: 0;
-
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
     align-items: flex-start;
     align-self: stretch;
-
     gap: 10px;
-
     overflow: hidden;
-
     background: linear-gradient(180deg, #151518, #0e0e10);
     color: #fff;
-
     text-align: left;
-
     cursor: pointer;
-
     box-sizing: border-box;
   }
 
@@ -953,7 +975,6 @@
 
   .project-load-plus {
     color: #0043ff;
-
     font-size: 60px;
     line-height: 1;
     font-weight: 300;
@@ -961,29 +982,23 @@
 
   .project-load-copy {
     color: #b8b8b8;
-
     font-size: 14px;
     letter-spacing: 0.08em;
-
     text-transform: uppercase;
   }
 
   .project-load-strong {
     max-width: 12ch;
-
     font-size: 28px;
     line-height: 1.05;
     font-weight: 700;
-
     text-transform: uppercase;
   }
 
   .project-load-progress {
     margin-top: auto;
     padding-top: 16px;
-
     color: #0043ff;
-
     font-size: 14px;
     letter-spacing: 0.06em;
   }
@@ -1073,11 +1088,9 @@
 
     .projects-header-inner {
       min-height: 0;
-
       display: flex;
       flex-direction: column;
       align-items: flex-start;
-
       gap: 24px;
       padding: 32px 0;
     }
@@ -1089,21 +1102,18 @@
 
     .projects-header h2 {
       max-width: 100%;
-
       font-size: clamp(22px, 6vw, 27px);
       line-height: 1.15;
     }
 
     .projects-subtitle {
       max-width: 100%;
-
       font-size: 14px;
       line-height: 1.6;
     }
 
     .projects-grid {
       grid-template-columns: 1fr;
-
       column-gap: 0;
       row-gap: 30px;
     }
@@ -1139,12 +1149,9 @@
     .project-tags span {
       min-height: 23px;
       padding: 4px 5px;
-
       font-size: 8px;
       letter-spacing: 0.035em;
-
       text-transform: uppercase;
-
       white-space: nowrap;
     }
 
@@ -1156,35 +1163,26 @@
         36px;
 
       align-items: start;
-
       gap: 12px;
-
       margin-bottom: 0;
     }
 
     .project-description-toggle {
       width: 36px;
       height: 36px;
-
       display: inline-grid;
       place-items: center;
-
       justify-self: end;
-
       margin: -7px 0 0;
       padding: 0;
       border: 0;
-
       background: transparent;
       color: #0043ff;
-
       font: inherit;
       font-size: 32.5px;
       font-weight: 400;
       line-height: 1;
-
       cursor: pointer;
-
       -webkit-tap-highlight-color: transparent;
     }
 
@@ -1195,11 +1193,8 @@
     .project-description {
       width: 100%;
       max-width: none;
-
       display: none;
-
       margin-top: 12px;
-
       font-size: 14px;
       font-weight: 400;
       line-height: 1.55;
@@ -1221,9 +1216,7 @@
     .project-details-link {
       min-height: auto;
       padding: 0;
-
       font-size: 12px;
-
       white-space: nowrap;
     }
 
@@ -1283,6 +1276,7 @@
 
     .projects-header-main::before {
       animation: none;
+      transform: none;
     }
   }
 </style>

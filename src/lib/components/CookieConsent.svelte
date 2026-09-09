@@ -1,16 +1,31 @@
 <script>
   import { onMount } from "svelte";
 
-  let showCookieNotice = $state(false);
+  /*
+   * IMPORTANT FOR PERFORMANCE
+   * -------------------------
+   * The notice starts as visible so it is rendered in the initial HTML.
+   * Previously it was inserted only after onMount/localStorage ran, which
+   * allowed the cookie text to become a very late LCP candidate on mobile.
+   *
+   * Returning visitors who already saved a choice have it removed as soon
+   * as the component hydrates.
+   */
+  let showCookieNotice = $state(true);
   let showPreferences = $state(false);
   let language = $state("de");
 
-  let consent = $state({
+  const CONSENT_KEY = "cookieConsent";
+  const CONSENT_EVENT = "zora:consentchange";
+
+  const defaultConsent = {
     essentials: true,
     marketing: false,
     personalization: false,
     analytics: false,
-  });
+  };
+
+  let consent = $state({ ...defaultConsent });
 
   const text = {
     de: {
@@ -62,18 +77,129 @@
 
   let t = $derived(text[language]);
 
-  onMount(() => {
-    const savedConsent = localStorage.getItem("cookieConsent");
-
-    if (!savedConsent) {
-      showCookieNotice = true;
-    } else {
-      consent = JSON.parse(savedConsent);
+  function normalizeConsent(value) {
+    if (!value || typeof value !== "object") {
+      return { ...defaultConsent };
     }
+
+    return {
+      essentials: true,
+      marketing: value.marketing === true,
+      personalization: value.personalization === true,
+      analytics: value.analytics === true,
+    };
+  }
+
+  /*
+   * Publish the current preference state for the rest of the site.
+   *
+   * Other components can either:
+   * 1. read window.__ZORA_COOKIE_CONSENT__, or
+   * 2. listen for "zora:consentchange".
+   *
+   * This lets analytics/marketing integrations stay completely unloaded
+   * when the visitor rejects optional cookies.
+   */
+  function publishConsent() {
+    if (typeof window === "undefined") {
+      return;
+    }
+
+    const snapshot = {
+      essentials: true,
+      marketing: consent.marketing === true,
+      personalization: consent.personalization === true,
+      analytics: consent.analytics === true,
+    };
+
+    window.__ZORA_COOKIE_CONSENT__ = snapshot;
+
+    document.documentElement.dataset.consentMarketing = snapshot.marketing
+      ? "granted"
+      : "denied";
+
+    document.documentElement.dataset.consentPersonalization =
+      snapshot.personalization ? "granted" : "denied";
+
+    document.documentElement.dataset.consentAnalytics = snapshot.analytics
+      ? "granted"
+      : "denied";
+
+    window.dispatchEvent(
+      new CustomEvent(CONSENT_EVENT, {
+        detail: snapshot,
+      }),
+    );
+  }
+
+  function readSavedConsent() {
+    try {
+      const raw = localStorage.getItem(CONSENT_KEY);
+
+      if (!raw) {
+        return null;
+      }
+
+      return normalizeConsent(JSON.parse(raw));
+    } catch {
+      return null;
+    }
+  }
+
+  function persistConsent() {
+    try {
+      localStorage.setItem(
+        CONSENT_KEY,
+        JSON.stringify({
+          essentials: true,
+          marketing: consent.marketing === true,
+          personalization: consent.personalization === true,
+          analytics: consent.analytics === true,
+        }),
+      );
+    } catch {
+      /*
+       * If storage is unavailable, the site still works.
+       * The visitor may simply be asked again on the next visit.
+       */
+    }
+  }
+
+  onMount(() => {
+    /*
+     * Match the banner language to the current page where possible.
+     * This happens after hydration and does not affect layout.
+     */
+    const pageLanguage = document.documentElement.lang?.toLowerCase().trim();
+
+    if (pageLanguage?.startsWith("en")) {
+      language = "en";
+    } else if (pageLanguage?.startsWith("de")) {
+      language = "de";
+    }
+
+    const savedConsent = readSavedConsent();
+
+    if (savedConsent) {
+      consent = savedConsent;
+      showCookieNotice = false;
+    } else {
+      consent = { ...defaultConsent };
+      showCookieNotice = true;
+    }
+
+    publishConsent();
   });
 
   function saveConsent() {
-    localStorage.setItem("cookieConsent", JSON.stringify(consent));
+    /*
+     * Essentials are always on.
+     * Optional categories keep the visitor's current choices.
+     */
+    consent = normalizeConsent(consent);
+
+    persistConsent();
+    publishConsent();
 
     showCookieNotice = false;
     showPreferences = false;
@@ -91,6 +217,10 @@
   }
 
   function rejectAll() {
+    /*
+     * Rejecting disables OPTIONAL categories only.
+     * Essential website functionality remains available.
+     */
     consent = {
       essentials: true,
       marketing: false,
@@ -103,11 +233,18 @@
 </script>
 
 {#if showCookieNotice}
-  <div class="cookie-consent">
+  <div
+    class="cookie-consent"
+    class:preferences-open={showPreferences}
+    role="dialog"
+    aria-modal="false"
+    aria-label={t.cookies}
+  >
     <div class="language-switch">
       <button
         type="button"
         class:active={language === "de"}
+        aria-pressed={language === "de"}
         onclick={() => (language = "de")}
       >
         DE
@@ -116,6 +253,7 @@
       <button
         type="button"
         class:active={language === "en"}
+        aria-pressed={language === "en"}
         onclick={() => (language = "en")}
       >
         EN
@@ -167,7 +305,11 @@
             <p>{t.marketingText}</p>
           </div>
 
-          <input type="checkbox" bind:checked={consent.marketing} />
+          <input
+            type="checkbox"
+            bind:checked={consent.marketing}
+            aria-label={t.marketing}
+          />
         </label>
 
         <label class="preference-item">
@@ -177,7 +319,11 @@
             <p>{t.personalizationText}</p>
           </div>
 
-          <input type="checkbox" bind:checked={consent.personalization} />
+          <input
+            type="checkbox"
+            bind:checked={consent.personalization}
+            aria-label={t.personalization}
+          />
         </label>
 
         <label class="preference-item">
@@ -187,7 +333,11 @@
             <p>{t.analyticsText}</p>
           </div>
 
-          <input type="checkbox" bind:checked={consent.analytics} />
+          <input
+            type="checkbox"
+            bind:checked={consent.analytics}
+            aria-label={t.analytics}
+          />
         </label>
       </div>
 
@@ -211,112 +361,178 @@
 <style>
   .cookie-consent {
     position: fixed;
+
     right: 24px;
     bottom: 24px;
+
     z-index: 99999999;
+
     width: min(420px, calc(100vw - 32px));
     max-height: calc(100vh - 48px);
-    overflow-y: auto;
-    background: #111;
-    color: #fff;
-    border: 1px solid rgba(255, 255, 255, 0.25);
+
+    /*
+     * The simple first screen does not need its own scroll container.
+     * We only enable scrolling when the detailed preferences are open.
+     */
+    overflow: visible;
+
     padding: 22px;
+
+    border: 1px solid rgba(255, 255, 255, 0.25);
     border-radius: 0;
+
+    background: #111;
+
+    color: #fff;
+
     box-shadow: 0 18px 50px rgba(0, 0, 0, 0.45);
+
+    /*
+     * Isolate layout/painting work from the rest of the page.
+     * This does not change the visual design.
+     */
+    contain: layout style paint;
+
+    box-sizing: border-box;
+
+    overscroll-behavior: contain;
+  }
+
+  .cookie-consent.preferences-open {
+    overflow-y: auto;
   }
 
   .language-switch {
     display: flex;
+
     justify-content: flex-end;
+
     gap: 6px;
+
     margin-bottom: 14px;
   }
 
   .language-switch button {
-    background: transparent;
-    color: #fff;
-    border: 1px solid #fff;
     padding: 4px 10px;
+
+    border: 1px solid #fff;
+    border-radius: 0;
+
+    background: transparent;
+
+    color: #fff;
+
     cursor: pointer;
+
+    font-family: inherit;
     font-size: 12px;
     font-weight: 700;
-    border-radius: 0;
   }
 
   .language-switch button.active {
     background: #fff;
+
     color: #000;
   }
 
   .cookie-content h3 {
     margin: 0 0 10px;
+
     font-size: 20px;
   }
 
   .cookie-content p {
     margin: 0;
+
     font-size: 14px;
+
     line-height: 1.6;
   }
 
   .cookie-actions {
-    margin-top: 18px;
     display: flex;
-    gap: 10px;
+
     flex-wrap: wrap;
+
+    gap: 10px;
+
+    margin-top: 18px;
   }
 
   .cookie-actions button {
-    border: 1px solid #fff;
-    background: #fff;
-    color: #000;
     padding: 10px 18px;
+
+    border: 1px solid #fff;
     border-radius: 0;
+
+    background: #fff;
+
+    color: #000;
+
     cursor: pointer;
+
     font-family: inherit;
     font-size: 13px;
     font-weight: 700;
+
     white-space: nowrap;
   }
 
   .cookie-actions .outline {
     background: transparent;
+
     color: #fff;
   }
 
   .cookie-actions .link {
-    background: transparent;
-    color: #fff;
     border-color: transparent;
+
+    background: transparent;
+
+    color: #fff;
+
     text-decoration: underline;
   }
 
   .preference-item {
-    border-top: 1px solid rgba(255, 255, 255, 0.2);
-    padding: 16px 0;
     display: flex;
+
     align-items: center;
+
     justify-content: space-between;
+
     gap: 20px;
+
+    padding: 16px 0;
+
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
   }
 
   .preference-item strong {
     display: block;
+
     margin-bottom: 4px;
+
     font-size: 15px;
   }
 
   .preference-item span {
     display: block;
+
     margin-bottom: 6px;
+
+    color: #ccc;
+
     font-size: 13px;
     font-weight: 700;
-    color: #ccc;
   }
 
   .preference-item input {
     width: 20px;
     height: 20px;
+
+    flex: 0 0 20px;
+
     accent-color: #fff;
   }
 
@@ -324,18 +540,35 @@
     .cookie-consent {
       right: 20px;
       bottom: 20px;
+
       width: min(380px, calc(100vw - 40px));
+
+      max-height: calc(100dvh - 40px);
     }
   }
 
   @media (max-width: 767px) {
     .cookie-consent {
-      left: 16px;
       right: 16px;
       bottom: 16px;
+      left: 16px;
+
       width: auto;
+
+      max-height: calc(100dvh - 32px);
+
       padding: 18px;
-      max-height: calc(100vh - 32px);
+    }
+
+    /*
+     * Keep exactly the same design language, but make the first mobile
+     * notice slightly cheaper/smaller to paint and less likely to dominate
+     * the viewport as the LCP candidate.
+     */
+    .cookie-content p {
+      font-size: 13px;
+
+      line-height: 1.5;
     }
 
     .cookie-actions {

@@ -392,7 +392,9 @@
     window.addEventListener("keydown", closeProblemOnEscape);
     window.addEventListener("pointerdown", closeProblemOnOutsidePointer, true);
     window.addEventListener("resize", resetProblemState);
-    window.addEventListener("scroll", closeProblemOnScroll, true);
+    window.addEventListener("scroll", closeProblemOnScroll, {
+      passive: true,
+    });
 
     return () => {
       window.clearTimeout(problemCloseTimer);
@@ -404,7 +406,7 @@
         true,
       );
       window.removeEventListener("resize", resetProblemState);
-      window.removeEventListener("scroll", closeProblemOnScroll, true);
+      window.removeEventListener("scroll", closeProblemOnScroll);
     };
   });
 
@@ -920,14 +922,15 @@
                 {resolvedProblemSectionTitle}
               </h3>
 
+              <p class="problem-instruction">
+                <span class="problem-instruction-arrow" aria-hidden="true"
+                  >↳</span
+                >
+                <span>{resolvedProblemInstruction}</span>
+              </p>
+
               <span class="problem-heading-line" aria-hidden="true"></span>
             </div>
-
-            <p class="problem-instruction">
-              <span class="problem-instruction-arrow" aria-hidden="true">↳</span
-              >
-              <span>{resolvedProblemInstruction}</span>
-            </p>
 
             <p
               class="problem-story"
@@ -6938,6 +6941,24 @@
       padding-right: 0;
 
       box-sizing: border-box;
+    }
+  }
+
+  /* =========================================================
+     MOBILE / TABLET PROBLEM POPUP REFINEMENTS
+  ========================================================= */
+
+  @media (max-width: 1024px) {
+    .problem-popup-label {
+      font-size: 70%;
+      line-height: 1.25;
+      letter-spacing: 0.08em;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .problem-popup-label {
+      font-size: 68%;
     }
   }
 </style>
