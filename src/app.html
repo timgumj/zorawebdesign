@@ -10,8 +10,10 @@
     <script>
       (function () {
         const rawPath = window.location.pathname;
+
         const pathname =
           rawPath === "/" || rawPath.endsWith("/") ? rawPath : `${rawPath}/`;
+
         const cityPaths = new Set([
           "/webdesign/salzburg/",
           "/en-2/web-design/salzburg/",
@@ -20,12 +22,16 @@
           "/webdesign/muenchen/",
           "/en-2/web-design/munich/",
         ]);
+
         const defaultTheme =
           pathname === "/webdesign/salzburg/" ? "dark" : "light";
+
         const storageKey = cityPaths.has(pathname)
           ? `site-theme:${pathname}`
           : "site-theme";
+
         const savedTheme = localStorage.getItem(storageKey);
+
         const selectedTheme =
           savedTheme === "light" || savedTheme === "dark"
             ? savedTheme
@@ -35,30 +41,72 @@
       })();
     </script>
 
-    <!-- Load Google Analytics after the visitor allows analytics cookies. -->
+    <!-- Google Analytics: only loads after analytics consent -->
     <script>
       (function () {
         const measurementId = "G-BP3ZTYHMEC";
+
         let loaded = false;
+
+        /*
+         * Disable Google Analytics by default.
+         * It will only be enabled after the visitor
+         * explicitly allows analytics cookies.
+         */
         window["ga-disable-" + measurementId] = true;
 
+        /*
+         * Listen for consent changes from the
+         * Zora cookie-consent component.
+         */
         window.addEventListener("zora:consentchange", function (event) {
           const allowed = event.detail?.analytics === true;
+
+          /*
+           * Enable or disable GA depending on consent.
+           */
           window["ga-disable-" + measurementId] = !allowed;
-          if (!allowed || loaded) return;
+
+          /*
+           * If consent was rejected, do nothing else.
+           */
+          if (!allowed) {
+            return;
+          }
+
+          /*
+           * If Google Analytics has already been loaded,
+           * we only need to re-enable it above.
+           */
+          if (loaded) {
+            return;
+          }
 
           loaded = true;
+
+          /*
+           * Create Google Analytics dataLayer + gtag.
+           */
           window.dataLayer = window.dataLayer || [];
+
           window.gtag = function () {
             window.dataLayer.push(arguments);
           };
+
           window.gtag("js", new Date());
+
           window.gtag("config", measurementId);
 
+          /*
+           * Load Google's gtag.js script.
+           */
           const script = document.createElement("script");
+
           script.async = true;
+
           script.src =
             "https://www.googletagmanager.com/gtag/js?id=" + measurementId;
+
           document.head.appendChild(script);
         });
       })();
