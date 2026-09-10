@@ -1266,6 +1266,22 @@
                     <span>{role}</span>
                   {/each}
                 </span>
+
+                <div
+                  class="about-experience-stack"
+                  aria-label={experienceLabel}
+                >
+                  {#each normalizedStats as stat}
+                    <div class="about-experience-card">
+                      <span class="about-experience-copy">
+                        <span class="about-experience-heading"
+                          >{stat.title.split(/\s+/)[0]}</span
+                        >
+                        {" "}{stat.title.split(/\s+/).slice(1).join(" ")}
+                      </span>
+                    </div>
+                  {/each}
+                </div>
               </div>
             </div>
           </div>
@@ -6550,7 +6566,7 @@
     .problem-story-wrap {
       width: calc(100% - 24px);
 
-      padding-inline: 12px;
+      padding-inline: 8px;
 
       box-sizing: border-box;
     }
@@ -6629,9 +6645,9 @@
 
     border-radius: 50%;
 
-    background: #000000;
+    background: #ffffff;
 
-    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.24);
+    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.24);
 
     animation: about-availability-pulse 1.8s ease-in-out infinite;
   }
@@ -6673,13 +6689,13 @@
     100% {
       transform: scale(0.78);
 
-      box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+      box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
     }
 
     50% {
       transform: scale(1);
 
-      box-shadow: 0 0 0 7px rgba(0, 0, 0, 0.08);
+      box-shadow: 0 0 0 7px rgba(255, 255, 255, 0.08);
     }
   }
 
@@ -6740,13 +6756,17 @@
 
       left: auto;
 
-      font-size: clamp(13px, 1.2vw, 18px);
+      font-size: clamp(10.4px, 0.96vw, 14.4px);
 
       font-weight: 400;
     }
 
     .about-availability {
       gap: 16px;
+    }
+
+    .about-title-static {
+      font-weight: 300;
     }
   }
 
@@ -6959,6 +6979,278 @@
   @media (max-width: 767px) {
     .problem-popup-label {
       font-size: 68%;
+    }
+  }
+
+  .about-experience-stack {
+    display: none;
+  }
+
+  @media (min-width: 768px) {
+    .experience-rail {
+      display: none;
+    }
+
+    .about-experience-stack {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      width: max-content;
+      max-width: 100%;
+      gap: 20px;
+      margin-top: auto;
+      padding-top: 24px;
+      flex-shrink: 0;
+    }
+
+    .about-editorial-figure {
+      align-self: stretch;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .about-editorial-figure > .profile-name,
+    .about-editorial-figure > .profile-role {
+      flex-shrink: 0;
+    }
+
+    .about-experience-card {
+      max-width: 100%;
+      color: #fff;
+      text-align: center;
+      text-shadow: 0 1px 14px rgba(0, 0, 0, 0.44);
+    }
+
+    .about-experience-heading {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 13px;
+      font-weight: 800;
+      line-height: 1.2;
+      letter-spacing: 0.11em;
+      text-transform: uppercase;
+    }
+
+    .about-experience-copy {
+      position: relative;
+      display: block;
+      width: 100%;
+      max-width: 100%;
+      box-sizing: border-box;
+      padding: 12px 24px;
+      font-size: 12px;
+      line-height: 1.48;
+      color: rgba(255, 255, 255, 0.82);
+    }
+
+    .about-experience-copy::before,
+    .about-experience-copy::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 20px;
+      border-top: 1px solid #fff;
+      border-bottom: 1px solid #fff;
+      pointer-events: none;
+    }
+
+    .about-experience-copy::before {
+      left: 0;
+      border-left: 1px solid #fff;
+    }
+
+    .about-experience-copy::after {
+      right: 0;
+      border-right: 1px solid #fff;
+    }
+
+    .about-editorial-title {
+      top: 36px;
+      right: 38px;
+      bottom: auto;
+      max-width: min(680px, calc(100% - 380px));
+    }
+
+    .about-below-copy {
+      bottom: 24px;
+      grid-template-rows: minmax(0, 1fr);
+    }
+
+    .about-top-copy {
+      align-self: end;
+    }
+
+    .about-reveal-frame {
+      display: none;
+      animation: none;
+    }
+
+    .about-editorial .about-kicker,
+    .about-editorial .about-editorial-text,
+    .about-editorial .profile-name,
+    .about-editorial .profile-role {
+      opacity: 1 !important;
+      clip-path: none !important;
+      transition: none !important;
+      animation: none !important;
+    }
+  }
+  @media (min-width: 768px) and (max-width: 1024px) {
+    .about-editorial {
+      position: relative;
+    }
+
+    .about-below-copy {
+      position: absolute;
+      inset: 24px 24px 24px;
+      z-index: 4;
+      width: auto;
+      margin: 0;
+      padding: 0;
+      grid-template-columns: minmax(140px, 1fr) minmax(0, 1.5fr);
+      grid-template-rows: minmax(0, 1fr);
+      gap: 32px;
+      pointer-events: none;
+    }
+
+    .about-editorial-figure {
+      grid-column: 1;
+      grid-row: 1;
+      align-self: stretch;
+      width: 100%;
+      margin: 0;
+    }
+
+    .about-top-copy {
+      grid-column: 2;
+      grid-row: 1;
+      align-self: end;
+      width: 100%;
+    }
+
+    .about-editorial-title {
+      top: 24px;
+      right: 24px;
+      bottom: auto;
+      max-width: 54%;
+      font-size: clamp(7.7px, 1.19vw, 10.5px);
+    }
+
+    .about-availability-pulse {
+      width: 8.4px;
+      height: 8.4px;
+      flex-basis: 8.4px;
+    }
+
+    .profile-role {
+      position: relative;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 7px;
+      width: fit-content;
+      max-width: 100%;
+      padding: 12px 18px;
+      border: 0;
+      font-size: 10px;
+    }
+
+    .about-editorial .profile-role::before,
+    .about-editorial .profile-role::after {
+      content: "";
+      display: block;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 20px;
+      border-top: 1px solid #fff;
+      border-bottom: 1px solid #fff;
+      pointer-events: none;
+    }
+
+    .about-editorial .profile-role::before {
+      left: 0;
+      border-left: 1px solid #fff;
+    }
+
+    .about-editorial .profile-role::after {
+      right: 0;
+      border-right: 1px solid #fff;
+    }
+
+    .profile-name,
+    .about-kicker {
+      margin: 0 0 8px;
+      font-size: 10px;
+      font-weight: 700;
+    }
+
+    .about-editorial-text {
+      margin: 0;
+      padding: 12px 18px;
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .about-experience-heading {
+      font-size: 8.5px;
+      margin-bottom: 3px;
+    }
+
+    .about-experience-copy {
+      font-size: 8px;
+      padding: 8px 12px;
+    }
+
+    .about-experience-stack {
+      gap: 12px;
+    }
+
+    .about-editorial .profile-name,
+    .about-editorial .profile-role,
+    .about-editorial .about-title-static,
+    .about-editorial .about-experience-heading,
+    .about-editorial .about-experience-copy,
+    .about-editorial .about-kicker,
+    .about-editorial .about-editorial-text {
+      color: #fff;
+      --editorial-border: #fff;
+      text-shadow: 0 1px 14px rgba(0, 0, 0, 0.44);
+    }
+  }
+
+  @media (min-width: 768px) and (max-width: 1024px) {
+    .about-editorial .about-editorial-text,
+    :global(body.light) .about-editorial .about-editorial-text {
+      --editorial-border: #ffffff;
+    }
+
+    :global(body.light) .about-editorial .profile-name,
+    :global(body.light) .about-editorial .profile-role,
+    :global(body.light) .about-editorial .about-title-static,
+    :global(body.light) .about-editorial .about-experience-heading,
+    :global(body.light) .about-editorial .about-experience-copy,
+    :global(body.light) .about-editorial .about-kicker,
+    :global(body.light) .about-editorial .about-editorial-text {
+      color: #ffffff;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .about-top-copy {
+      gap: 0;
+    }
+
+    .about-kicker {
+      margin: 0 0 6px;
+    }
+
+    .about-editorial-text {
+      margin: 0;
+      padding: 0;
+      text-indent: 0;
+      text-align: left;
     }
   }
 </style>
