@@ -5,6 +5,8 @@
   import ThemeToggle from "$lib/components/ThemeToggle.svelte";
   import Hero from "$lib/components/Hero.svelte";
   import Services from "$lib/components/Services.svelte";
+  import FeaturedProjectShowcase from "$lib/components/FeaturedProjectShowcase.svelte";
+  import { baldaufShowcase } from "$lib/data/baldauf-showcase.js";
   import Projects from "$lib/components/Projects.svelte";
   import Process from "$lib/components/Process.svelte";
   import Reviews from "$lib/components/Reviews.svelte";
@@ -207,6 +209,11 @@
           { title: "WEBSITE PROJECT PLANNER", text: "Clarify the pages and functionality your project genuinely needs.", href: "/en-2/website-configurator/", linkLabel: "PLAN YOUR PROJECT" },
           { title: "FREE WEBSITE AUDIT", text: "Check your website for SEO, performance, security and accessibility.", href: "/en-2/website-audit/", linkLabel: "CHECK YOUR WEBSITE" },
         ]}
+  />
+
+  <FeaturedProjectShowcase
+    project={isGerman ? baldaufShowcase.de : baldaufShowcase.en}
+    language={page.language}
   />
 
   <Projects

@@ -5,13 +5,16 @@
   import ThemeToggle from "$lib/components/ThemeToggle.svelte";
   import Hero from "$lib/components/Hero.svelte";
   import Services from "$lib/components/Services.svelte";
+  import FeaturedProjectShowcase from "$lib/components/FeaturedProjectShowcase.svelte";
   import Projects from "$lib/components/Projects.svelte";
   import Process from "$lib/components/Process.svelte";
   import Reviews from "$lib/components/Reviews.svelte";
   import Faq from "$lib/components/Faq.svelte";
   import Contact from "$lib/components/Contact.svelte";
   import Footer from "$lib/components/Footer.svelte";
+
   import { projects } from "$lib/data/projects.js";
+  import { baldaufShowcase } from "$lib/data/baldauf-showcase.js";
 
   let CookieConsent = $state(null);
 
@@ -575,6 +578,8 @@
     {serviceKeywords}
     fallbackServiceTags={["Strategie", "Design", "Umsetzung", "Optimierung"]}
   />
+
+  <FeaturedProjectShowcase project={baldaufShowcase.de} language="de" />
 
   <Projects
     title="PROJEKTE"
