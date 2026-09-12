@@ -25,11 +25,11 @@ export const baldaufShowcase = {
     stats: [
       {
         value: "#1",
-        label: "LOCAL SEARCH",
+        label: "LOKALE SUCHE",
       },
       {
         value: "200×",
-        label: "WEBSITE VISITS",
+        label: "WEBSITE-BESUCHE",
       },
       {
         value: "28×",
@@ -41,201 +41,69 @@ export const baldaufShowcase = {
       },
     ],
 
-    features: [
-      {
-        id: "visibility",
+    feature: {
+      sectionTitle:
+        "SUCHSICHTBARKEIT",
 
-        icon: "search",
+      title:
+        "MEHR SICHTBARKEIT IN DER LOKALEN GOOGLE-SUCHE",
 
-        tabTitle:
-          "SEARCH VISIBILITY",
+      text:
+        "Der Relaunch sollte nicht nur moderner aussehen. Ziel war, die Ordination für Menschen sichtbar zu machen, die aktiv nach einer Urologin in Wien suchen.",
 
-        tabHint:
-          "SEO · GEO · LOCAL",
+      work: [
+        "ON-PAGE SEO",
+        "SEMANTIC SEO",
+        "GEO",
+        "LOCAL SEO",
+        "GOOGLE BUSINESS",
+        "DOCFINDER",
+      ],
 
-        title:
-          "MEHR SICHTBARKEIT IN DER LOKALEN GOOGLE-SUCHE",
+      graph: {
+        eyebrow:
+          "ENTWICKLUNG WEBSITE-BESUCHE & ANFRAGEN",
 
-        text:
-          "Der Relaunch sollte nicht nur moderner aussehen. Ziel war, die Ordination für Menschen sichtbar zu machen, die aktiv nach einer Urologin in Wien suchen.",
+        visitorsLegend:
+          "Neue Website-Besucher",
 
-        work: [
-          "ON-PAGE SEO",
-          "SEMANTIC SEO",
-          "GEO",
-          "LOCAL SEO",
-          "GOOGLE BUSINESS",
-          "DOCFINDER",
+        enquiriesLegend:
+          "Anfragen",
+
+        visitorsGrowth:
+          "200×",
+
+        visitorsGrowthWord:
+          "mehr",
+
+        visitorsGrowthLabel:
+          "WEBSITE-BESUCHE",
+
+        enquiriesGrowth:
+          "28×",
+
+        enquiriesGrowthWord:
+          "mehr",
+
+        enquiriesGrowthLabel:
+          "ANFRAGEN",
+
+        timeline: [
+          "2025 Q1",
+          "2025 Q2",
+          "2025 Q3",
+          "2025 Q4",
+          "2026 Q1",
+          "2026 Q2",
         ],
 
-        graph: {
-          eyebrow:
-            "ENTWICKLUNG WEBSITE-BESUCHE & ANFRAGEN",
+        impactTitle:
+          "HOHE TERMINAUSLASTUNG",
 
-          visitorsLegend:
-            "Neue Website-Besucher",
-
-          enquiriesLegend:
-            "Anfragen",
-
-          visitorsGrowth:
-            "200×",
-
-          visitorsGrowthWord:
-            "mehr",
-
-          visitorsGrowthLabel:
-            "WEBSITE-BESUCHE",
-
-          enquiriesGrowth:
-            "28×",
-
-          enquiriesGrowthWord:
-            "mehr",
-
-          enquiriesGrowthLabel:
-            "ANFRAGEN",
-
-          timeline: [
-            "2025 Q1",
-            "2025 Q2",
-            "2025 Q3",
-            "2025 Q4",
-            "2026 Q1",
-            "2026 Q2",
-          ],
-
-          impactTitle:
-            "HOHE TERMINAUSLASTUNG",
-
-          impactText:
-            "Die gestiegene Suchsichtbarkeit führt inzwischen zu deutlich mehr Nachfrage nach Terminen.",
-        },
+        impactText:
+          "Die gestiegene Suchsichtbarkeit führt inzwischen zu deutlich mehr Nachfrage nach Terminen.",
       },
-
-      {
-        id: "performance",
-
-        icon: "performance",
-
-        tabTitle:
-          "CORE WEB VITALS",
-
-        tabHint:
-          "PERFORMANCE",
-
-        title:
-          "SCHNELLE TECHNISCHE BASIS FÜR NUTZER UND GOOGLE",
-
-        text:
-          "Geschwindigkeit, semantisches Markup und eine saubere technische Struktur wurden direkt in den Relaunch integriert.",
-
-        work: [
-          "99 PERFORMANCE",
-          "96 ACCESSIBILITY",
-          "100 BEST PRACTICES",
-          "100 SEO",
-          "SEMANTIC MARKUP",
-        ],
-
-        image:
-          "/baldauf/baldauf-performance.webp",
-
-        imageAlt:
-          "Google PageSpeed und Lighthouse Ergebnis für die Website von Dr. Bosede Baldauf",
-
-        imageLabel:
-          "GOOGLE LIGHTHOUSE",
-
-        imageResult:
-          "99 / 100",
-
-        imageNote:
-          "99 Performance · 96 Accessibility · 100 Best Practices · 100 SEO",
-      },
-
-      {
-        id: "business",
-
-        icon: "business",
-
-        tabTitle:
-          "GOOGLE BUSINESS",
-
-        tabHint:
-          "LOCAL PRESENCE",
-
-        title:
-          "MEHR SICHTBARKEIT DIREKT IN GOOGLE UND MAPS",
-
-        text:
-          "Neben der Website wurde auch die lokale Google-Präsenz optimiert, damit Patienten Standort, Bewertungen, Route, Kontakt und Website direkt in der Suche finden.",
-
-        work: [
-          "GOOGLE BUSINESS",
-          "GOOGLE MAPS",
-          "LOCAL SEO",
-          "REVIEWS",
-          "LOCAL SIGNALS",
-        ],
-
-        image:
-          "/baldauf/baldauf-google-business.webp",
-
-        imageAlt:
-          "Google Business Profil der Ordination Dr. Bosede Baldauf",
-
-        imageLabel:
-          "GOOGLE BUSINESS PROFILE",
-
-        imageResult:
-          "#1 LOCAL",
-
-        imageNote:
-          "Standort · Bewertungen · Route · Website · lokale Sichtbarkeit",
-      },
-
-      {
-        id: "booking",
-
-        icon: "booking",
-
-        tabTitle:
-          "BOOKING JOURNEY",
-
-        tabHint:
-          "SEARCH → APPOINTMENT",
-
-        title:
-          "VON DER GOOGLE-SUCHE DIREKT ZUM TERMIN",
-
-        text:
-          "Mehr Sichtbarkeit bringt nur dann einen Mehrwert, wenn Patienten die Ordination schnell verstehen, Vertrauen aufbauen und einfach den nächsten Schritt machen können.",
-
-        work: [
-          "BILINGUAL UX",
-          "BOOKING UX",
-          "CLEAR CONTACT PATHS",
-          "LOCAL SIGNALS",
-          "PATIENT JOURNEY",
-        ],
-
-        image:
-          "/baldauf/baldauf-booking.webp",
-
-        imageAlt:
-          "Online Terminbuchung der Ordination Dr. Bosede Baldauf",
-
-        imageLabel:
-          "ONLINE APPOINTMENT BOOKING",
-
-        imageResult:
-          "SEARCH → BOOKING",
-
-        imageNote:
-          "Google-Suche → Information → Vertrauen → Terminbuchung",
-      },
-    ],
+    },
   },
 
   en: {
@@ -280,200 +148,68 @@ export const baldaufShowcase = {
       },
     ],
 
-    features: [
-      {
-        id: "visibility",
+    feature: {
+      sectionTitle:
+        "SEARCH VISIBILITY",
 
-        icon: "search",
+      title:
+        "STRONGER VISIBILITY IN LOCAL GOOGLE SEARCH",
 
-        tabTitle:
-          "SEARCH VISIBILITY",
+      text:
+        "The relaunch needed to do more than look better. The goal was to make the practice visible to people actively searching for a urologist in Vienna.",
 
-        tabHint:
-          "SEO · GEO · LOCAL",
+      work: [
+        "ON-PAGE SEO",
+        "SEMANTIC SEO",
+        "GEO",
+        "LOCAL SEO",
+        "GOOGLE BUSINESS",
+        "DOCFINDER",
+      ],
 
-        title:
-          "STRONGER VISIBILITY IN LOCAL GOOGLE SEARCH",
+      graph: {
+        eyebrow:
+          "WEBSITE VISITS & ENQUIRIES",
 
-        text:
-          "The relaunch needed to do more than look better. The goal was to make the practice visible to people actively searching for a urologist in Vienna.",
+        visitorsLegend:
+          "New website visitors",
 
-        work: [
-          "ON-PAGE SEO",
-          "SEMANTIC SEO",
-          "GEO",
-          "LOCAL SEO",
-          "GOOGLE BUSINESS",
-          "DOCFINDER",
+        enquiriesLegend:
+          "Enquiries",
+
+        visitorsGrowth:
+          "200×",
+
+        visitorsGrowthWord:
+          "more",
+
+        visitorsGrowthLabel:
+          "WEBSITE VISITS",
+
+        enquiriesGrowth:
+          "28×",
+
+        enquiriesGrowthWord:
+          "more",
+
+        enquiriesGrowthLabel:
+          "ENQUIRIES",
+
+        timeline: [
+          "2025 Q1",
+          "2025 Q2",
+          "2025 Q3",
+          "2025 Q4",
+          "2026 Q1",
+          "2026 Q2",
         ],
 
-        graph: {
-          eyebrow:
-            "WEBSITE VISITS & ENQUIRIES",
+        impactTitle:
+          "HIGH APPOINTMENT DEMAND",
 
-          visitorsLegend:
-            "New website visitors",
-
-          enquiriesLegend:
-            "Enquiries",
-
-          visitorsGrowth:
-            "200×",
-
-          visitorsGrowthWord:
-            "more",
-
-          visitorsGrowthLabel:
-            "WEBSITE VISITS",
-
-          enquiriesGrowth:
-            "28×",
-
-          enquiriesGrowthWord:
-            "more",
-
-          enquiriesGrowthLabel:
-            "ENQUIRIES",
-
-          timeline: [
-            "2025 Q1",
-            "2025 Q2",
-            "2025 Q3",
-            "2025 Q4",
-            "2026 Q1",
-            "2026 Q2",
-          ],
-
-          impactTitle:
-            "HIGH APPOINTMENT DEMAND",
-
-          impactText:
-            "Increased search visibility is now generating significantly stronger appointment demand.",
-        },
+        impactText:
+          "Increased search visibility is now generating significantly stronger appointment demand.",
       },
-
-      {
-        id: "performance",
-
-        icon: "performance",
-
-        tabTitle:
-          "CORE WEB VITALS",
-
-        tabHint:
-          "PERFORMANCE",
-
-        title:
-          "A FAST TECHNICAL FOUNDATION FOR USERS AND GOOGLE",
-
-        text:
-          "Speed, semantic markup and a cleaner technical structure were integrated directly into the relaunch.",
-
-        work: [
-          "99 PERFORMANCE",
-          "96 ACCESSIBILITY",
-          "100 BEST PRACTICES",
-          "100 SEO",
-          "SEMANTIC MARKUP",
-        ],
-
-        image:
-          "/baldauf/baldauf-performance.webp",
-
-        imageAlt:
-          "Google PageSpeed and Lighthouse result for the Dr. Bosede Baldauf website",
-
-        imageLabel:
-          "GOOGLE LIGHTHOUSE",
-
-        imageResult:
-          "99 / 100",
-
-        imageNote:
-          "99 Performance · 96 Accessibility · 100 Best Practices · 100 SEO",
-      },
-
-      {
-        id: "business",
-
-        icon: "business",
-
-        tabTitle:
-          "GOOGLE BUSINESS",
-
-        tabHint:
-          "LOCAL PRESENCE",
-
-        title:
-          "STRONGER VISIBILITY DIRECTLY IN GOOGLE AND MAPS",
-
-        text:
-          "Alongside the website, the local Google presence was strengthened so patients can immediately find the location, reviews, directions, contact details and website.",
-
-        work: [
-          "GOOGLE BUSINESS",
-          "GOOGLE MAPS",
-          "LOCAL SEO",
-          "REVIEWS",
-          "LOCAL SIGNALS",
-        ],
-
-        image:
-          "/baldauf/baldauf-google-business.webp",
-
-        imageAlt:
-          "Google Business Profile of the Dr. Bosede Baldauf medical practice",
-
-        imageLabel:
-          "GOOGLE BUSINESS PROFILE",
-
-        imageResult:
-          "#1 LOCAL",
-
-        imageNote:
-          "Location · reviews · directions · website · local visibility",
-      },
-
-      {
-        id: "booking",
-
-        icon: "booking",
-
-        tabTitle:
-          "BOOKING JOURNEY",
-
-        tabHint:
-          "SEARCH → APPOINTMENT",
-
-        title:
-          "FROM GOOGLE SEARCH DIRECTLY TO AN APPOINTMENT",
-
-        text:
-          "More visibility only creates value when patients can quickly understand the practice, build trust and easily take the next step.",
-
-        work: [
-          "BILINGUAL UX",
-          "BOOKING UX",
-          "CLEAR CONTACT PATHS",
-          "LOCAL SIGNALS",
-          "PATIENT JOURNEY",
-        ],
-
-        image:
-          "/baldauf/baldauf-booking.webp",
-
-        imageAlt:
-          "Online appointment booking for the Dr. Bosede Baldauf practice",
-
-        imageLabel:
-          "ONLINE APPOINTMENT BOOKING",
-
-        imageResult:
-          "SEARCH → BOOKING",
-
-        imageNote:
-          "Google search → information → trust → appointment booking",
-      },
-    ],
+    },
   },
 };
