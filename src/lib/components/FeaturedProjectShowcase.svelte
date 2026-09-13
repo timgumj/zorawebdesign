@@ -738,15 +738,15 @@
     border-bottom: 1px solid var(--accent-blue);
 
     color: #fff;
-
-    font-size: 11px;
     line-height: 1;
-
-    font-weight: 600;
 
     letter-spacing: 0.12em;
 
     text-transform: uppercase;
+  }
+  :global(body:not(:has(.homepage-footer))) .project-kicker {
+    font-size: 11px;
+    font-weight: 600;
   }
 
   .project-header h2 {
@@ -754,12 +754,12 @@
 
     color: #fff;
 
-    font-size: clamp(24px, 2.1vw, 34px);
-
     line-height: 1.08;
 
     letter-spacing: -0.035em;
-
+  }
+  :global(body:not(:has(.homepage-footer))) .project-header h2 {
+    font-size: clamp(24px, 2.1vw, 34px);
     font-weight: 600;
   }
 
@@ -769,10 +769,10 @@
     margin: 0 0 6px;
 
     color: rgba(255, 255, 255, 0.72);
-
-    font-size: 16px;
     line-height: 1.5;
-
+  }
+  :global(body:not(:has(.homepage-footer))) .project-lead {
+    font-size: 16px;
     font-weight: 500;
   }
 
@@ -782,10 +782,10 @@
     margin: 0 0 18px;
 
     color: #999;
-
-    font-size: 16px;
     line-height: 1.55;
-
+  }
+  :global(body:not(:has(.homepage-footer))) .project-text {
+    font-size: 16px;
     font-weight: 400;
   }
 
@@ -801,17 +801,17 @@
     gap: 8px;
 
     color: #fff;
-
-    font-size: 12px;
     line-height: 1;
-
-    font-weight: 600;
 
     letter-spacing: 0.05em;
 
     text-transform: uppercase;
 
     text-decoration: none;
+  }
+  :global(body:not(:has(.homepage-footer))) .project-link {
+    font-size: 12px;
+    font-weight: 600;
   }
 
   .project-link > span {
@@ -949,17 +949,17 @@
     display: block;
 
     color: rgba(255, 255, 255, 0.52);
-
-    font-size: 11px;
     line-height: 1.25;
-
-    font-weight: 500;
 
     letter-spacing: 0.045em;
 
     text-transform: uppercase;
 
     white-space: nowrap;
+  }
+  .header-stat span {
+    font-size: 11px;
+    font-weight: 500;
   }
 
   /* =========================================================
@@ -1036,15 +1036,15 @@
     margin: 0 0 14px;
 
     color: #fff;
-
-    font-size: 15px;
     line-height: 1.4;
-
-    font-weight: 700;
 
     letter-spacing: 0.05em;
 
     text-transform: uppercase;
+  }
+  :global(body:not(:has(.homepage-footer))) .feature-detail-body h3 {
+    font-size: 15px;
+    font-weight: 700;
   }
 
   .feature-description {
@@ -1053,10 +1053,10 @@
     margin: 0 0 24px;
 
     color: #999;
-
-    font-size: 16px;
     line-height: 1.6;
-
+  }
+  :global(body:not(:has(.homepage-footer))) .feature-description {
+    font-size: 16px;
     font-weight: 400;
   }
 
@@ -1074,15 +1074,15 @@
 
   .feature-tags span {
     color: #fff;
-
-    font-size: 11px;
     line-height: 1.3;
-
-    font-weight: 500;
 
     letter-spacing: 0.035em;
 
     text-transform: uppercase;
+  }
+  :global(body:not(:has(.homepage-footer))) .feature-tags span {
+    font-size: 11px;
+    font-weight: 500;
   }
 
   .feature-tags span::before {
@@ -1147,15 +1147,15 @@
 
   .chart-heading span {
     color: rgba(255, 255, 255, 0.78);
-
-    font-size: 11px;
     line-height: 1.3;
-
-    font-weight: 700;
 
     letter-spacing: 0.06em;
 
     text-transform: uppercase;
+  }
+  :global(body:not(:has(.homepage-footer))) .chart-heading span {
+    font-size: 11px;
+    font-weight: 700;
   }
 
   /* =========================================================
@@ -1253,13 +1253,14 @@
   .growth-value span,
   .growth-metric small {
     color: rgba(255, 255, 255, 0.67);
-
-    font-size: 11px;
     line-height: 1.25;
 
-    font-weight: 600;
-
     letter-spacing: 0.035em;
+  }
+  :global(body:not(:has(.homepage-footer))) .growth-value span,
+  :global(body:not(:has(.homepage-footer))) .growth-metric small {
+    font-size: 11px;
+    font-weight: 600;
   }
 
   .growth-value span {
@@ -1302,10 +1303,10 @@
     width: fit-content;
 
     color: rgba(255, 255, 255, 0.82);
-
-    font-size: 12px;
     line-height: 1.2;
-
+  }
+  :global(body:not(:has(.homepage-footer))) .chart-key span {
+    font-size: 12px;
     font-weight: 500;
   }
 
@@ -1480,9 +1481,10 @@
     margin: 0;
 
     color: rgba(255, 255, 255, 0.64);
-
-    font-size: 12px;
     line-height: 1.5;
+  }
+  :global(body:not(:has(.homepage-footer))) .graph-impact p {
+    font-size: 12px;
   }
 
   /* =========================================================
@@ -1509,15 +1511,15 @@
 
   .graph-timeline span {
     color: rgba(255, 255, 255, 0.6);
-
-    font-size: 11px;
     line-height: 1.2;
-
-    font-weight: 500;
 
     text-align: center;
 
     text-transform: uppercase;
+  }
+  :global(body:not(:has(.homepage-footer))) .graph-timeline span {
+    font-size: 11px;
+    font-weight: 500;
   }
 
   .graph-timeline span:first-child {
@@ -1566,7 +1568,9 @@
     .project-lead,
     .project-text {
       max-width: 700px;
-
+    }
+    :global(body:not(:has(.homepage-footer))) .project-lead,
+  :global(body:not(:has(.homepage-footer))) .project-text {
       font-size: 14px;
     }
 
@@ -1634,15 +1638,15 @@
 
     .responsive-feature-title {
       color: #fff;
-
-      font-size: 13px;
       line-height: 1.3;
-
-      font-weight: 700;
 
       letter-spacing: 0.04em;
 
       text-transform: uppercase;
+    }
+    :global(body:not(:has(.homepage-footer))) .responsive-feature-title {
+      font-size: 13px;
+      font-weight: 700;
     }
 
     .details-toggle {
@@ -1699,7 +1703,8 @@
 
     .feature-detail-body h3 {
       max-width: 760px;
-
+    }
+    :global(body:not(:has(.homepage-footer))) .feature-detail-body h3 {
       font-size: 13px;
     }
 
@@ -1707,7 +1712,8 @@
       max-width: 760px;
 
       margin-bottom: 18px;
-
+    }
+    :global(body:not(:has(.homepage-footer))) .feature-description {
       font-size: 14px;
     }
 
@@ -1734,9 +1740,8 @@
     .growth-value strong {
       font-size: 27px;
     }
-
-    .growth-value span,
-    .growth-metric small {
+    :global(body:not(:has(.homepage-footer))) .growth-value span,
+  :global(body:not(:has(.homepage-footer))) .growth-metric small {
       font-size: 11px;
     }
 
@@ -1745,8 +1750,7 @@
 
       width: min(300px, 43%);
     }
-
-    .graph-timeline span {
+    :global(body:not(:has(.homepage-footer))) .graph-timeline span {
       font-size: 10px;
     }
   }
@@ -1787,15 +1791,16 @@
     .project-header-copy {
       max-width: none;
     }
-
-    .project-header h2 {
+    :global(body:not(:has(.homepage-footer))) .project-header h2 {
       font-size: 24px;
     }
 
     .project-lead,
     .project-text {
       max-width: 100%;
-
+    }
+    :global(body:not(:has(.homepage-footer))) .project-lead,
+  :global(body:not(:has(.homepage-footer))) .project-text {
       font-size: 14px;
     }
 
@@ -1844,9 +1849,11 @@
     }
 
     .header-stat span {
-      font-size: 10px;
 
       white-space: nowrap;
+    }
+    .header-stat span {
+      font-size: 10px;
     }
 
     .header-stat::before,
@@ -1892,15 +1899,15 @@
 
     .responsive-feature-title {
       color: #fff;
-
-      font-size: 13px;
       line-height: 1.3;
-
-      font-weight: 700;
 
       letter-spacing: 0.04em;
 
       text-transform: uppercase;
+    }
+    :global(body:not(:has(.homepage-footer))) .responsive-feature-title {
+      font-size: 13px;
+      font-weight: 700;
     }
 
     .details-toggle {
@@ -1957,7 +1964,8 @@
 
     .feature-detail-body h3 {
       max-width: 100%;
-
+    }
+    :global(body:not(:has(.homepage-footer))) .feature-detail-body h3 {
       font-size: 12px;
     }
 
@@ -1965,15 +1973,15 @@
       max-width: 100%;
 
       margin-bottom: 17px;
-
+    }
+    :global(body:not(:has(.homepage-footer))) .feature-description {
       font-size: 14px;
     }
 
     .feature-tags {
       gap: 7px 10px;
     }
-
-    .feature-tags span {
+    :global(body:not(:has(.homepage-footer))) .feature-tags span {
       font-size: 10px;
     }
 
@@ -1992,8 +2000,7 @@
     .chart-top {
       display: block;
     }
-
-    .chart-heading span {
+    :global(body:not(:has(.homepage-footer))) .chart-heading span {
       font-size: 10px;
     }
 
@@ -2040,8 +2047,11 @@
 
     .growth-value span,
     .growth-metric small {
-      font-size: 9px;
       line-height: 1.2;
+    }
+    :global(body:not(:has(.homepage-footer))) .growth-value span,
+  :global(body:not(:has(.homepage-footer))) .growth-metric small {
+      font-size: 9px;
     }
 
     .growth-metric small {
@@ -2080,8 +2090,7 @@
     .chart-key {
       margin-top: 17px;
     }
-
-    .chart-key span {
+    :global(body:not(:has(.homepage-footer))) .chart-key span {
       font-size: 11px;
     }
 
@@ -2103,8 +2112,10 @@
     }
 
     .graph-impact p {
-      font-size: 10px;
       line-height: 1.45;
+    }
+    :global(body:not(:has(.homepage-footer))) .graph-impact p {
+      font-size: 10px;
     }
 
     /* =====================================================
@@ -2116,12 +2127,14 @@
     }
 
     .graph-timeline span {
-      font-size: 8px;
       line-height: 1.15;
 
       letter-spacing: -0.015em;
 
       white-space: nowrap;
+    }
+    :global(body:not(:has(.homepage-footer))) .graph-timeline span {
+      font-size: 8px;
     }
   }
 
@@ -2141,7 +2154,6 @@
     .header-stat strong {
       font-size: 18px;
     }
-
     .header-stat span {
       font-size: 9px;
     }
@@ -2153,17 +2165,15 @@
     .growth-value strong {
       font-size: 20px;
     }
-
-    .growth-value span,
-    .growth-metric small {
+    :global(body:not(:has(.homepage-footer))) .growth-value span,
+  :global(body:not(:has(.homepage-footer))) .growth-metric small {
       font-size: 8.5px;
     }
 
     .graph-impact {
       width: 74%;
     }
-
-    .graph-timeline span {
+    :global(body:not(:has(.homepage-footer))) .graph-timeline span {
       font-size: 7.5px;
     }
   }
@@ -2198,9 +2208,11 @@
     }
 
     .header-stat span {
-      font-size: clamp(8px, 0.75vw, 11px);
       white-space: normal;
       overflow-wrap: anywhere;
+    }
+    .header-stat span {
+      font-size: clamp(8px, 0.75vw, 11px);
     }
 
     .desktop-project-image {
@@ -2248,9 +2260,51 @@
     .header-stat {
       padding: 8px 2px;
     }
-
     .header-stat span {
       font-size: clamp(7px, 2.2vw, 9px);
+    }
+  }
+
+  /* Shared homepage typography; other routes retain their existing styles. */
+  :global(body:has(.homepage-footer)) .project-header h2 {
+    font-size: var(--text-section);
+    font-weight: var(--weight-semibold);
+  }
+  :global(body:has(.homepage-footer)) .feature-detail-body h3,
+  :global(body:has(.homepage-footer)) .responsive-feature-title {
+    font-size: var(--text-title);
+    font-weight: var(--weight-bold);
+  }
+  :global(body:has(.homepage-footer)) .project-lead {
+    font-size: var(--text-intro);
+    font-weight: var(--weight-regular);
+  }
+  :global(body:has(.homepage-footer)) .project-text,
+  :global(body:has(.homepage-footer)) .feature-description {
+    font-size: var(--text-body);
+    font-weight: var(--weight-regular);
+  }
+  :global(body:has(.homepage-footer)) .graph-impact p {
+    font-size: var(--text-small);
+    font-weight: var(--weight-regular);
+  }
+  :global(body:has(.homepage-footer)) .project-kicker,
+  :global(body:has(.homepage-footer)) .project-link,
+  :global(body:has(.homepage-footer)) .feature-tags span,
+  :global(body:has(.homepage-footer)) .chart-heading span,
+  :global(body:has(.homepage-footer)) .growth-value span,
+  :global(body:has(.homepage-footer)) .growth-metric small,
+  :global(body:has(.homepage-footer)) .chart-key span,
+  :global(body:has(.homepage-footer)) .graph-timeline span {
+    font-size: var(--text-label);
+    font-weight: var(--weight-semibold);
+  }
+
+
+  @media (min-width: 768px) {
+    .header-stat strong,
+    .header-stat span {
+      text-align: center;
     }
   }
 </style>

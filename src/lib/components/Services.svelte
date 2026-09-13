@@ -1860,11 +1860,12 @@
   }
 
   .experience-title-rest {
-    font-size: 0.72em;
-
-    font-weight: 400;
 
     letter-spacing: 0.01em;
+  }
+  :global(body:not(:has(.homepage-footer))) .experience-title-rest {
+    font-size: 0.72em;
+    font-weight: 400;
   }
 
   :global(body.light) .experience-title {
@@ -1990,10 +1991,6 @@
 
     color: #ffffff;
 
-    font-size: clamp(14px, 1.55vw, 24px);
-
-    font-weight: 700;
-
     line-height: 1.08;
 
     letter-spacing: 0.035em;
@@ -2003,6 +2000,10 @@
     text-transform: uppercase;
 
     pointer-events: none;
+  }
+  :global(body:not(:has(.homepage-footer))) .about-editorial-title {
+    font-size: clamp(14px, 1.55vw, 24px);
+    font-weight: 700;
   }
 
   .about-title-static {
@@ -2089,15 +2090,15 @@
 
     color: #ffffff;
 
-    font-size: 12px;
-
-    font-weight: var(--weight-bold);
-
     line-height: 1;
 
     letter-spacing: 0.14em;
 
     text-transform: uppercase;
+  }
+  :global(body:not(:has(.homepage-footer))) .about-kicker {
+    font-size: 12px;
+    font-weight: var(--weight-bold);
   }
 
   :global(body.light) .about-kicker {
@@ -2118,11 +2119,13 @@
     box-sizing: border-box;
 
     color: #9a9a9a;
-    font-size: 17px;
-    font-weight: 400;
     line-height: 1.62;
     text-align: left;
     text-wrap: pretty;
+  }
+  :global(body:not(:has(.homepage-footer))) .about-editorial-text {
+    font-size: 17px;
+    font-weight: 400;
   }
 
   /* =========================================================
@@ -2197,13 +2200,14 @@
     margin: 0 0 12px;
 
     color: #ffffff;
-
-    font-size: 12px;
-    font-weight: var(--weight-bold);
     line-height: 1.3;
     letter-spacing: 0.08em;
 
     text-transform: uppercase;
+  }
+  :global(body:not(:has(.homepage-footer))) .profile-name {
+    font-size: 12px;
+    font-weight: var(--weight-bold);
   }
 
   :global(body.light) .profile-name {
@@ -2224,14 +2228,15 @@
     margin: 0;
 
     color: #888888;
-
-    font-size: 13px;
-    font-weight: var(--weight-semibold);
     line-height: 1.45;
     letter-spacing: 0.07em;
 
     text-align: left;
     text-transform: uppercase;
+  }
+  :global(body:not(:has(.homepage-footer))) .profile-role {
+    font-size: 13px;
+    font-weight: var(--weight-semibold);
   }
 
   .profile-role > span {
@@ -2390,15 +2395,15 @@
 
     color: #f2f2f2;
 
-    font-size: clamp(24px, 2.15vw, 34px);
-
     line-height: 1.12;
 
     letter-spacing: -0.035em;
 
-    font-weight: 600;
-
     text-transform: none;
+  }
+  :global(body:not(:has(.homepage-footer))) .services-header h2 {
+    font-size: clamp(24px, 2.15vw, 34px);
+    font-weight: 600;
   }
 
   .services-subtitle {
@@ -2410,13 +2415,13 @@
 
     color: rgba(255, 255, 255, 0.62);
 
-    font-size: 16px;
-
-    font-weight: 400;
-
     line-height: 1.65;
 
     letter-spacing: 0;
+  }
+  :global(body:not(:has(.homepage-footer))) .services-subtitle {
+    font-size: 16px;
+    font-weight: 400;
   }
 
   :global(body.light) .services-header {
@@ -2494,10 +2499,6 @@
 
     color: rgba(255, 255, 255, 0.72);
 
-    font-size: clamp(18px, 1.7vw, 27px);
-
-    font-weight: 500;
-
     line-height: 1.35;
 
     letter-spacing: -0.018em;
@@ -2507,6 +2508,10 @@
     text-transform: none;
 
     text-wrap: balance;
+  }
+  .problem-section-title {
+    font-size: clamp(18px, 1.7vw, 27px);
+    font-weight: 500;
   }
 
   :global(body.light) .problem-section-title {
@@ -2520,10 +2525,6 @@
 
     color: #8f8f8f;
 
-    font-size: clamp(18px, 1.7vw, 27px);
-
-    font-weight: 400;
-
     line-height: 1.68;
 
     letter-spacing: -0.018em;
@@ -2531,6 +2532,10 @@
     text-align: center;
 
     text-wrap: pretty;
+  }
+  .problem-story {
+    font-size: clamp(18px, 1.7vw, 27px);
+    font-weight: 400;
   }
 
   :global(body.light) .problem-story {
@@ -2592,8 +2597,6 @@
 
     font: inherit;
 
-    font-weight: 700;
-
     line-height: inherit;
 
     letter-spacing: inherit;
@@ -2607,6 +2610,9 @@
     transition:
       color 0.18s ease,
       opacity 0.18s ease;
+  }
+  .problem-trigger {
+    font-weight: 700;
   }
 
   .problem-trigger-text {
@@ -2840,15 +2846,15 @@
   .problem-instruction-text {
     color: rgba(255, 255, 255, 0.38);
 
-    font-size: 8px;
-
-    font-weight: 500;
-
     line-height: 1.35;
 
     letter-spacing: 0.025em;
 
     text-transform: none;
+  }
+  .problem-instruction-text {
+    font-size: 8px;
+    font-weight: 500;
   }
 
   :global(body.light) .problem-instruction-text {
@@ -3047,15 +3053,15 @@
 
     color: var(--accent-blue);
 
-    font-size: 11px;
-
-    font-weight: 700;
-
     line-height: 1.2;
 
     letter-spacing: 0.1em;
 
     text-transform: uppercase;
+  }
+  :global(body:not(:has(.homepage-footer))) .problem-popup-keyword {
+    font-size: 11px;
+    font-weight: 700;
   }
 
   .problem-popup-content {
@@ -3093,15 +3099,15 @@
 
     color: #ffffff;
 
-    font-size: 10px;
-
-    font-weight: var(--weight-bold);
-
     line-height: 1.2;
 
     letter-spacing: 0.09em;
 
     text-transform: uppercase;
+  }
+  :global(body:not(:has(.homepage-footer))) .problem-popup-label {
+    font-size: 10px;
+    font-weight: var(--weight-bold);
   }
 
   .problem-popup-solution .problem-popup-label {
@@ -3121,13 +3127,13 @@
 
     color: rgba(255, 255, 255, 0.68);
 
-    font-size: 14px;
-
-    font-weight: var(--weight-regular);
-
     line-height: 1.62;
 
     text-wrap: pretty;
+  }
+  :global(body:not(:has(.homepage-footer))) .problem-popup-block p {
+    font-size: 14px;
+    font-weight: var(--weight-regular);
   }
 
   .problem-popup-solution p {
@@ -3288,14 +3294,16 @@
     background: transparent;
     color: #777777;
     font: inherit;
-    font-size: 20px;
-    font-weight: 650;
     line-height: 1.25;
     letter-spacing: 0.025em;
     text-align: left;
     text-decoration: none;
     text-transform: uppercase;
     transition: color 0.2s ease;
+  }
+  :global(body:not(:has(.homepage-footer))) .service-trigger {
+    font-size: 20px;
+    font-weight: 650;
   }
 
   .service-trigger::after {
@@ -3431,12 +3439,14 @@
     max-width: 100%;
     margin: 0;
     color: #737373;
-    font-size: 20px;
-    font-weight: 700;
     line-height: 1.15;
     letter-spacing: 0.04em;
     text-transform: uppercase;
     transition: color 0.25s ease;
+  }
+  :global(body:not(:has(.homepage-footer))) .service-detail-heading h3 {
+    font-size: 20px;
+    font-weight: 700;
   }
 
   :global(body.light) .service-detail-heading h3 {
@@ -3457,11 +3467,13 @@
     max-width: 100%;
     margin: 18px 0 0;
     color: #6f6f6f;
-    font-size: 16px;
-    font-weight: 400;
     line-height: 1.5;
     text-wrap: pretty;
     transition: color 0.25s ease;
+  }
+  :global(body:not(:has(.homepage-footer))) .service-detail-text {
+    font-size: 16px;
+    font-weight: 400;
   }
 
   :global(body.light) .service-detail-text {
@@ -3477,7 +3489,7 @@
   }
 
   @media (min-width: 1025px) {
-    .service-trigger {
+    :global(body:not(:has(.homepage-footer))) .service-trigger {
       font-size: 18.4px;
     }
 
@@ -3625,8 +3637,7 @@
     z-index: 1;
     margin-top: 18px;
   }
-
-  .service-detail-tags span {
+  :global(body:not(:has(.homepage-footer))) .service-detail-tags span {
     font-weight: 400;
   }
 
@@ -3708,11 +3719,13 @@
   .service-content h3 {
     margin: 0 0 14px;
     color: #ffffff;
-    font-size: 20px;
-    font-weight: 700;
     line-height: 1.15;
     letter-spacing: 0.04em;
     text-transform: uppercase;
+  }
+  :global(body:not(:has(.homepage-footer))) .service-content h3 {
+    font-size: 20px;
+    font-weight: 700;
   }
 
   :global(body.light) .service-content h3 {
@@ -3722,8 +3735,10 @@
   .service-content p {
     margin: 0;
     color: #989898;
-    font-size: 16px;
     line-height: 1.5;
+  }
+  :global(body:not(:has(.homepage-footer))) .service-content p {
+    font-size: 16px;
   }
 
   :global(body.light) .service-content p {
@@ -3762,11 +3777,13 @@
     border: 1px solid rgba(255, 255, 255, 0.28);
     border-radius: 0;
     color: #ffffff;
-    font-size: 11px;
-    font-weight: 400;
     line-height: 1;
     letter-spacing: 0.035em;
     text-transform: uppercase;
+  }
+  :global(body:not(:has(.homepage-footer))) .service-tags span {
+    font-size: 11px;
+    font-weight: 400;
   }
 
   :global(body.light) .service-tags span {
@@ -3834,15 +3851,15 @@
 
     color: #ffffff;
 
-    font-size: 20px;
-
-    font-weight: var(--weight-semibold);
-
     line-height: 1.3;
 
     letter-spacing: 0.035em;
 
     text-transform: uppercase;
+  }
+  :global(body:not(:has(.homepage-footer))) .free-tools-heading h2 {
+    font-size: 20px;
+    font-weight: var(--weight-semibold);
   }
 
   :global(body.light) .free-tools-heading h2 {
@@ -3961,15 +3978,15 @@
 
     color: inherit;
 
-    font-size: 20px;
-
-    font-weight: var(--weight-semibold);
-
     line-height: 1.25;
 
     letter-spacing: 0.035em;
 
     text-transform: uppercase;
+  }
+  :global(body:not(:has(.homepage-footer))) .website-tool-copy h3 {
+    font-size: 20px;
+    font-weight: var(--weight-semibold);
   }
 
   .website-tool-copy p {
@@ -3979,11 +3996,11 @@
 
     color: #989898;
 
-    font-size: var(--type-body);
-
-    font-weight: var(--weight-regular);
-
     line-height: 1.58;
+  }
+  :global(body:not(:has(.homepage-footer))) .website-tool-copy p {
+    font-size: var(--type-body);
+    font-weight: var(--weight-regular);
   }
 
   :global(body.light) .website-tool-copy p {
@@ -4013,15 +4030,15 @@
 
     text-decoration: none;
 
-    font-size: 12px;
-
-    font-weight: var(--weight-bold);
-
     line-height: 1.2;
 
     letter-spacing: 0.08em;
 
     text-transform: uppercase;
+  }
+  :global(body:not(:has(.homepage-footer))) .website-tool-cta {
+    font-size: 12px;
+    font-weight: var(--weight-bold);
   }
 
   :global(body.light) .website-tool-cta {
@@ -4279,7 +4296,8 @@
 
     .about-editorial-title {
       bottom: 10px;
-
+    }
+    :global(body:not(:has(.homepage-footer))) .about-editorial-title {
       font-size: clamp(29px, 4.59vw, 45px);
     }
 
@@ -4289,8 +4307,7 @@
       gap: 20px;
       padding-top: 28px;
     }
-
-    .about-kicker {
+    :global(body:not(:has(.homepage-footer))) .about-kicker {
       font-size: 11px;
     }
 
@@ -4299,9 +4316,10 @@
 
       margin-top: 7px;
 
-      font-size: 15px;
-
       line-height: 1.6;
+    }
+    :global(body:not(:has(.homepage-footer))) .about-editorial-text {
+      font-size: 15px;
     }
 
     .about-editorial-figure {
@@ -4346,15 +4364,19 @@
     }
 
     .services-header h2 {
-      font-size: 24px;
 
       line-height: 1.15;
     }
+    :global(body:not(:has(.homepage-footer))) .services-header h2 {
+      font-size: 24px;
+    }
 
     .services-subtitle {
-      font-size: 13px;
 
       line-height: 1.55;
+    }
+    :global(body:not(:has(.homepage-footer))) .services-subtitle {
+      font-size: 13px;
     }
 
     .problem-workspace {
@@ -4368,16 +4390,18 @@
     .problem-story {
       max-width: 760px;
 
-      font-size: clamp(14px, 1.85vw, 16px);
-
       line-height: 1.62;
 
       letter-spacing: -0.012em;
     }
+    .problem-story {
+      font-size: clamp(14px, 1.85vw, 16px);
+    }
 
     .problem-section-title {
       margin-bottom: 16px;
-
+    }
+    .problem-section-title {
       font-size: 9px;
     }
 
@@ -4390,9 +4414,11 @@
     }
 
     .problem-instruction-text {
-      font-size: 8px;
 
       letter-spacing: 0.065em;
+    }
+    .problem-instruction-text {
+      font-size: 8px;
     }
 
     .problem-popup {
@@ -4427,7 +4453,8 @@
       gap: 10px;
 
       padding: 8px 0;
-
+    }
+    :global(body:not(:has(.homepage-footer))) .service-trigger {
       font-size: 16.2px;
     }
 
@@ -4446,8 +4473,7 @@
 
       scroll-margin-top: 88px;
     }
-
-    .service-detail-heading h3 {
+    :global(body:not(:has(.homepage-footer))) .service-detail-heading h3 {
       font-size: 18px;
     }
 
@@ -4458,11 +4484,12 @@
 
       margin-top: 16px;
 
-      font-size: 14px;
-
       line-height: 1.55;
 
       text-wrap: pretty;
+    }
+    :global(body:not(:has(.homepage-footer))) .service-detail-text {
+      font-size: 14px;
     }
 
     .service-detail-tags {
@@ -4691,9 +4718,10 @@
 
       left: 10px;
 
-      font-size: clamp(21px, 6.3vw, 31px);
-
       line-height: 0.92;
+    }
+    :global(body:not(:has(.homepage-footer))) .about-editorial-title {
+      font-size: clamp(21px, 6.3vw, 31px);
     }
 
     .about-title-track {
@@ -4716,7 +4744,8 @@
 
     .about-kicker {
       gap: 0;
-
+    }
+    :global(body:not(:has(.homepage-footer))) .about-kicker {
       font-size: 10px;
     }
 
@@ -4725,9 +4754,10 @@
 
       margin-top: 6px;
 
-      font-size: 12.5px;
-
       line-height: 1.6;
+    }
+    :global(body:not(:has(.homepage-footer))) .about-editorial-text {
+      font-size: 12.5px;
     }
     .about-editorial-figure {
       width: 100%;
@@ -4754,17 +4784,17 @@
       content: "·";
       margin-left: 6px;
     }
-
-    .profile-name {
+    :global(body:not(:has(.homepage-footer))) .profile-name {
       font-size: 11px;
     }
 
     .profile-role {
       max-width: none;
 
-      font-size: 9.5px;
-
       line-height: 1.4;
+    }
+    :global(body:not(:has(.homepage-footer))) .profile-role {
+      font-size: 9.5px;
     }
 
     .services-header {
@@ -4794,17 +4824,19 @@
     .services-header h2 {
       max-width: 100%;
 
-      font-size: clamp(22px, 6vw, 27px);
-
       line-height: 1.15;
+    }
+    :global(body:not(:has(.homepage-footer))) .services-header h2 {
+      font-size: clamp(22px, 6vw, 27px);
     }
 
     .services-subtitle {
       max-width: 100%;
 
-      font-size: 14px;
-
       line-height: 1.6;
+    }
+    :global(body:not(:has(.homepage-footer))) .services-subtitle {
+      font-size: 14px;
     }
 
     .problem-workspace {
@@ -4824,10 +4856,6 @@
     .problem-story {
       max-width: 100%;
 
-      font-size: clamp(13px, 3.55vw, 14.5px);
-
-      font-weight: 300;
-
       line-height: 1.74;
 
       letter-spacing: -0.006em;
@@ -4836,10 +4864,15 @@
 
       text-wrap: pretty;
     }
+    .problem-story {
+      font-size: clamp(13px, 3.55vw, 14.5px);
+      font-weight: 300;
+    }
 
     .problem-trigger {
       gap: 0.24em;
-
+    }
+    .problem-trigger {
       font-weight: 550;
     }
 
@@ -4855,18 +4888,20 @@
 
     .problem-trigger {
       border-bottom-width: 1px;
-
+    }
+    .problem-trigger {
       font-weight: 500;
     }
 
     .problem-section-title {
       max-width: 250px;
 
-      font-size: 8px;
-
       line-height: 1.45;
 
       letter-spacing: 0.085em;
+    }
+    .problem-section-title {
+      font-size: 8px;
     }
 
     .problem-instruction {
@@ -4882,11 +4917,12 @@
     .problem-instruction-text {
       max-width: 225px;
 
-      font-size: 7px;
-
       line-height: 1.45;
 
       letter-spacing: 0.05em;
+    }
+    .problem-instruction-text {
+      font-size: 7px;
     }
 
     .problem-popup {
@@ -4901,7 +4937,8 @@
       margin-bottom: 17px;
 
       padding-right: 32px;
-
+    }
+    :global(body:not(:has(.homepage-footer))) .problem-popup-keyword {
       font-size: 10px;
     }
 
@@ -4916,9 +4953,11 @@
     }
 
     .problem-popup-block p {
-      font-size: 13px;
 
       line-height: 1.55;
+    }
+    :global(body:not(:has(.homepage-footer))) .problem-popup-block p {
+      font-size: 13px;
     }
 
     .problem-popup-close {
@@ -5041,11 +5080,11 @@
 
     .service-content p {
       max-width: 95%;
-
+    }
+    :global(body:not(:has(.homepage-footer))) .service-content p {
       font-size: 15px;
     }
-
-    .service-tags span {
+    :global(body:not(:has(.homepage-footer))) .service-tags span {
       font-size: 10px;
     }
 
@@ -5058,8 +5097,7 @@
 
       margin-bottom: 30px;
     }
-
-    .free-tools-heading h2 {
+    :global(body:not(:has(.homepage-footer))) .free-tools-heading h2 {
       font-size: 18px;
     }
 
@@ -5078,8 +5116,7 @@
     .website-tool-card::after {
       width: 20px;
     }
-
-    .website-tool-copy h3 {
+    :global(body:not(:has(.homepage-footer))) .website-tool-copy h3 {
       font-size: 18px;
     }
 
@@ -5142,8 +5179,7 @@
     .about-image-wrap {
       aspect-ratio: 4 / 5;
     }
-
-    .about-editorial-title {
+    :global(body:not(:has(.homepage-footer))) .about-editorial-title {
       font-size: clamp(20px, 5.94vw, 27px);
     }
 
@@ -5152,44 +5188,36 @@
 
       padding-top: 22px;
     }
-
-    .about-editorial-text {
+    :global(body:not(:has(.homepage-footer))) .about-editorial-text {
       font-size: 12px;
     }
-
-    .profile-name {
+    :global(body:not(:has(.homepage-footer))) .profile-name {
       font-size: 10.5px;
     }
-
-    .profile-role {
+    :global(body:not(:has(.homepage-footer))) .profile-role {
       font-size: 9px;
     }
 
     .services-header-inner {
       padding: 28px 0;
     }
-
-    .service-content h3 {
+    :global(body:not(:has(.homepage-footer))) .service-content h3 {
       font-size: 17px;
     }
-
-    .service-content p {
+    :global(body:not(:has(.homepage-footer))) .service-content p {
       font-size: 14px;
     }
 
     .website-tool-card {
       min-height: 140px;
     }
-
-    .website-tool-copy h3 {
+    :global(body:not(:has(.homepage-footer))) .website-tool-copy h3 {
       font-size: 17px;
     }
-
-    .website-tool-copy p {
+    :global(body:not(:has(.homepage-footer))) .website-tool-copy p {
       font-size: 14px;
     }
-
-    .service-tags span {
+    :global(body:not(:has(.homepage-footer))) .service-tags span {
       font-size: 8px;
     }
 
@@ -5211,12 +5239,10 @@
 
       height: 36px;
     }
-
-    .about-editorial-title {
+    :global(body:not(:has(.homepage-footer))) .about-editorial-title {
       font-size: clamp(18px, 5.76vw, 24px);
     }
-
-    .about-editorial-text {
+    :global(body:not(:has(.homepage-footer))) .about-editorial-text {
       font-size: 11.5px;
     }
 
@@ -5229,12 +5255,10 @@
 
       padding: 28px 0;
     }
-
-    .services-header h2 {
+    :global(body:not(:has(.homepage-footer))) .services-header h2 {
       font-size: 22px;
     }
-
-    .services-subtitle {
+    :global(body:not(:has(.homepage-footer))) .services-subtitle {
       font-size: 14px;
     }
   }
@@ -5632,10 +5656,6 @@
 
       color: #ffffff;
 
-      font-size: 11px;
-
-      font-weight: 700;
-
       line-height: 1.2;
 
       letter-spacing: 0.11em;
@@ -5643,6 +5663,11 @@
       text-shadow: 0 1px 14px rgba(0, 0, 0, 0.44);
 
       text-transform: uppercase;
+    }
+    :global(body:not(:has(.homepage-footer))) .profile-name,
+  :global(body:not(:has(.homepage-footer))) .about-kicker {
+      font-size: 11px;
+      font-weight: 700;
     }
 
     .about-kicker {
@@ -5666,11 +5691,12 @@
 
       color: rgba(255, 255, 255, 0.82);
 
-      font-size: 12px;
-
       line-height: 1.48;
 
       text-shadow: 0 1px 14px rgba(0, 0, 0, 0.44);
+    }
+    :global(body:not(:has(.homepage-footer))) .profile-role {
+      font-size: 12px;
     }
 
     .about-editorial-text {
@@ -5686,13 +5712,14 @@
 
       color: rgba(255, 255, 255, 0.9);
 
-      font-size: 15px;
-
       line-height: 1.62;
 
       text-align: left;
 
       text-shadow: 0 1px 16px rgba(0, 0, 0, 0.4);
+    }
+    :global(body:not(:has(.homepage-footer))) .about-editorial-text {
+      font-size: 15px;
     }
 
     /* Keep every bracket line white over the photograph in both themes. */
@@ -5768,11 +5795,12 @@
     }
 
     .experience-title-rest {
-      font-size: clamp(10px, 0.74vw, 12.1px);
-
-      font-weight: 400;
 
       line-height: 1.28;
+    }
+    :global(body:not(:has(.homepage-footer))) .experience-title-rest {
+      font-size: clamp(10px, 0.74vw, 12.1px);
+      font-weight: 400;
     }
 
     /* Static About statement replaces the marquee completely. */
@@ -5789,15 +5817,15 @@
 
       mask-image: none;
 
-      font-size: clamp(14px, 1.55vw, 24px);
-
-      font-weight: 700;
-
       line-height: 1.08;
 
       text-align: center;
 
       white-space: normal;
+    }
+    :global(body:not(:has(.homepage-footer))) .about-editorial-title {
+      font-size: clamp(14px, 1.55vw, 24px);
+      font-weight: 700;
     }
   }
 
@@ -5815,11 +5843,12 @@
     .problem-section-title {
       max-width: 720px;
 
-      font-size: clamp(16px, 2.2vw, 20px);
-
       line-height: 1.4;
 
       text-align: center;
+    }
+    .problem-section-title {
+      font-size: clamp(16px, 2.2vw, 20px);
     }
 
     .problem-story {
@@ -5859,15 +5888,15 @@
 
       mask-image: none;
 
-      font-size: clamp(11px, 2vw, 17px);
-
-      font-weight: 700;
-
       line-height: 1.08;
 
       text-align: center;
 
       white-space: normal;
+    }
+    :global(body:not(:has(.homepage-footer))) .about-editorial-title {
+      font-size: clamp(11px, 2vw, 17px);
+      font-weight: 700;
     }
 
     .about-title-static {
@@ -5891,11 +5920,12 @@
     .problem-section-title {
       max-width: 330px;
 
-      font-size: clamp(15px, 4.2vw, 18px);
-
       line-height: 1.42;
 
       text-align: center;
+    }
+    .problem-section-title {
+      font-size: clamp(15px, 4.2vw, 18px);
     }
 
     .problem-story {
@@ -5931,9 +5961,11 @@
     }
 
     .problem-instruction-text {
-      font-size: 7.5px;
 
       line-height: 1.4;
+    }
+    .problem-instruction-text {
+      font-size: 7.5px;
     }
 
     .about-editorial-title {
@@ -5949,10 +5981,6 @@
 
       mask-image: none;
 
-      font-size: clamp(10px, 2.8vw, 14px);
-
-      font-weight: 700;
-
       line-height: 1.1;
 
       letter-spacing: 0.025em;
@@ -5960,6 +5988,10 @@
       text-align: center;
 
       white-space: normal;
+    }
+    :global(body:not(:has(.homepage-footer))) .about-editorial-title {
+      font-size: clamp(10px, 2.8vw, 14px);
+      font-weight: 700;
     }
 
     .about-title-static {
@@ -5976,7 +6008,7 @@
   }
 
   @media (max-width: 480px) {
-    .about-editorial-title {
+    :global(body:not(:has(.homepage-footer))) .about-editorial-title {
       font-size: clamp(9.5px, 2.75vw, 12.5px);
     }
   }
@@ -6127,9 +6159,11 @@
 
   @media (max-width: 767px) {
     .problem-story {
-      font-size: clamp(13.5px, 3.75vw, 15px);
 
       line-height: 1.72;
+    }
+    .problem-story {
+      font-size: clamp(13.5px, 3.75vw, 15px);
     }
 
     .problem-trigger {
@@ -6192,10 +6226,6 @@
 
     color: #ffffff;
 
-    font-size: var(--problem-copy-size);
-
-    font-weight: 700;
-
     line-height: 1.42;
 
     letter-spacing: -0.018em;
@@ -6206,11 +6236,14 @@
 
     text-wrap: balance;
   }
+  .problem-section-title {
+    font-size: var(--problem-copy-size);
+    font-weight: 700;
+  }
 
   :global(body.light) .problem-section-title {
     color: #111111;
   }
-
   .problem-story {
     font-size: var(--problem-copy-size);
   }
@@ -6460,10 +6493,6 @@
 
     color: rgba(255, 255, 255, 0.46);
 
-    font-size: 10px;
-
-    font-weight: 500;
-
     line-height: 1.4;
 
     letter-spacing: 0.01em;
@@ -6471,6 +6500,10 @@
     text-align: center;
 
     text-transform: none;
+  }
+  .problem-instruction {
+    font-size: 10px;
+    font-weight: 500;
   }
 
   .problem-instruction-arrow {
@@ -6500,8 +6533,6 @@
 
     font: inherit;
 
-    font-weight: 700;
-
     line-height: inherit;
 
     letter-spacing: inherit;
@@ -6511,6 +6542,9 @@
     white-space: nowrap;
 
     vertical-align: baseline;
+  }
+  .problem-contact-link {
+    font-weight: 700;
   }
 
   :global(body.light) .problem-contact-link {
@@ -6630,7 +6664,8 @@
 
     .problem-instruction {
       margin-bottom: 16px;
-
+    }
+    .problem-instruction {
       font-size: 10px;
     }
   }
@@ -6649,9 +6684,10 @@
 
       margin-bottom: 15px;
 
-      font-size: 10px;
-
       line-height: 1.45;
+    }
+    .problem-instruction {
+      font-size: 10px;
     }
 
     .problem-contact-icon {
@@ -6688,11 +6724,12 @@
 
     margin: 0;
 
-    font-weight: 400;
-
     text-align: right;
 
     text-transform: uppercase;
+  }
+  :global(body:not(:has(.homepage-footer))) .about-editorial-title {
+    font-weight: 400;
   }
 
   .about-availability {
@@ -6736,10 +6773,6 @@
 
     color: rgba(255, 255, 255, 0.96);
 
-    font-size: inherit;
-
-    font-weight: 400;
-
     line-height: 1.1;
 
     letter-spacing: 0.14em;
@@ -6749,6 +6782,10 @@
     text-shadow: 0 2px 18px rgba(0, 0, 0, 0.3);
 
     text-wrap: balance;
+  }
+  :global(body:not(:has(.homepage-footer))) .about-title-static {
+    font-size: inherit;
+    font-weight: 400;
   }
 
   .about-title-static::after {
@@ -6828,17 +6865,16 @@
       bottom: 24px;
 
       left: auto;
-
+    }
+    :global(body:not(:has(.homepage-footer))) .about-editorial-title {
       font-size: clamp(10.4px, 0.96vw, 14.4px);
-
       font-weight: 400;
     }
 
     .about-availability {
       gap: 16px;
     }
-
-    .about-title-static {
+    :global(body:not(:has(.homepage-footer))) .about-title-static {
       font-weight: 300;
     }
   }
@@ -6851,11 +6887,11 @@
 
       left: auto;
 
-      font-size: clamp(11px, 1.7vw, 15px);
-
-      font-weight: 400;
-
       text-align: right;
+    }
+    :global(body:not(:has(.homepage-footer))) .about-editorial-title {
+      font-size: clamp(11px, 1.7vw, 15px);
+      font-weight: 400;
     }
 
     .about-availability {
@@ -6885,11 +6921,11 @@
 
       max-width: calc(100% - 28px);
 
-      font-size: clamp(9.5px, 2.7vw, 12.5px);
-
-      font-weight: 400;
-
       text-align: right;
+    }
+    :global(body:not(:has(.homepage-footer))) .about-editorial-title {
+      font-size: clamp(9.5px, 2.7vw, 12.5px);
+      font-weight: 400;
     }
 
     .about-availability {
@@ -7042,14 +7078,16 @@
 
   @media (max-width: 1024px) {
     .problem-popup-label {
-      font-size: 70%;
       line-height: 1.25;
       letter-spacing: 0.08em;
+    }
+    :global(body:not(:has(.homepage-footer))) .problem-popup-label {
+      font-size: 70%;
     }
   }
 
   @media (max-width: 767px) {
-    .problem-popup-label {
+    :global(body:not(:has(.homepage-footer))) .problem-popup-label {
       font-size: 68%;
     }
   }
@@ -7111,9 +7149,11 @@
       max-width: 100%;
       box-sizing: border-box;
       padding: 12px 24px;
-      font-size: 12px;
       line-height: 1.48;
       color: rgba(255, 255, 255, 0.82);
+    }
+    :global(body:not(:has(.homepage-footer))) .about-experience-copy {
+      font-size: 12px;
     }
 
     .about-experience-copy::before,
@@ -7207,6 +7247,8 @@
       right: 24px;
       bottom: auto;
       max-width: 54%;
+    }
+    :global(body:not(:has(.homepage-footer))) .about-editorial-title {
       font-size: clamp(7.7px, 1.19vw, 10.5px);
     }
 
@@ -7225,6 +7267,8 @@
       max-width: 100%;
       padding: 12px 18px;
       border: 0;
+    }
+    :global(body:not(:has(.homepage-footer))) .profile-role {
       font-size: 10px;
     }
 
@@ -7254,6 +7298,9 @@
     .profile-name,
     .about-kicker {
       margin: 0 0 8px;
+    }
+    :global(body:not(:has(.homepage-footer))) .profile-name,
+  :global(body:not(:has(.homepage-footer))) .about-kicker {
       font-size: 10px;
       font-weight: 700;
     }
@@ -7261,8 +7308,10 @@
     .about-editorial-text {
       margin: 0;
       padding: 12px 18px;
-      font-size: 12px;
       line-height: 1.5;
+    }
+    :global(body:not(:has(.homepage-footer))) .about-editorial-text {
+      font-size: 12px;
     }
 
     .about-experience-heading {
@@ -7271,8 +7320,10 @@
     }
 
     .about-experience-copy {
-      font-size: 8px;
       padding: 8px 12px;
+    }
+    :global(body:not(:has(.homepage-footer))) .about-experience-copy {
+      font-size: 8px;
     }
 
     .about-experience-stack {
@@ -7541,6 +7592,140 @@
     .service-mobile-tags-row .service-description-toggle {
       margin: 0;
       justify-self: end;
+    }
+  }
+
+  /* Shared homepage typography; other routes retain their existing styles. */
+  :global(body:has(.homepage-footer)) .services-header h2,
+  :global(body:has(.homepage-footer)) .free-tools-heading h2 {
+    font-size: var(--text-section);
+    font-weight: var(--weight-semibold);
+  }
+  :global(body:has(.homepage-footer)) .service-trigger,
+  :global(body:has(.homepage-footer)) .service-detail-heading h3,
+  :global(body:has(.homepage-footer)) .service-content h3,
+  :global(body:has(.homepage-footer)) .website-tool-copy h3 {
+    font-size: var(--text-title);
+    font-weight: var(--weight-bold);
+  }
+  :global(body:has(.homepage-footer)) .services-subtitle,
+  :global(body:has(.homepage-footer)) .about-editorial-text {
+    font-size: var(--text-intro);
+    font-weight: var(--weight-regular);
+  }
+  :global(body:has(.homepage-footer)) .problem-popup-block p,
+  :global(body:has(.homepage-footer)) .service-detail-text,
+  :global(body:has(.homepage-footer)) .service-content p,
+  :global(body:has(.homepage-footer)) .website-tool-copy p {
+    font-size: var(--text-body);
+    font-weight: var(--weight-regular);
+  }
+  :global(body:has(.homepage-footer)) .experience-title-rest,
+  :global(body:has(.homepage-footer)) .about-experience-copy {
+    font-size: var(--text-small);
+    font-weight: var(--weight-regular);
+  }
+  :global(body:has(.homepage-footer)) .about-editorial-title,
+  :global(body:has(.homepage-footer)) .about-title-static,
+  :global(body:has(.homepage-footer)) .about-kicker,
+  :global(body:has(.homepage-footer)) .profile-name,
+  :global(body:has(.homepage-footer)) .profile-role,
+  :global(body:has(.homepage-footer)) .problem-popup-keyword,
+  :global(body:has(.homepage-footer)) .problem-popup-label,
+  :global(body:has(.homepage-footer)) .service-detail-tags span,
+  :global(body:has(.homepage-footer)) .service-tags span,
+  :global(body:has(.homepage-footer)) .website-tool-cta {
+    font-size: var(--text-label);
+    font-weight: var(--weight-semibold);
+  }
+
+
+  @media (min-width: 1025px) {
+    .about-editorial-figure > .profile-role {
+      display: none;
+    }
+  }
+
+  @media (max-width: 1024px) {
+    .about-editorial {
+      position: relative;
+    }
+
+    .about-image-caption {
+      position: absolute;
+      top: 24px;
+      right: 24px;
+      bottom: auto;
+      left: auto;
+      z-index: 5;
+      display: block;
+      max-width: calc(100% - 48px);
+    }
+
+    .about-image-caption .about-editorial-title {
+      position: static;
+      max-width: 100%;
+      margin: 0;
+      text-align: right;
+    }
+
+    .about-mobile-identity {
+      display: none;
+    }
+
+    .about-editorial .about-top-copy,
+    .about-editorial .about-editorial-text,
+    :global(body.light) .about-editorial .about-top-copy,
+    :global(body.light) .about-editorial .about-editorial-text {
+      --editorial-border: #ffffff;
+      color: #ffffff;
+    }
+
+    .about-editorial .about-kicker,
+    .about-editorial .about-title-static,
+    :global(body.light) .about-editorial .about-kicker,
+    :global(body.light) .about-editorial .about-title-static {
+      color: #ffffff;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .about-image-caption {
+      top: 14px;
+      right: 14px;
+      max-width: calc(100% - 28px);
+    }
+
+    .about-below-copy {
+      position: absolute;
+      inset: 0;
+      z-index: 4;
+      display: block;
+      width: 100%;
+      margin: 0;
+      padding: 0;
+      pointer-events: none;
+    }
+
+    .about-top-copy {
+      position: absolute;
+      right: 14px;
+      bottom: 14px;
+      width: calc(100% - 28px);
+      max-width: 380px;
+      margin: 0;
+      padding: 12px 14px;
+      text-shadow: 0 1px 14px rgba(0, 0, 0, 0.65);
+    }
+  }
+
+  @media (max-width: 767px) {
+    :global(body:has(.homepage-footer)) .about-top-copy .about-editorial-text {
+      font-size: calc(var(--text-intro) - 4px);
+    }
+
+    :global(body:has(.homepage-footer)) .about-top-copy .about-kicker {
+      font-size: calc(var(--text-label) - 2px);
     }
   }
 </style>

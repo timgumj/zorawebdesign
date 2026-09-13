@@ -106,8 +106,10 @@
   .footer-service-areas p {
     margin: 0;
     color: rgba(255, 255, 255, 0.62);
-    font-size: 9.72px;
     letter-spacing: 0.16em;
+  }
+  :global(body:not(:has(.homepage-footer))) .footer-service-areas p {
+    font-size: 9.72px;
   }
 
   :global(body.light) .footer-service-areas p {
@@ -128,9 +130,11 @@
     padding-bottom: 4px;
     border-bottom: 1px solid #0043ff;
     color: #fff;
-    font-size: 10.53px;
     letter-spacing: 0.14em;
     text-decoration: none;
+  }
+  :global(body:not(:has(.homepage-footer))) .footer-service-areas a {
+    font-size: 10.53px;
   }
 
   .footer-service-areas a:hover,
@@ -153,13 +157,14 @@
   .footer-meta p {
     margin: 0;
     color: #fff;
-    font-size: 11.34px;
     letter-spacing: 0.18em;
     text-transform: uppercase;
     transition: color 0.3s ease;
   }
-
-  .footer-meta .footer-copyright {
+  :global(body:not(:has(.homepage-footer))) .footer-meta p {
+    font-size: 11.34px;
+  }
+  :global(body:not(:has(.homepage-footer))) .footer-meta .footer-copyright {
     font-weight: 300;
   }
 
@@ -175,7 +180,6 @@
     background: transparent;
     color: #fff;
     font: inherit;
-    font-size: 11.34px;
     letter-spacing: 0.18em;
     text-transform: uppercase;
     text-decoration: none;
@@ -184,6 +188,9 @@
     transition:
       color 0.3s ease,
       border-color 0.3s ease;
+  }
+  :global(body:not(:has(.homepage-footer))) .footer-imprint-link {
+    font-size: 11.34px;
   }
 
   :global(body.light) .footer-imprint-link {
@@ -248,9 +255,8 @@
     .footer-wko-link {
       justify-self: start;
     }
-
-    .footer-meta p,
-    .footer-imprint-link {
+    :global(body:not(:has(.homepage-footer))) .footer-meta p,
+  :global(body:not(:has(.homepage-footer))) .footer-imprint-link {
       font-size: 12.96px;
     }
 
@@ -290,8 +296,11 @@
 
     .footer-meta p,
     .footer-imprint-link {
-      font-size: 11.34px;
       letter-spacing: 0.12em;
+    }
+    :global(body:not(:has(.homepage-footer))) .footer-meta p,
+  :global(body:not(:has(.homepage-footer))) .footer-imprint-link {
+      font-size: 11.34px;
     }
 
     .footer-wko-logo {
@@ -306,7 +315,6 @@
       border-left: 1px solid rgba(255, 255, 255, 0.08);
       border-right: 1px solid rgba(255, 255, 255, 0.08);
     }
-
     .homepage-footer .footer-row {
       width: 100%;
       max-width: none;
@@ -314,10 +322,22 @@
       padding-right: 39px;
       padding-left: 39px;
     }
-
     :global(body.light) .site-footer.homepage-footer {
       border-left-color: rgba(0, 0, 0, 0.08);
       border-right-color: rgba(0, 0, 0, 0.08);
     }
   }
+  /* Shared homepage typography; other routes retain their existing styles. */
+  :global(body:has(.homepage-footer)) .footer-meta p,
+  :global(body:has(.homepage-footer)) .footer-meta .footer-copyright {
+    font-size: var(--text-small);
+    font-weight: var(--weight-regular);
+  }
+  :global(body:has(.homepage-footer)) .footer-service-areas p,
+  :global(body:has(.homepage-footer)) .footer-service-areas a,
+  :global(body:has(.homepage-footer)) .footer-imprint-link {
+    font-size: var(--text-label);
+    font-weight: var(--weight-semibold);
+  }
+
 </style>

@@ -834,23 +834,27 @@
   }
   .hero-greeting-text {
     color: rgba(246, 246, 242, 0.78);
-    font-size: clamp(0.76rem, 0.3vw + 0.72rem, 0.9rem);
     line-height: 1.2;
-    font-weight: 400;
     letter-spacing: 0.08em;
     text-transform: none;
     transition: color 0.3s ease;
+  }
+  :global(body:not(:has(.homepage-footer))) .hero-greeting-text {
+    font-size: clamp(0.76rem, 0.3vw + 0.72rem, 0.9rem);
+    font-weight: 400;
   }
   :global(body.light) .hero-greeting-text {
     color: rgba(0, 0, 0, 0.68);
   }
   .hero-name {
     color: #ffffff;
-    font-size: clamp(0.74rem, 0.26vw + 0.7rem, 0.86rem);
     line-height: 1.1;
-    font-weight: 600;
     text-transform: uppercase;
     transition: color 0.3s ease;
+  }
+  :global(body:not(:has(.homepage-footer))) .hero-name {
+    font-size: clamp(0.74rem, 0.26vw + 0.7rem, 0.86rem);
+    font-weight: 600;
   }
   :global(body.light) .hero-name {
     color: #111111;
@@ -996,15 +1000,17 @@
   .hero-word {
     display: block;
     color: #f5f5f5;
-    font-size: var(--hero-title-size);
     line-height: var(--hero-title-leading);
     /* slightly lighter than previous 700 */
-    font-weight: 600;
     letter-spacing: -0.025em;
     text-transform: uppercase;
     text-wrap: balance;
     text-align: left;
     transition: color 0.3s ease;
+  }
+  :global(body:not(:has(.homepage-footer))) .hero-word {
+    font-size: var(--hero-title-size);
+    font-weight: 600;
   }
   :global(body.light) .hero-word {
     color: #111111;
@@ -1045,12 +1051,14 @@
     max-width: 100%;
     margin: 0;
     color: #ffffff;
-    font-size: 20px;
-    font-weight: 300;
     line-height: 1.5;
     letter-spacing: 0;
     text-align: left;
     text-wrap: pretty;
+  }
+  :global(body:not(:has(.homepage-footer))) .hero-text {
+    font-size: 20px;
+    font-weight: 300;
   }
   :global(body.light) .hero-text-accent {
     background: #0043ff;
@@ -1079,8 +1087,6 @@
     background: #ffffff;
     border: 1px solid #ffffff;
     text-decoration: none;
-    font-size: clamp(0.66rem, 0.16vw + 0.63rem, 0.76rem);
-    font-weight: 700;
     letter-spacing: 0.07em;
     text-transform: uppercase;
     transition:
@@ -1088,6 +1094,10 @@
       background 0.25s ease,
       border-color 0.25s ease,
       color 0.25s ease;
+  }
+  :global(body:not(:has(.homepage-footer))) .cta-link {
+    font-size: clamp(0.66rem, 0.16vw + 0.63rem, 0.76rem);
+    font-weight: 700;
   }
   .cta-link:hover {
     transform: translateY(-3px);
@@ -1156,7 +1166,7 @@
     .hero-bg-wall-desktop {
       width: clamp(34%, 39vw, 46%);
     }
-    .hero-text {
+    :global(body:not(:has(.homepage-footer))) .hero-text {
       font-size: 19px;
     }
   }
@@ -1282,8 +1292,10 @@
     }
 
     .hero-greeting-text {
-      font-size: clamp(0.82rem, 1vw, 0.98rem);
       text-transform: none;
+    }
+    :global(body:not(:has(.homepage-footer))) .hero-greeting-text {
+      font-size: clamp(0.82rem, 1vw, 0.98rem);
     }
 
     .hero-line,
@@ -1310,8 +1322,13 @@
       text-align: left;
       line-height: 0.99;
       letter-spacing: -0.045em;
-      font-weight: 500;
       text-transform: none;
+    }
+    :global(body:not(:has(.homepage-footer))) .hero-word,
+  :global(body:not(:has(.homepage-footer))) .hero-word-center,
+  :global(body:not(:has(.homepage-footer))) .hero-word-mid,
+  :global(body:not(:has(.homepage-footer))) .hero-word-wien {
+      font-weight: 500;
     }
 
     /* Minimal statement accent on tablet */
@@ -1329,10 +1346,12 @@
     .hero-text {
       max-width: 100%;
       margin: 0;
-      font-size: 20px;
-      font-weight: 400;
       line-height: 1.5;
       text-align: left;
+    }
+    :global(body:not(:has(.homepage-footer))) .hero-text {
+      font-size: 20px;
+      font-weight: 400;
     }
 
     :global(body.light) .hero-text-accent {
@@ -1556,16 +1575,20 @@
       gap: 1px;
     }
     .hero-greeting-text {
-      font-size: 0.72rem;
       line-height: 1.1;
       letter-spacing: 0.05em;
       text-transform: none;
+    }
+    :global(body:not(:has(.homepage-footer))) .hero-greeting-text {
+      font-size: 0.72rem;
       font-weight: 300;
     }
     .hero-name {
-      font-size: 0.68rem;
       line-height: 1.1;
       text-transform: uppercase;
+    }
+    :global(body:not(:has(.homepage-footer))) .hero-name {
+      font-size: 0.68rem;
     }
     .hero-title {
       width: 100%;
@@ -1585,11 +1608,14 @@
     .hero-word-mobile {
       width: 100%;
       text-align: left;
-      font-size: clamp(1.2rem, 5.5vw, 1.8rem);
       line-height: 1.02;
       letter-spacing: -0.035em;
-      font-weight: 500;
       text-transform: none;
+    }
+    :global(body:not(:has(.homepage-footer))) .hero-word,
+  :global(body:not(:has(.homepage-footer))) .hero-word-mobile {
+      font-size: clamp(1.2rem, 5.5vw, 1.8rem);
+      font-weight: 500;
     }
 
     .hero-marquee-up .hero-marquee-track {
@@ -1620,10 +1646,12 @@
       max-width: 100%;
       margin: 0;
       color: rgba(255, 255, 255, 0.72);
-      font-size: 15px;
-      font-weight: 300;
       line-height: 1.48;
       text-align: left;
+    }
+    :global(body:not(:has(.homepage-footer))) .hero-text {
+      font-size: 15px;
+      font-weight: 300;
     }
     :global(body.light) .hero-text-accent {
       background: transparent;
@@ -1639,8 +1667,10 @@
     .cta-link {
       min-height: 38px;
       padding: 0 12px;
-      font-size: 0.6rem;
       flex: 0 1 auto;
+    }
+    :global(body:not(:has(.homepage-footer))) .cta-link {
+      font-size: 0.6rem;
     }
   }
   /* =========================================================
@@ -1656,8 +1686,8 @@
     .hero-inner {
       width: min(64%, 300px);
     }
-    .hero-word,
-    .hero-word-mobile {
+    :global(body:not(:has(.homepage-footer))) .hero-word,
+  :global(body:not(:has(.homepage-footer))) .hero-word-mobile {
       font-size: clamp(1.15rem, 5.4vw, 1.65rem);
     }
     .hero-text-accent {
@@ -1667,12 +1697,14 @@
     .hero-text {
       width: 100%;
       max-width: 100%;
-      font-size: 14px;
-      font-weight: 300;
       line-height: 1.48;
       text-align: left;
       align-self: flex-start;
       justify-self: start;
+    }
+    :global(body:not(:has(.homepage-footer))) .hero-text {
+      font-size: 14px;
+      font-weight: 300;
     }
   }
   /* =========================================================
@@ -1780,11 +1812,13 @@
       gap: clamp(3px, 0.45vw, 7px);
     }
     .hero-word {
-      font-size: clamp(2.1rem, 3.2vw, 3.35rem);
       line-height: 0.98;
-      font-weight: 500;
       letter-spacing: -0.045em;
       text-transform: none;
+    }
+    :global(body:not(:has(.homepage-footer))) .hero-word {
+      font-size: clamp(2.1rem, 3.2vw, 3.35rem);
+      font-weight: 500;
     }
     .hero-word-wien::after {
       content: ".";
@@ -1801,8 +1835,10 @@
     }
     .hero-text {
       color: rgba(255, 255, 255, 0.66);
-      font-size: clamp(17px, calc(0.9vw + 2px), 19px);
       line-height: 1.62;
+    }
+    :global(body:not(:has(.homepage-footer))) .hero-text {
+      font-size: clamp(17px, calc(0.9vw + 2px), 19px);
     }
     :global(body.light) .hero-text-accent {
       background: transparent;
@@ -1874,4 +1910,28 @@
     content: none !important;
     display: none !important;
   }
+  /* Shared homepage typography; other routes retain their existing styles. */
+  :global(body:has(.homepage-footer)) .hero-title,
+  :global(body:has(.homepage-footer)) .hero-word,
+  :global(body:has(.homepage-footer)) .hero-word-center,
+  :global(body:has(.homepage-footer)) .hero-word-mid,
+  :global(body:has(.homepage-footer)) .hero-word-wien,
+  :global(body:has(.homepage-footer)) .hero-word-mobile {
+    font-size: var(--text-hero);
+    font-weight: var(--weight-medium);
+  }
+  :global(body:has(.homepage-footer)) .hero-text {
+    font-size: var(--text-intro);
+    font-weight: var(--weight-regular);
+  }
+  :global(body:has(.homepage-footer)) .hero-greeting-text {
+    font-size: var(--text-small);
+    font-weight: var(--weight-regular);
+  }
+  :global(body:has(.homepage-footer)) .hero-name,
+  :global(body:has(.homepage-footer)) .cta-link {
+    font-size: var(--text-label);
+    font-weight: var(--weight-semibold);
+  }
+
 </style>

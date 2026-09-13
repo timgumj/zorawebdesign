@@ -369,11 +369,13 @@
     grid-column: 2;
     margin: 0 0 18px;
     color: rgba(255, 255, 255, 0.58);
-    font-size: 11px;
     line-height: 1.2;
-    font-weight: 700;
     letter-spacing: 0.18em;
     text-transform: uppercase;
+  }
+  :global(body:not(:has(.homepage-footer))) .process-eyebrow {
+    font-size: 11px;
+    font-weight: 700;
   }
 
   /* =========================================================
@@ -384,11 +386,13 @@
     max-width: 720px;
     margin: 0;
     color: #f2f2f2;
-    font-size: clamp(24px, 2.15vw, 34px);
     line-height: 1.12;
     letter-spacing: -0.035em;
-    font-weight: 600;
     text-transform: none;
+  }
+  :global(body:not(:has(.homepage-footer))) .process-header h2 {
+    font-size: clamp(24px, 2.15vw, 34px);
+    font-weight: 600;
   }
 
   /* =========================================================
@@ -399,9 +403,11 @@
     margin: 0;
     padding: 0;
     color: rgba(255, 255, 255, 0.62);
-    font-size: 16px;
     line-height: 1.65;
     letter-spacing: 0;
+  }
+  :global(body:not(:has(.homepage-footer))) .process-subtitle {
+    font-size: 16px;
     font-weight: 400;
   }
 
@@ -553,12 +559,14 @@
   .stage-content h3 {
     margin: 0 0 16px;
     color: #ffffff;
-    font-size: 20px;
     line-height: 1.15;
     letter-spacing: 0.04em;
     text-transform: uppercase;
-    font-weight: 700;
     transition: color 0.3s ease;
+  }
+  :global(body:not(:has(.homepage-footer))) .stage-content h3 {
+    font-size: 20px;
+    font-weight: 700;
   }
 
   :global(body.light) .stage-content h3 {
@@ -569,9 +577,11 @@
     max-width: 620px;
     margin: 0;
     color: #9a9a9a;
-    font-size: 16px;
     line-height: 1.7;
     transition: color 0.3s ease;
+  }
+  :global(body:not(:has(.homepage-footer))) .stage-content p {
+    font-size: 16px;
   }
 
   .stage-inline-link {
@@ -659,11 +669,13 @@
 
   .image-credit-text {
     color: #b3b3b3;
-    font-size: 11px;
     line-height: 1.35;
-    font-weight: 600;
     letter-spacing: 0.055em;
     text-transform: uppercase;
+  }
+  :global(body:not(:has(.homepage-footer))) .image-credit-text {
+    font-size: 11px;
+    font-weight: 600;
   }
 
   :global(body.light) .image-credit-text {
@@ -694,14 +706,15 @@
       gap: 48px;
       padding: 36px 0;
     }
-
-    .process-header h2 {
+    :global(body:not(:has(.homepage-footer))) .process-header h2 {
       font-size: 24px;
     }
 
     .process-subtitle {
-      font-size: 15px;
       line-height: 1.6;
+    }
+    :global(body:not(:has(.homepage-footer))) .process-subtitle {
+      font-size: 15px;
     }
 
     .process-stage {
@@ -758,6 +771,8 @@
 
     .stage-content p {
       max-width: none;
+    }
+    :global(body:not(:has(.homepage-footer))) .stage-content p {
       font-size: 14px;
     }
 
@@ -845,17 +860,23 @@
 
     .process-eyebrow {
       margin-bottom: 14px;
+    }
+    :global(body:not(:has(.homepage-footer))) .process-eyebrow {
       font-size: 9px;
     }
 
     .process-header h2 {
-      font-size: 24px;
       line-height: 1.15;
+    }
+    :global(body:not(:has(.homepage-footer))) .process-header h2 {
+      font-size: 24px;
     }
 
     .process-subtitle {
-      font-size: 13px;
       line-height: 1.55;
+    }
+    :global(body:not(:has(.homepage-footer))) .process-subtitle {
+      font-size: 13px;
     }
 
     .image-credit {
@@ -863,8 +884,10 @@
     }
 
     .image-credit-text {
-      font-size: 10px;
       letter-spacing: 0.05em;
+    }
+    :global(body:not(:has(.homepage-footer))) .image-credit-text {
+      font-size: 10px;
     }
   }
 
@@ -904,20 +927,26 @@
 
     .process-eyebrow {
       margin-bottom: 14px;
-      font-size: 9px;
       letter-spacing: 0.17em;
+    }
+    :global(body:not(:has(.homepage-footer))) .process-eyebrow {
+      font-size: 9px;
     }
 
     .process-header h2 {
       max-width: 100%;
-      font-size: clamp(22px, 6vw, 27px);
       line-height: 1.15;
+    }
+    :global(body:not(:has(.homepage-footer))) .process-header h2 {
+      font-size: clamp(22px, 6vw, 27px);
     }
 
     .process-subtitle {
       max-width: 100%;
-      font-size: 14px;
       line-height: 1.6;
+    }
+    :global(body:not(:has(.homepage-footer))) .process-subtitle {
+      font-size: 14px;
     }
 
     .process-stage {
@@ -932,14 +961,15 @@
     .stage-number {
       font-size: 18px;
     }
-
-    .stage-content h3 {
+    :global(body:not(:has(.homepage-footer))) .stage-content h3 {
       font-size: 18px;
     }
 
     .stage-content p {
-      font-size: 14px;
       line-height: 1.4;
+    }
+    :global(body:not(:has(.homepage-footer))) .stage-content p {
+      font-size: 14px;
     }
 
     .stage-right {
@@ -991,9 +1021,11 @@
     }
 
     .image-credit-text {
-      font-size: 9px;
       line-height: 1.4;
       letter-spacing: 0.05em;
+    }
+    :global(body:not(:has(.homepage-footer))) .image-credit-text {
+      font-size: 9px;
     }
 
     .stage-line {
@@ -1034,8 +1066,7 @@
     .image-credit {
       margin-top: 9px;
     }
-
-    .image-credit-text {
+    :global(body:not(:has(.homepage-footer))) .image-credit-text {
       font-size: 9px;
     }
   }
@@ -1049,12 +1080,10 @@
       gap: 20px;
       padding: 28px 0;
     }
-
-    .process-header h2 {
+    :global(body:not(:has(.homepage-footer))) .process-header h2 {
       font-size: 22px;
     }
-
-    .process-subtitle {
+    :global(body:not(:has(.homepage-footer))) .process-subtitle {
       font-size: 14px;
     }
 
@@ -1084,4 +1113,30 @@
       animation: none;
     }
   }
+  /* Shared homepage typography; other routes retain their existing styles. */
+  :global(body:has(.homepage-footer)) .process-header h2 {
+    font-size: var(--text-section);
+    font-weight: var(--weight-semibold);
+  }
+  :global(body:has(.homepage-footer)) .stage-content h3 {
+    font-size: var(--text-title);
+    font-weight: var(--weight-bold);
+  }
+  :global(body:has(.homepage-footer)) .process-subtitle {
+    font-size: var(--text-intro);
+    font-weight: var(--weight-regular);
+  }
+  :global(body:has(.homepage-footer)) .stage-content p {
+    font-size: var(--text-body);
+    font-weight: var(--weight-regular);
+  }
+  :global(body:has(.homepage-footer)) .image-credit-text {
+    font-size: var(--text-small);
+    font-weight: var(--weight-regular);
+  }
+  :global(body:has(.homepage-footer)) .process-eyebrow {
+    font-size: var(--text-label);
+    font-weight: var(--weight-semibold);
+  }
+
 </style>

@@ -657,15 +657,15 @@
 
     font-family: inherit;
 
-    font-size: clamp(24px, 2.15vw, 34px);
-
     line-height: 1.12;
 
     letter-spacing: -0.035em;
 
-    font-weight: 600;
-
     text-transform: none;
+  }
+  :global(body:not(:has(.homepage-footer))) .contact-header h2 {
+    font-size: clamp(24px, 2.15vw, 34px);
+    font-weight: 600;
   }
 
   .contact-subtitle {
@@ -677,14 +677,15 @@
     color: rgba(255, 255, 255, 0.62);
 
     font-family: inherit;
-
-    font-size: 16px;
-    font-weight: 400;
     line-height: 1.65;
 
     letter-spacing: 0;
 
     text-transform: none;
+  }
+  :global(body:not(:has(.homepage-footer))) .contact-subtitle {
+    font-size: 16px;
+    font-weight: 400;
   }
 
   :global(body.light) .contact-header {
@@ -751,14 +752,16 @@
     color: #ffffff;
 
     font-family: inherit;
-
-    font-size: 16px;
-    font-weight: 600;
     line-height: 1.3;
 
     letter-spacing: 0.04em;
 
     text-transform: uppercase;
+  }
+  :global(body:not(:has(.homepage-footer))) .contact-success-box h3,
+  :global(body:not(:has(.homepage-footer))) .contact-error-box h3 {
+    font-size: 16px;
+    font-weight: 600;
   }
 
   .contact-success-box p,
@@ -770,10 +773,12 @@
     color: #b5b5b5;
 
     font-family: inherit;
-
+    line-height: 1.65;
+  }
+  :global(body:not(:has(.homepage-footer))) .contact-success-box p,
+  :global(body:not(:has(.homepage-footer))) .contact-error-box p {
     font-size: 14px;
     font-weight: 400;
-    line-height: 1.65;
   }
 
   .contact-error-box a {
@@ -783,9 +788,10 @@
   .contact-technical-error {
     margin-top: 10px !important;
 
-    font-size: 12px !important;
-
     opacity: 0.7;
+  }
+  :global(body:not(:has(.homepage-footer))) .contact-technical-error {
+    font-size: 12px !important;
   }
 
   :global(body.light) .contact-success-box h3,
@@ -915,14 +921,15 @@
     color: #ffffff;
 
     font-family: inherit;
-
-    font-size: 14px;
-    font-weight: 600;
     line-height: 1.35;
 
     letter-spacing: 0.075em;
 
     text-transform: uppercase;
+  }
+  :global(body:not(:has(.homepage-footer))) .card-eyebrow {
+    font-size: 14px;
+    font-weight: 600;
   }
 
   :global(body.light) .card-eyebrow {
@@ -973,9 +980,6 @@
     color: #ffffff;
 
     font-family: inherit;
-
-    font-size: 13px;
-    font-weight: 400;
     line-height: 1.4;
 
     letter-spacing: 0.025em;
@@ -986,6 +990,11 @@
       color 0.3s ease,
       background 0.3s ease,
       border-color 0.25s ease;
+  }
+  :global(body:not(:has(.homepage-footer))) .contact-form input,
+  :global(body:not(:has(.homepage-footer))) .contact-form textarea {
+    font-size: 13px;
+    font-weight: 400;
   }
 
   .contact-form input:hover,
@@ -1006,10 +1015,12 @@
 
     font-family: inherit;
 
+    letter-spacing: 0.055em;
+  }
+  :global(body:not(:has(.homepage-footer))) .contact-form input::placeholder,
+  :global(body:not(:has(.homepage-footer))) .contact-form textarea::placeholder {
     font-size: inherit;
     font-weight: 500;
-
-    letter-spacing: 0.055em;
   }
 
   :global(body.light) .contact-form input,
@@ -1118,9 +1129,6 @@
     color: #ffffff;
 
     font-family: inherit;
-
-    font-size: 11px;
-    font-weight: 700;
     line-height: 1;
 
     letter-spacing: 0.09em;
@@ -1132,6 +1140,10 @@
     transition:
       background 0.25s ease,
       color 0.25s ease;
+  }
+  :global(body:not(:has(.homepage-footer))) .contact-form button {
+    font-size: 11px;
+    font-weight: 700;
   }
 
   .contact-form button:hover {
@@ -1209,14 +1221,15 @@
     color: #777777;
 
     font-family: inherit;
-
-    font-size: 10px;
-    font-weight: 600;
     line-height: 1.3;
 
     letter-spacing: 0.09em;
 
     text-transform: uppercase;
+  }
+  :global(body:not(:has(.homepage-footer))) .contact-block h3 {
+    font-size: 10px;
+    font-weight: 600;
   }
 
   .contact-block p,
@@ -1226,14 +1239,16 @@
     color: #ffffff;
 
     font-family: inherit;
-
-    font-size: 15px;
-    font-weight: 400;
     line-height: 1.6;
 
     letter-spacing: 0;
 
     overflow-wrap: anywhere;
+  }
+  :global(body:not(:has(.homepage-footer))) .contact-block p,
+  :global(body:not(:has(.homepage-footer))) .contact-block a {
+    font-size: 15px;
+    font-weight: 400;
   }
 
   .contact-block a {
@@ -1296,14 +1311,15 @@
     color: #707070;
 
     font-family: inherit;
-
-    font-size: 9px;
-    font-weight: 600;
     line-height: 1;
 
     letter-spacing: 0.11em;
 
     text-transform: uppercase;
+  }
+  :global(body:not(:has(.homepage-footer))) .social-label {
+    font-size: 9px;
+    font-weight: 600;
   }
 
   :global(body.light) .social-label {
@@ -1393,9 +1409,6 @@
     color: #0043ff;
 
     font-family: inherit;
-
-    font-size: 11px;
-    font-weight: 700;
     line-height: 1;
 
     letter-spacing: 0.09em;
@@ -1407,6 +1420,10 @@
     transition:
       background 0.25s ease,
       color 0.25s ease;
+  }
+  :global(body:not(:has(.homepage-footer))) .contact-book-link {
+    font-size: 11px;
+    font-weight: 700;
   }
 
   .contact-book-link:hover {
@@ -1479,13 +1496,17 @@
     }
 
     .contact-header h2 {
-      font-size: 24px;
       line-height: 1.15;
+    }
+    :global(body:not(:has(.homepage-footer))) .contact-header h2 {
+      font-size: 24px;
     }
 
     .contact-subtitle {
-      font-size: 13px;
       line-height: 1.55;
+    }
+    :global(body:not(:has(.homepage-footer))) .contact-subtitle {
+      font-size: 13px;
     }
 
     .contact-grid {
@@ -1503,8 +1524,7 @@
     .contact-info {
       padding: 24px 0;
     }
-
-    .card-eyebrow {
+    :global(body:not(:has(.homepage-footer))) .card-eyebrow {
       font-size: 12px;
     }
 
@@ -1515,21 +1535,21 @@
     .contact-form input,
     .contact-form textarea {
       padding: 15px 14px;
-
+    }
+    :global(body:not(:has(.homepage-footer))) .contact-form input,
+  :global(body:not(:has(.homepage-footer))) .contact-form textarea {
       font-size: 12px;
     }
 
     .contact-form textarea {
       min-height: 190px;
     }
-
-    .contact-block p,
-    .contact-block a {
+    :global(body:not(:has(.homepage-footer))) .contact-block p,
+  :global(body:not(:has(.homepage-footer))) .contact-block a {
       font-size: 13px;
     }
-
-    .contact-book-link,
-    .contact-form button {
+    :global(body:not(:has(.homepage-footer))) .contact-book-link,
+  :global(body:not(:has(.homepage-footer))) .contact-form button {
       font-size: 10px;
     }
   }
@@ -1573,16 +1593,18 @@
     .contact-header h2 {
       max-width: 100%;
 
-      font-size: clamp(22px, 6vw, 27px);
-
       line-height: 1.15;
+    }
+    :global(body:not(:has(.homepage-footer))) .contact-header h2 {
+      font-size: clamp(22px, 6vw, 27px);
     }
 
     .contact-subtitle {
       max-width: 100%;
-
-      font-size: 14px;
       line-height: 1.6;
+    }
+    :global(body:not(:has(.homepage-footer))) .contact-subtitle {
+      font-size: 14px;
     }
 
     .contact-success-box,
@@ -1609,8 +1631,7 @@
 
       padding: 0;
     }
-
-    .card-eyebrow {
+    :global(body:not(:has(.homepage-footer))) .card-eyebrow {
       font-size: 13px;
     }
 
@@ -1629,7 +1650,9 @@
     .contact-form input,
     .contact-form textarea {
       padding: 16px 14px;
-
+    }
+    :global(body:not(:has(.homepage-footer))) .contact-form input,
+  :global(body:not(:has(.homepage-footer))) .contact-form textarea {
       font-size: 13px;
     }
 
@@ -1640,9 +1663,8 @@
     .contact-details {
       padding-top: 26px;
     }
-
-    .contact-block p,
-    .contact-block a {
+    :global(body:not(:has(.homepage-footer))) .contact-block p,
+  :global(body:not(:has(.homepage-footer))) .contact-block a {
       font-size: 14px;
     }
 
@@ -1670,8 +1692,7 @@
 
       padding-bottom: 20px;
     }
-
-    .card-eyebrow {
+    :global(body:not(:has(.homepage-footer))) .card-eyebrow {
       font-size: 12px;
     }
   }
@@ -1693,12 +1714,10 @@
 
       padding: 28px 0;
     }
-
-    .contact-header h2 {
+    :global(body:not(:has(.homepage-footer))) .contact-header h2 {
       font-size: 22px;
     }
-
-    .contact-subtitle {
+    :global(body:not(:has(.homepage-footer))) .contact-subtitle {
       font-size: 14px;
     }
 
@@ -1709,24 +1728,24 @@
     .contact-form {
       padding: 20px;
     }
-
-    .card-eyebrow {
+    :global(body:not(:has(.homepage-footer))) .card-eyebrow {
       font-size: 11px;
     }
 
     .contact-form input,
     .contact-form textarea {
       padding: 15px 13px;
-
+    }
+    :global(body:not(:has(.homepage-footer))) .contact-form input,
+  :global(body:not(:has(.homepage-footer))) .contact-form textarea {
       font-size: 12px;
     }
 
     .contact-block {
       padding: 17px 0;
     }
-
-    .contact-block p,
-    .contact-block a {
+    :global(body:not(:has(.homepage-footer))) .contact-block p,
+  :global(body:not(:has(.homepage-footer))) .contact-block a {
       font-size: 13px;
     }
 
@@ -1748,7 +1767,9 @@
       min-height: 48px;
 
       padding: 0 14px;
-
+    }
+    :global(body:not(:has(.homepage-footer))) .contact-book-link,
+  :global(body:not(:has(.homepage-footer))) .contact-form button {
       font-size: 10px;
     }
 
@@ -1821,4 +1842,44 @@
       background: rgba(0, 0, 0, 0.08);
     }
   }
+  /* Shared homepage typography; other routes retain their existing styles. */
+  :global(body:has(.homepage-footer)) .contact-header h2 {
+    font-size: var(--text-section);
+    font-weight: var(--weight-semibold);
+  }
+  :global(body:has(.homepage-footer)) .contact-subtitle {
+    font-size: var(--text-intro);
+    font-weight: var(--weight-regular);
+  }
+  :global(body:has(.homepage-footer)) .contact-success-box h3,
+  :global(body:has(.homepage-footer)) .contact-error-box h3 {
+    font-size: var(--text-title);
+    font-weight: var(--weight-bold);
+  }
+  :global(body:has(.homepage-footer)) .contact-success-box p,
+  :global(body:has(.homepage-footer)) .contact-error-box p,
+  :global(body:has(.homepage-footer)) .contact-form input,
+  :global(body:has(.homepage-footer)) .contact-form textarea,
+  :global(body:has(.homepage-footer)) .contact-block p,
+  :global(body:has(.homepage-footer)) .contact-block a {
+    font-size: var(--text-body);
+    font-weight: var(--weight-regular);
+  }
+  :global(body:has(.homepage-footer)) .contact-form input::placeholder,
+  :global(body:has(.homepage-footer)) .contact-form textarea::placeholder {
+    font-weight: var(--weight-regular);
+  }
+  :global(body:has(.homepage-footer)) .contact-technical-error {
+    font-size: var(--text-small);
+    font-weight: var(--weight-regular);
+  }
+  :global(body:has(.homepage-footer)) .card-eyebrow,
+  :global(body:has(.homepage-footer)) .contact-form button,
+  :global(body:has(.homepage-footer)) .contact-block h3,
+  :global(body:has(.homepage-footer)) .social-label,
+  :global(body:has(.homepage-footer)) .contact-book-link {
+    font-size: var(--text-label);
+    font-weight: var(--weight-semibold);
+  }
+
 </style>

@@ -922,10 +922,6 @@
 
     color: rgba(255, 255, 255, 0.46);
 
-    font-size: 0.66rem;
-
-    font-weight: 500;
-
     line-height: 1.2;
 
     letter-spacing: 0.08em;
@@ -935,6 +931,10 @@
     transition:
       color 0.25s ease,
       transform 0.25s ease;
+  }
+  :global(body:not(:has(.homepage-footer))) .brand-subtext {
+    font-size: 0.66rem;
+    font-weight: 500;
   }
 
   :global(body.light) .brand-subtext {
@@ -1054,10 +1054,6 @@
 
     font-family: inherit;
 
-    font-size: 0.96rem;
-
-    font-weight: 600;
-
     line-height: 1;
 
     letter-spacing: -0.005em;
@@ -1069,6 +1065,12 @@
     transition:
       color 0.2s ease,
       opacity 0.2s ease;
+  }
+  :global(body:not(:has(.homepage-footer))) .main-nav > a,
+  :global(body:not(:has(.homepage-footer))) .dropdown-trigger,
+  :global(body:not(:has(.homepage-footer))) .lang-link {
+    font-size: 0.96rem;
+    font-weight: 600;
   }
 
   :global(body.light) .main-nav > a,
@@ -1124,12 +1126,13 @@
 
     opacity: 0.88;
 
-    font-weight: 500;
-
     transition:
       opacity 0.2s ease,
       color 0.2s ease,
       transform 0.2s ease;
+  }
+  :global(body:not(:has(.homepage-footer))) .menu-bracket {
+    font-weight: 500;
   }
 
   .menu-label {
@@ -1320,10 +1323,6 @@
 
     color: #ffffff;
 
-    font-size: 0.84rem;
-
-    font-weight: 600;
-
     line-height: 1.2;
 
     text-decoration: none;
@@ -1336,6 +1335,10 @@
       background 0.18s ease,
       color 0.18s ease,
       padding-left 0.18s ease;
+  }
+  :global(body:not(:has(.homepage-footer))) .dropdown-panel a {
+    font-size: 0.84rem;
+    font-weight: 600;
   }
 
   .dropdown-panel a:last-child {
@@ -1371,9 +1374,10 @@
 
     color: currentColor;
 
-    font-weight: 500;
-
     transition: opacity 0.18s ease;
+  }
+  :global(body:not(:has(.homepage-footer))) .dropdown-item-bracket {
+    font-weight: 500;
   }
 
   .dropdown-panel a:hover .dropdown-item-bracket {
@@ -1559,9 +1563,11 @@
     }
 
     .brand-subtext {
-      font-size: 0.63rem;
 
       text-align: center;
+    }
+    :global(body:not(:has(.homepage-footer))) .brand-subtext {
+      font-size: 0.63rem;
     }
 
     .main-nav {
@@ -1597,9 +1603,11 @@
     .dropdown-trigger,
     .lang-link {
       flex: 0 0 auto;
-
+    }
+    :global(body:not(:has(.homepage-footer))) .main-nav > a,
+  :global(body:not(:has(.homepage-footer))) .dropdown-trigger,
+  :global(body:not(:has(.homepage-footer))) .lang-link {
       font-size: 0.82rem;
-
       font-weight: 600;
     }
 
@@ -1683,11 +1691,13 @@
     }
 
     .brand-subtext {
-      font-size: 0.61rem;
 
       letter-spacing: 0.06em;
 
       text-align: center;
+    }
+    :global(body:not(:has(.homepage-footer))) .brand-subtext {
+      font-size: 0.61rem;
     }
 
     .main-nav {
@@ -1697,11 +1707,9 @@
 
       justify-content: center;
     }
-
-    .main-nav > a,
-    .dropdown-trigger {
+    :global(body:not(:has(.homepage-footer))) .main-nav > a,
+  :global(body:not(:has(.homepage-footer))) .dropdown-trigger {
       font-size: 0.76rem;
-
       font-weight: 600;
     }
 
@@ -1726,9 +1734,9 @@
       min-height: 42px;
 
       padding: 0 13px;
-
+    }
+    :global(body:not(:has(.homepage-footer))) .dropdown-panel a {
       font-size: 0.8rem;
-
       font-weight: 600;
     }
 
@@ -1777,10 +1785,6 @@
 
       font-family: inherit;
 
-      font-size: 0.72rem;
-
-      font-weight: 600;
-
       line-height: 1;
 
       letter-spacing: 0;
@@ -1800,6 +1804,10 @@
         border-color 0.2s ease,
         background 0.2s ease,
         transform 0.2s ease;
+    }
+    :global(body:not(:has(.homepage-footer))) .mobile-language-switcher {
+      font-size: 0.72rem;
+      font-weight: 600;
     }
 
     .mobile-language-switcher:hover {
@@ -1942,9 +1950,13 @@
     .main-nav > a,
     .dropdown-trigger,
     .lang-link {
-      font-size: calc(0.76rem - 2px);
       text-align: center;
       justify-content: center;
+    }
+    :global(body:not(:has(.homepage-footer))) .main-nav > a,
+  :global(body:not(:has(.homepage-footer))) .dropdown-trigger,
+  :global(body:not(:has(.homepage-footer))) .lang-link {
+      font-size: calc(0.76rem - 2px);
     }
   }
 
@@ -1952,7 +1964,37 @@
     .dropdown-panel a {
       min-height: 28px;
       padding-block: 4px;
+    }
+    :global(body:not(:has(.homepage-footer))) .dropdown-panel a {
       font-size: calc(0.76rem - 2px);
     }
   }
+
+  /* Shared homepage typography; other routes retain their existing styles. */
+  :global(body:has(.homepage-footer)) .brand-subtext,
+  :global(body:has(.homepage-footer)) .mobile-language-switcher {
+    font-size: var(--text-label);
+    font-weight: var(--weight-semibold);
+  }
+  :global(body:has(.homepage-footer)) .main-nav > a,
+  :global(body:has(.homepage-footer)) .dropdown-trigger,
+  :global(body:has(.homepage-footer)) .lang-link,
+  :global(body:has(.homepage-footer)) .dropdown-panel a {
+    font-size: 13px;
+    font-weight: var(--weight-semibold);
+  }
+  :global(body:has(.homepage-footer)) .menu-bracket,
+  :global(body:has(.homepage-footer)) .dropdown-item-bracket {
+    font-weight: var(--weight-semibold);
+  }
+
+  @media (max-width: 767px) {
+    :global(body:has(.homepage-footer)) .main-nav > a,
+  :global(body:has(.homepage-footer)) .dropdown-trigger,
+  :global(body:has(.homepage-footer)) .lang-link,
+  :global(body:has(.homepage-footer)) .dropdown-panel a {
+      font-size: 12px;
+    }
+}
+
 </style>

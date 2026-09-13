@@ -573,11 +573,13 @@
     max-width: 720px;
     margin: 0;
     color: #f2f2f2;
-    font-size: clamp(24px, 2.15vw, 34px);
     line-height: 1.12;
     letter-spacing: -0.035em;
-    font-weight: 600;
     text-transform: none;
+  }
+  :global(body:not(:has(.homepage-footer))) .projects-header h2 {
+    font-size: clamp(24px, 2.15vw, 34px);
+    font-weight: 600;
   }
 
   /* =========================================================
@@ -589,9 +591,11 @@
     margin: 0;
     padding: 0;
     color: rgba(255, 255, 255, 0.62);
-    font-size: 16px;
     line-height: 1.65;
     letter-spacing: 0;
+  }
+  :global(body:not(:has(.homepage-footer))) .projects-subtitle {
+    font-size: 16px;
     font-weight: 400;
   }
 
@@ -783,10 +787,12 @@
     align-items: center;
     background: transparent;
     color: #ffffff;
-    font-size: 11px;
-    font-weight: 500;
     line-height: 1;
     letter-spacing: 0.035em;
+  }
+  :global(body:not(:has(.homepage-footer))) .project-tags span {
+    font-size: 11px;
+    font-weight: 500;
   }
 
   :global(body.light) .project-tags span {
@@ -814,13 +820,15 @@
     width: 100%;
     margin: 0;
     color: #ffffff;
-    font-size: 20px;
     line-height: 1.22;
-    font-weight: 700;
     letter-spacing: 0.03em;
     text-transform: uppercase;
     text-decoration: none;
     text-wrap: balance;
+  }
+  :global(body:not(:has(.homepage-footer))) .project-title-wrap h3 {
+    font-size: 20px;
+    font-weight: 700;
   }
 
   .project-description-toggle {
@@ -836,11 +844,13 @@
     max-width: none;
     margin: 0;
     color: #9a9a9a;
-    font-size: 16px;
-    font-weight: 500;
     line-height: 1.55;
     letter-spacing: 0;
     text-wrap: pretty;
+  }
+  :global(body:not(:has(.homepage-footer))) .project-description {
+    font-size: 16px;
+    font-weight: 500;
   }
 
   :global(body.light) .project-description {
@@ -877,13 +887,16 @@
     gap: 9px;
     background: transparent;
     color: #ffffff;
-    font-size: 14px;
-    font-weight: 600;
     text-transform: uppercase;
     line-height: 1;
     letter-spacing: 0.015em;
     text-decoration: none;
     transition: color 0.25s ease;
+  }
+  :global(body:not(:has(.homepage-footer))) .project-view-link,
+  :global(body:not(:has(.homepage-footer))) .project-details-link {
+    font-size: 14px;
+    font-weight: 600;
   }
 
   .project-view-link {
@@ -934,8 +947,10 @@
 
   @media (min-width: 768px) {
     .project-tags span {
-      font-weight: 400;
       text-transform: uppercase;
+    }
+    :global(body:not(:has(.homepage-footer))) .project-tags span {
+      font-weight: 400;
     }
 
     .project-card:hover .project-image-wrap img {
@@ -982,25 +997,31 @@
 
   .project-load-copy {
     color: #b8b8b8;
-    font-size: 14px;
     letter-spacing: 0.08em;
     text-transform: uppercase;
+  }
+  .project-load-copy {
+    font-size: 14px;
   }
 
   .project-load-strong {
     max-width: 12ch;
-    font-size: 28px;
     line-height: 1.05;
-    font-weight: 700;
     text-transform: uppercase;
+  }
+  .project-load-strong {
+    font-size: 28px;
+    font-weight: 700;
   }
 
   .project-load-progress {
     margin-top: auto;
     padding-top: 16px;
     color: #0043ff;
-    font-size: 14px;
     letter-spacing: 0.06em;
+  }
+  :global(body:not(:has(.homepage-footer))) .project-load-progress {
+    font-size: 14px;
   }
 
   /* =========================================================
@@ -1037,13 +1058,17 @@
     }
 
     .projects-header h2 {
-      font-size: 24px;
       line-height: 1.15;
+    }
+    :global(body:not(:has(.homepage-footer))) .projects-header h2 {
+      font-size: 24px;
     }
 
     .projects-subtitle {
-      font-size: 13px;
       line-height: 1.55;
+    }
+    :global(body:not(:has(.homepage-footer))) .projects-subtitle {
+      font-size: 13px;
     }
 
     .projects-grid {
@@ -1102,14 +1127,18 @@
 
     .projects-header h2 {
       max-width: 100%;
-      font-size: clamp(22px, 6vw, 27px);
       line-height: 1.15;
+    }
+    :global(body:not(:has(.homepage-footer))) .projects-header h2 {
+      font-size: clamp(22px, 6vw, 27px);
     }
 
     .projects-subtitle {
       max-width: 100%;
-      font-size: 14px;
       line-height: 1.6;
+    }
+    :global(body:not(:has(.homepage-footer))) .projects-subtitle {
+      font-size: 14px;
     }
 
     .projects-grid {
@@ -1150,10 +1179,12 @@
     .project-tags span {
       min-height: 23px;
       padding: 4px 5px;
-      font-size: 8px;
       letter-spacing: 0.035em;
       text-transform: uppercase;
       white-space: nowrap;
+    }
+    :global(body:not(:has(.homepage-footer))) .project-tags span {
+      font-size: 8px;
     }
 
     .project-title-wrap {
@@ -1196,9 +1227,11 @@
       max-width: none;
       display: none;
       margin-top: 12px;
+      line-height: 1.55;
+    }
+    :global(body:not(:has(.homepage-footer))) .project-description {
       font-size: 14px;
       font-weight: 400;
-      line-height: 1.55;
     }
 
     .project-description.expanded {
@@ -1208,8 +1241,7 @@
     .project-footer {
       padding-top: 28px;
     }
-
-    .project-title-wrap h3 {
+    :global(body:not(:has(.homepage-footer))) .project-title-wrap h3 {
       font-size: 18px;
     }
 
@@ -1217,8 +1249,11 @@
     .project-details-link {
       min-height: auto;
       padding: 0;
-      font-size: 12px;
       white-space: nowrap;
+    }
+    :global(body:not(:has(.homepage-footer))) .project-view-link,
+  :global(body:not(:has(.homepage-footer))) .project-details-link {
+      font-size: 12px;
     }
 
     .project-load-card {
@@ -1245,21 +1280,18 @@
       gap: 20px;
       padding: 28px 0;
     }
-
-    .projects-header h2 {
+    :global(body:not(:has(.homepage-footer))) .projects-header h2 {
       font-size: 22px;
     }
-
-    .projects-subtitle {
+    :global(body:not(:has(.homepage-footer))) .projects-subtitle {
       font-size: 14px;
     }
 
     .project-footer {
       gap: 16px;
     }
-
-    .project-view-link,
-    .project-details-link {
+    :global(body:not(:has(.homepage-footer))) .project-view-link,
+  :global(body:not(:has(.homepage-footer))) .project-details-link {
       font-size: 11px;
     }
   }
@@ -1280,4 +1312,33 @@
       transform: none;
     }
   }
+
+  /* Shared homepage typography; other routes retain their existing styles. */
+  :global(body:has(.homepage-footer)) .projects-header h2 {
+    font-size: var(--text-section);
+    font-weight: var(--weight-semibold);
+  }
+  :global(body:has(.homepage-footer)) .project-title-wrap h3 {
+    font-size: var(--text-title);
+    font-weight: var(--weight-bold);
+  }
+  :global(body:has(.homepage-footer)) .projects-subtitle {
+    font-size: var(--text-intro);
+    font-weight: var(--weight-regular);
+  }
+  :global(body:has(.homepage-footer)) .project-description {
+    font-size: var(--text-body);
+    font-weight: var(--weight-regular);
+  }
+  :global(body:has(.homepage-footer)) .project-load-progress {
+    font-size: var(--text-small);
+    font-weight: var(--weight-regular);
+  }
+  :global(body:has(.homepage-footer)) .project-tags span,
+  :global(body:has(.homepage-footer)) .project-view-link,
+  :global(body:has(.homepage-footer)) .project-details-link {
+    font-size: var(--text-label);
+    font-weight: var(--weight-semibold);
+  }
+
 </style>
