@@ -59,6 +59,7 @@
 </script>
 
 <section class="faq" class:full-width={fullWidth} id="faq">
+  <span class="section-bottom-line" aria-hidden="true"></span>
   <div class="container faq-container">
     <!-- =====================================================
          BLUE SECTION HEADER
@@ -831,6 +832,57 @@
     .faq-icon::before,
     .faq-icon::after {
       transition: none;
+    }
+  }
+  @media (min-width: 1025px) {
+    .faq {
+      position: relative;
+    }
+
+    .faq::before,
+    .faq::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 1px;
+      background: rgba(255, 255, 255, 0.08);
+      pointer-events: none;
+      transition: background 0.3s ease;
+    }
+
+    .faq::before {
+      left: max(16px, calc((100% - 1540px) / 2));
+    }
+
+    .faq::after {
+      right: max(16px, calc((100% - 1540px) / 2));
+    }
+
+    :global(body.light) .faq::before,
+    :global(body.light) .faq::after {
+      background: rgba(0, 0, 0, 0.08);
+    }
+  }
+  .section-bottom-line {
+    display: none;
+  }
+
+  @media (min-width: 1025px) {
+    .section-bottom-line {
+      display: block;
+      position: absolute;
+      bottom: 0;
+      left: max(16px, calc((100% - 1540px) / 2));
+      right: max(16px, calc((100% - 1540px) / 2));
+      height: 1px;
+      background: rgba(255, 255, 255, 0.12);
+      pointer-events: none;
+      transition: background 0.3s ease;
+    }
+
+    :global(body.light) .section-bottom-line {
+      background: rgba(0, 0, 0, 0.1);
     }
   }
 </style>

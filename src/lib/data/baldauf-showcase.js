@@ -5,10 +5,10 @@ export const baldaufShowcase = {
     projectTitle: "DR. BOSEDE BALDAUF",
 
     projectLead:
-      "Website-Relaunch mit Fokus auf lokale Sichtbarkeit, Performance und eine klarere Patientenreise.",
+      "Website-Relaunch für mehr lokale Sichtbarkeit, Geschwindigkeit und eine klarere Patientenreise.",
 
     projectText:
-      "Die Ordination brauchte eine schnelle, zweisprachige Website, die in Wien besser gefunden wird und Besucher einfacher von der Google-Suche bis zur Terminbuchung führt.",
+      "Eine schnelle zweisprachige Website, die in Wien besser rankt und Patienten klar von der Google-Suche zur Terminbuchung führt.",
 
     heroImage:
       "/baldauf/baldauf-homepage.webp",
@@ -112,16 +112,16 @@ export const baldaufShowcase = {
     projectTitle: "DR. BOSEDE BALDAUF",
 
     projectLead:
-      "Website relaunch focused on local visibility, performance and a clearer patient journey.",
+      "Website relaunch for stronger local visibility, speed and a clearer patient journey.",
 
     projectText:
-      "The practice needed a fast bilingual website that could be found more easily in Vienna and guide visitors more clearly from Google search to appointment booking.",
+      "A fast bilingual clinic website built to rank better in Vienna and guide patients clearly from Google search to appointment booking.",
 
     heroImage:
       "/baldauf/baldauf-homepage.webp",
 
     heroImageAlt:
-      "Website of the Dr. Bosede Baldauf urology practice in Vienna",
+      "Website of the Dr. Bosede Baldauf urology clinic in Vienna",
 
     websiteUrl:
       "https://www.baldauf-uro.at/",
@@ -156,7 +156,7 @@ export const baldaufShowcase = {
         "STRONGER VISIBILITY IN LOCAL GOOGLE SEARCH",
 
       text:
-        "The relaunch needed to do more than look better. The goal was to make the practice visible to people actively searching for a urologist in Vienna.",
+        "The relaunch needed to do more than look better. The goal was to make the clinic visible to people actively searching for a urologist in Vienna.",
 
       work: [
         "ON-PAGE SEO",

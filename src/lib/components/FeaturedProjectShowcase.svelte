@@ -17,7 +17,6 @@
 >
   <div class="featured-shell">
     <span class="shell-line edge-left" aria-hidden="true"></span>
-
     <span class="shell-line edge-right" aria-hidden="true"></span>
 
     <div class="featured-container">
@@ -69,10 +68,27 @@
               ></path>
             </svg>
           </a>
+
+          <!-- =================================================
+               TABLET / MOBILE IMAGE
+
+               Directly after live website link.
+          ================================================== -->
+
+          <div class="project-image responsive-project-image">
+            <img
+              src={project.heroImage}
+              alt={project.heroImageAlt}
+              width="1448"
+              height="1086"
+              loading="eager"
+              decoding="async"
+            />
+          </div>
         </div>
 
         <!-- =================================================
-             INDIVIDUAL PROJECT RESULT BRACKETS
+             PROJECT RESULT BRACKETS
         ================================================== -->
 
         <div
@@ -96,10 +112,13 @@
       </header>
 
       <!-- =====================================================
-           WEBSITE SCREENSHOT
+           DESKTOP IMAGE
+
+           Desktop remains in its current position,
+           underneath the complete header.
       ====================================================== -->
 
-      <div class="project-image">
+      <div class="project-image desktop-project-image">
         <img
           src={project.heroImage}
           alt={project.heroImageAlt}
@@ -123,19 +142,12 @@
         <div class="feature-panel">
           <!-- ===============================================
                LEFT COLUMN
-
-               Desktop:
-               content is vertically centred.
-               No extra feature title/icon.
-
-               Tablet/mobile:
-               compact title + +/-.
           ================================================ -->
 
           <div class="feature-copy">
             <div class="feature-copy-inner" class:details-open={detailsOpen}>
               <!-- =========================================
-                   TABLET / MOBILE TITLE ROW ONLY
+                   TABLET / MOBILE TITLE ROW
               ========================================== -->
 
               <div class="responsive-feature-heading">
@@ -164,9 +176,6 @@
 
               <!-- =========================================
                    CONTENT
-
-                   One continuous blue line:
-                   title + text + tags
               ========================================== -->
 
               <div class="feature-detail-body">
@@ -275,9 +284,7 @@
                   <span class="graph-grid graph-grid-b"></span>
                   <span class="graph-grid graph-grid-c"></span>
 
-                  <!-- =================================
-                       IMPACT NOTE
-                  ================================== -->
+                  <!-- IMPACT -->
 
                   <div class="graph-impact">
                     <strong>
@@ -289,188 +296,312 @@
                     </p>
                   </div>
 
-                  <!-- =================================
-                       CURVES
-                  ================================== -->
+                  <!-- =================================================
+                       DESKTOP + TABLET GRAPH
+
+                       Sharper / more angular progression.
+                       Starts exactly at x=0.
+                       Ends exactly at x=1000.
+                  ================================================== -->
 
                   <svg
+                    class="graph-svg graph-svg-sharp"
                     viewBox="0 0 1000 400"
                     preserveAspectRatio="none"
                     aria-hidden="true"
                   >
-                    <!-- ===============================
-                         ENQUIRIES
-                    ================================ -->
+                    <!-- ENQUIRIES FILL -->
 
                     <path
                       class="enquiries-fill"
                       d="
-                        M35 356
-
-                        C115 354
-                        175 350
-                        225 331
-
-                        C267 315
-                        288 254
-                        318 210
-
-                        C347 168
-                        378 161
-                        410 194
-
-                        C445 229
-                        464 260
-                        500 249
-
-                        C538 237
-                        565 181
-                        602 151
-
-                        C635 124
-                        667 139
-                        700 168
-
-                        C732 196
-                        760 186
-                        793 153
-
-                        C826 120
-                        854 104
-                        883 116
-
-                        C915 129
-                        943 84
-                        965 45
-
-                        L965 390
-                        L35 390
+                        M0 356
+                        L170 344
+                        L285 315
+                        L330 188
+                        L405 170
+                        L490 252
+                        L590 146
+                        L670 122
+                        L735 170
+                        L805 118
+                        L870 154
+                        L930 92
+                        L1000 42
+                        L1000 390
+                        L0 390
                         Z
                       "
                     ></path>
+
+                    <!-- ENQUIRIES LINE -->
 
                     <path
                       class="enquiries-line"
                       d="
-                        M35 356
-
-                        C115 354
-                        175 350
-                        225 331
-
-                        C267 315
-                        288 254
-                        318 210
-
-                        C347 168
-                        378 161
-                        410 194
-
-                        C445 229
-                        464 260
-                        500 249
-
-                        C538 237
-                        565 181
-                        602 151
-
-                        C635 124
-                        667 139
-                        700 168
-
-                        C732 196
-                        760 186
-                        793 153
-
-                        C826 120
-                        854 104
-                        883 116
-
-                        C915 129
-                        943 84
-                        965 45
+                        M0 356
+                        L170 344
+                        L285 315
+                        L330 188
+                        L405 170
+                        L490 252
+                        L590 146
+                        L670 122
+                        L735 170
+                        L805 118
+                        L870 154
+                        L930 92
+                        L1000 42
                       "
                     ></path>
 
-                    <!-- ===============================
-                         WEBSITE VISITORS
-                    ================================ -->
+                    <!-- VISITORS FILL -->
 
                     <path
                       class="visitors-fill"
                       d="
-                        M35 360
-
-                        C135 356
-                        208 344
-                        292 321
-
-                        C378 298
-                        450 282
-                        527 259
-
-                        C607 235
-                        673 206
-                        736 168
-
-                        C798 130
-                        846 90
-                        890 58
-
-                        C922 35
-                        947 22
-                        965 14
-
-                        L965 390
-                        L35 390
+                        M0 360
+                        L200 341
+                        L400 296
+                        L600 238
+                        L800 151
+                        L900 61
+                        L1000 14
+                        L1000 390
+                        L0 390
                         Z
                       "
                     ></path>
 
+                    <!-- VISITORS LINE -->
+
                     <path
                       class="visitors-line"
                       d="
-                        M35 360
-
-                        C135 356
-                        208 344
-                        292 321
-
-                        C378 298
-                        450 282
-                        527 259
-
-                        C607 235
-                        673 206
-                        736 168
-
-                        C798 130
-                        846 90
-                        890 58
-
-                        C922 35
-                        947 22
-                        965 14
+                        M0 360
+                        L200 341
+                        L400 296
+                        L600 238
+                        L800 151
+                        L900 61
+                        L1000 14
                       "
                     ></path>
 
-                    <!-- QUARTER MARKERS -->
+                    <!-- MARKERS -->
 
-                    <circle class="visitor-dot" cx="208" cy="344" r="4"
+                    <circle class="visitor-dot" cx="200" cy="341" r="4"
                     ></circle>
 
-                    <circle class="visitor-dot" cx="378" cy="298" r="4"
+                    <circle class="visitor-dot" cx="400" cy="296" r="4"
                     ></circle>
 
-                    <circle class="visitor-dot" cx="560" cy="249" r="4"
+                    <circle class="visitor-dot" cx="600" cy="238" r="4"
                     ></circle>
 
-                    <circle class="visitor-dot" cx="736" cy="168" r="4"
+                    <circle class="visitor-dot" cx="800" cy="151" r="4"
                     ></circle>
 
-                    <circle class="visitor-dot" cx="890" cy="58" r="4"></circle>
+                    <circle class="visitor-dot" cx="900" cy="61" r="4"></circle>
 
-                    <circle class="visitor-dot final-dot" cx="965" cy="14" r="6"
+                    <circle
+                      class="visitor-dot final-dot"
+                      cx="1000"
+                      cy="14"
+                      r="6"
+                    ></circle>
+                  </svg>
+
+                  <!-- =================================================
+                       MOBILE GRAPH
+
+                       Keeps softer curved progression.
+                       Also aligned exactly from 0 → 1000.
+                  ================================================== -->
+
+                  <svg
+                    class="graph-svg graph-svg-smooth"
+                    viewBox="0 0 1000 400"
+                    preserveAspectRatio="none"
+                    aria-hidden="true"
+                  >
+                    <!-- ENQUIRIES FILL -->
+
+                    <path
+                      class="enquiries-fill"
+                      d="
+                        M0 356
+
+                        C95 354
+                        160 350
+                        220 330
+
+                        C265 315
+                        287 255
+                        320 208
+
+                        C350 167
+                        382 160
+                        415 194
+
+                        C450 230
+                        470 258
+                        505 248
+
+                        C545 236
+                        570 181
+                        610 150
+
+                        C644 124
+                        676 139
+                        710 168
+
+                        C744 196
+                        770 185
+                        805 152
+
+                        C840 118
+                        866 104
+                        895 116
+
+                        C930 130
+                        960 82
+                        1000 42
+
+                        L1000 390
+                        L0 390
+                        Z
+                      "
+                    ></path>
+
+                    <!-- ENQUIRIES LINE -->
+
+                    <path
+                      class="enquiries-line"
+                      d="
+                        M0 356
+
+                        C95 354
+                        160 350
+                        220 330
+
+                        C265 315
+                        287 255
+                        320 208
+
+                        C350 167
+                        382 160
+                        415 194
+
+                        C450 230
+                        470 258
+                        505 248
+
+                        C545 236
+                        570 181
+                        610 150
+
+                        C644 124
+                        676 139
+                        710 168
+
+                        C744 196
+                        770 185
+                        805 152
+
+                        C840 118
+                        866 104
+                        895 116
+
+                        C930 130
+                        960 82
+                        1000 42
+                      "
+                    ></path>
+
+                    <!-- VISITORS FILL -->
+
+                    <path
+                      class="visitors-fill"
+                      d="
+                        M0 360
+
+                        C130 356
+                        205 344
+                        300 320
+
+                        C390 297
+                        462 281
+                        545 256
+
+                        C630 231
+                        697 201
+                        760 163
+
+                        C823 125
+                        872 85
+                        920 54
+
+                        C954 32
+                        980 20
+                        1000 14
+
+                        L1000 390
+                        L0 390
+                        Z
+                      "
+                    ></path>
+
+                    <!-- VISITORS LINE -->
+
+                    <path
+                      class="visitors-line"
+                      d="
+                        M0 360
+
+                        C130 356
+                        205 344
+                        300 320
+
+                        C390 297
+                        462 281
+                        545 256
+
+                        C630 231
+                        697 201
+                        760 163
+
+                        C823 125
+                        872 85
+                        920 54
+
+                        C954 32
+                        980 20
+                        1000 14
+                      "
+                    ></path>
+
+                    <!-- MARKERS -->
+
+                    <circle class="visitor-dot" cx="200" cy="343" r="4"
+                    ></circle>
+
+                    <circle class="visitor-dot" cx="400" cy="294" r="4"
+                    ></circle>
+
+                    <circle class="visitor-dot" cx="600" cy="240" r="4"
+                    ></circle>
+
+                    <circle class="visitor-dot" cx="800" cy="140" r="4"
+                    ></circle>
+
+                    <circle class="visitor-dot" cx="920" cy="54" r="4"></circle>
+
+                    <circle
+                      class="visitor-dot final-dot"
+                      cx="1000"
+                      cy="14"
+                      r="6"
                     ></circle>
                   </svg>
 
@@ -595,12 +726,24 @@
     max-width: 760px;
   }
 
+  /* =========================================================
+     FEATURED PROJECT KICKER
+
+     White + restrained blue underline.
+  ========================================================= */
+
   .project-kicker {
-    display: block;
+    display: inline-block;
 
-    margin: 0 0 10px;
+    width: fit-content;
 
-    color: rgba(255, 255, 255, 0.5);
+    margin: 0 0 12px;
+
+    padding-bottom: 5px;
+
+    border-bottom: 1px solid var(--accent-blue);
+
+    color: #fff;
 
     font-size: 11px;
     line-height: 1;
@@ -627,27 +770,27 @@
   }
 
   .project-lead {
-    max-width: 720px;
+    max-width: 670px;
 
-    margin: 0 0 7px;
+    margin: 0 0 6px;
 
     color: rgba(255, 255, 255, 0.72);
 
     font-size: 16px;
-    line-height: 1.55;
+    line-height: 1.5;
 
     font-weight: 500;
   }
 
   .project-text {
-    max-width: 720px;
+    max-width: 670px;
 
     margin: 0 0 18px;
 
     color: #999;
 
     font-size: 16px;
-    line-height: 1.6;
+    line-height: 1.55;
 
     font-weight: 400;
   }
@@ -691,17 +834,62 @@
   }
 
   /* =========================================================
+     PROJECT IMAGES
+  ========================================================= */
+
+  .project-image {
+    width: 100%;
+
+    overflow: hidden;
+
+    border: 1px solid rgba(255, 255, 255, 0.12);
+
+    background: #111;
+
+    box-sizing: border-box;
+  }
+
+  .project-image img {
+    display: block;
+
+    width: 100%;
+    height: auto;
+  }
+
+  /*
+   * Desktop image stays exactly where it was:
+   * underneath the header.
+   */
+
+  .desktop-project-image {
+    display: block;
+
+    margin-top: 34px;
+  }
+
+  /*
+   * Responsive image sits after the live link
+   * but is hidden on desktop.
+   */
+
+  .responsive-project-image {
+    display: none;
+  }
+
+  /* =========================================================
      HEADER RESULT BRACKETS
+
+     Desktop and tablet brackets share the longest item's width.
   ========================================================= */
 
   .header-stats {
     display: grid;
 
-    grid-template-columns: repeat(2, auto);
+    grid-template-columns: repeat(2, 1fr);
 
-    gap: 9px;
+    gap: 8px;
 
-    width: fit-content;
+    width: max-content;
   }
 
   .header-stat {
@@ -709,9 +897,11 @@
 
     position: relative;
 
-    min-width: 126px;
+    width: 100%;
 
-    padding: 11px 17px;
+    min-width: 0;
+
+    padding: 10px 12px;
 
     box-sizing: border-box;
   }
@@ -725,7 +915,7 @@
     top: 0;
     bottom: 0;
 
-    width: 10px;
+    width: 8px;
 
     box-sizing: border-box;
 
@@ -774,31 +964,8 @@
     letter-spacing: 0.045em;
 
     text-transform: uppercase;
-  }
 
-  /* =========================================================
-     WEBSITE SCREENSHOT
-  ========================================================= */
-
-  .project-image {
-    width: 100%;
-
-    margin-top: 34px;
-
-    overflow: hidden;
-
-    border: 1px solid rgba(255, 255, 255, 0.12);
-
-    background: #111;
-
-    box-sizing: border-box;
-  }
-
-  .project-image img {
-    display: block;
-
-    width: 100%;
-    height: auto;
+    white-space: nowrap;
   }
 
   /* =========================================================
@@ -827,9 +994,6 @@
 
   /* =========================================================
      LEFT COLUMN
-
-     DESKTOP:
-     vertically centered.
   ========================================================= */
 
   .feature-copy {
@@ -854,21 +1018,12 @@
     box-sizing: border-box;
   }
 
-  /* =========================================================
-     RESPONSIVE FEATURE HEADER
-
-     Hidden completely on desktop.
-  ========================================================= */
-
   .responsive-feature-heading {
     display: none;
   }
 
   /* =========================================================
      CONTENT
-
-     One 1px blue line for:
-     title + description + tags
   ========================================================= */
 
   .feature-detail-body {
@@ -1011,6 +1166,8 @@
 
   /* =========================================================
      RESULT BRACKETS
+
+     Desktop also hugs content.
   ========================================================= */
 
   .growth-metrics {
@@ -1018,7 +1175,7 @@
 
     align-items: flex-start;
 
-    gap: 13px;
+    gap: 8px;
   }
 
   .growth-metric {
@@ -1028,13 +1185,17 @@
 
     display: flex;
 
+    flex: 0 0 auto;
+
     flex-direction: column;
 
     align-items: flex-start;
 
-    min-width: 185px;
+    width: max-content;
 
-    padding: 11px 17px;
+    min-width: 0;
+
+    padding: 10px 12px;
 
     box-sizing: border-box;
 
@@ -1050,7 +1211,7 @@
     top: 0;
     bottom: 0;
 
-    width: 10px;
+    width: 8px;
 
     box-sizing: border-box;
 
@@ -1080,7 +1241,7 @@
 
     gap: 7px;
 
-    width: 100%;
+    width: max-content;
   }
 
   .growth-value strong {
@@ -1114,7 +1275,7 @@
   .growth-metric small {
     display: block;
 
-    width: 100%;
+    width: max-content;
 
     margin-top: 8px;
 
@@ -1173,6 +1334,9 @@
 
   /* =========================================================
      GRAPH
+
+     Everything now shares the exact same horizontal
+     start/end point.
   ========================================================= */
 
   .graph-area {
@@ -1208,18 +1372,26 @@
     top: 75%;
   }
 
-  .graph-area > svg {
+  .graph-svg {
     position: absolute;
 
-    inset: 0;
+    top: 0;
+    right: 0;
+    left: 0;
 
     z-index: 1;
+
+    display: block;
 
     width: 100%;
 
     height: calc(100% - 36px);
 
     overflow: visible;
+  }
+
+  .graph-svg-smooth {
+    display: none;
   }
 
   /* =========================================================
@@ -1236,6 +1408,10 @@
     stroke: #c9d0ee;
 
     stroke-width: 1.35;
+
+    stroke-linejoin: miter;
+
+    stroke-linecap: butt;
   }
 
   /* =========================================================
@@ -1252,6 +1428,10 @@
     stroke: var(--accent-blue);
 
     stroke-width: 1.7;
+
+    stroke-linejoin: miter;
+
+    stroke-linecap: butt;
   }
 
   .visitor-dot {
@@ -1267,7 +1447,7 @@
   }
 
   /* =========================================================
-     IMPACT NOTE
+     IMPACT
   ========================================================= */
 
   .graph-impact {
@@ -1313,6 +1493,8 @@
 
   /* =========================================================
      X AXIS
+
+     First / last labels sit directly at graph edges.
   ========================================================= */
 
   .graph-timeline {
@@ -1328,7 +1510,7 @@
 
     grid-template-columns: repeat(6, minmax(0, 1fr));
 
-    gap: 5px;
+    gap: 0;
   }
 
   .graph-timeline span {
@@ -1354,9 +1536,6 @@
 
   /* =========================================================
      TABLET
-
-     Title + +/- remains.
-     Content opens beneath.
   ========================================================= */
 
   @media (min-width: 768px) and (max-width: 1024px) {
@@ -1374,32 +1553,62 @@
       padding: 85px 0;
     }
 
+    /* =====================================================
+       HEADER BECOMES ONE COLUMN
+
+       Image now appears directly after link.
+    ====================================================== */
+
     .project-header {
-      gap: 35px;
+      grid-template-columns: 1fr;
+
+      gap: 24px;
+    }
+
+    .project-header-copy {
+      max-width: none;
     }
 
     .project-lead,
     .project-text {
+      max-width: 700px;
+
       font-size: 14px;
     }
 
+    .desktop-project-image {
+      display: none;
+    }
+
+    .responsive-project-image {
+      display: block;
+
+      width: 100%;
+
+      margin-top: 28px;
+    }
+
     .header-stats {
+      grid-template-columns: repeat(4, 1fr);
+
       gap: 7px;
     }
 
     .header-stat {
-      min-width: 102px;
+      width: 100%;
 
-      padding: 10px 14px;
+      min-width: 0;
+
+      padding: 9px 11px;
     }
 
     .header-stat strong {
       font-size: 20px;
     }
 
-    /* -----------------------------------------
-       ONE COLUMN
-    ----------------------------------------- */
+    /* =====================================================
+       ONE COLUMN FEATURE
+    ====================================================== */
 
     .feature-panel {
       display: block;
@@ -1418,10 +1627,6 @@
     .feature-copy-inner {
       padding: 17px 20px;
     }
-
-    /* -----------------------------------------
-       RESPONSIVE TITLE ROW
-    ----------------------------------------- */
 
     .responsive-feature-heading {
       display: flex;
@@ -1484,10 +1689,6 @@
       font-weight: 300;
     }
 
-    /* -----------------------------------------
-       COLLAPSED BY DEFAULT
-    ----------------------------------------- */
-
     .feature-detail-body {
       display: none;
 
@@ -1525,13 +1726,15 @@
     }
 
     .growth-metrics {
-      gap: 10px;
+      gap: 8px;
     }
 
     .growth-metric {
-      min-width: 145px;
+      width: max-content;
 
-      padding: 10px 14px;
+      min-width: 0;
+
+      padding: 9px 11px;
     }
 
     .growth-value strong {
@@ -1573,9 +1776,11 @@
       padding: 70px 0;
     }
 
-    /* -----------------------------------------
+    /* =====================================================
        PROJECT HEADER
-    ----------------------------------------- */
+
+       Image comes immediately after link.
+    ====================================================== */
 
     .project-header {
       grid-template-columns: 1fr;
@@ -1585,18 +1790,36 @@
       padding-bottom: 28px;
     }
 
+    .project-header-copy {
+      max-width: none;
+    }
+
     .project-header h2 {
       font-size: 24px;
     }
 
     .project-lead,
     .project-text {
+      max-width: 100%;
+
       font-size: 14px;
     }
 
-    /* -----------------------------------------
+    .desktop-project-image {
+      display: none;
+    }
+
+    .responsive-project-image {
+      display: block;
+
+      width: 100%;
+
+      margin-top: 28px;
+    }
+
+    /* =====================================================
        STATS
-    ----------------------------------------- */
+    ====================================================== */
 
     .header-stats {
       display: flex;
@@ -1607,7 +1830,7 @@
 
       gap: 7px;
 
-      width: fit-content;
+      width: 100%;
 
       max-width: 100%;
     }
@@ -1634,16 +1857,12 @@
 
     .header-stat::before,
     .header-stat::after {
-      width: 8px;
+      display: none;
     }
 
-    .project-image {
-      margin-top: 28px;
-    }
-
-    /* -----------------------------------------
+    /* =====================================================
        FEATURE
-    ----------------------------------------- */
+    ====================================================== */
 
     .feature-dashboard {
       margin-top: 28px;
@@ -1666,10 +1885,6 @@
     .feature-copy-inner {
       padding: 15px 0;
     }
-
-    /* -----------------------------------------
-       TITLE + +/-
-    ----------------------------------------- */
 
     .responsive-feature-heading {
       display: flex;
@@ -1732,10 +1947,6 @@
       font-weight: 300;
     }
 
-    /* -----------------------------------------
-       COLLAPSED DETAILS
-    ----------------------------------------- */
-
     .feature-detail-body {
       display: none;
 
@@ -1772,9 +1983,9 @@
       font-size: 10px;
     }
 
-    /* -----------------------------------------
+    /* =====================================================
        GRAPH
-    ----------------------------------------- */
+    ====================================================== */
 
     .feature-visual-inner {
       padding: 22px 14px;
@@ -1792,9 +2003,9 @@
       font-size: 10px;
     }
 
-    /* -----------------------------------------
-       GROWTH []
-    ----------------------------------------- */
+    /* =====================================================
+       GROWTH BRACKETS
+    ====================================================== */
 
     .growth-metrics {
       display: flex;
@@ -1847,9 +2058,30 @@
       white-space: nowrap;
     }
 
-    /* -----------------------------------------
+    /* =====================================================
+       MOBILE CURVES
+
+       Smooth version only.
+    ====================================================== */
+
+    .graph-svg-sharp {
+      display: none;
+    }
+
+    .graph-svg-smooth {
+      display: block;
+    }
+
+    .enquiries-line,
+    .visitors-line {
+      stroke-linejoin: round;
+
+      stroke-linecap: round;
+    }
+
+    /* =====================================================
        KEY
-    ----------------------------------------- */
+    ====================================================== */
 
     .chart-key {
       margin-top: 17px;
@@ -1859,9 +2091,9 @@
       font-size: 11px;
     }
 
-    /* -----------------------------------------
+    /* =====================================================
        IMPACT
-    ----------------------------------------- */
+    ====================================================== */
 
     .graph-impact {
       top: 42px;
@@ -1881,12 +2113,12 @@
       line-height: 1.45;
     }
 
-    /* -----------------------------------------
+    /* =====================================================
        X AXIS
-    ----------------------------------------- */
+    ====================================================== */
 
     .graph-timeline {
-      gap: 1px;
+      gap: 0;
     }
 
     .graph-timeline span {

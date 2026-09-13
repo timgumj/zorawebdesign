@@ -1784,4 +1784,41 @@
       transition-duration: 0.01ms;
     }
   }
+  @media (min-width: 1025px) {
+    .contact {
+      position: relative;
+    }
+
+    .contact-container {
+      width: min(1540px, calc(100% - 32px));
+      padding-right: 40px;
+      padding-left: 40px;
+      box-sizing: border-box;
+    }
+
+    .contact::before,
+    .contact::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 1px;
+      background: rgba(255, 255, 255, 0.08);
+      pointer-events: none;
+      transition: background 0.3s ease;
+    }
+
+    .contact::before {
+      left: max(16px, calc((100% - 1540px) / 2));
+    }
+
+    .contact::after {
+      right: max(16px, calc((100% - 1540px) / 2));
+    }
+
+    :global(body.light) .contact::before,
+    :global(body.light) .contact::after {
+      background: rgba(0, 0, 0, 0.08);
+    }
+  }
 </style>

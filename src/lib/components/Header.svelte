@@ -19,26 +19,29 @@
   } = $props();
 
   function clean(text) {
-    return String(text ?? "").replace(/[\[\]]/g, "");
+    return String(text ?? "").replace(/[\[\]*]/g, "");
   }
 
   let activeSection = $state("");
+
   let brandClicked = $state(false);
+
   let freebiesOpen = $state(false);
   let projectsOpen = $state(false);
 
   let dropdownElement = $state(null);
   let dropdownTriggerElement = $state(null);
+
   let projectDropdownElement = $state(null);
   let projectDropdownTriggerElement = $state(null);
 
   let mobileDropdownTop = $state(0);
   let mobileDropdownLeft = $state(0);
+
   let projectMobileDropdownTop = $state(0);
   let projectMobileDropdownLeft = $state(0);
 
   /*
-   * The language switch shows the language the visitor can switch to:
    * [DE] means the current page is English.
    * [EN] means the current page is German.
    */
@@ -73,6 +76,7 @@
 
   let projectsMenu = $derived({
     label: clean(nav.projects || (isEnglishPage ? "PROJECTS" : "PROJEKTE")),
+
     items: isEnglishPage
       ? [
           {
@@ -100,16 +104,9 @@
         ],
   });
 
-  /*
-   * These two tools are created directly in the header so the menu
-   * always contains both items, even when a homepage passes only one.
-   *
-   * Order:
-   * 1. Website Configurator
-   * 2. Website Audit
-   */
   let freebiesMenu = $derived({
-    label: isEnglishPage ? "TOOLS" : "TOOLS",
+    label: "TOOLS",
+
     items: isEnglishPage
       ? [
           {
@@ -127,7 +124,7 @@
           {
             label: "WEBSITE PLANNER",
             href: "/website-konfigurator/",
-            title: "Website planner",
+            title: "Website Planner",
           },
           {
             label: "WEBSITE AUDIT",
@@ -139,6 +136,7 @@
 
   function animateBrand() {
     brandClicked = true;
+
     closeFreebies();
     closeProjects();
 
@@ -159,6 +157,7 @@
     const triggerRect = dropdownTriggerElement.getBoundingClientRect();
 
     const dropdownWidth = window.innerWidth <= 640 ? 184 : 200;
+
     const viewportPadding = 12;
     const halfDropdownWidth = dropdownWidth / 2;
 
@@ -187,12 +186,14 @@
     const triggerRect = projectDropdownTriggerElement.getBoundingClientRect();
 
     const dropdownWidth = window.innerWidth <= 640 ? 184 : 200;
+
     const viewportPadding = 12;
     const halfDropdownWidth = dropdownWidth / 2;
 
     let centerPosition = triggerRect.left + triggerRect.width / 2;
 
     const minimumCenter = viewportPadding + halfDropdownWidth;
+
     const maximumCenter =
       window.innerWidth - viewportPadding - halfDropdownWidth;
 
@@ -202,6 +203,7 @@
     );
 
     projectMobileDropdownTop = Math.round(triggerRect.bottom + 12);
+
     projectMobileDropdownLeft = Math.round(centerPosition);
   }
 
@@ -212,6 +214,7 @@
     const willOpen = !projectsOpen;
 
     closeFreebies();
+
     projectsOpen = willOpen;
 
     if (willOpen) {
@@ -232,6 +235,7 @@
     const willOpen = !freebiesOpen;
 
     closeProjects();
+
     freebiesOpen = willOpen;
 
     if (willOpen) {
@@ -279,6 +283,7 @@
 
     closeFreebies();
     closeProjects();
+
     focusTarget?.focus();
   }
 
@@ -316,6 +321,7 @@
 
   function scrollToSection(event, id) {
     event.preventDefault();
+
     closeFreebies();
     closeProjects();
 
@@ -334,6 +340,7 @@
     });
 
     history.pushState(null, "", `#${id}`);
+
     activeSection = id;
   }
 
@@ -434,6 +441,8 @@
 
 <header class="site-header">
   <div class="header-grid">
+    <!-- LOGO -->
+
     <div class="header-left">
       <a
         href="/"
@@ -442,17 +451,17 @@
         class:brand-clicked={brandClicked}
         onclick={animateBrand}
       >
-        <span class="brand-frame">
-          <span class="brand">
-            ZORA<span class="brand-dot"></span>WEBDESIGN
-          </span>
+        <span class="brand">
+          ZORA<span class="brand-dot"></span>WEBDESIGN
+        </span>
 
-          <span class="brand-subtext">
-            {clean(nav.tagline)}
-          </span>
+        <span class="brand-subtext">
+          {clean(nav.tagline)}
         </span>
       </a>
     </div>
+
+    <!-- NAVIGATION -->
 
     <div class="header-right">
       <nav class="main-nav" aria-label="Main navigation">
@@ -474,7 +483,15 @@
                 aria-controls="website-projects-dropdown-panel"
                 onclick={toggleProjects}
               >
-                <span>{projectsMenu.label}</span>
+                <span class="menu-bracket">[</span>
+
+                <span class="menu-label">
+                  {projectsMenu.label}
+                </span>
+
+                <span class="dropdown-arrow" aria-hidden="true"></span>
+
+                <span class="menu-bracket">]</span>
               </button>
 
               <div
@@ -488,7 +505,13 @@
                     title={menuItem.title}
                     onclick={handleDropdownItemClick}
                   >
-                    <span>{menuItem.label}</span>
+                    <span class="dropdown-item-bracket"> [ </span>
+
+                    <span>
+                      {menuItem.label}
+                    </span>
+
+                    <span class="dropdown-item-bracket"> ] </span>
                   </a>
                 {/each}
               </div>
@@ -500,7 +523,13 @@
               class:active={activeSection === item.id}
               onclick={(event) => handleNavClick(event, item)}
             >
-              <span>{item.label}</span>
+              <span class="menu-bracket"> [ </span>
+
+              <span class="menu-label">
+                {item.label}
+              </span>
+
+              <span class="menu-bracket"> ] </span>
             </a>
           {/if}
 
@@ -520,7 +549,15 @@
                 aria-controls="website-tools-dropdown-panel"
                 onclick={toggleFreebies}
               >
-                <span>{freebiesMenu.label}</span>
+                <span class="menu-bracket"> [ </span>
+
+                <span class="menu-label">
+                  {freebiesMenu.label}
+                </span>
+
+                <span class="dropdown-arrow" aria-hidden="true"></span>
+
+                <span class="menu-bracket"> ] </span>
               </button>
 
               <div
@@ -534,7 +571,13 @@
                     title={menuItem.title}
                     onclick={handleDropdownItemClick}
                   >
-                    <span>{menuItem.label}</span>
+                    <span class="dropdown-item-bracket"> [ </span>
+
+                    <span>
+                      {menuItem.label}
+                    </span>
+
+                    <span class="dropdown-item-bracket"> ] </span>
                   </a>
                 {/each}
               </div>
@@ -542,22 +585,30 @@
           {/if}
         {/each}
 
+        <!-- LANGUAGE -->
+
         <div class="lang-switch">
           <a
             href={nav.languageLink || "#"}
             title="Sprache wechseln / Switch Language"
-            class="lang-link active"
+            class="lang-link"
             onclick={handleDropdownItemClick}
           >
+            <span class="menu-bracket"> [ </span>
+
             <svg class="language-globe" viewBox="0 0 24 24" aria-hidden="true">
               <circle cx="12" cy="12" r="9"></circle>
+
               <path
                 d="M3 12h18M12 3c2.4 2.45 3.6 5.45 3.6 9S14.4 18.55 12 21M12 3c-2.4 2.45-3.6 5.45-3.6 9S9.6 18.55 12 21"
               ></path>
             </svg>
-            <span>
+
+            <span class="menu-label">
               {clean(nav.languageLabel)}
             </span>
+
+            <span class="menu-bracket"> ] </span>
           </a>
         </div>
       </nav>
@@ -565,13 +616,8 @@
   </div>
 </header>
 
-<!--
-  Mobile-only fixed language switcher.
+<!-- MOBILE LANGUAGE SWITCH -->
 
-  It is hidden on tablet and desktop.
-  The regular language switch remains in the header
-  for screens wider than 640px.
--->
 <a
   class="mobile-language-switcher"
   href={nav.languageLink || "#"}
@@ -581,27 +627,44 @@
     : "Switch to the English version"}
   onclick={handleDropdownItemClick}
 >
+  <span class="menu-bracket"> [ </span>
+
   <svg class="language-globe" viewBox="0 0 24 24" aria-hidden="true">
     <circle cx="12" cy="12" r="9"></circle>
+
     <path
       d="M3 12h18M12 3c2.4 2.45 3.6 5.45 3.6 9S14.4 18.55 12 21M12 3c-2.4 2.45-3.6 5.45-3.6 9S9.6 18.55 12 21"
     ></path>
   </svg>
-  <span>{clean(nav.languageLabel)}</span>
+
+  <span>
+    {clean(nav.languageLabel)}
+  </span>
+
+  <span class="menu-bracket"> ] </span>
 </a>
 
 <style>
+  /* =========================================================
+     SHARED
+  ========================================================= */
+
   .mobile-language-switcher {
     display: none;
   }
 
   .language-globe {
-    width: 16px;
-    height: 16px;
+    width: 15px;
+    height: 15px;
+
     flex: 0 0 auto;
+
     fill: none;
-    stroke: currentColor;
+
+    stroke: #0043ff;
+
     stroke-width: 1.6;
+
     stroke-linecap: round;
     stroke-linejoin: round;
   }
@@ -612,8 +675,11 @@
 
   .site-header {
     position: sticky;
+
     top: 0;
+
     z-index: 1000;
+
     width: 100%;
 
     background: radial-gradient(
@@ -623,9 +689,15 @@
       ),
       linear-gradient(180deg, rgba(9, 10, 14, 0.96), rgba(4, 5, 8, 0.94));
 
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    /*
+     * IMPORTANT:
+     * No full-browser-width bottom border.
+     * Desktop bottom line is created with ::after.
+     */
+    border-bottom: 0;
 
     backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
 
     transition:
       background 0.3s ease,
@@ -634,50 +706,55 @@
 
   :global(body.light) .site-header {
     background: #ffffff;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+
+    border-bottom: 0;
+
     backdrop-filter: none;
+    -webkit-backdrop-filter: none;
   }
+
+  /* =========================================================
+     HEADER BOTTOM LINE
+     SAME WIDTH AS HERO + SERVICES
+     DESKTOP ONLY
+  ========================================================= */
 
   .site-header::after {
     content: "";
 
     position: absolute;
 
-    right: 0;
-    bottom: -1px;
-    left: 0;
+    z-index: 2;
+
+    left: 50%;
+    bottom: 0;
+
+    width: min(1540px, calc(100% - 32px));
 
     height: 1px;
 
-    background: linear-gradient(
-      90deg,
-      transparent,
-      rgba(255, 255, 255, 0.42),
-      transparent
-    );
+    background: rgba(255, 255, 255, 0.1);
 
-    opacity: 0.28;
+    transform: translateX(-50%);
 
     pointer-events: none;
+
+    transition: background 0.3s ease;
   }
 
   :global(body.light) .site-header::after {
-    background: linear-gradient(
-      90deg,
-      transparent,
-      rgba(0, 0, 0, 0.24),
-      transparent
-    );
+    background: rgba(0, 0, 0, 0.1);
   }
 
   /* =========================================================
      HEADER GRID
+     SAME DESKTOP WIDTH AS HERO + SERVICES
   ========================================================= */
 
   .header-grid {
     position: relative;
 
-    width: min(1540px, calc(100% - 48px));
+    width: min(1540px, calc(100% - 32px));
 
     min-height: 78px;
 
@@ -692,43 +769,36 @@
     align-items: stretch;
   }
 
-  .header-grid::before,
-  .header-grid::after {
-    content: "";
+  /* =========================================================
+     OUTER VERTICAL LINES
+  ========================================================= */
 
-    position: absolute;
+  .header-grid {
+    position: relative;
 
-    top: 14px;
-    bottom: 14px;
+    width: min(1540px, calc(100% - 32px));
 
-    width: 1px;
+    min-height: 78px;
 
-    background: linear-gradient(
-      180deg,
-      transparent,
-      rgba(255, 255, 255, 0.16),
-      transparent
-    );
+    margin: 0 auto;
 
-    pointer-events: none;
+    display: grid;
+
+    grid-template-columns:
+      1fr
+      auto;
+
+    align-items: stretch;
+
+    box-sizing: border-box;
+
+    border-left: 1px solid rgba(255, 255, 255, 0.08);
+    border-right: 1px solid rgba(255, 255, 255, 0.08);
   }
 
-  :global(body.light) .header-grid::before,
-  :global(body.light) .header-grid::after {
-    background: linear-gradient(
-      180deg,
-      transparent,
-      rgba(0, 0, 0, 0.14),
-      transparent
-    );
-  }
-
-  .header-grid::before {
-    left: 0;
-  }
-
-  .header-grid::after {
-    right: 0;
+  :global(body.light) .header-grid {
+    border-left-color: rgba(0, 0, 0, 0.1);
+    border-right-color: rgba(0, 0, 0, 0.1);
   }
 
   .header-left,
@@ -736,8 +806,13 @@
     min-height: 78px;
 
     display: flex;
+
     align-items: center;
   }
+
+  /* =========================================================
+     LOGO / NAV SEPARATOR
+  ========================================================= */
 
   .header-left {
     padding: 0 24px;
@@ -777,15 +852,8 @@
     color: inherit;
 
     text-decoration: none;
-  }
 
-  :global(body.light) .brand-block::before {
-    background: rgba(0, 0, 0, 0.05);
-  }
-
-  .brand-block:hover::before {
-    opacity: 1;
-    transform: scale(1);
+    -webkit-tap-highlight-color: transparent;
   }
 
   .brand {
@@ -798,7 +866,9 @@
     color: #ffffff;
 
     font-size: 1.18rem;
+
     font-weight: 600;
+
     line-height: 1;
 
     letter-spacing: 0.015em;
@@ -842,13 +912,9 @@
   }
 
   .brand-block:hover .brand-dot {
-    box-shadow: 0 0 18px rgba(255, 255, 255, 0.34);
+    box-shadow: 0 0 18px rgba(0, 67, 255, 0.28);
 
     transform: translateY(0.02em) scale(1.12);
-  }
-
-  :global(body.light) .brand-block:hover .brand-dot {
-    box-shadow: 0 0 18px rgba(0, 67, 255, 0.25);
   }
 
   .brand-subtext {
@@ -857,6 +923,9 @@
     color: rgba(255, 255, 255, 0.46);
 
     font-size: 0.66rem;
+
+    font-weight: 500;
+
     line-height: 1.2;
 
     letter-spacing: 0.08em;
@@ -965,85 +1034,6 @@
   }
 
   /* =========================================================
-   BRAND OPEN BRACKETS
-   SAME BORDER LANGUAGE AS REVIEW CARDS
-========================================================= */
-
-  .brand-frame {
-    --brand-frame-border: rgba(255, 255, 255, 0.34);
-
-    position: relative;
-
-    display: inline-flex;
-    flex-direction: column;
-    justify-content: center;
-
-    gap: 5px;
-
-    padding: 2px 0;
-  }
-
-  /*
- * Each side draws:
- * - one vertical line
- * - a short top line
- * - a short bottom line
- *
- * There is deliberately NO complete top/bottom border.
- */
-  .brand-frame::before,
-  .brand-frame::after {
-    content: "";
-
-    position: absolute;
-
-    top: -9px;
-    bottom: -9px;
-
-    width: 18px;
-
-    box-sizing: border-box;
-
-    border-top: 1px solid var(--brand-frame-border);
-    border-bottom: 1px solid var(--brand-frame-border);
-
-    pointer-events: none;
-
-    transition:
-      border-color 0.3s ease,
-      width 0.25s ease;
-  }
-
-  /* LEFT OPEN BRACKET */
-
-  .brand-frame::before {
-    left: -15px;
-
-    border-left: 1px solid var(--brand-frame-border);
-  }
-
-  /* RIGHT OPEN BRACKET */
-
-  .brand-frame::after {
-    right: -15px;
-
-    border-right: 1px solid var(--brand-frame-border);
-  }
-
-  /* LIGHT MODE */
-
-  :global(body.light) .brand-frame {
-    --brand-frame-border: rgba(0, 0, 0, 0.34);
-  }
-
-  /* SUBTLE HOVER EXPANSION */
-
-  .brand-block:hover .brand-frame::before,
-  .brand-block:hover .brand-frame::after {
-    width: 22px;
-  }
-
-  /* =========================================================
      MAIN NAV
   ========================================================= */
 
@@ -1057,89 +1047,106 @@
     gap: 28px;
   }
 
-  .main-nav a {
-    position: relative;
-
+  .main-nav > a,
+  .dropdown-trigger,
+  .lang-link {
     color: #ffffff;
 
-    font-size: 0.98rem;
-    font-weight: 550;
+    font-family: inherit;
+
+    font-size: 0.96rem;
+
+    font-weight: 600;
+
     line-height: 1;
 
+    letter-spacing: -0.005em;
+
     text-decoration: none;
+
+    text-transform: none;
 
     transition:
       color 0.2s ease,
       opacity 0.2s ease;
   }
 
-  :global(body.light) .main-nav a {
-    color: #111111;
+  :global(body.light) .main-nav > a,
+  :global(body.light) .dropdown-trigger,
+  :global(body.light) .lang-link {
+    color: #000000;
+  }
+
+  /* =========================================================
+     NORMAL MENU ITEMS
+  ========================================================= */
+
+  .main-nav > a {
+    position: relative;
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 0.32em;
+
+    white-space: nowrap;
   }
 
   /*
-   * Subtle hover motion instead of the previous
-   * 360 degree flip animation.
+   * NO BLUE HOVER UNDERLINE
    */
-  .main-nav a span {
-    position: relative;
+  .main-nav > a::after,
+  .main-nav > a:hover::after,
+  .main-nav > a.active::after,
+  .lang-link::after,
+  .lang-link:hover::after,
+  .lang-link.active::after {
+    content: none;
 
+    display: none;
+  }
+
+  .main-nav > a:hover,
+  .main-nav > a.active {
+    color: #ffffff;
+  }
+
+  :global(body.light) .main-nav > a:hover,
+  :global(body.light) .main-nav > a.active {
+    color: #000000;
+  }
+
+  .menu-bracket {
+    display: inline-block;
+
+    color: currentColor;
+
+    opacity: 0.88;
+
+    font-weight: 500;
+
+    transition:
+      opacity 0.2s ease,
+      color 0.2s ease,
+      transform 0.2s ease;
+  }
+
+  .menu-label {
     display: inline-block;
 
     transition:
-      transform 0.22s ease,
-      opacity 0.22s ease;
+      color 0.2s ease,
+      transform 0.2s ease;
   }
 
-  .main-nav a::after {
-    content: "";
-
-    position: absolute;
-
-    right: 0;
-    bottom: -29px;
-    left: 0;
-
-    height: 2px;
-
-    background: #0043ff;
-
-    opacity: 0;
-
-    transform: scaleX(0);
-
-    transform-origin: center;
-
-    transition:
-      transform 0.24s ease,
-      opacity 0.24s ease;
+  .main-nav > a:hover .menu-label {
+    transform: translateY(-1px);
   }
 
-  .main-nav a:hover {
-    color: #ffffff;
-  }
-
-  :global(body.light) .main-nav a:hover {
-    color: #000000;
-  }
-
-  .main-nav a:hover span {
-    transform: translateY(-2px);
-  }
-
-  .main-nav a:hover::after,
-  .main-nav a.active::after {
+  .main-nav > a:hover .menu-bracket,
+  .main-nav > a.active .menu-bracket {
     opacity: 1;
-
-    transform: scaleX(1);
-  }
-
-  .main-nav a.active {
-    color: #ffffff;
-  }
-
-  :global(body.light) .main-nav a.active {
-    color: #000000;
   }
 
   /* =========================================================
@@ -1167,7 +1174,7 @@
 
     align-items: center;
 
-    gap: 8px;
+    gap: 0.32em;
 
     padding: 0;
 
@@ -1175,17 +1182,9 @@
 
     background: transparent;
 
-    color: #ffffff;
-
-    font-family: inherit;
-
-    font-size: 0.98rem;
-    font-weight: 550;
-    line-height: 1;
-
-    text-transform: uppercase;
-
     cursor: pointer;
+
+    white-space: nowrap;
 
     -webkit-tap-highlight-color: transparent;
 
@@ -1195,56 +1194,66 @@
       transform 0.22s ease;
   }
 
-  :global(body.light) .dropdown-trigger {
-    color: #111111;
+  .dropdown-trigger:hover,
+  .dropdown-trigger.active,
+  .nav-dropdown.open .dropdown-trigger {
+    color: #ffffff;
   }
 
-  .dropdown-trigger::after {
-    content: "";
+  :global(body.light) .dropdown-trigger:hover,
+  :global(body.light) .dropdown-trigger.active,
+  :global(body.light) .nav-dropdown.open .dropdown-trigger {
+    color: #000000;
+  }
 
+  .dropdown-trigger:hover .menu-label {
+    transform: translateY(-1px);
+  }
+
+  /* =========================================================
+     BLUE DROPDOWN ARROW
+  ========================================================= */
+
+  .dropdown-arrow {
     width: 6px;
     height: 6px;
 
-    display: block;
+    margin: 0 0.13em 3px 0.12em;
 
-    flex-shrink: 0;
+    display: inline-block;
 
-    border-right: 1px solid #0043ff;
-    border-bottom: 1px solid #0043ff;
+    flex: 0 0 auto;
 
-    transform: rotate(45deg) translateY(-1px);
+    border-right: 1.5px solid #0043ff;
+
+    border-bottom: 1.5px solid #0043ff;
+
+    transform: rotate(45deg);
+
+    transform-origin: center;
 
     transition:
       transform 0.2s ease,
-      border-color 0.2s ease;
+      margin 0.2s ease;
+
+    color: #0043ff;
   }
 
-  .dropdown-trigger:hover {
-    color: #ffffff;
+  .nav-dropdown.open .dropdown-arrow {
+    margin-bottom: -2px;
 
-    transform: translateY(-2px);
-  }
-
-  :global(body.light) .dropdown-trigger:hover {
-    color: #000000;
-  }
-
-  .dropdown-trigger.active {
-    color: #ffffff;
-  }
-
-  :global(body.light) .dropdown-trigger.active {
-    color: #000000;
+    transform: rotate(225deg);
   }
 
   .dropdown-trigger:focus-visible {
-    outline: 1px solid rgba(0, 67, 255, 0.8);
+    outline: 1px solid #0043ff;
 
     outline-offset: 6px;
   }
 
   /* =========================================================
      DROPDOWN PANEL
+     NEUTRAL ONLY
   ========================================================= */
 
   .dropdown-panel {
@@ -1253,6 +1262,7 @@
     z-index: 1020;
 
     top: calc(100% - 6px);
+
     left: -12px;
 
     min-width: 220px;
@@ -1261,13 +1271,17 @@
 
     gap: 0;
 
-    padding: 10px 0;
+    padding: 8px 0;
 
     border: 1px solid rgba(255, 255, 255, 0.1);
 
     background: rgba(5, 6, 10, 0.98);
 
-    backdrop-filter: blur(8px);
+    box-shadow: 0 18px 42px rgba(0, 0, 0, 0.22);
+
+    backdrop-filter: blur(10px);
+
+    -webkit-backdrop-filter: blur(10px);
 
     opacity: 0;
 
@@ -1286,15 +1300,19 @@
   :global(body.light) .dropdown-panel {
     border-color: rgba(0, 0, 0, 0.12);
 
-    background: rgba(255, 255, 255, 0.98);
+    background: rgba(255, 255, 255, 0.99);
+
+    box-shadow: 0 18px 42px rgba(0, 0, 0, 0.1);
   }
 
   .dropdown-panel a {
-    min-height: 40px;
+    min-height: 42px;
 
     display: inline-flex;
 
     align-items: center;
+
+    gap: 0.38em;
 
     padding: 0 14px;
 
@@ -1302,12 +1320,15 @@
 
     color: #ffffff;
 
-    font-size: 0.86rem;
-    font-weight: 550;
+    font-size: 0.84rem;
+
+    font-weight: 600;
+
+    line-height: 1.2;
 
     text-decoration: none;
 
-    text-transform: uppercase;
+    text-transform: none;
 
     box-shadow: none;
 
@@ -1324,12 +1345,12 @@
   :global(body.light) .dropdown-panel a {
     border-bottom-color: rgba(0, 0, 0, 0.07);
 
-    color: #111111;
+    color: #000000;
   }
 
   .dropdown-panel a:hover,
   .dropdown-panel a:focus-visible {
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(255, 255, 255, 0.055);
 
     color: #ffffff;
 
@@ -1340,9 +1361,25 @@
 
   :global(body.light) .dropdown-panel a:hover,
   :global(body.light) .dropdown-panel a:focus-visible {
-    background: rgba(0, 0, 0, 0.05);
+    background: rgba(0, 0, 0, 0.045);
 
-    color: #111111;
+    color: #000000;
+  }
+
+  .dropdown-item-bracket {
+    opacity: 0.72;
+
+    color: currentColor;
+
+    font-weight: 500;
+
+    transition: opacity 0.18s ease;
+  }
+
+  .dropdown-panel a:hover .dropdown-item-bracket {
+    opacity: 1;
+
+    color: currentColor;
   }
 
   .dropdown-panel a::after,
@@ -1372,10 +1409,6 @@
     transform: translateY(0);
   }
 
-  .nav-dropdown.open .dropdown-trigger::after {
-    transform: rotate(225deg) translateY(1px);
-  }
-
   /* =========================================================
      DESKTOP DROPDOWN HOVER
   ========================================================= */
@@ -1392,9 +1425,11 @@
       transform: translateY(0);
     }
 
-    .nav-dropdown:hover .dropdown-trigger::after,
-    .nav-dropdown:focus-within .dropdown-trigger::after {
-      transform: rotate(225deg) translateY(1px);
+    .nav-dropdown:hover .dropdown-arrow,
+    .nav-dropdown:focus-within .dropdown-arrow {
+      margin-bottom: -2px;
+
+      transform: rotate(225deg);
     }
   }
 
@@ -1423,43 +1458,25 @@
   .lang-link {
     position: relative;
 
-    padding: 30px 0 26px;
-
     display: inline-flex;
 
     align-items: center;
-    gap: 7px;
 
-    color: #ffffff;
+    gap: 0.34em;
 
-    font-weight: 550;
+    white-space: nowrap;
   }
 
-  .lang-link.active {
+  .lang-link:hover {
     color: #ffffff;
   }
 
-  :global(body.light) .lang-link,
-  :global(body.light) .lang-link.active {
+  :global(body.light) .lang-link:hover {
     color: #000000;
   }
 
-  .lang-link.active::after {
-    content: "";
-
-    position: absolute;
-
-    right: 0;
-    bottom: -1px;
-    left: 0;
-
-    height: 2px;
-
-    background: #0043ff;
-
-    opacity: 1;
-
-    transform: scaleX(1);
+  .lang-link .language-globe {
+    stroke: #0043ff;
   }
 
   /* =========================================================
@@ -1471,6 +1488,14 @@
       overflow: visible;
     }
 
+    /*
+     * Desktop architectural bottom line
+     * is not needed on tablet/mobile.
+     */
+    .site-header::after {
+      display: none;
+    }
+
     .header-grid {
       width: min(100%, calc(100% - 28px));
 
@@ -1479,11 +1504,18 @@
       overflow: visible;
     }
 
+    /*
+     * Desktop outer edge rails disappear.
+     */
     .header-grid::before,
     .header-grid::after {
       display: none;
     }
 
+    /*
+     * Tablet separator between logo
+     * and navigation remains.
+     */
     .header-left {
       min-height: auto;
 
@@ -1518,6 +1550,20 @@
       align-items: center;
     }
 
+    .brand {
+      font-size: 1.05rem;
+
+      justify-content: center;
+
+      text-align: center;
+    }
+
+    .brand-subtext {
+      font-size: 0.63rem;
+
+      text-align: center;
+    }
+
     .main-nav {
       width: 100%;
 
@@ -1547,24 +1593,18 @@
       display: none;
     }
 
-    .main-nav a {
+    .main-nav > a,
+    .dropdown-trigger,
+    .lang-link {
       flex: 0 0 auto;
 
-      color: #ffffff;
-
       font-size: 0.82rem;
-      font-weight: 550;
+
+      font-weight: 600;
     }
 
-    :global(body.light) .main-nav a {
-      color: #111111;
-    }
-
-    .main-nav a::after {
-      bottom: -8px;
-    }
-
-    .main-nav a:hover span {
+    .main-nav > a:hover .menu-label,
+    .dropdown-trigger:hover .menu-label {
       transform: translateY(-1px);
     }
 
@@ -1574,21 +1614,6 @@
       min-height: auto;
 
       flex: 0 0 auto;
-    }
-
-    .dropdown-trigger {
-      color: #ffffff;
-
-      font-size: 0.82rem;
-      font-weight: 550;
-    }
-
-    :global(body.light) .dropdown-trigger {
-      color: #111111;
-    }
-
-    .dropdown-trigger:hover {
-      transform: translateY(-1px);
     }
 
     .dropdown-panel {
@@ -1622,32 +1647,9 @@
 
       flex: 0 0 auto;
     }
-    /* TABLET */
 
-    .brand {
-      font-size: 1.05rem;
-      justify-content: center;
-      text-align: center;
-    }
-
-    .brand-subtext {
-      font-size: 0.63rem;
-      text-align: center;
-    }
     .lang-link {
       padding: 0;
-
-      color: #ffffff;
-
-      font-weight: 550;
-    }
-
-    :global(body.light) .lang-link {
-      color: #000000;
-    }
-
-    .lang-link.active::after {
-      bottom: -8px;
     }
   }
 
@@ -1672,17 +1674,19 @@
       padding: 0;
     }
 
-    /* MOBILE */
-
     .brand {
       font-size: 0.88rem;
+
       justify-content: center;
+
       text-align: center;
     }
 
     .brand-subtext {
       font-size: 0.61rem;
+
       letter-spacing: 0.06em;
+
       text-align: center;
     }
 
@@ -1694,26 +1698,24 @@
       justify-content: center;
     }
 
-    .main-nav a {
-      color: #ffffff;
-
-      font-size: 0.76rem;
-      font-weight: 550;
-    }
-
-    :global(body.light) .main-nav a {
-      color: #111111;
-    }
-
+    .main-nav > a,
     .dropdown-trigger {
-      color: #ffffff;
-
       font-size: 0.76rem;
-      font-weight: 550;
+
+      font-weight: 600;
     }
 
-    :global(body.light) .dropdown-trigger {
-      color: #111111;
+    .menu-bracket {
+      opacity: 0.86;
+    }
+
+    .dropdown-arrow {
+      width: 5px;
+      height: 5px;
+
+      border-right-width: 1.4px;
+
+      border-bottom-width: 1.4px;
     }
 
     .dropdown-panel {
@@ -1725,18 +1727,13 @@
 
       padding: 0 13px;
 
-      color: #ffffff;
-
       font-size: 0.8rem;
-      font-weight: 550;
-    }
 
-    :global(body.light) .dropdown-panel a {
-      color: #111111;
+      font-weight: 600;
     }
 
     /* =====================================================
-       HIDE REGULAR LANGUAGE SWITCH ON MOBILE
+       HIDE REGULAR LANGUAGE SWITCH
     ====================================================== */
 
     .lang-switch {
@@ -1752,20 +1749,25 @@
 
       z-index: 1200;
 
-      right: max(14px, env(safe-area-inset-left));
+      right: max(14px, env(safe-area-inset-right));
 
       bottom: max(14px, env(safe-area-inset-bottom));
 
       width: auto;
+
       min-width: 48px;
+
       height: 42px;
+
       padding: 0 10px;
 
       display: inline-flex;
 
       align-items: center;
+
       justify-content: center;
-      gap: 5px;
+
+      gap: 0.3em;
 
       border: 1px solid rgba(0, 67, 255, 0.82);
 
@@ -1773,14 +1775,17 @@
 
       color: #ffffff;
 
+      font-family: inherit;
+
       font-size: 0.72rem;
+
       font-weight: 600;
+
       line-height: 1;
 
-      letter-spacing: 0.08em;
+      letter-spacing: 0;
 
       text-decoration: none;
-      text-transform: uppercase;
 
       box-shadow: 0 10px 28px rgba(0, 0, 0, 0.24);
 
@@ -1791,35 +1796,38 @@
       -webkit-tap-highlight-color: transparent;
 
       transition:
+        color 0.2s ease,
         border-color 0.2s ease,
         background 0.2s ease,
         transform 0.2s ease;
     }
 
     .mobile-language-switcher:hover {
+      color: #ffffff;
+
       transform: translateY(-2px);
     }
 
     :global(body.light) .mobile-language-switcher {
-      background: rgba(255, 255, 255, 0.94);
+      background: rgba(255, 255, 255, 0.96);
 
       color: #000000;
 
       box-shadow: 0 10px 28px rgba(0, 0, 0, 0.12);
     }
 
+    :global(body.light) .mobile-language-switcher:hover {
+      color: #000000;
+    }
+
     .mobile-language-switcher::after {
-      content: "";
+      content: none;
 
-      position: absolute;
+      display: none;
+    }
 
-      right: 8px;
-      bottom: -1px;
-      left: 8px;
-
-      height: 2px;
-
-      background: #0043ff;
+    .mobile-language-switcher .language-globe {
+      stroke: #0043ff;
     }
 
     .mobile-language-switcher:focus-visible {
@@ -1839,9 +1847,10 @@
     .brand-subtext,
     .dropdown-panel,
     .dropdown-trigger,
-    .dropdown-trigger::after,
-    .main-nav a span,
-    .main-nav a::after,
+    .dropdown-arrow,
+    .menu-label,
+    .menu-bracket,
+    .main-nav a,
     .mobile-language-switcher {
       transition-duration: 0.01ms;
 

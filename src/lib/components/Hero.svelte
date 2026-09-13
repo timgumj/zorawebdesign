@@ -9,7 +9,6 @@
   let greetingText = $state("");
   let greetingIcon = $state("");
   let greetingAlt = $state("Greeting Icon");
-  let activePopover = $state(null);
   const heroColumnOne = $derived(projects.slice(0, 5));
   const heroColumnTwo = $derived(projects.slice(5, 10));
   const heroSingleColumn = $derived(projects.slice(0, 6));
@@ -98,29 +97,6 @@
       alt: "Evening",
     },
   };
-  const fallbackConnectionItems = [
-    {
-      title: "Easy to talk to",
-      popup:
-        "Clients love feeling relaxed from the first call. A warm and clear process makes it easier to share ideas, ask questions, and build something that truly feels like them.",
-    },
-    {
-      title: "Feels personal",
-      popup:
-        "People appreciate a designer who listens before designing. When the work reflects their story, values, and style, the final website feels human instead of generic.",
-    },
-    {
-      title: "Built with care",
-      popup:
-        "It means a lot when details are handled thoughtfully. Fast replies, honest guidance, and careful design choices help clients feel supported and respected throughout the project.",
-    },
-  ];
-  const connectionItems = $derived(
-    fallbackConnectionItems.map((item, index) => ({
-      title: hero.connectionItems?.[index]?.title ?? item.title,
-      popup: hero.connectionItems?.[index]?.popup ?? item.popup,
-    })),
-  );
   function formatGreeting(text = "") {
     return text.charAt(0).toUpperCase() + text.slice(1);
   }
@@ -146,13 +122,6 @@
     isTablet = width <= 1100 && width > 767;
     isMobile = width <= 767;
     showSingleMarquee = !isDesktop;
-    if (isDesktop) {
-      activePopover = null;
-    }
-  }
-  function togglePopover(index) {
-    if (isDesktop) return;
-    activePopover = activePopover === index ? null : index;
   }
 
   function trackCenteredThumbnail(node) {
@@ -207,24 +176,17 @@
     updateGreeting();
     showMarquee = true;
     const handleResize = () => updateViewportState();
-    const handleDocumentClick = (event) => {
-      if (isDesktop) return;
-      if (!event.target.closest(".connection-card")) {
-        activePopover = null;
-      }
-    };
     window.addEventListener("resize", handleResize);
-    document.addEventListener("click", handleDocumentClick);
     return () => {
       window.removeEventListener("resize", handleResize);
-      document.removeEventListener("click", handleDocumentClick);
     };
   });
 </script>
 
 <section class="hero">
   <div class="container hero-shell">
-    <span class="hero-edge-line" aria-hidden="true"></span>
+    <span class="hero-edge-line hero-edge-left" aria-hidden="true"></span>
+    <span class="hero-edge-line hero-edge-right" aria-hidden="true"></span>
     <nav
       class="hero-social-rail"
       aria-label={isGerman
@@ -444,34 +406,6 @@
             </a>
           </div>
         {/if}
-        <div
-          class="hero-connection-strip"
-          role="group"
-          aria-label={hero.connectionAriaLabel ?? "What clients appreciate"}
-        >
-          {#each connectionItems as item, index}
-            <div
-              class="connection-card connection-card-{index}"
-              class:is-open={activePopover === index}
-            >
-              <button
-                class="connection-trigger"
-                type="button"
-                aria-label={item.title}
-                aria-expanded={activePopover === index}
-                onclick={(e) => {
-                  e.stopPropagation();
-                  togglePopover(index);
-                }}
-              >
-                <span class="connection-title">{item.title}</span>
-              </button>
-              <div class="connection-popover" role="tooltip">
-                <p>{item.popup}</p>
-              </div>
-            </div>
-          {/each}
-        </div>
       </div>
     </div>
   </div>
@@ -508,7 +442,7 @@
     max-height: 92svh;
     overflow: hidden;
     color: #ffffff;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+
     background: radial-gradient(
         circle at 90% 80%,
         rgba(255, 255, 255, 0.05),
@@ -520,9 +454,30 @@
       color 0.3s ease,
       border-color 0.3s ease;
   }
+
+  .hero::after {
+    content: "";
+    position: absolute;
+
+    left: 50%;
+    bottom: 0;
+
+    width: min(1540px, calc(100% - 32px));
+    height: 1px;
+
+    background: rgba(255, 255, 255, 0.12);
+
+    transform: translateX(-50%);
+
+    pointer-events: none;
+  }
+
+  :global(body.light) .hero::after {
+    background: rgba(0, 0, 0, 0.12);
+  }
   :global(body.light) .hero {
     color: #111111;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+
     background: #ffffff;
   }
   .hero-shell {
@@ -538,16 +493,48 @@
     isolation: isolate;
     overflow: visible;
   }
+  /* =========================================================
+   HERO LEFT + RIGHT VERTICAL LINES
+========================================================= */
+
   .hero-edge-line {
     position: absolute;
-    z-index: -1;
+
+    z-index: 2;
+
     top: 0;
     bottom: 0;
-    left: 0;
-    width: 0.1px;
+
+    width: 1px;
+
     background: rgba(255, 255, 255, 0.08);
+
     pointer-events: none;
+
     transition: background 0.3s ease;
+  }
+
+  .hero-edge-left {
+    left: 0;
+  }
+
+  .hero-edge-right {
+    right: 0;
+  }
+
+  :global(body.light) .hero-edge-line {
+    background: rgba(0, 0, 0, 0.08);
+  }
+
+  /* =========================================================
+   TABLET + MOBILE
+   REMOVE HERO VERTICAL EDGE LINES
+========================================================= */
+
+  @media (max-width: 1100px) {
+    .hero-edge-line {
+      display: none;
+    }
   }
   :global(body.light) .hero-edge-line {
     background: rgba(0, 0, 0, 0.08);
@@ -1138,167 +1125,6 @@
     border-color: #050505;
   }
   /* =========================================================
-     CONNECTION STRIP
-  ========================================================= */
-  .hero-connection-strip {
-    position: relative;
-    z-index: 5;
-    width: 100%;
-    max-width: 100%;
-    margin-top: clamp(8px, 1.3vh, 14px);
-    padding-top: clamp(3px, 0.7vh, 6px);
-    display: grid;
-    grid-template-columns: repeat(3, max-content);
-    gap: clamp(14px, 1.6vw, 24px);
-    align-self: flex-start;
-    justify-self: start;
-    justify-content: start;
-    background: transparent;
-  }
-  .connection-card {
-    position: relative;
-    min-width: 0;
-    width: max-content;
-  }
-  .connection-trigger {
-    position: relative;
-    width: auto;
-    min-height: 0;
-    padding: 0;
-    border: 0;
-    background: transparent;
-    color: #f5f5f5;
-    display: inline-flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: flex-start;
-    gap: 8px;
-    text-align: left;
-    cursor: pointer;
-    overflow: visible;
-    backdrop-filter: none;
-    -webkit-backdrop-filter: none;
-    transition:
-      opacity 0.25s ease,
-      transform 0.25s ease,
-      color 0.3s ease;
-  }
-  :global(body.light) .connection-trigger {
-    color: #111111;
-  }
-  .connection-trigger:hover,
-  .connection-trigger:focus-visible {
-    background: transparent;
-    outline: none;
-    opacity: 0.78;
-    transform: translateY(-1px);
-  }
-  .connection-icon-wrap {
-    width: var(--hero-icon-wrap);
-    height: var(--hero-icon-wrap);
-    border-radius: 0;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    color: #ffffff;
-    background: transparent;
-    border: 0;
-    flex-shrink: 0;
-    transition: color 0.3s ease;
-  }
-  :global(body.light) .connection-icon-wrap {
-    color: #111111;
-  }
-  .connection-icon {
-    width: var(--hero-icon-size);
-    height: var(--hero-icon-size);
-    display: block;
-  }
-  .connection-title {
-    color: rgba(255, 255, 255, 0.92);
-    font-size: clamp(0.72rem, 0.26vw + 0.68rem, 0.84rem);
-    line-height: 1.25;
-    font-weight: 400;
-    letter-spacing: 0;
-    text-wrap: balance;
-    text-align: left;
-    text-decoration: underline;
-    text-decoration-color: #0043ff;
-    text-underline-offset: 4px;
-    text-decoration-thickness: 1px;
-    transition: color 0.3s ease;
-  }
-  :global(body.light) .connection-title {
-    color: rgba(0, 0, 0, 0.86);
-  }
-  /* =========================================================
-     CONNECTION POPOVER
-  ========================================================= */
-  .connection-popover {
-    position: absolute;
-    left: 0;
-    bottom: calc(100% + 14px);
-    transform: translateY(10px);
-    width: min(280px, calc(100vw - 40px));
-    padding: 16px 16px 17px;
-    border-radius: 0;
-    background: #ffffff;
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    box-shadow: 0 18px 45px rgba(0, 0, 0, 0.35);
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-    transition:
-      opacity 0.22s ease,
-      transform 0.22s ease,
-      visibility 0.22s ease,
-      background 0.3s ease,
-      border-color 0.3s ease;
-  }
-  :global(body.light) .connection-popover {
-    background: #050505;
-    border-color: rgba(255, 255, 255, 0.12);
-  }
-  .connection-popover::after {
-    content: "";
-    position: absolute;
-    left: 18px;
-    top: 100%;
-    transform: rotate(45deg);
-    width: 12px;
-    height: 12px;
-    background: #ffffff;
-    border-right: 1px solid rgba(0, 0, 0, 0.1);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-    transition:
-      background 0.3s ease,
-      border-color 0.3s ease;
-  }
-  :global(body.light) .connection-popover::after {
-    background: #050505;
-    border-right-color: rgba(255, 255, 255, 0.12);
-    border-bottom-color: rgba(255, 255, 255, 0.12);
-  }
-  .connection-popover p {
-    margin: 0;
-    color: #000000;
-    font-size: clamp(0.84rem, 0.22vw + 0.82rem, 0.9rem);
-    line-height: 1.55;
-    text-align: left;
-    transition: color 0.3s ease;
-  }
-  :global(body.light) .connection-popover p {
-    color: #ffffff;
-  }
-  @media (hover: hover) and (pointer: fine) {
-    .connection-card:hover .connection-popover,
-    .connection-card:focus-within .connection-popover {
-      opacity: 1;
-      visibility: visible;
-      transform: translateY(0);
-    }
-  }
-  /* =========================================================
      MARQUEE ANIMATION
   ========================================================= */
   @keyframes heroScrollUp {
@@ -1522,101 +1348,6 @@
       gap: clamp(10px, 1.5vh, 16px);
     }
 
-    .hero-connection-strip {
-      margin: clamp(4px, 0.9vh, 9px) 0 0;
-      padding-top: clamp(2px, 0.5vh, 5px);
-      width: min(100%, 480px);
-      grid-template-columns: repeat(3, max-content);
-      gap: 6px;
-      justify-self: start;
-      justify-content: start;
-      align-self: flex-start;
-    }
-
-    .connection-card {
-      width: 100%;
-    }
-
-    .connection-trigger {
-      width: 100%;
-      min-height: 0;
-      padding: 0;
-      flex-direction: column;
-      align-items: flex-start;
-      justify-content: flex-start;
-      gap: 4px;
-      text-align: left;
-    }
-
-    .connection-title {
-      font-size: 1rem;
-      line-height: 1.12;
-      text-align: left;
-      font-weight: 400;
-    }
-
-    .connection-popover {
-      left: 50%;
-      bottom: calc(100% + 12px);
-      transform: translate(-50%, 10px);
-      width: min(260px, calc(100vw - 32px));
-      padding: 15px 15px 16px;
-    }
-
-    .connection-popover p {
-      font-size: 0.92rem;
-      line-height: 1.5;
-    }
-
-    .connection-popover::after {
-      left: 50%;
-      transform: translateX(-50%) rotate(45deg);
-    }
-
-    .connection-card:hover .connection-popover,
-    .connection-card:focus-within .connection-popover {
-      opacity: 0;
-      visibility: hidden;
-      transform: translate(-50%, 10px);
-    }
-
-    .connection-card.is-open .connection-popover {
-      opacity: 1;
-      visibility: visible;
-      pointer-events: auto;
-      transform: translate(-50%, 0);
-    }
-
-    .connection-card-0 .connection-popover {
-      left: 0;
-      right: auto;
-      transform: translate(0, 10px);
-    }
-
-    .connection-card-0 .connection-popover::after {
-      left: 24px;
-      transform: rotate(45deg);
-    }
-
-    .connection-card-0.is-open .connection-popover {
-      transform: translate(0, 0);
-    }
-
-    .connection-card-2 .connection-popover {
-      left: auto;
-      right: 0;
-      transform: translate(0, 10px);
-    }
-
-    .connection-card-2 .connection-popover::after {
-      left: auto;
-      right: 24px;
-      transform: rotate(45deg);
-    }
-
-    .connection-card-2.is-open .connection-popover {
-      transform: translate(0, 0);
-    }
     .hero-marquee-up .hero-marquee-track {
       animation: heroScrollUp 18s linear infinite;
     }
@@ -1911,93 +1642,6 @@
       font-size: 0.6rem;
       flex: 0 1 auto;
     }
-    .hero-connection-strip {
-      width: min(100%, 300px);
-      margin: clamp(4px, 0.9vh, 9px) 0 0;
-      padding-top: clamp(2px, 0.5vh, 5px);
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 5px;
-      justify-self: start;
-      justify-content: start;
-      align-self: flex-start;
-    }
-    .connection-card {
-      width: 100%;
-    }
-    .connection-trigger {
-      width: 100%;
-      min-height: 0;
-      padding: 0;
-      align-items: flex-start;
-      justify-content: flex-start;
-      text-align: left;
-      gap: 4px;
-    }
-    .connection-title {
-      font-size: 0.68rem;
-      line-height: 1.08;
-      text-align: left;
-      font-weight: 400;
-    }
-    .connection-popover {
-      left: 50%;
-      bottom: calc(100% + 11px);
-      width: min(235px, calc(100vw - 28px));
-      padding: 14px 14px 15px;
-      transform: translate(-50%, 8px);
-    }
-    .connection-popover p {
-      font-size: 0.86rem;
-      line-height: 1.48;
-    }
-    .connection-popover::after {
-      left: 50%;
-      transform: translateX(-50%) rotate(45deg);
-    }
-    .connection-card:hover .connection-popover,
-    .connection-card:focus-within .connection-popover {
-      opacity: 0;
-      visibility: hidden;
-      transform: translate(-50%, 8px);
-    }
-    .connection-card.is-open .connection-popover {
-      opacity: 1;
-      visibility: visible;
-      pointer-events: auto;
-      transform: translate(-50%, 0);
-    }
-    .connection-card-0 .connection-popover {
-      left: 0;
-      right: auto;
-      transform: translate(0, 8px);
-    }
-    .connection-card-0 .connection-popover::after {
-      left: 22px;
-      transform: rotate(45deg);
-    }
-    .connection-card-0.is-open .connection-popover {
-      transform: translate(0, 0);
-    }
-    .connection-card-1 .connection-popover {
-      left: 50%;
-      transform: translate(-50%, 8px);
-    }
-    .connection-card-1.is-open .connection-popover {
-      transform: translate(-50%, 0);
-    }
-    .connection-card-2 .connection-popover {
-      left: auto;
-      right: 0;
-      transform: translate(0, 8px);
-    }
-    .connection-card-2 .connection-popover::after {
-      left: auto;
-      right: 22px;
-      transform: rotate(45deg);
-    }
-    .connection-card-2.is-open .connection-popover {
-      transform: translate(0, 0);
-    }
   }
   /* =========================================================
      SMALL MOBILE
@@ -2029,16 +1673,6 @@
       text-align: left;
       align-self: flex-start;
       justify-self: start;
-    }
-    .connection-title {
-      font-size: 0.62rem;
-    }
-    .hero-connection-strip {
-      width: min(100%, 260px);
-      gap: 4px;
-    }
-    .connection-popover {
-      width: min(225px, calc(100vw - 24px));
     }
   }
   /* =========================================================
@@ -2190,9 +1824,7 @@
     .hero-project-thumb img {
       transition: none;
     }
-    .cta-link,
-    .connection-trigger,
-    .connection-popover {
+    .cta-link {
       transition: none;
     }
   }

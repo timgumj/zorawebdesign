@@ -40,6 +40,7 @@
 </script>
 
 <section class="reviews" id="reviews">
+  <span class="section-bottom-line" aria-hidden="true"></span>
   <div class="reviews-shell">
     <div class="container reviews-container">
       <!-- =====================================================
@@ -871,6 +872,57 @@
 
     .reviews-header-main::before {
       animation: none;
+    }
+  }
+  @media (min-width: 1025px) {
+    .reviews {
+      position: relative;
+    }
+
+    .reviews::before,
+    .reviews::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 1px;
+      background: rgba(255, 255, 255, 0.08);
+      pointer-events: none;
+      transition: background 0.3s ease;
+    }
+
+    .reviews::before {
+      left: max(16px, calc((100% - 1540px) / 2));
+    }
+
+    .reviews::after {
+      right: max(16px, calc((100% - 1540px) / 2));
+    }
+
+    :global(body.light) .reviews::before,
+    :global(body.light) .reviews::after {
+      background: rgba(0, 0, 0, 0.08);
+    }
+  }
+  .section-bottom-line {
+    display: none;
+  }
+
+  @media (min-width: 1025px) {
+    .section-bottom-line {
+      display: block;
+      position: absolute;
+      bottom: 0;
+      left: max(16px, calc((100% - 1540px) / 2));
+      right: max(16px, calc((100% - 1540px) / 2));
+      height: 1px;
+      background: rgba(255, 255, 255, 0.12);
+      pointer-events: none;
+      transition: background 0.3s ease;
+    }
+
+    :global(body.light) .section-bottom-line {
+      background: rgba(0, 0, 0, 0.1);
     }
   }
 </style>

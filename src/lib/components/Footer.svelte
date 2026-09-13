@@ -7,6 +7,7 @@
     imprintText = "IMPRINT",
     language = "en",
     currentArea = "",
+    homepage = false,
   } = $props();
 
   const areaLinks = {
@@ -25,7 +26,7 @@
   let serviceAreas = $derived(areaLinks[language] ?? areaLinks.en);
 </script>
 
-<footer class="site-footer">
+<footer class="site-footer" class:homepage-footer={homepage}>
   <div class="container footer-row">
     <div class="footer-meta">
       <p class="footer-copyright">{copyright}</p>
@@ -295,6 +296,28 @@
 
     .footer-wko-logo {
       width: 90px;
+    }
+  }
+  @media (min-width: 1025px) {
+    .site-footer.homepage-footer {
+      width: min(1540px, calc(100% - 32px));
+      margin: 0 auto;
+      box-sizing: border-box;
+      border-left: 1px solid rgba(255, 255, 255, 0.08);
+      border-right: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .homepage-footer .footer-row {
+      width: 100%;
+      max-width: none;
+      box-sizing: border-box;
+      padding-right: 39px;
+      padding-left: 39px;
+    }
+
+    :global(body.light) .site-footer.homepage-footer {
+      border-left-color: rgba(0, 0, 0, 0.08);
+      border-right-color: rgba(0, 0, 0, 0.08);
     }
   }
 </style>

@@ -627,6 +627,7 @@
   <Contact ...contact />
 
   <Footer
+    homepage
     copyright="ZORA WEB DESIGN © COPYRIGHT 2026"
     location="HACKENGASSE 22, 1150 WIEN"
     imprintText="IMPRESSUM"

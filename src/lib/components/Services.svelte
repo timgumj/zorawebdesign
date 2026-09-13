@@ -465,7 +465,9 @@
       };
     }
 
-    const sliderQuery = window.matchMedia("(max-width: 1024px)");
+    const sliderQuery = window.matchMedia(
+      "(min-width: 768px) and (max-width: 1024px)",
+    );
 
     let hovered = false;
 
@@ -860,7 +862,13 @@
 
     return foundKey ? serviceKeywords[foundKey] : fallbackServiceTags;
   }
+  function isWebDesignService(service) {
+    const serviceTitle = service?.title?.toLowerCase().trim() ?? "";
 
+    return (
+      serviceTitle.includes("web design") || serviceTitle.includes("webdesign")
+    );
+  }
   function observeHeader(node) {
     if (typeof IntersectionObserver === "undefined") {
       headerVisible = true;
@@ -1233,14 +1241,26 @@
                 />
               </div>
 
-              <h2 id="premium-about-title" class="about-editorial-title">
-                <span class="about-availability">
-                  <span class="about-availability-pulse" aria-hidden="true"
-                  ></span>
+              <div class="about-image-caption">
+                <h2 id="premium-about-title" class="about-editorial-title">
+                  <span class="about-availability">
+                    <span class="about-availability-pulse" aria-hidden="true"
+                    ></span>
 
-                  <span class="about-title-static">{resolvedProblemTitle}</span>
-                </span>
-              </h2>
+                    <span class="about-title-static"
+                      >{resolvedProblemTitle}</span
+                    >
+                  </span>
+                </h2>
+                <div class="about-mobile-identity">
+                  <span class="profile-name">{profileName}</span>
+                  <span class="profile-role">
+                    {#each profileRole.split(/\s*·\s*/) as role}
+                      <span>{role}</span>
+                    {/each}
+                  </span>
+                </div>
+              </div>
             </div>
 
             <div class="about-below-copy">
@@ -1371,6 +1391,17 @@
                     <span>{tag}</span>
                   {/each}
                 </div>
+
+                {#if isWebDesignService(service)}
+                  <div class="service-webdesign-visual">
+                    <img
+                      src="/baldauf/webdesign.webp"
+                      alt="Web design workspace showing responsive website design"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </div>
+                {/if}
               </article>
             {/each}
           </div>
@@ -6941,8 +6972,7 @@
     }
 
     :global(body:not(.light)) .service-detail-panel::before {
-      right: 14px;
-      left: 14px;
+      inset: 0;
     }
 
     :global(body:not(.light)) .service-detail-number {
@@ -7252,5 +7282,204 @@
       text-indent: 0;
       text-align: left;
     }
+  }
+  @media (max-width: 767px) {
+    .experience-toolbar {
+      display: none;
+    }
+
+    .experience-list {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 4px;
+      overflow: visible;
+      scroll-snap-type: none;
+    }
+
+    .experience-item {
+      padding: 0;
+      align-items: flex-start;
+    }
+
+    .experience-item::before,
+    .experience-item::after {
+      display: none;
+    }
+
+    .experience-title {
+      font-size: clamp(11px, 2.8vw, 16px);
+      align-items: flex-start;
+      text-align: left;
+      line-height: 1.3;
+      overflow-wrap: anywhere;
+    }
+
+    .experience-title-first {
+      font-size: calc(0.88em + 4px);
+      font-weight: 800;
+    }
+
+    .experience-item:nth-child(2) .experience-title,
+    .experience-item:nth-child(3) .experience-title {
+      align-items: center;
+      text-align: center;
+    }
+
+    .experience-item:nth-child(4) .experience-title {
+      width: fit-content;
+      margin-left: auto;
+      align-items: flex-start;
+      text-align: left;
+    }
+  }
+  .about-image-caption {
+    display: contents;
+  }
+
+  .about-mobile-identity {
+    display: none;
+  }
+
+  @media (max-width: 767px) {
+    .about-image-caption {
+      position: absolute;
+      z-index: 3;
+      right: 14px;
+      bottom: 12px;
+      left: 14px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 10px;
+      color: #fff;
+      text-shadow: 0 2px 12px rgba(0, 0, 0, 0.6);
+    }
+
+    .about-image-caption .about-editorial-title {
+      position: static;
+      max-width: 100%;
+      margin: 0;
+    }
+
+    .about-mobile-identity {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 14px;
+      text-align: left;
+      white-space: nowrap;
+    }
+
+    .about-mobile-identity .profile-role {
+      flex-wrap: nowrap;
+    }
+
+    .about-mobile-identity .profile-name,
+    .about-mobile-identity .profile-role,
+    :global(body.light) .about-mobile-identity .profile-name,
+    :global(body.light) .about-mobile-identity .profile-role {
+      color: rgba(255, 255, 255, 0.96);
+    }
+
+    .about-editorial-figure {
+      display: none;
+    }
+  }
+
+  /* =========================================================
+   WEB DESIGN SERVICE VISUAL
+========================================================= */
+
+  .service-webdesign-visual {
+    position: relative;
+    z-index: 1;
+
+    width: 100%;
+    margin-top: 26px;
+
+    overflow: hidden;
+
+    border-top: 1px solid rgba(255, 255, 255, 0.16);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.16);
+
+    background: transparent;
+  }
+
+  /* Small Zora accent line */
+  .service-webdesign-visual::before {
+    content: "";
+
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+
+    z-index: 2;
+
+    width: 3px;
+
+    background: var(--accent-blue);
+
+    pointer-events: none;
+  }
+
+  .service-webdesign-visual img {
+    width: 100%;
+    aspect-ratio: 3 / 1;
+
+    display: block;
+
+    object-fit: cover;
+    object-position: center;
+
+    opacity: 0.68;
+
+    filter: saturate(0.8) brightness(0.82);
+
+    transform: scale(1.005);
+
+    transition:
+      opacity 0.4s ease,
+      filter 0.4s ease,
+      transform 0.6s ease;
+  }
+
+  /* When WEB DESIGN is the active service */
+  .service-detail-panel.active .service-webdesign-visual img {
+    opacity: 1;
+
+    filter: saturate(1) brightness(1);
+
+    transform: scale(1.01);
+  }
+
+  /* Very subtle interaction */
+  @media (hover: hover) and (pointer: fine) {
+    .service-detail-panel.active .service-webdesign-visual:hover img {
+      transform: scale(1.025);
+    }
+  }
+
+  :global(body.light) .service-webdesign-visual {
+    border-top-color: rgba(0, 0, 0, 0.14);
+    border-bottom-color: rgba(0, 0, 0, 0.14);
+
+    background: transparent;
+  }
+
+  :global(body.light) .service-webdesign-visual img {
+    opacity: 0.78;
+  }
+
+  :global(body.light)
+    .service-detail-panel.active
+    .service-webdesign-visual
+    img {
+    opacity: 1;
+
+    filter: saturate(1) brightness(1);
+  }
+  .service-webdesign-visual::before {
+    display: none;
   }
 </style>

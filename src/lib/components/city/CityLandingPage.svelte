@@ -265,6 +265,7 @@
   <Contact ...contact />
 
   <Footer
+    homepage
     copyright="ZORA WEB DESIGN © COPYRIGHT 2026"
     location={isGerman
       ? "HACKENGASSE 22, 1150 WIEN"
