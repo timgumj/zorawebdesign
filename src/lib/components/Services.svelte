@@ -1455,8 +1455,6 @@
 
                 <div class="service-mobile-heading">
                   <h3>{service.title}</h3>
-
-
                 </div>
 
                 {#if openServiceIndex === index}
@@ -1860,10 +1858,9 @@
   }
 
   .experience-title-rest {
-
     letter-spacing: 0.01em;
   }
-  :global(body:not(:has(.homepage-footer))) .experience-title-rest {
+  .experience-title-rest {
     font-size: 0.72em;
     font-weight: 400;
   }
@@ -2001,7 +1998,7 @@
 
     pointer-events: none;
   }
-  :global(body:not(:has(.homepage-footer))) .about-editorial-title {
+  .about-editorial-title {
     font-size: clamp(14px, 1.55vw, 24px);
     font-weight: 700;
   }
@@ -2096,7 +2093,7 @@
 
     text-transform: uppercase;
   }
-  :global(body:not(:has(.homepage-footer))) .about-kicker {
+  .about-kicker {
     font-size: 12px;
     font-weight: var(--weight-bold);
   }
@@ -2123,7 +2120,7 @@
     text-align: left;
     text-wrap: pretty;
   }
-  :global(body:not(:has(.homepage-footer))) .about-editorial-text {
+  .about-editorial-text {
     font-size: 17px;
     font-weight: 400;
   }
@@ -2205,7 +2202,7 @@
 
     text-transform: uppercase;
   }
-  :global(body:not(:has(.homepage-footer))) .profile-name {
+  .profile-name {
     font-size: 12px;
     font-weight: var(--weight-bold);
   }
@@ -2234,7 +2231,7 @@
     text-align: left;
     text-transform: uppercase;
   }
-  :global(body:not(:has(.homepage-footer))) .profile-role {
+  .profile-role {
     font-size: 13px;
     font-weight: var(--weight-semibold);
   }
@@ -2401,7 +2398,7 @@
 
     text-transform: none;
   }
-  :global(body:not(:has(.homepage-footer))) .services-header h2 {
+  .services-header h2 {
     font-size: clamp(24px, 2.15vw, 34px);
     font-weight: 600;
   }
@@ -2419,7 +2416,7 @@
 
     letter-spacing: 0;
   }
-  :global(body:not(:has(.homepage-footer))) .services-subtitle {
+  .services-subtitle {
     font-size: 16px;
     font-weight: 400;
   }
@@ -3059,7 +3056,7 @@
 
     text-transform: uppercase;
   }
-  :global(body:not(:has(.homepage-footer))) .problem-popup-keyword {
+  .problem-popup-keyword {
     font-size: 11px;
     font-weight: 700;
   }
@@ -3105,7 +3102,7 @@
 
     text-transform: uppercase;
   }
-  :global(body:not(:has(.homepage-footer))) .problem-popup-label {
+  .problem-popup-label {
     font-size: 10px;
     font-weight: var(--weight-bold);
   }
@@ -3131,7 +3128,7 @@
 
     text-wrap: pretty;
   }
-  :global(body:not(:has(.homepage-footer))) .problem-popup-block p {
+  .problem-popup-block p {
     font-size: 14px;
     font-weight: var(--weight-regular);
   }
@@ -3301,7 +3298,7 @@
     text-transform: uppercase;
     transition: color 0.2s ease;
   }
-  :global(body:not(:has(.homepage-footer))) .service-trigger {
+  .service-trigger {
     font-size: 20px;
     font-weight: 650;
   }
@@ -3444,7 +3441,7 @@
     text-transform: uppercase;
     transition: color 0.25s ease;
   }
-  :global(body:not(:has(.homepage-footer))) .service-detail-heading h3 {
+  .service-detail-heading h3 {
     font-size: 20px;
     font-weight: 700;
   }
@@ -3471,7 +3468,7 @@
     text-wrap: pretty;
     transition: color 0.25s ease;
   }
-  :global(body:not(:has(.homepage-footer))) .service-detail-text {
+  .service-detail-text {
     font-size: 16px;
     font-weight: 400;
   }
@@ -3489,7 +3486,7 @@
   }
 
   @media (min-width: 1025px) {
-    :global(body:not(:has(.homepage-footer))) .service-trigger {
+    .service-trigger {
       font-size: 18.4px;
     }
 
@@ -3637,7 +3634,7 @@
     z-index: 1;
     margin-top: 18px;
   }
-  :global(body:not(:has(.homepage-footer))) .service-detail-tags span {
+  .service-detail-tags span {
     font-weight: 400;
   }
 
@@ -3723,7 +3720,7 @@
     letter-spacing: 0.04em;
     text-transform: uppercase;
   }
-  :global(body:not(:has(.homepage-footer))) .service-content h3 {
+  .service-content h3 {
     font-size: 20px;
     font-weight: 700;
   }
@@ -3737,7 +3734,7 @@
     color: #989898;
     line-height: 1.5;
   }
-  :global(body:not(:has(.homepage-footer))) .service-content p {
+  .service-content p {
     font-size: 16px;
   }
 
@@ -3781,7 +3778,7 @@
     letter-spacing: 0.035em;
     text-transform: uppercase;
   }
-  :global(body:not(:has(.homepage-footer))) .service-tags span {
+  .service-tags span {
     font-size: 11px;
     font-weight: 400;
   }
@@ -3857,7 +3854,7 @@
 
     text-transform: uppercase;
   }
-  :global(body:not(:has(.homepage-footer))) .free-tools-heading h2 {
+  .free-tools-heading h2 {
     font-size: 20px;
     font-weight: var(--weight-semibold);
   }
@@ -3984,7 +3981,7 @@
 
     text-transform: uppercase;
   }
-  :global(body:not(:has(.homepage-footer))) .website-tool-copy h3 {
+  .website-tool-copy h3 {
     font-size: 20px;
     font-weight: var(--weight-semibold);
   }
@@ -3998,7 +3995,7 @@
 
     line-height: 1.58;
   }
-  :global(body:not(:has(.homepage-footer))) .website-tool-copy p {
+  .website-tool-copy p {
     font-size: var(--type-body);
     font-weight: var(--weight-regular);
   }
@@ -4036,7 +4033,7 @@
 
     text-transform: uppercase;
   }
-  :global(body:not(:has(.homepage-footer))) .website-tool-cta {
+  .website-tool-cta {
     font-size: 12px;
     font-weight: var(--weight-bold);
   }
@@ -4297,7 +4294,7 @@
     .about-editorial-title {
       bottom: 10px;
     }
-    :global(body:not(:has(.homepage-footer))) .about-editorial-title {
+    .about-editorial-title {
       font-size: clamp(29px, 4.59vw, 45px);
     }
 
@@ -4307,7 +4304,7 @@
       gap: 20px;
       padding-top: 28px;
     }
-    :global(body:not(:has(.homepage-footer))) .about-kicker {
+    .about-kicker {
       font-size: 11px;
     }
 
@@ -4318,7 +4315,7 @@
 
       line-height: 1.6;
     }
-    :global(body:not(:has(.homepage-footer))) .about-editorial-text {
+    .about-editorial-text {
       font-size: 15px;
     }
 
@@ -4364,18 +4361,16 @@
     }
 
     .services-header h2 {
-
       line-height: 1.15;
     }
-    :global(body:not(:has(.homepage-footer))) .services-header h2 {
+    .services-header h2 {
       font-size: 24px;
     }
 
     .services-subtitle {
-
       line-height: 1.55;
     }
-    :global(body:not(:has(.homepage-footer))) .services-subtitle {
+    .services-subtitle {
       font-size: 13px;
     }
 
@@ -4414,7 +4409,6 @@
     }
 
     .problem-instruction-text {
-
       letter-spacing: 0.065em;
     }
     .problem-instruction-text {
@@ -4454,7 +4448,7 @@
 
       padding: 8px 0;
     }
-    :global(body:not(:has(.homepage-footer))) .service-trigger {
+    .service-trigger {
       font-size: 16.2px;
     }
 
@@ -4473,7 +4467,7 @@
 
       scroll-margin-top: 88px;
     }
-    :global(body:not(:has(.homepage-footer))) .service-detail-heading h3 {
+    .service-detail-heading h3 {
       font-size: 18px;
     }
 
@@ -4488,7 +4482,7 @@
 
       text-wrap: pretty;
     }
-    :global(body:not(:has(.homepage-footer))) .service-detail-text {
+    .service-detail-text {
       font-size: 14px;
     }
 
@@ -4720,7 +4714,7 @@
 
       line-height: 0.92;
     }
-    :global(body:not(:has(.homepage-footer))) .about-editorial-title {
+    .about-editorial-title {
       font-size: clamp(21px, 6.3vw, 31px);
     }
 
@@ -4745,7 +4739,7 @@
     .about-kicker {
       gap: 0;
     }
-    :global(body:not(:has(.homepage-footer))) .about-kicker {
+    .about-kicker {
       font-size: 10px;
     }
 
@@ -4756,7 +4750,7 @@
 
       line-height: 1.6;
     }
-    :global(body:not(:has(.homepage-footer))) .about-editorial-text {
+    .about-editorial-text {
       font-size: 12.5px;
     }
     .about-editorial-figure {
@@ -4784,7 +4778,7 @@
       content: "·";
       margin-left: 6px;
     }
-    :global(body:not(:has(.homepage-footer))) .profile-name {
+    .profile-name {
       font-size: 11px;
     }
 
@@ -4793,7 +4787,7 @@
 
       line-height: 1.4;
     }
-    :global(body:not(:has(.homepage-footer))) .profile-role {
+    .profile-role {
       font-size: 9.5px;
     }
 
@@ -4826,7 +4820,7 @@
 
       line-height: 1.15;
     }
-    :global(body:not(:has(.homepage-footer))) .services-header h2 {
+    .services-header h2 {
       font-size: clamp(22px, 6vw, 27px);
     }
 
@@ -4835,7 +4829,7 @@
 
       line-height: 1.6;
     }
-    :global(body:not(:has(.homepage-footer))) .services-subtitle {
+    .services-subtitle {
       font-size: 14px;
     }
 
@@ -4938,7 +4932,7 @@
 
       padding-right: 32px;
     }
-    :global(body:not(:has(.homepage-footer))) .problem-popup-keyword {
+    .problem-popup-keyword {
       font-size: 10px;
     }
 
@@ -4953,10 +4947,9 @@
     }
 
     .problem-popup-block p {
-
       line-height: 1.55;
     }
-    :global(body:not(:has(.homepage-footer))) .problem-popup-block p {
+    .problem-popup-block p {
       font-size: 13px;
     }
 
@@ -5081,10 +5074,10 @@
     .service-content p {
       max-width: 95%;
     }
-    :global(body:not(:has(.homepage-footer))) .service-content p {
+    .service-content p {
       font-size: 15px;
     }
-    :global(body:not(:has(.homepage-footer))) .service-tags span {
+    .service-tags span {
       font-size: 10px;
     }
 
@@ -5097,7 +5090,7 @@
 
       margin-bottom: 30px;
     }
-    :global(body:not(:has(.homepage-footer))) .free-tools-heading h2 {
+    .free-tools-heading h2 {
       font-size: 18px;
     }
 
@@ -5116,7 +5109,7 @@
     .website-tool-card::after {
       width: 20px;
     }
-    :global(body:not(:has(.homepage-footer))) .website-tool-copy h3 {
+    .website-tool-copy h3 {
       font-size: 18px;
     }
 
@@ -5179,7 +5172,7 @@
     .about-image-wrap {
       aspect-ratio: 4 / 5;
     }
-    :global(body:not(:has(.homepage-footer))) .about-editorial-title {
+    .about-editorial-title {
       font-size: clamp(20px, 5.94vw, 27px);
     }
 
@@ -5188,36 +5181,36 @@
 
       padding-top: 22px;
     }
-    :global(body:not(:has(.homepage-footer))) .about-editorial-text {
+    .about-editorial-text {
       font-size: 12px;
     }
-    :global(body:not(:has(.homepage-footer))) .profile-name {
+    .profile-name {
       font-size: 10.5px;
     }
-    :global(body:not(:has(.homepage-footer))) .profile-role {
+    .profile-role {
       font-size: 9px;
     }
 
     .services-header-inner {
       padding: 28px 0;
     }
-    :global(body:not(:has(.homepage-footer))) .service-content h3 {
+    .service-content h3 {
       font-size: 17px;
     }
-    :global(body:not(:has(.homepage-footer))) .service-content p {
+    .service-content p {
       font-size: 14px;
     }
 
     .website-tool-card {
       min-height: 140px;
     }
-    :global(body:not(:has(.homepage-footer))) .website-tool-copy h3 {
+    .website-tool-copy h3 {
       font-size: 17px;
     }
-    :global(body:not(:has(.homepage-footer))) .website-tool-copy p {
+    .website-tool-copy p {
       font-size: 14px;
     }
-    :global(body:not(:has(.homepage-footer))) .service-tags span {
+    .service-tags span {
       font-size: 8px;
     }
 
@@ -5239,10 +5232,10 @@
 
       height: 36px;
     }
-    :global(body:not(:has(.homepage-footer))) .about-editorial-title {
+    .about-editorial-title {
       font-size: clamp(18px, 5.76vw, 24px);
     }
-    :global(body:not(:has(.homepage-footer))) .about-editorial-text {
+    .about-editorial-text {
       font-size: 11.5px;
     }
 
@@ -5255,10 +5248,10 @@
 
       padding: 28px 0;
     }
-    :global(body:not(:has(.homepage-footer))) .services-header h2 {
+    .services-header h2 {
       font-size: 22px;
     }
-    :global(body:not(:has(.homepage-footer))) .services-subtitle {
+    .services-subtitle {
       font-size: 14px;
     }
   }
@@ -5664,8 +5657,8 @@
 
       text-transform: uppercase;
     }
-    :global(body:not(:has(.homepage-footer))) .profile-name,
-  :global(body:not(:has(.homepage-footer))) .about-kicker {
+    .profile-name,
+    .about-kicker {
       font-size: 11px;
       font-weight: 700;
     }
@@ -5695,7 +5688,7 @@
 
       text-shadow: 0 1px 14px rgba(0, 0, 0, 0.44);
     }
-    :global(body:not(:has(.homepage-footer))) .profile-role {
+    .profile-role {
       font-size: 12px;
     }
 
@@ -5718,7 +5711,7 @@
 
       text-shadow: 0 1px 16px rgba(0, 0, 0, 0.4);
     }
-    :global(body:not(:has(.homepage-footer))) .about-editorial-text {
+    .about-editorial-text {
       font-size: 15px;
     }
 
@@ -5795,10 +5788,9 @@
     }
 
     .experience-title-rest {
-
       line-height: 1.28;
     }
-    :global(body:not(:has(.homepage-footer))) .experience-title-rest {
+    .experience-title-rest {
       font-size: clamp(10px, 0.74vw, 12.1px);
       font-weight: 400;
     }
@@ -5823,7 +5815,7 @@
 
       white-space: normal;
     }
-    :global(body:not(:has(.homepage-footer))) .about-editorial-title {
+    .about-editorial-title {
       font-size: clamp(14px, 1.55vw, 24px);
       font-weight: 700;
     }
@@ -5894,7 +5886,7 @@
 
       white-space: normal;
     }
-    :global(body:not(:has(.homepage-footer))) .about-editorial-title {
+    .about-editorial-title {
       font-size: clamp(11px, 2vw, 17px);
       font-weight: 700;
     }
@@ -5961,7 +5953,6 @@
     }
 
     .problem-instruction-text {
-
       line-height: 1.4;
     }
     .problem-instruction-text {
@@ -5989,7 +5980,7 @@
 
       white-space: normal;
     }
-    :global(body:not(:has(.homepage-footer))) .about-editorial-title {
+    .about-editorial-title {
       font-size: clamp(10px, 2.8vw, 14px);
       font-weight: 700;
     }
@@ -6008,7 +5999,7 @@
   }
 
   @media (max-width: 480px) {
-    :global(body:not(:has(.homepage-footer))) .about-editorial-title {
+    .about-editorial-title {
       font-size: clamp(9.5px, 2.75vw, 12.5px);
     }
   }
@@ -6159,7 +6150,6 @@
 
   @media (max-width: 767px) {
     .problem-story {
-
       line-height: 1.72;
     }
     .problem-story {
@@ -6728,7 +6718,7 @@
 
     text-transform: uppercase;
   }
-  :global(body:not(:has(.homepage-footer))) .about-editorial-title {
+  .about-editorial-title {
     font-weight: 400;
   }
 
@@ -6783,7 +6773,7 @@
 
     text-wrap: balance;
   }
-  :global(body:not(:has(.homepage-footer))) .about-title-static {
+  .about-title-static {
     font-size: inherit;
     font-weight: 400;
   }
@@ -6866,7 +6856,7 @@
 
       left: auto;
     }
-    :global(body:not(:has(.homepage-footer))) .about-editorial-title {
+    .about-editorial-title {
       font-size: clamp(10.4px, 0.96vw, 14.4px);
       font-weight: 400;
     }
@@ -6874,7 +6864,7 @@
     .about-availability {
       gap: 16px;
     }
-    :global(body:not(:has(.homepage-footer))) .about-title-static {
+    .about-title-static {
       font-weight: 300;
     }
   }
@@ -6889,7 +6879,7 @@
 
       text-align: right;
     }
-    :global(body:not(:has(.homepage-footer))) .about-editorial-title {
+    .about-editorial-title {
       font-size: clamp(11px, 1.7vw, 15px);
       font-weight: 400;
     }
@@ -6923,7 +6913,7 @@
 
       text-align: right;
     }
-    :global(body:not(:has(.homepage-footer))) .about-editorial-title {
+    .about-editorial-title {
       font-size: clamp(9.5px, 2.7vw, 12.5px);
       font-weight: 400;
     }
@@ -7081,13 +7071,13 @@
       line-height: 1.25;
       letter-spacing: 0.08em;
     }
-    :global(body:not(:has(.homepage-footer))) .problem-popup-label {
+    .problem-popup-label {
       font-size: 70%;
     }
   }
 
   @media (max-width: 767px) {
-    :global(body:not(:has(.homepage-footer))) .problem-popup-label {
+    .problem-popup-label {
       font-size: 68%;
     }
   }
@@ -7152,7 +7142,7 @@
       line-height: 1.48;
       color: rgba(255, 255, 255, 0.82);
     }
-    :global(body:not(:has(.homepage-footer))) .about-experience-copy {
+    .about-experience-copy {
       font-size: 12px;
     }
 
@@ -7248,7 +7238,7 @@
       bottom: auto;
       max-width: 54%;
     }
-    :global(body:not(:has(.homepage-footer))) .about-editorial-title {
+    .about-editorial-title {
       font-size: clamp(7.7px, 1.19vw, 10.5px);
     }
 
@@ -7268,7 +7258,7 @@
       padding: 12px 18px;
       border: 0;
     }
-    :global(body:not(:has(.homepage-footer))) .profile-role {
+    .profile-role {
       font-size: 10px;
     }
 
@@ -7299,8 +7289,8 @@
     .about-kicker {
       margin: 0 0 8px;
     }
-    :global(body:not(:has(.homepage-footer))) .profile-name,
-  :global(body:not(:has(.homepage-footer))) .about-kicker {
+    .profile-name,
+    .about-kicker {
       font-size: 10px;
       font-weight: 700;
     }
@@ -7310,7 +7300,7 @@
       padding: 12px 18px;
       line-height: 1.5;
     }
-    :global(body:not(:has(.homepage-footer))) .about-editorial-text {
+    .about-editorial-text {
       font-size: 12px;
     }
 
@@ -7322,7 +7312,7 @@
     .about-experience-copy {
       padding: 8px 12px;
     }
-    :global(body:not(:has(.homepage-footer))) .about-experience-copy {
+    .about-experience-copy {
       font-size: 8px;
     }
 
@@ -7595,51 +7585,6 @@
     }
   }
 
-  /* Shared homepage typography; other routes retain their existing styles. */
-  :global(body:has(.homepage-footer)) .services-header h2,
-  :global(body:has(.homepage-footer)) .free-tools-heading h2 {
-    font-size: var(--text-section);
-    font-weight: var(--weight-semibold);
-  }
-  :global(body:has(.homepage-footer)) .service-trigger,
-  :global(body:has(.homepage-footer)) .service-detail-heading h3,
-  :global(body:has(.homepage-footer)) .service-content h3,
-  :global(body:has(.homepage-footer)) .website-tool-copy h3 {
-    font-size: var(--text-title);
-    font-weight: var(--weight-bold);
-  }
-  :global(body:has(.homepage-footer)) .services-subtitle,
-  :global(body:has(.homepage-footer)) .about-editorial-text {
-    font-size: var(--text-intro);
-    font-weight: var(--weight-regular);
-  }
-  :global(body:has(.homepage-footer)) .problem-popup-block p,
-  :global(body:has(.homepage-footer)) .service-detail-text,
-  :global(body:has(.homepage-footer)) .service-content p,
-  :global(body:has(.homepage-footer)) .website-tool-copy p {
-    font-size: var(--text-body);
-    font-weight: var(--weight-regular);
-  }
-  :global(body:has(.homepage-footer)) .experience-title-rest,
-  :global(body:has(.homepage-footer)) .about-experience-copy {
-    font-size: var(--text-small);
-    font-weight: var(--weight-regular);
-  }
-  :global(body:has(.homepage-footer)) .about-editorial-title,
-  :global(body:has(.homepage-footer)) .about-title-static,
-  :global(body:has(.homepage-footer)) .about-kicker,
-  :global(body:has(.homepage-footer)) .profile-name,
-  :global(body:has(.homepage-footer)) .profile-role,
-  :global(body:has(.homepage-footer)) .problem-popup-keyword,
-  :global(body:has(.homepage-footer)) .problem-popup-label,
-  :global(body:has(.homepage-footer)) .service-detail-tags span,
-  :global(body:has(.homepage-footer)) .service-tags span,
-  :global(body:has(.homepage-footer)) .website-tool-cta {
-    font-size: var(--text-label);
-    font-weight: var(--weight-semibold);
-  }
-
-
   @media (min-width: 1025px) {
     .about-editorial-figure > .profile-role {
       display: none;
@@ -7720,12 +7665,5 @@
   }
 
   @media (max-width: 767px) {
-    :global(body:has(.homepage-footer)) .about-top-copy .about-editorial-text {
-      font-size: calc(var(--text-intro) - 4px);
-    }
-
-    :global(body:has(.homepage-footer)) .about-top-copy .about-kicker {
-      font-size: calc(var(--text-label) - 2px);
-    }
   }
 </style>
