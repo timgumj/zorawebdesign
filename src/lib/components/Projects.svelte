@@ -1113,6 +1113,7 @@
     }
 
     .projects-grid {
+      grid-auto-rows: auto;
       grid-template-columns: 1fr;
       column-gap: 0;
       row-gap: 30px;

@@ -1942,7 +1942,7 @@
     .main-nav > a,
     .dropdown-trigger,
     .lang-link {
-      font-size: calc(0.76rem - 4px);
+      font-size: calc(0.76rem - 2px);
       text-align: center;
       justify-content: center;
     }
@@ -1952,7 +1952,7 @@
     .dropdown-panel a {
       min-height: 28px;
       padding-block: 4px;
-      font-size: calc(0.76rem - 4px);
+      font-size: calc(0.76rem - 2px);
     }
   }
 </style>

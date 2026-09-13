@@ -1456,6 +1456,28 @@
                 <div class="service-mobile-heading">
                   <h3>{service.title}</h3>
 
+
+                </div>
+
+                {#if openServiceIndex === index}
+                  <p
+                    class="service-mobile-description"
+                    id={`service-description-${index}`}
+                  >
+                    {service.text}
+                  </p>
+                {/if}
+
+                <div class="service-mobile-tags-row">
+                  <div
+                    class="service-tags"
+                    role="group"
+                    aria-label={serviceKeywordsLabel}
+                  >
+                    {#each getServiceTags(service) as tag}
+                      <span>{tag}</span>
+                    {/each}
+                  </div>
                   <button
                     class="service-description-toggle"
                     type="button"
@@ -1468,25 +1490,6 @@
                       {openServiceIndex === index ? "−" : "+"}
                     </span>
                   </button>
-                </div>
-
-                {#if openServiceIndex === index}
-                  <p
-                    class="service-mobile-description"
-                    id={`service-description-${index}`}
-                  >
-                    {service.text}
-                  </p>
-                {/if}
-
-                <div
-                  class="service-tags"
-                  role="group"
-                  aria-label={serviceKeywordsLabel}
-                >
-                  {#each getServiceTags(service) as tag}
-                    <span>{tag}</span>
-                  {/each}
                 </div>
 
                 {#if serviceVisual}
@@ -7520,5 +7523,24 @@
   }
   .service-webdesign-visual::before {
     display: none;
+  }
+
+  @media (max-width: 767px) {
+    .service-mobile-tags-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 26px;
+      align-items: center;
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .service-mobile-tags-row .service-tags {
+      margin-top: 0;
+    }
+
+    .service-mobile-tags-row .service-description-toggle {
+      margin: 0;
+      justify-self: end;
+    }
   }
 </style>
