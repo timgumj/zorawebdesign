@@ -185,6 +185,7 @@
                   {#if getImageCredit(index)}
                     <div class="image-credit">
                       <span class="image-credit-dot" aria-hidden="true"></span>
+
                       <span class="image-credit-text">
                         {getImageCredit(index)}
                       </span>
@@ -211,6 +212,7 @@
     background: #111111;
     color: #ffffff;
     font-family: "Space Grotesk", Arial, sans-serif;
+
     transition:
       background 0.3s ease,
       color 0.3s ease;
@@ -227,10 +229,12 @@
     position: relative;
     width: min(1540px, calc(100% - 32px));
     margin: 0 auto;
+
     padding-top: 140px;
     padding-right: var(--shell-x);
     padding-bottom: 140px;
     padding-left: var(--shell-x);
+
     box-sizing: border-box;
   }
 
@@ -246,10 +250,14 @@
     position: absolute;
     top: 0;
     bottom: 0;
+
     width: 1px;
+
     background: rgba(255, 255, 255, 0.08);
+
     pointer-events: none;
     z-index: 0;
+
     transition: background 0.3s ease;
   }
 
@@ -268,9 +276,11 @@
   .process-container {
     position: relative;
     z-index: 1;
+
     display: flex;
     flex-direction: column;
     align-items: stretch;
+
     width: 100%;
   }
 
@@ -279,13 +289,19 @@
   ========================================================= */
   .process-header {
     width: 100%;
+
     margin-bottom: 80px;
+
     box-sizing: border-box;
+
     border-bottom: 1px solid #0043ff;
+
     background: transparent;
     color: #f2f2f2;
+
     opacity: 0;
     transform: translateY(18px);
+
     transition:
       opacity 0.7s ease,
       transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
@@ -299,13 +315,19 @@
   .process-header-inner {
     width: 100%;
     min-height: 0;
+
     box-sizing: border-box;
+
     display: grid;
+
     grid-template-columns:
       minmax(0, 1.15fr)
       minmax(320px, 0.85fr);
+
     align-items: center;
+
     gap: 80px;
+
     padding: 44px 0;
   }
 
@@ -313,23 +335,37 @@
     --section-title-marker-size: clamp(18px, 1.6125vw, 25.5px);
 
     min-width: 0;
+
     display: grid;
-    grid-template-columns: var(--section-title-marker-size) minmax(0, 1fr);
+
+    grid-template-columns:
+      var(--section-title-marker-size)
+      minmax(0, 1fr);
+
     align-items: start;
+
     column-gap: 18px;
   }
 
   .process-header-main::before {
     width: var(--section-title-marker-size);
     height: var(--section-title-marker-size);
+
     margin-top: 0.48em;
+
     border-radius: 50%;
+
     background: #0043ff;
+
     content: "";
+
     grid-column: 1;
     grid-row: 1;
+
     transform-origin: center;
+
     animation: section-title-pulse 1.65s ease-in-out infinite;
+
     will-change: transform, box-shadow;
   }
 
@@ -367,15 +403,17 @@
   .process-eyebrow {
     display: block;
     grid-column: 2;
+
     margin: 0 0 18px;
+
     color: rgba(255, 255, 255, 0.58);
+
+    font-size: 11px;
     line-height: 1.2;
+    font-weight: 700;
+
     letter-spacing: 0.18em;
     text-transform: uppercase;
-  }
-  :global(body:not(:has(.homepage-footer))) .process-eyebrow {
-    font-size: 11px;
-    font-weight: 700;
   }
 
   /* =========================================================
@@ -383,16 +421,20 @@
   ========================================================= */
   .process-header h2 {
     grid-column: 2;
+
     max-width: 720px;
+
     margin: 0;
+
     color: #f2f2f2;
-    line-height: 1.12;
-    letter-spacing: -0.035em;
-    text-transform: none;
-  }
-  :global(body:not(:has(.homepage-footer))) .process-header h2 {
+
     font-size: clamp(24px, 2.15vw, 34px);
+    line-height: 1.12;
     font-weight: 600;
+
+    letter-spacing: -0.035em;
+
+    text-transform: none;
   }
 
   /* =========================================================
@@ -400,15 +442,17 @@
   ========================================================= */
   .process-subtitle {
     max-width: 520px;
+
     margin: 0;
     padding: 0;
+
     color: rgba(255, 255, 255, 0.62);
-    line-height: 1.65;
-    letter-spacing: 0;
-  }
-  :global(body:not(:has(.homepage-footer))) .process-subtitle {
+
     font-size: 16px;
+    line-height: 1.65;
     font-weight: 400;
+
+    letter-spacing: 0;
   }
 
   :global(body.light) .process-header {
@@ -431,10 +475,14 @@
   @media (min-width: 1025px) {
     .process-subtitle {
       width: min(460px, 100%);
+
       justify-self: end;
+
       margin-left: auto;
       margin-right: 0;
+
       padding-right: 0;
+
       text-align: left;
     }
   }
@@ -449,13 +497,19 @@
 
   .process-stage {
     position: relative;
+
     display: grid;
+
     grid-template-columns:
       minmax(0, 1fr)
       minmax(320px, 0.75fr);
+
     gap: 80px;
+
     align-items: start;
+
     min-height: 320px;
+
     padding-top: 54px;
     padding-bottom: 54px;
   }
@@ -466,13 +520,19 @@
 
   .process-stage::after {
     content: "";
+
     position: absolute;
+
     right: calc(-1 * var(--shell-x));
     bottom: 0;
     left: calc(-1 * var(--shell-x));
+
     height: 1px;
+
     background: rgba(255, 255, 255, 0.12);
+
     pointer-events: none;
+
     transition: background 0.3s ease;
   }
 
@@ -483,6 +543,7 @@
   .process-stage:last-child {
     margin-bottom: 0;
     padding-bottom: 0;
+
     min-height: auto;
   }
 
@@ -495,28 +556,38 @@
   ========================================================= */
   .stage-left {
     display: grid;
+
     grid-template-columns:
       58px
       minmax(0, 1fr);
+
     gap: 34px;
+
     min-height: 320px;
   }
 
   .stage-number-wrap {
     position: relative;
+
     display: flex;
+
     justify-content: center;
   }
 
   .stage-number {
     position: relative;
     z-index: 2;
+
     color: #ffffff;
+
     font-size: 20px;
     line-height: 1.15;
-    letter-spacing: 0.04em;
     font-weight: 700;
+
+    letter-spacing: 0.04em;
+
     padding-top: 0;
+
     transition: color 0.3s ease;
   }
 
@@ -531,21 +602,29 @@
     --line-progress: 0;
 
     position: absolute;
+
     top: 36px;
     bottom: 10px;
     left: calc(50% - 0.5px);
+
     width: 1px;
+
     background: transparent;
+
     overflow: hidden;
   }
 
   .stage-line-fill {
     display: block;
+
     width: 100%;
     height: 100%;
+
     background: #0043ff;
+
     transform: scaleY(var(--line-progress));
     transform-origin: top;
+
     will-change: transform;
   }
 
@@ -558,15 +637,18 @@
 
   .stage-content h3 {
     margin: 0 0 16px;
+
     color: #ffffff;
-    line-height: 1.15;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    transition: color 0.3s ease;
-  }
-  :global(body:not(:has(.homepage-footer))) .stage-content h3 {
+
     font-size: 20px;
+    line-height: 1.15;
     font-weight: 700;
+
+    letter-spacing: 0.04em;
+
+    text-transform: uppercase;
+
+    transition: color 0.3s ease;
   }
 
   :global(body.light) .stage-content h3 {
@@ -575,21 +657,25 @@
 
   .stage-content p {
     max-width: 620px;
+
     margin: 0;
+
     color: #9a9a9a;
-    line-height: 1.7;
-    transition: color 0.3s ease;
-  }
-  :global(body:not(:has(.homepage-footer))) .stage-content p {
+
     font-size: 16px;
+    line-height: 1.7;
+
+    transition: color 0.3s ease;
   }
 
   .stage-inline-link {
     color: inherit;
+
     text-decoration-line: underline;
     text-decoration-color: #0043ff;
     text-decoration-thickness: 1px;
     text-underline-offset: 4px;
+
     transition: color 0.2s ease;
   }
 
@@ -606,33 +692,43 @@
   ========================================================= */
   .stage-right {
     width: 100%;
+
     min-height: 300px;
   }
 
   .stage-image-wrap {
     width: 100%;
     max-width: 460px;
+
     margin: 0 auto;
+
     overflow: hidden;
+
     opacity: 0.4;
+
     transform: scale(0.6);
     transform-origin: center;
+
     transition:
       opacity 0.9s ease,
       transform 1.2s cubic-bezier(0.16, 1, 0.3, 1),
       background 0.3s ease;
+
     will-change: opacity, transform;
   }
 
   .stage-image-wrap:global(.image-visible) {
     opacity: 1;
+
     transform: scale(1);
   }
 
   .stage-right img {
     display: block;
+
     width: 100%;
     height: 300px;
+
     object-fit: cover;
     object-position: center center;
   }
@@ -644,6 +740,7 @@
   ========================================================= */
   .stage-right img.process-feature-image {
     filter: none;
+
     object-fit: cover;
     object-position: center 35%;
   }
@@ -653,29 +750,37 @@
   ========================================================= */
   .image-credit {
     display: flex;
+
     align-items: center;
+
     gap: 10px;
+
     margin: 12px 0 0;
+
     min-height: 18px;
   }
 
   .image-credit-dot {
     width: 6px;
     height: 6px;
+
     flex: 0 0 auto;
+
     border-radius: 50%;
+
     background: var(--accent-blue);
   }
 
   .image-credit-text {
     color: #b3b3b3;
-    line-height: 1.35;
-    letter-spacing: 0.055em;
-    text-transform: uppercase;
-  }
-  :global(body:not(:has(.homepage-footer))) .image-credit-text {
+
     font-size: 11px;
+    line-height: 1.35;
     font-weight: 600;
+
+    letter-spacing: 0.055em;
+
+    text-transform: uppercase;
   }
 
   :global(body.light) .image-credit-text {
@@ -700,32 +805,39 @@
 
     .process-header-inner {
       min-height: 0;
+
       grid-template-columns:
         minmax(0, 1fr)
         minmax(280px, 0.9fr);
+
       gap: 48px;
+
       padding: 36px 0;
     }
-    :global(body:not(:has(.homepage-footer))) .process-header h2 {
+
+    .process-header h2 {
       font-size: 24px;
     }
 
     .process-subtitle {
-      line-height: 1.6;
-    }
-    :global(body:not(:has(.homepage-footer))) .process-subtitle {
       font-size: 15px;
+      line-height: 1.6;
     }
 
     .process-stage {
       display: grid;
+
       grid-template-columns:
         58px
         minmax(0, 1fr);
+
       gap: 34px;
+
       min-height: auto;
+
       padding-top: 46px;
       padding-bottom: 46px;
+
       align-items: stretch;
     }
 
@@ -745,10 +857,15 @@
     .stage-number-wrap {
       grid-column: 1;
       grid-row: 1 / span 2;
+
       position: relative;
+
       display: flex;
+
       justify-content: center;
+
       align-self: stretch;
+
       min-height: 100%;
     }
 
@@ -759,34 +876,38 @@
     .stage-line {
       top: 36px;
       bottom: 10px;
+
       height: auto;
     }
 
     .stage-content {
       grid-column: 2;
       grid-row: 1;
+
       width: 100%;
       max-width: none;
     }
 
     .stage-content p {
       max-width: none;
-    }
-    :global(body:not(:has(.homepage-footer))) .stage-content p {
+
       font-size: 14px;
     }
 
     .stage-right {
       grid-column: 2;
       grid-row: 2;
+
       width: 100%;
       min-height: auto;
+
       padding-left: 0;
     }
 
     .stage-image-wrap {
       width: 100%;
       max-width: none;
+
       margin-left: 0;
     }
 
@@ -797,8 +918,10 @@
     .stage-right img,
     .stage-right img.process-feature-image {
       display: block;
+
       width: 100%;
       height: 330px;
+
       object-fit: cover;
       object-position: center center;
     }
@@ -839,6 +962,7 @@
       --shell-x: 0px;
 
       width: 90%;
+
       padding-top: 110px;
       padding-right: var(--shell-x);
       padding-bottom: 82px;
@@ -851,32 +975,30 @@
 
     .process-header-inner {
       min-height: 0;
+
       grid-template-columns:
         minmax(0, 1fr)
         minmax(260px, 0.9fr);
+
       gap: 38px;
+
       padding: 36px 0;
     }
 
     .process-eyebrow {
       margin-bottom: 14px;
-    }
-    :global(body:not(:has(.homepage-footer))) .process-eyebrow {
+
       font-size: 9px;
     }
 
     .process-header h2 {
-      line-height: 1.15;
-    }
-    :global(body:not(:has(.homepage-footer))) .process-header h2 {
       font-size: 24px;
+      line-height: 1.15;
     }
 
     .process-subtitle {
-      line-height: 1.55;
-    }
-    :global(body:not(:has(.homepage-footer))) .process-subtitle {
       font-size: 13px;
+      line-height: 1.55;
     }
 
     .image-credit {
@@ -884,10 +1006,9 @@
     }
 
     .image-credit-text {
-      letter-spacing: 0.05em;
-    }
-    :global(body:not(:has(.homepage-footer))) .image-credit-text {
       font-size: 10px;
+
+      letter-spacing: 0.05em;
     }
   }
 
@@ -912,10 +1033,14 @@
 
     .process-header-inner {
       min-height: 0;
+
       display: flex;
       flex-direction: column;
+
       align-items: flex-start;
+
       gap: 24px;
+
       padding: 32px 0;
     }
 
@@ -927,33 +1052,33 @@
 
     .process-eyebrow {
       margin-bottom: 14px;
-      letter-spacing: 0.17em;
-    }
-    :global(body:not(:has(.homepage-footer))) .process-eyebrow {
+
       font-size: 9px;
+
+      letter-spacing: 0.17em;
     }
 
     .process-header h2 {
       max-width: 100%;
-      line-height: 1.15;
-    }
-    :global(body:not(:has(.homepage-footer))) .process-header h2 {
+
       font-size: clamp(22px, 6vw, 27px);
+      line-height: 1.15;
     }
 
     .process-subtitle {
       max-width: 100%;
-      line-height: 1.6;
-    }
-    :global(body:not(:has(.homepage-footer))) .process-subtitle {
+
       font-size: 14px;
+      line-height: 1.6;
     }
 
     .process-stage {
       grid-template-columns:
         42px
         minmax(0, 1fr);
+
       gap: 20px;
+
       padding-top: 46px;
       padding-bottom: 46px;
     }
@@ -961,25 +1086,26 @@
     .stage-number {
       font-size: 18px;
     }
-    :global(body:not(:has(.homepage-footer))) .stage-content h3 {
+
+    .stage-content h3 {
       font-size: 18px;
     }
 
     .stage-content p {
-      line-height: 1.4;
-    }
-    :global(body:not(:has(.homepage-footer))) .stage-content p {
       font-size: 14px;
+      line-height: 1.4;
     }
 
     .stage-right {
       width: 100%;
+
       padding-left: 0;
     }
 
     .stage-image-wrap {
       width: 100%;
       max-width: none;
+
       background: #111111;
     }
 
@@ -996,8 +1122,10 @@
     .stage-right img,
     .stage-right img.process-feature-image {
       display: block;
+
       width: 100%;
       height: 250px;
+
       object-fit: cover;
       object-position: center center;
     }
@@ -1012,6 +1140,7 @@
 
     .image-credit {
       gap: 9px;
+
       margin-top: 10px;
     }
 
@@ -1021,11 +1150,10 @@
     }
 
     .image-credit-text {
-      line-height: 1.4;
-      letter-spacing: 0.05em;
-    }
-    :global(body:not(:has(.homepage-footer))) .image-credit-text {
       font-size: 9px;
+      line-height: 1.4;
+
+      letter-spacing: 0.05em;
     }
 
     .stage-line {
@@ -1053,8 +1181,10 @@
     .stage-right img,
     .stage-right img.process-feature-image {
       display: block;
+
       width: 100%;
       height: 230px;
+
       object-fit: cover;
       object-position: center center;
     }
@@ -1066,7 +1196,8 @@
     .image-credit {
       margin-top: 9px;
     }
-    :global(body:not(:has(.homepage-footer))) .image-credit-text {
+
+    .image-credit-text {
       font-size: 9px;
     }
   }
@@ -1078,12 +1209,15 @@
 
     .process-header-inner {
       gap: 20px;
+
       padding: 28px 0;
     }
-    :global(body:not(:has(.homepage-footer))) .process-header h2 {
+
+    .process-header h2 {
       font-size: 22px;
     }
-    :global(body:not(:has(.homepage-footer))) .process-subtitle {
+
+    .process-subtitle {
       font-size: 14px;
     }
 
@@ -1091,6 +1225,7 @@
     .stage-right img.process-feature-image {
       width: 100%;
       height: 220px;
+
       object-fit: cover;
     }
 
@@ -1105,7 +1240,9 @@
   @media (prefers-reduced-motion: reduce) {
     .process-header {
       opacity: 1;
+
       transform: none;
+
       transition: none;
     }
 
@@ -1113,30 +1250,4 @@
       animation: none;
     }
   }
-  /* Shared homepage typography; other routes retain their existing styles. */
-  :global(body:has(.homepage-footer)) .process-header h2 {
-    font-size: var(--text-section);
-    font-weight: var(--weight-semibold);
-  }
-  :global(body:has(.homepage-footer)) .stage-content h3 {
-    font-size: var(--text-title);
-    font-weight: var(--weight-bold);
-  }
-  :global(body:has(.homepage-footer)) .process-subtitle {
-    font-size: var(--text-intro);
-    font-weight: var(--weight-regular);
-  }
-  :global(body:has(.homepage-footer)) .stage-content p {
-    font-size: var(--text-body);
-    font-weight: var(--weight-regular);
-  }
-  :global(body:has(.homepage-footer)) .image-credit-text {
-    font-size: var(--text-small);
-    font-weight: var(--weight-regular);
-  }
-  :global(body:has(.homepage-footer)) .process-eyebrow {
-    font-size: var(--text-label);
-    font-weight: var(--weight-semibold);
-  }
-
 </style>

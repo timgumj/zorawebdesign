@@ -41,6 +41,7 @@
 
 <section class="reviews" id="reviews">
   <span class="section-bottom-line" aria-hidden="true"></span>
+
   <div class="reviews-shell">
     <div class="container reviews-container">
       <!-- =====================================================
@@ -287,15 +288,15 @@
 
     color: #f2f2f2;
 
+    font-size: clamp(24px, 2.15vw, 34px);
+
     line-height: 1.12;
 
     letter-spacing: -0.035em;
 
-    text-transform: none;
-  }
-  :global(body:not(:has(.homepage-footer))) .reviews-header h2 {
-    font-size: clamp(24px, 2.15vw, 34px);
     font-weight: 600;
+
+    text-transform: none;
   }
 
   /* =========================================================
@@ -310,12 +311,12 @@
 
     color: rgba(255, 255, 255, 0.62);
 
+    font-size: 16px;
+
     line-height: 1.65;
 
     letter-spacing: 0;
-  }
-  :global(body:not(:has(.homepage-footer))) .reviews-subtitle {
-    font-size: 16px;
+
     font-weight: 400;
   }
 
@@ -495,6 +496,10 @@
 
     color: #b2b2b2;
 
+    font-size: 15px;
+
+    font-weight: 400;
+
     line-height: 1.7;
 
     overflow-wrap: anywhere;
@@ -502,10 +507,6 @@
     text-wrap: pretty;
 
     transition: color 0.3s ease;
-  }
-  :global(body:not(:has(.homepage-footer))) .review-text {
-    font-size: 15px;
-    font-weight: 400;
   }
 
   :global(body.light) .review-text {
@@ -560,6 +561,10 @@
 
     color: #ffffff;
 
+    font-size: 14px;
+
+    font-weight: 700;
+
     line-height: 1.3;
 
     letter-spacing: 0.04em;
@@ -567,10 +572,6 @@
     text-transform: uppercase;
 
     overflow-wrap: anywhere;
-  }
-  :global(body:not(:has(.homepage-footer))) .review-author h3 {
-    font-size: 14px;
-    font-weight: 700;
   }
 
   :global(body.light) .review-author h3 {
@@ -582,13 +583,13 @@
 
     color: #858585;
 
+    font-size: 12px;
+
+    font-weight: 400;
+
     line-height: 1.4;
 
     overflow-wrap: anywhere;
-  }
-  :global(body:not(:has(.homepage-footer))) .review-author h4 {
-    font-size: 12px;
-    font-weight: 400;
   }
 
   :global(body.light) .review-author h4 {
@@ -633,19 +634,15 @@
     }
 
     .reviews-header h2 {
+      font-size: 24px;
 
       line-height: 1.15;
     }
-    :global(body:not(:has(.homepage-footer))) .reviews-header h2 {
-      font-size: 24px;
-    }
 
     .reviews-subtitle {
+      font-size: 13px;
 
       line-height: 1.55;
-    }
-    :global(body:not(:has(.homepage-footer))) .reviews-subtitle {
-      font-size: 13px;
     }
 
     /* REVIEWS */
@@ -674,11 +671,9 @@
     }
 
     .review-text {
+      font-size: 13px;
 
       line-height: 1.65;
-    }
-    :global(body:not(:has(.homepage-footer))) .review-text {
-      font-size: 13px;
     }
 
     .review-author {
@@ -693,10 +688,12 @@
 
       flex-basis: 48px;
     }
-    :global(body:not(:has(.homepage-footer))) .review-author h3 {
+
+    .review-author h3 {
       font-size: 12px;
     }
-    :global(body:not(:has(.homepage-footer))) .review-author h4 {
+
+    .review-author h4 {
       font-size: 10px;
     }
 
@@ -749,19 +746,17 @@
     .reviews-header h2 {
       max-width: 100%;
 
-      line-height: 1.15;
-    }
-    :global(body:not(:has(.homepage-footer))) .reviews-header h2 {
       font-size: clamp(22px, 6vw, 27px);
+
+      line-height: 1.15;
     }
 
     .reviews-subtitle {
       max-width: 100%;
 
-      line-height: 1.6;
-    }
-    :global(body:not(:has(.homepage-footer))) .reviews-subtitle {
       font-size: 14px;
+
+      line-height: 1.6;
     }
 
     /* REVIEWS */
@@ -790,11 +785,9 @@
     }
 
     .review-text {
+      font-size: 14px;
 
       line-height: 1.65;
-    }
-    :global(body:not(:has(.homepage-footer))) .review-text {
-      font-size: 14px;
     }
 
     .review-author {
@@ -847,17 +840,20 @@
 
       padding: 28px 0;
     }
-    :global(body:not(:has(.homepage-footer))) .reviews-header h2 {
+
+    .reviews-header h2 {
       font-size: 22px;
     }
-    :global(body:not(:has(.homepage-footer))) .reviews-subtitle {
+
+    .reviews-subtitle {
       font-size: 14px;
     }
 
     .review-card {
       min-height: 275px;
     }
-    :global(body:not(:has(.homepage-footer))) .review-text {
+
+    .review-text {
       font-size: 13px;
     }
   }
@@ -879,6 +875,7 @@
       animation: none;
     }
   }
+
   @media (min-width: 1025px) {
     .reviews {
       position: relative;
@@ -887,12 +884,18 @@
     .reviews::before,
     .reviews::after {
       content: "";
+
       position: absolute;
+
       top: 0;
       bottom: 0;
+
       width: 1px;
+
       background: rgba(255, 255, 255, 0.08);
+
       pointer-events: none;
+
       transition: background 0.3s ease;
     }
 
@@ -909,6 +912,7 @@
       background: rgba(0, 0, 0, 0.08);
     }
   }
+
   .section-bottom-line {
     display: none;
   }
@@ -916,13 +920,20 @@
   @media (min-width: 1025px) {
     .section-bottom-line {
       display: block;
+
       position: absolute;
+
       bottom: 0;
+
       left: max(16px, calc((100% - 1540px) / 2));
       right: max(16px, calc((100% - 1540px) / 2));
+
       height: 1px;
+
       background: rgba(255, 255, 255, 0.12);
+
       pointer-events: none;
+
       transition: background 0.3s ease;
     }
 
@@ -930,27 +941,4 @@
       background: rgba(0, 0, 0, 0.1);
     }
   }
-
-  /* Shared homepage typography; other routes retain their existing styles. */
-  :global(body:has(.homepage-footer)) .reviews-header h2 {
-    font-size: var(--text-section);
-    font-weight: var(--weight-semibold);
-  }
-  :global(body:has(.homepage-footer)) .reviews-subtitle {
-    font-size: var(--text-intro);
-    font-weight: var(--weight-regular);
-  }
-  :global(body:has(.homepage-footer)) .review-text {
-    font-size: var(--text-body);
-    font-weight: var(--weight-regular);
-  }
-  :global(body:has(.homepage-footer)) .review-author h4 {
-    font-size: var(--text-small);
-    font-weight: var(--weight-regular);
-  }
-  :global(body:has(.homepage-footer)) .review-author h3 {
-    font-size: var(--text-title);
-    font-weight: var(--weight-bold);
-  }
-
 </style>

@@ -7666,4 +7666,25 @@
 
   @media (max-width: 767px) {
   }
+
+  @media (min-width: 1025px) {
+    .about-title-static {
+      font-size: 12px;
+      font-weight: var(--weight-bold);
+    }
+  }
+
+  @media (max-width: 767px) {
+    .about-title-static {
+      font-size: calc(clamp(9.5px, 2.7vw, 12.5px) - 2px);
+    }
+  }
+
+  @media (max-width: 767px) {
+    .about-availability-pulse {
+      width: 6px;
+      height: 6px;
+      flex-basis: 6px;
+    }
+  }
 </style>

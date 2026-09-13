@@ -483,7 +483,6 @@
                 aria-controls="website-projects-dropdown-panel"
                 onclick={toggleProjects}
               >
-                <span class="menu-bracket">[</span>
 
                 <span class="menu-label">
                   {projectsMenu.label}
@@ -491,7 +490,6 @@
 
                 <span class="dropdown-arrow" aria-hidden="true"></span>
 
-                <span class="menu-bracket">]</span>
               </button>
 
               <div
@@ -505,13 +503,11 @@
                     title={menuItem.title}
                     onclick={handleDropdownItemClick}
                   >
-                    <span class="dropdown-item-bracket"> [ </span>
 
                     <span>
                       {menuItem.label}
                     </span>
 
-                    <span class="dropdown-item-bracket"> ] </span>
                   </a>
                 {/each}
               </div>
@@ -521,15 +517,14 @@
               href={item.href}
               title={item.title}
               class:active={activeSection === item.id}
+              class:contact-nav-link={item.id === "contact"}
               onclick={(event) => handleNavClick(event, item)}
             >
-              <span class="menu-bracket"> [ </span>
 
               <span class="menu-label">
                 {item.label}
               </span>
 
-              <span class="menu-bracket"> ] </span>
             </a>
           {/if}
 
@@ -549,7 +544,6 @@
                 aria-controls="website-tools-dropdown-panel"
                 onclick={toggleFreebies}
               >
-                <span class="menu-bracket"> [ </span>
 
                 <span class="menu-label">
                   {freebiesMenu.label}
@@ -557,7 +551,6 @@
 
                 <span class="dropdown-arrow" aria-hidden="true"></span>
 
-                <span class="menu-bracket"> ] </span>
               </button>
 
               <div
@@ -571,13 +564,11 @@
                     title={menuItem.title}
                     onclick={handleDropdownItemClick}
                   >
-                    <span class="dropdown-item-bracket"> [ </span>
 
                     <span>
                       {menuItem.label}
                     </span>
 
-                    <span class="dropdown-item-bracket"> ] </span>
                   </a>
                 {/each}
               </div>
@@ -594,7 +585,6 @@
             class="lang-link"
             onclick={handleDropdownItemClick}
           >
-            <span class="menu-bracket"> [ </span>
 
             <svg class="language-globe" viewBox="0 0 24 24" aria-hidden="true">
               <circle cx="12" cy="12" r="9"></circle>
@@ -608,7 +598,6 @@
               {clean(nav.languageLabel)}
             </span>
 
-            <span class="menu-bracket"> ] </span>
           </a>
         </div>
       </nav>
@@ -627,7 +616,6 @@
     : "Switch to the English version"}
   onclick={handleDropdownItemClick}
 >
-  <span class="menu-bracket"> [ </span>
 
   <svg class="language-globe" viewBox="0 0 24 24" aria-hidden="true">
     <circle cx="12" cy="12" r="9"></circle>
@@ -641,7 +629,6 @@
     {clean(nav.languageLabel)}
   </span>
 
-  <span class="menu-bracket"> ] </span>
 </a>
 
 <style>
@@ -1119,22 +1106,6 @@
     color: #000000;
   }
 
-  .menu-bracket {
-    display: inline-block;
-
-    color: currentColor;
-
-    opacity: 0.88;
-
-    transition:
-      opacity 0.2s ease,
-      color 0.2s ease,
-      transform 0.2s ease;
-  }
-  :global(body:not(:has(.homepage-footer))) .menu-bracket {
-    font-weight: 500;
-  }
-
   .menu-label {
     display: inline-block;
 
@@ -1145,11 +1116,6 @@
 
   .main-nav > a:hover .menu-label {
     transform: translateY(-1px);
-  }
-
-  .main-nav > a:hover .menu-bracket,
-  .main-nav > a.active .menu-bracket {
-    opacity: 1;
   }
 
   /* =========================================================
@@ -1367,23 +1333,6 @@
     background: rgba(0, 0, 0, 0.045);
 
     color: #000000;
-  }
-
-  .dropdown-item-bracket {
-    opacity: 0.72;
-
-    color: currentColor;
-
-    transition: opacity 0.18s ease;
-  }
-  :global(body:not(:has(.homepage-footer))) .dropdown-item-bracket {
-    font-weight: 500;
-  }
-
-  .dropdown-panel a:hover .dropdown-item-bracket {
-    opacity: 1;
-
-    color: currentColor;
   }
 
   .dropdown-panel a::after,
@@ -1713,10 +1662,6 @@
       font-weight: 600;
     }
 
-    .menu-bracket {
-      opacity: 0.86;
-    }
-
     .dropdown-arrow {
       width: 5px;
       height: 5px;
@@ -1857,7 +1802,6 @@
     .dropdown-trigger,
     .dropdown-arrow,
     .menu-label,
-    .menu-bracket,
     .main-nav a,
     .mobile-language-switcher {
       transition-duration: 0.01ms;
@@ -1983,10 +1927,6 @@
     font-size: 13px;
     font-weight: var(--weight-semibold);
   }
-  :global(body:has(.homepage-footer)) .menu-bracket,
-  :global(body:has(.homepage-footer)) .dropdown-item-bracket {
-    font-weight: var(--weight-semibold);
-  }
 
   @media (max-width: 767px) {
     :global(body:has(.homepage-footer)) .main-nav > a,
@@ -1997,4 +1937,11 @@
     }
 }
 
+
+  .main-nav > a.contact-nav-link {
+    text-decoration-line: underline;
+    text-decoration-color: #0043ff;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 4px;
+  }
 </style>

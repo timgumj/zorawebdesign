@@ -1,13 +1,23 @@
 <script>
   let { project, language = "en" } = $props();
 
-  let detailsOpen = $state(false);
-
   const feature = $derived(project.feature);
 
-  function toggleDetails() {
-    detailsOpen = !detailsOpen;
-  }
+  const projectAchievements = $derived(
+    language === "de"
+      ? [
+          "Stärkere lokale Sichtbarkeit in der Google-Suche in Wien.",
+          "Schnellere zweisprachige Website für Desktop und Mobile.",
+          "Klarere Patientenreise von der Suche bis zur Terminbuchung.",
+          "Lokale SEO-Präsenz über Google Business und DocFinder optimiert.",
+        ]
+      : [
+          "Stronger local Google visibility for relevant searches in Vienna.",
+          "Faster bilingual website across desktop and mobile.",
+          "Clearer patient journey from search to appointment booking.",
+          "Local SEO presence strengthened across Google Business and DocFinder.",
+        ],
+  );
 </script>
 
 <section
@@ -38,9 +48,11 @@
             {project.projectLead}
           </p>
 
-          <p class="project-text">
-            {project.projectText}
-          </p>
+          <ul class="project-achievements">
+            {#each projectAchievements as achievement}
+              <li>{achievement}</li>
+            {/each}
+          </ul>
 
           <a
             href={project.websiteUrl}
@@ -71,8 +83,6 @@
 
           <!-- =================================================
                TABLET / MOBILE IMAGE
-
-               Directly after live website link.
           ================================================== -->
 
           <div class="project-image responsive-project-image">
@@ -109,6 +119,7 @@
             </div>
           {/each}
         </div>
+
         <div class="project-image desktop-project-image">
           <img
             src={project.heroImage}
@@ -121,10 +132,8 @@
         </div>
       </header>
 
-
-
       <!-- =====================================================
-           SINGLE CASE-STUDY RESULT
+           FULL WIDTH SEO GRAPH
       ====================================================== -->
 
       <section
@@ -134,68 +143,6 @@
           : "SEO project results"}
       >
         <div class="feature-panel">
-          <!-- ===============================================
-               LEFT COLUMN
-          ================================================ -->
-
-          <div class="feature-copy">
-            <div class="feature-copy-inner" class:details-open={detailsOpen}>
-              <!-- =========================================
-                   TABLET / MOBILE TITLE ROW
-              ========================================== -->
-
-              <div class="responsive-feature-heading">
-                <span class="responsive-feature-title">
-                  {feature.sectionTitle}
-                </span>
-
-                <button
-                  type="button"
-                  class="details-toggle"
-                  aria-expanded={detailsOpen}
-                  aria-label={detailsOpen
-                    ? language === "de"
-                      ? "Details schließen"
-                      : "Close details"
-                    : language === "de"
-                      ? "Details öffnen"
-                      : "Open details"}
-                  onclick={toggleDetails}
-                >
-                  <span>
-                    {detailsOpen ? "−" : "+"}
-                  </span>
-                </button>
-              </div>
-
-              <!-- =========================================
-                   CONTENT
-              ========================================== -->
-
-              <div class="feature-detail-body">
-                <h3>
-                  {feature.title}
-                </h3>
-
-                <p class="feature-description">
-                  {feature.text}
-                </p>
-
-                <div class="feature-tags">
-                  {#each feature.work as item}
-                    <span>
-                      {item}
-                    </span>
-                  {/each}
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- ===============================================
-               GRAPH COLUMN
-          ================================================ -->
-
           <div class="feature-visual">
             <div class="feature-visual-inner">
               <div class="search-chart">
@@ -256,13 +203,11 @@
                 <div class="chart-key">
                   <span>
                     <i class="key-visitors"></i>
-
                     {feature.graph.visitorsLegend}
                   </span>
 
                   <span>
                     <i class="key-enquiries"></i>
-
                     {feature.graph.enquiriesLegend}
                   </span>
                 </div>
@@ -272,30 +217,12 @@
                 ====================================== -->
 
                 <div class="graph-area">
-                  <!-- GRID -->
-
                   <span class="graph-grid graph-grid-a"></span>
                   <span class="graph-grid graph-grid-b"></span>
                   <span class="graph-grid graph-grid-c"></span>
 
-                  <!-- IMPACT -->
-
-                  <div class="graph-impact">
-                    <strong>
-                      {feature.graph.impactTitle}
-                    </strong>
-
-                    <p>
-                      {feature.graph.impactText}
-                    </p>
-                  </div>
-
                   <!-- =================================================
                        DESKTOP + TABLET GRAPH
-
-                       Sharper / more angular progression.
-                       Starts exactly at x=0.
-                       Ends exactly at x=1000.
                   ================================================== -->
 
                   <svg
@@ -408,9 +335,6 @@
 
                   <!-- =================================================
                        MOBILE GRAPH
-
-                       Keeps softer curved progression.
-                       Also aligned exactly from 0 → 1000.
                   ================================================== -->
 
                   <svg
@@ -629,7 +553,6 @@
     --accent-blue: #0043ff;
 
     --section-bg: #0c0c0c;
-    --panel-bg: #121212;
     --graph-bg: #242526;
 
     --evidence-height: 338px;
@@ -722,8 +645,6 @@
 
   /* =========================================================
      FEATURED PROJECT KICKER
-
-     White + restrained blue underline.
   ========================================================= */
 
   .project-kicker {
@@ -738,15 +659,14 @@
     border-bottom: 1px solid var(--accent-blue);
 
     color: #fff;
+
+    font-size: 11px;
+    font-weight: 600;
     line-height: 1;
 
     letter-spacing: 0.12em;
 
     text-transform: uppercase;
-  }
-  :global(body:not(:has(.homepage-footer))) .project-kicker {
-    font-size: 11px;
-    font-weight: 600;
   }
 
   .project-header h2 {
@@ -754,39 +674,70 @@
 
     color: #fff;
 
+    font-size: clamp(24px, 2.1vw, 34px);
+    font-weight: 600;
     line-height: 1.08;
 
     letter-spacing: -0.035em;
   }
-  :global(body:not(:has(.homepage-footer))) .project-header h2 {
-    font-size: clamp(24px, 2.1vw, 34px);
-    font-weight: 600;
-  }
+
+  /* =========================================================
+     PROJECT SUMMARY
+  ========================================================= */
 
   .project-lead {
     max-width: 670px;
 
-    margin: 0 0 6px;
+    margin: 0 0 12px;
 
     color: rgba(255, 255, 255, 0.72);
-    line-height: 1.5;
-  }
-  :global(body:not(:has(.homepage-footer))) .project-lead {
+
     font-size: 16px;
     font-weight: 500;
-  }
-
-  .project-text {
-    max-width: 670px;
-
-    margin: 0 0 18px;
-
-    color: #999;
     line-height: 1.55;
   }
-  :global(body:not(:has(.homepage-footer))) .project-text {
+
+  .project-achievements {
+    max-width: 670px;
+
+    margin: 0 0 20px;
+
+    padding: 0;
+
+    list-style: none;
+
+    color: #999;
+
     font-size: 16px;
     font-weight: 400;
+    line-height: 1.55;
+  }
+
+  .project-achievements li {
+    position: relative;
+
+    padding-left: 18px;
+  }
+
+  .project-achievements li + li {
+    margin-top: 6px;
+  }
+
+  .project-achievements li::before {
+    border-radius: 50%;
+    content: "";
+
+    position: absolute;
+
+    top: 0.72em;
+    left: 0;
+
+    width: 5px;
+    height: 5px;
+
+    background: var(--accent-blue);
+
+    transform: translateY(-50%);
   }
 
   /* =========================================================
@@ -801,6 +752,9 @@
     gap: 8px;
 
     color: #fff;
+
+    font-size: 12px;
+    font-weight: 600;
     line-height: 1;
 
     letter-spacing: 0.05em;
@@ -808,10 +762,6 @@
     text-transform: uppercase;
 
     text-decoration: none;
-  }
-  :global(body:not(:has(.homepage-footer))) .project-link {
-    font-size: 12px;
-    font-weight: 600;
   }
 
   .project-link > span {
@@ -850,21 +800,11 @@
     height: auto;
   }
 
-  /*
-   * Desktop image stays exactly where it was:
-   * underneath the header.
-   */
-
   .desktop-project-image {
     display: block;
 
     margin-top: 34px;
   }
-
-  /*
-   * Responsive image sits after the live link
-   * but is hidden on desktop.
-   */
 
   .responsive-project-image {
     display: none;
@@ -872,8 +812,6 @@
 
   /* =========================================================
      HEADER RESULT BRACKETS
-
-     Desktop and tablet brackets share the longest item's width.
   ========================================================= */
 
   .header-stats {
@@ -914,7 +852,6 @@
     box-sizing: border-box;
 
     border-top: 1px solid var(--stat-border);
-
     border-bottom: 1px solid var(--stat-border);
   }
 
@@ -949,6 +886,9 @@
     display: block;
 
     color: rgba(255, 255, 255, 0.52);
+
+    font-size: 11px;
+    font-weight: 500;
     line-height: 1.25;
 
     letter-spacing: 0.045em;
@@ -957,13 +897,9 @@
 
     white-space: nowrap;
   }
-  .header-stat span {
-    font-size: 11px;
-    font-weight: 500;
-  }
 
   /* =========================================================
-     SINGLE FEATURE
+     FULL WIDTH GRAPH
   ========================================================= */
 
   .feature-dashboard {
@@ -973,140 +909,14 @@
   }
 
   .feature-panel {
-    display: grid;
-
-    grid-template-columns:
-      minmax(320px, 0.72fr)
-      minmax(0, 1.28fr);
-
-    min-height: 500px;
+    width: 100%;
 
     border-top: 1px solid rgba(255, 255, 255, 0.12);
-
     border-bottom: 1px solid rgba(255, 255, 255, 0.12);
   }
 
-  /* =========================================================
-     LEFT COLUMN
-  ========================================================= */
-
-  .feature-copy {
-    min-width: 0;
-
-    display: flex;
-
-    align-items: center;
-
-    background: var(--panel-bg);
-
-    border-right: 1px solid rgba(255, 255, 255, 0.11);
-
-    box-sizing: border-box;
-  }
-
-  .feature-copy-inner {
-    width: 100%;
-
-    padding: 34px;
-
-    box-sizing: border-box;
-  }
-
-  .responsive-feature-heading {
-    display: none;
-  }
-
-  /* =========================================================
-     CONTENT
-  ========================================================= */
-
-  .feature-detail-body {
-    max-width: 520px;
-
-    padding-left: 20px;
-
-    border-left: 1px solid var(--accent-blue);
-
-    box-sizing: border-box;
-  }
-
-  .feature-detail-body h3 {
-    max-width: 470px;
-
-    margin: 0 0 14px;
-
-    color: #fff;
-    line-height: 1.4;
-
-    letter-spacing: 0.05em;
-
-    text-transform: uppercase;
-  }
-  :global(body:not(:has(.homepage-footer))) .feature-detail-body h3 {
-    font-size: 15px;
-    font-weight: 700;
-  }
-
-  .feature-description {
-    max-width: 500px;
-
-    margin: 0 0 24px;
-
-    color: #999;
-    line-height: 1.6;
-  }
-  :global(body:not(:has(.homepage-footer))) .feature-description {
-    font-size: 16px;
-    font-weight: 400;
-  }
-
-  /* =========================================================
-     [] TAGS
-  ========================================================= */
-
-  .feature-tags {
-    display: flex;
-
-    flex-wrap: wrap;
-
-    gap: 8px 12px;
-  }
-
-  .feature-tags span {
-    color: #fff;
-    line-height: 1.3;
-
-    letter-spacing: 0.035em;
-
-    text-transform: uppercase;
-  }
-  :global(body:not(:has(.homepage-footer))) .feature-tags span {
-    font-size: 11px;
-    font-weight: 500;
-  }
-
-  .feature-tags span::before {
-    content: "[";
-
-    margin-right: 3px;
-
-    color: #fff;
-  }
-
-  .feature-tags span::after {
-    content: "]";
-
-    margin-left: 3px;
-
-    color: #fff;
-  }
-
-  /* =========================================================
-     GRAPH COLUMN
-  ========================================================= */
-
   .feature-visual {
-    min-width: 0;
+    width: 100%;
 
     display: flex;
 
@@ -1147,21 +957,18 @@
 
   .chart-heading span {
     color: rgba(255, 255, 255, 0.78);
+
+    font-size: 11px;
+    font-weight: 700;
     line-height: 1.3;
 
     letter-spacing: 0.06em;
 
     text-transform: uppercase;
   }
-  :global(body:not(:has(.homepage-footer))) .chart-heading span {
-    font-size: 11px;
-    font-weight: 700;
-  }
 
   /* =========================================================
      RESULT BRACKETS
-
-     Desktop also hugs content.
   ========================================================= */
 
   .growth-metrics {
@@ -1210,7 +1017,6 @@
     box-sizing: border-box;
 
     border-top: 1px solid var(--growth-border);
-
     border-bottom: 1px solid var(--growth-border);
   }
 
@@ -1253,14 +1059,12 @@
   .growth-value span,
   .growth-metric small {
     color: rgba(255, 255, 255, 0.67);
+
+    font-size: 11px;
+    font-weight: 600;
     line-height: 1.25;
 
     letter-spacing: 0.035em;
-  }
-  :global(body:not(:has(.homepage-footer))) .growth-value span,
-  :global(body:not(:has(.homepage-footer))) .growth-metric small {
-    font-size: 11px;
-    font-weight: 600;
   }
 
   .growth-value span {
@@ -1303,11 +1107,10 @@
     width: fit-content;
 
     color: rgba(255, 255, 255, 0.82);
-    line-height: 1.2;
-  }
-  :global(body:not(:has(.homepage-footer))) .chart-key span {
+
     font-size: 12px;
     font-weight: 500;
+    line-height: 1.2;
   }
 
   .chart-key i {
@@ -1329,9 +1132,6 @@
 
   /* =========================================================
      GRAPH
-
-     Everything now shares the exact same horizontal
-     start/end point.
   ========================================================= */
 
   .graph-area {
@@ -1442,55 +1242,7 @@
   }
 
   /* =========================================================
-     IMPACT
-  ========================================================= */
-
-  .graph-impact {
-    position: absolute;
-
-    top: 64px;
-    left: 22px;
-
-    z-index: 3;
-
-    width: min(290px, 37%);
-
-    padding-left: 14px;
-
-    border-left: 2px solid var(--accent-blue);
-  }
-
-  .graph-impact strong {
-    display: block;
-
-    margin-bottom: 6px;
-
-    color: #fff;
-
-    font-size: 13px;
-    line-height: 1.3;
-
-    font-weight: 700;
-
-    letter-spacing: 0.04em;
-
-    text-transform: uppercase;
-  }
-
-  .graph-impact p {
-    margin: 0;
-
-    color: rgba(255, 255, 255, 0.64);
-    line-height: 1.5;
-  }
-  :global(body:not(:has(.homepage-footer))) .graph-impact p {
-    font-size: 12px;
-  }
-
-  /* =========================================================
      X AXIS
-
-     First / last labels sit directly at graph edges.
   ========================================================= */
 
   .graph-timeline {
@@ -1511,15 +1263,14 @@
 
   .graph-timeline span {
     color: rgba(255, 255, 255, 0.6);
+
+    font-size: 11px;
+    font-weight: 500;
     line-height: 1.2;
 
     text-align: center;
 
     text-transform: uppercase;
-  }
-  :global(body:not(:has(.homepage-footer))) .graph-timeline span {
-    font-size: 11px;
-    font-weight: 500;
   }
 
   .graph-timeline span:first-child {
@@ -1549,171 +1300,10 @@
       padding: 85px 0;
     }
 
-    /* =====================================================
-       HEADER BECOMES ONE COLUMN
-
-       Image now appears directly after link.
-    ====================================================== */
-
-    .project-header {
-      grid-template-columns: 1fr;
-
-      gap: 24px;
-    }
-
-    .project-header-copy {
-      max-width: none;
-    }
-
     .project-lead,
-    .project-text {
+    .project-achievements {
       max-width: 700px;
-    }
-    :global(body:not(:has(.homepage-footer))) .project-lead,
-  :global(body:not(:has(.homepage-footer))) .project-text {
-      font-size: 14px;
-    }
 
-    .desktop-project-image {
-      display: none;
-    }
-
-    .responsive-project-image {
-      display: block;
-
-      width: 100%;
-
-      margin-top: 28px;
-    }
-
-    .header-stats {
-      grid-template-columns: repeat(4, 1fr);
-
-      gap: 7px;
-    }
-
-    .header-stat {
-      width: 100%;
-
-      min-width: 0;
-
-      padding: 9px 11px;
-    }
-
-    .header-stat strong {
-      font-size: 20px;
-    }
-
-    /* =====================================================
-       ONE COLUMN FEATURE
-    ====================================================== */
-
-    .feature-panel {
-      display: block;
-
-      min-height: 0;
-    }
-
-    .feature-copy {
-      display: block;
-
-      border-right: 0;
-
-      border-bottom: 1px solid rgba(255, 255, 255, 0.11);
-    }
-
-    .feature-copy-inner {
-      padding: 17px 20px;
-    }
-
-    .responsive-feature-heading {
-      display: flex;
-
-      align-items: center;
-
-      justify-content: space-between;
-
-      gap: 18px;
-    }
-
-    .responsive-feature-title {
-      color: #fff;
-      line-height: 1.3;
-
-      letter-spacing: 0.04em;
-
-      text-transform: uppercase;
-    }
-    :global(body:not(:has(.homepage-footer))) .responsive-feature-title {
-      font-size: 13px;
-      font-weight: 700;
-    }
-
-    .details-toggle {
-      appearance: none;
-
-      display: flex;
-
-      flex: 0 0 32px;
-
-      align-items: center;
-
-      justify-content: center;
-
-      width: 32px;
-      height: 32px;
-
-      margin: 0;
-
-      padding: 0;
-
-      border: 1px solid rgba(255, 255, 255, 0.18);
-
-      border-radius: 0;
-
-      background: transparent;
-
-      color: #fff;
-
-      font: inherit;
-
-      cursor: pointer;
-    }
-
-    .details-toggle span {
-      font-size: 19px;
-      line-height: 1;
-
-      font-weight: 300;
-    }
-
-    .feature-detail-body {
-      display: none;
-
-      max-width: 760px;
-    }
-
-    .feature-copy-inner.details-open .feature-detail-body {
-      display: block;
-
-      margin-top: 17px;
-
-      padding-left: 18px;
-    }
-
-    .feature-detail-body h3 {
-      max-width: 760px;
-    }
-    :global(body:not(:has(.homepage-footer))) .feature-detail-body h3 {
-      font-size: 13px;
-    }
-
-    .feature-description {
-      max-width: 760px;
-
-      margin-bottom: 18px;
-    }
-    :global(body:not(:has(.homepage-footer))) .feature-description {
       font-size: 14px;
     }
 
@@ -1740,17 +1330,13 @@
     .growth-value strong {
       font-size: 27px;
     }
-    :global(body:not(:has(.homepage-footer))) .growth-value span,
-  :global(body:not(:has(.homepage-footer))) .growth-metric small {
+
+    .growth-value span,
+    .growth-metric small {
       font-size: 11px;
     }
 
-    .graph-impact {
-      left: 0;
-
-      width: min(300px, 43%);
-    }
-    :global(body:not(:has(.homepage-footer))) .graph-timeline span {
+    .graph-timeline span {
       font-size: 10px;
     }
   }
@@ -1774,12 +1360,6 @@
       padding: 70px 0;
     }
 
-    /* =====================================================
-       PROJECT HEADER
-
-       Image comes immediately after link.
-    ====================================================== */
-
     .project-header {
       grid-template-columns: 1fr;
 
@@ -1791,17 +1371,20 @@
     .project-header-copy {
       max-width: none;
     }
-    :global(body:not(:has(.homepage-footer))) .project-header h2 {
+
+    .project-header h2 {
       font-size: 24px;
     }
 
     .project-lead,
-    .project-text {
+    .project-achievements {
       max-width: 100%;
-    }
-    :global(body:not(:has(.homepage-footer))) .project-lead,
-  :global(body:not(:has(.homepage-footer))) .project-text {
+
       font-size: 14px;
+    }
+
+    .project-achievements {
+      margin-bottom: 20px;
     }
 
     .desktop-project-image {
@@ -1823,11 +1406,13 @@
     .header-stats {
       display: flex;
 
-      flex-wrap: wrap;
+      flex-wrap: nowrap;
 
       align-items: flex-start;
 
-      gap: 7px;
+      justify-content: space-between;
+
+      gap: 4px;
 
       width: 100%;
 
@@ -1841,7 +1426,7 @@
 
       min-width: 0;
 
-      padding: 9px 11px;
+      padding: 8px 2px;
     }
 
     .header-stat strong {
@@ -1849,11 +1434,9 @@
     }
 
     .header-stat span {
+      font-size: clamp(7px, 2.2vw, 9px);
 
       white-space: nowrap;
-    }
-    .header-stat span {
-      font-size: 10px;
     }
 
     .header-stat::before,
@@ -1862,132 +1445,12 @@
     }
 
     /* =====================================================
-       FEATURE
+       GRAPH
     ====================================================== */
 
     .feature-dashboard {
       margin-top: 28px;
     }
-
-    .feature-panel {
-      display: block;
-
-      min-height: 0;
-    }
-
-    .feature-copy {
-      display: block;
-
-      border-right: 0;
-
-      border-bottom: 1px solid rgba(255, 255, 255, 0.11);
-    }
-
-    .feature-copy-inner {
-      padding: 15px 0;
-    }
-
-    .responsive-feature-heading {
-      display: flex;
-
-      align-items: center;
-
-      justify-content: space-between;
-
-      gap: 18px;
-    }
-
-    .responsive-feature-title {
-      color: #fff;
-      line-height: 1.3;
-
-      letter-spacing: 0.04em;
-
-      text-transform: uppercase;
-    }
-    :global(body:not(:has(.homepage-footer))) .responsive-feature-title {
-      font-size: 13px;
-      font-weight: 700;
-    }
-
-    .details-toggle {
-      appearance: none;
-
-      display: flex;
-
-      flex: 0 0 31px;
-
-      align-items: center;
-
-      justify-content: center;
-
-      width: 31px;
-      height: 31px;
-
-      margin: 0;
-
-      padding: 0;
-
-      border: 1px solid rgba(255, 255, 255, 0.18);
-
-      border-radius: 0;
-
-      background: transparent;
-
-      color: #fff;
-
-      font: inherit;
-
-      cursor: pointer;
-    }
-
-    .details-toggle span {
-      font-size: 19px;
-      line-height: 1;
-
-      font-weight: 300;
-    }
-
-    .feature-detail-body {
-      display: none;
-
-      max-width: 100%;
-    }
-
-    .feature-copy-inner.details-open .feature-detail-body {
-      display: block;
-
-      margin-top: 15px;
-
-      padding-left: 15px;
-    }
-
-    .feature-detail-body h3 {
-      max-width: 100%;
-    }
-    :global(body:not(:has(.homepage-footer))) .feature-detail-body h3 {
-      font-size: 12px;
-    }
-
-    .feature-description {
-      max-width: 100%;
-
-      margin-bottom: 17px;
-    }
-    :global(body:not(:has(.homepage-footer))) .feature-description {
-      font-size: 14px;
-    }
-
-    .feature-tags {
-      gap: 7px 10px;
-    }
-    :global(body:not(:has(.homepage-footer))) .feature-tags span {
-      font-size: 10px;
-    }
-
-    /* =====================================================
-       GRAPH
-    ====================================================== */
 
     .feature-visual-inner {
       padding: 22px 14px;
@@ -2000,7 +1463,8 @@
     .chart-top {
       display: block;
     }
-    :global(body:not(:has(.homepage-footer))) .chart-heading span {
+
+    .chart-heading span {
       font-size: 10px;
     }
 
@@ -2047,11 +1511,9 @@
 
     .growth-value span,
     .growth-metric small {
-      line-height: 1.2;
-    }
-    :global(body:not(:has(.homepage-footer))) .growth-value span,
-  :global(body:not(:has(.homepage-footer))) .growth-metric small {
       font-size: 9px;
+
+      line-height: 1.2;
     }
 
     .growth-metric small {
@@ -2064,8 +1526,6 @@
 
     /* =====================================================
        MOBILE CURVES
-
-       Smooth version only.
     ====================================================== */
 
     .graph-svg-sharp {
@@ -2090,32 +1550,9 @@
     .chart-key {
       margin-top: 17px;
     }
-    :global(body:not(:has(.homepage-footer))) .chart-key span {
+
+    .chart-key span {
       font-size: 11px;
-    }
-
-    /* =====================================================
-       IMPACT
-    ====================================================== */
-
-    .graph-impact {
-      top: 42px;
-      left: 0;
-
-      width: min(225px, 70%);
-
-      padding-left: 10px;
-    }
-
-    .graph-impact strong {
-      font-size: 11px;
-    }
-
-    .graph-impact p {
-      line-height: 1.45;
-    }
-    :global(body:not(:has(.homepage-footer))) .graph-impact p {
-      font-size: 10px;
     }
 
     /* =====================================================
@@ -2127,14 +1564,13 @@
     }
 
     .graph-timeline span {
+      font-size: 8px;
+
       line-height: 1.15;
 
       letter-spacing: -0.015em;
 
       white-space: nowrap;
-    }
-    :global(body:not(:has(.homepage-footer))) .graph-timeline span {
-      font-size: 8px;
     }
   }
 
@@ -2148,12 +1584,13 @@
     }
 
     .header-stat {
-      padding: 8px 10px;
+      padding: 8px 2px;
     }
 
     .header-stat strong {
       font-size: 18px;
     }
+
     .header-stat span {
       font-size: 9px;
     }
@@ -2165,41 +1602,53 @@
     .growth-value strong {
       font-size: 20px;
     }
-    :global(body:not(:has(.homepage-footer))) .growth-value span,
-  :global(body:not(:has(.homepage-footer))) .growth-metric small {
+
+    .growth-value span,
+    .growth-metric small {
       font-size: 8.5px;
     }
 
-    .graph-impact {
-      width: 74%;
-    }
-    :global(body:not(:has(.homepage-footer))) .graph-timeline span {
+    .graph-timeline span {
       font-size: 7.5px;
     }
   }
 
+  /* =========================================================
+     DESKTOP / TABLET HEADER GRID
+  ========================================================= */
+
   @media (min-width: 768px) {
     .project-header {
       grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+
       grid-template-areas:
         "copy image"
         "stats image";
+
       column-gap: clamp(24px, 3vw, 48px);
+
       row-gap: 28px;
+
       align-items: start;
     }
 
     .project-header-copy {
       grid-area: copy;
+
       min-width: 0;
+
       max-width: none;
     }
 
     .header-stats {
       grid-area: stats;
+
       grid-template-columns: repeat(4, minmax(0, 1fr));
+
       align-self: end;
+
       width: 100%;
+
       min-width: 0;
     }
 
@@ -2208,27 +1657,35 @@
     }
 
     .header-stat span {
-      white-space: normal;
-      overflow-wrap: anywhere;
-    }
-    .header-stat span {
       font-size: clamp(8px, 0.75vw, 11px);
+
+      white-space: normal;
+
+      overflow-wrap: anywhere;
     }
 
     .desktop-project-image {
       grid-area: image;
+
       display: block;
+
       margin-top: 0;
     }
 
     .responsive-project-image {
       display: none;
     }
+
+    .header-stat strong,
+    .header-stat span {
+      text-align: center;
+    }
   }
 
   @media (min-width: 768px) and (max-width: 1024px) {
     .project-header {
       grid-template-columns: repeat(2, minmax(0, 1fr));
+
       grid-template-areas:
         "copy image"
         "stats stats";
@@ -2236,75 +1693,23 @@
 
     .desktop-project-image {
       position: relative;
+
       align-self: stretch;
+
       min-height: 0;
     }
 
     .desktop-project-image img {
       position: absolute;
+
       inset: 0;
+
       width: 100%;
       height: 100%;
+
       object-fit: contain;
+
       object-position: center;
-    }
-  }
-
-  @media (max-width: 767px) {
-    .header-stats {
-      flex-wrap: nowrap;
-      justify-content: space-between;
-      gap: 4px;
-    }
-
-    .header-stat {
-      padding: 8px 2px;
-    }
-    .header-stat span {
-      font-size: clamp(7px, 2.2vw, 9px);
-    }
-  }
-
-  /* Shared homepage typography; other routes retain their existing styles. */
-  :global(body:has(.homepage-footer)) .project-header h2 {
-    font-size: var(--text-section);
-    font-weight: var(--weight-semibold);
-  }
-  :global(body:has(.homepage-footer)) .feature-detail-body h3,
-  :global(body:has(.homepage-footer)) .responsive-feature-title {
-    font-size: var(--text-title);
-    font-weight: var(--weight-bold);
-  }
-  :global(body:has(.homepage-footer)) .project-lead {
-    font-size: var(--text-intro);
-    font-weight: var(--weight-regular);
-  }
-  :global(body:has(.homepage-footer)) .project-text,
-  :global(body:has(.homepage-footer)) .feature-description {
-    font-size: var(--text-body);
-    font-weight: var(--weight-regular);
-  }
-  :global(body:has(.homepage-footer)) .graph-impact p {
-    font-size: var(--text-small);
-    font-weight: var(--weight-regular);
-  }
-  :global(body:has(.homepage-footer)) .project-kicker,
-  :global(body:has(.homepage-footer)) .project-link,
-  :global(body:has(.homepage-footer)) .feature-tags span,
-  :global(body:has(.homepage-footer)) .chart-heading span,
-  :global(body:has(.homepage-footer)) .growth-value span,
-  :global(body:has(.homepage-footer)) .growth-metric small,
-  :global(body:has(.homepage-footer)) .chart-key span,
-  :global(body:has(.homepage-footer)) .graph-timeline span {
-    font-size: var(--text-label);
-    font-weight: var(--weight-semibold);
-  }
-
-
-  @media (min-width: 768px) {
-    .header-stat strong,
-    .header-stat span {
-      text-align: center;
     }
   }
 </style>

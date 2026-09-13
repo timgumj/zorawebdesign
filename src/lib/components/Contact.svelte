@@ -6,6 +6,7 @@
    * https://www.zorawebdesign.com, so use the same-domain endpoint.
    */
   const mailEndpoint = "/api/send-mail";
+
   let {
     title = "KONTAKT",
     subtitle = "ICH FREUE MICH AUF DEINE NACHRICHT.",
@@ -239,6 +240,7 @@
     <!-- =====================================================
          BLUE SECTION HEADER
     ====================================================== -->
+
     <div class="contact-header" class:visible={headerVisible} use:observeHeader>
       <div class="contact-header-inner">
         <div class="contact-header-main">
@@ -254,6 +256,7 @@
     <!-- =====================================================
          FORM STATUS
     ====================================================== -->
+
     {#if formStatus === "success"}
       <div class="contact-success-box" role="status">
         <h3>{successTitle}</h3>
@@ -281,10 +284,12 @@
     <!-- =====================================================
          CONTACT GRID
     ====================================================== -->
+
     <div class="contact-grid">
       <!-- ===================================================
            MESSAGE FORM
       ==================================================== -->
+
       <form class="contact-form" onsubmit={sendEmail}>
         <div class="card-header">
           <h3 class="card-eyebrow">
@@ -366,6 +371,7 @@
                 stroke-width="1.5"
                 stroke-linecap="square"
               />
+
               <path
                 d="M9 7H17V15"
                 stroke="currentColor"
@@ -381,6 +387,7 @@
       <!-- ===================================================
            PERSONAL CONTACT
       ==================================================== -->
+
       <div class="contact-info">
         <div class="card-header">
           <h3 class="card-eyebrow">
@@ -492,6 +499,7 @@
                 stroke-width="1.5"
                 stroke-linecap="square"
               />
+
               <path
                 d="M9 7H17V15"
                 stroke="currentColor"
@@ -511,6 +519,7 @@
   /* =========================================================
      SECTION
   ========================================================= */
+
   .contact {
     padding: 130px 0;
 
@@ -543,6 +552,7 @@
   /* =========================================================
      SECTION HEADER
   ========================================================= */
+
   .contact-header {
     width: 100%;
 
@@ -557,6 +567,7 @@
     color: #f2f2f2;
 
     opacity: 0;
+
     transform: translateY(18px);
 
     transition:
@@ -571,6 +582,7 @@
 
   .contact-header-inner {
     width: 100%;
+
     min-height: 0;
 
     box-sizing: border-box;
@@ -595,7 +607,9 @@
 
     display: grid;
 
-    grid-template-columns: var(--section-title-marker-size) minmax(0, 1fr);
+    grid-template-columns:
+      var(--section-title-marker-size)
+      minmax(0, 1fr);
 
     align-items: start;
 
@@ -604,7 +618,6 @@
 
   .contact-header-main::before {
     width: var(--section-title-marker-size);
-
     height: var(--section-title-marker-size);
 
     margin-top: 0.48em;
@@ -629,6 +642,7 @@
 
     .contact-header-main::before {
       align-self: center;
+
       margin-top: 0;
     }
   }
@@ -637,13 +651,11 @@
     0%,
     100% {
       transform: scale(0.82);
-
       box-shadow: 0 0 0 0 rgba(0, 67, 255, 0);
     }
 
     50% {
       transform: scale(1.18);
-
       box-shadow: 0 0 0 8px rgba(0, 67, 255, 0.16);
     }
   }
@@ -657,15 +669,14 @@
 
     font-family: inherit;
 
+    font-size: clamp(24px, 2.15vw, 34px);
+    font-weight: 600;
+
     line-height: 1.12;
 
     letter-spacing: -0.035em;
 
     text-transform: none;
-  }
-  :global(body:not(:has(.homepage-footer))) .contact-header h2 {
-    font-size: clamp(24px, 2.15vw, 34px);
-    font-weight: 600;
   }
 
   .contact-subtitle {
@@ -677,15 +688,15 @@
     color: rgba(255, 255, 255, 0.62);
 
     font-family: inherit;
+
+    font-size: 16px;
+    font-weight: 400;
+
     line-height: 1.65;
 
     letter-spacing: 0;
 
     text-transform: none;
-  }
-  :global(body:not(:has(.homepage-footer))) .contact-subtitle {
-    font-size: 16px;
-    font-weight: 400;
   }
 
   :global(body.light) .contact-header {
@@ -708,7 +719,6 @@
       justify-self: end;
 
       margin-left: auto;
-
       margin-right: 0;
 
       padding-right: 0;
@@ -720,6 +730,7 @@
   /* =========================================================
      STATUS MESSAGES
   ========================================================= */
+
   .contact-success-box,
   .contact-error-box {
     width: 100%;
@@ -752,16 +763,15 @@
     color: #ffffff;
 
     font-family: inherit;
+
+    font-size: 16px;
+    font-weight: 600;
+
     line-height: 1.3;
 
     letter-spacing: 0.04em;
 
     text-transform: uppercase;
-  }
-  :global(body:not(:has(.homepage-footer))) .contact-success-box h3,
-  :global(body:not(:has(.homepage-footer))) .contact-error-box h3 {
-    font-size: 16px;
-    font-weight: 600;
   }
 
   .contact-success-box p,
@@ -773,12 +783,11 @@
     color: #b5b5b5;
 
     font-family: inherit;
-    line-height: 1.65;
-  }
-  :global(body:not(:has(.homepage-footer))) .contact-success-box p,
-  :global(body:not(:has(.homepage-footer))) .contact-error-box p {
+
     font-size: 14px;
     font-weight: 400;
+
+    line-height: 1.65;
   }
 
   .contact-error-box a {
@@ -788,10 +797,9 @@
   .contact-technical-error {
     margin-top: 10px !important;
 
-    opacity: 0.7;
-  }
-  :global(body:not(:has(.homepage-footer))) .contact-technical-error {
     font-size: 12px !important;
+
+    opacity: 0.7;
   }
 
   :global(body.light) .contact-success-box h3,
@@ -807,6 +815,7 @@
   /* =========================================================
      TWO COLUMN GRID
   ========================================================= */
+
   .contact-grid {
     width: 100%;
 
@@ -823,6 +832,7 @@
      FORM COLUMN
      ONLY THIS COLUMN HAS AN OUTER BORDER
   ========================================================= */
+
   .contact-form {
     position: relative;
 
@@ -865,6 +875,7 @@
      PERSONAL CONTACT COLUMN
      NO OUTER BORDER
   ========================================================= */
+
   .contact-info {
     position: relative;
 
@@ -895,6 +906,7 @@
   /* =========================================================
      CARD HEADERS
   ========================================================= */
+
   .card-header {
     min-height: 30px;
 
@@ -921,15 +933,15 @@
     color: #ffffff;
 
     font-family: inherit;
+
+    font-size: 14px;
+    font-weight: 600;
+
     line-height: 1.35;
 
     letter-spacing: 0.075em;
 
     text-transform: uppercase;
-  }
-  :global(body:not(:has(.homepage-footer))) .card-eyebrow {
-    font-size: 14px;
-    font-weight: 600;
   }
 
   :global(body.light) .card-eyebrow {
@@ -939,6 +951,7 @@
   /* =========================================================
      FORM FIELDS
   ========================================================= */
+
   .spam-field {
     position: absolute;
 
@@ -980,6 +993,10 @@
     color: #ffffff;
 
     font-family: inherit;
+
+    font-size: 13px;
+    font-weight: 400;
+
     line-height: 1.4;
 
     letter-spacing: 0.025em;
@@ -990,11 +1007,6 @@
       color 0.3s ease,
       background 0.3s ease,
       border-color 0.25s ease;
-  }
-  :global(body:not(:has(.homepage-footer))) .contact-form input,
-  :global(body:not(:has(.homepage-footer))) .contact-form textarea {
-    font-size: 13px;
-    font-weight: 400;
   }
 
   .contact-form input:hover,
@@ -1015,12 +1027,10 @@
 
     font-family: inherit;
 
-    letter-spacing: 0.055em;
-  }
-  :global(body:not(:has(.homepage-footer))) .contact-form input::placeholder,
-  :global(body:not(:has(.homepage-footer))) .contact-form textarea::placeholder {
     font-size: inherit;
     font-weight: 500;
+
+    letter-spacing: 0.055em;
   }
 
   :global(body.light) .contact-form input,
@@ -1062,9 +1072,9 @@
   /* =========================================================
      SENDING PROGRESS
   ========================================================= */
+
   .sending-progress {
     width: 100%;
-
     height: 2px;
 
     margin: 0 0 16px;
@@ -1082,7 +1092,6 @@
     display: block;
 
     width: 40%;
-
     height: 100%;
 
     background: #0043ff;
@@ -1103,6 +1112,7 @@
   /* =========================================================
      SEND BUTTON
   ========================================================= */
+
   .contact-form button {
     width: 100%;
 
@@ -1129,6 +1139,10 @@
     color: #ffffff;
 
     font-family: inherit;
+
+    font-size: 11px;
+    font-weight: 700;
+
     line-height: 1;
 
     letter-spacing: 0.09em;
@@ -1140,10 +1154,6 @@
     transition:
       background 0.25s ease,
       color 0.25s ease;
-  }
-  :global(body:not(:has(.homepage-footer))) .contact-form button {
-    font-size: 11px;
-    font-weight: 700;
   }
 
   .contact-form button:hover {
@@ -1165,6 +1175,7 @@
   /* =========================================================
      SHARED SVG CTA ARROW
   ========================================================= */
+
   .cta-arrow {
     width: 20px;
     height: 20px;
@@ -1189,6 +1200,7 @@
   /* =========================================================
      PERSONAL CONTACT DETAILS
   ========================================================= */
+
   .contact-details {
     padding-top: 30px;
   }
@@ -1221,15 +1233,15 @@
     color: #777777;
 
     font-family: inherit;
+
+    font-size: 10px;
+    font-weight: 600;
+
     line-height: 1.3;
 
     letter-spacing: 0.09em;
 
     text-transform: uppercase;
-  }
-  :global(body:not(:has(.homepage-footer))) .contact-block h3 {
-    font-size: 10px;
-    font-weight: 600;
   }
 
   .contact-block p,
@@ -1239,16 +1251,15 @@
     color: #ffffff;
 
     font-family: inherit;
+
+    font-size: 15px;
+    font-weight: 400;
+
     line-height: 1.6;
 
     letter-spacing: 0;
 
     overflow-wrap: anywhere;
-  }
-  :global(body:not(:has(.homepage-footer))) .contact-block p,
-  :global(body:not(:has(.homepage-footer))) .contact-block a {
-    font-size: 15px;
-    font-weight: 400;
   }
 
   .contact-block a {
@@ -1285,6 +1296,7 @@
   /* =========================================================
      CONTACT INFO FOOTER
   ========================================================= */
+
   .contact-info-footer {
     margin-top: auto;
 
@@ -1295,6 +1307,7 @@
      SOCIAL AREA
      LABEL ABOVE / ICONS UNDERNEATH
   ========================================================= */
+
   .contact-social-area {
     margin-bottom: 24px;
 
@@ -1311,15 +1324,15 @@
     color: #707070;
 
     font-family: inherit;
+
+    font-size: 9px;
+    font-weight: 600;
+
     line-height: 1;
 
     letter-spacing: 0.11em;
 
     text-transform: uppercase;
-  }
-  :global(body:not(:has(.homepage-footer))) .social-label {
-    font-size: 9px;
-    font-weight: 600;
   }
 
   :global(body.light) .social-label {
@@ -1385,6 +1398,7 @@
   /* =========================================================
      BOOK CALL BUTTON
   ========================================================= */
+
   .contact-book-link {
     width: 100%;
 
@@ -1409,6 +1423,10 @@
     color: #0043ff;
 
     font-family: inherit;
+
+    font-size: 11px;
+    font-weight: 700;
+
     line-height: 1;
 
     letter-spacing: 0.09em;
@@ -1420,10 +1438,6 @@
     transition:
       background 0.25s ease,
       color 0.25s ease;
-  }
-  :global(body:not(:has(.homepage-footer))) .contact-book-link {
-    font-size: 11px;
-    font-weight: 700;
   }
 
   .contact-book-link:hover {
@@ -1453,6 +1467,7 @@
   /* =========================================================
      MID DESKTOP
   ========================================================= */
+
   @media (min-width: 1025px) and (max-width: 1280px) {
     .contact-grid {
       gap: 42px;
@@ -1466,6 +1481,7 @@
   /* =========================================================
      TABLET
   ========================================================= */
+
   @media (min-width: 768px) and (max-width: 1024px) {
     .contact-header-main {
       --section-title-marker-size: 28.8px;
@@ -1496,17 +1512,15 @@
     }
 
     .contact-header h2 {
-      line-height: 1.15;
-    }
-    :global(body:not(:has(.homepage-footer))) .contact-header h2 {
       font-size: 24px;
+
+      line-height: 1.15;
     }
 
     .contact-subtitle {
-      line-height: 1.55;
-    }
-    :global(body:not(:has(.homepage-footer))) .contact-subtitle {
       font-size: 13px;
+
+      line-height: 1.55;
     }
 
     .contact-grid {
@@ -1524,7 +1538,8 @@
     .contact-info {
       padding: 24px 0;
     }
-    :global(body:not(:has(.homepage-footer))) .card-eyebrow {
+
+    .card-eyebrow {
       font-size: 12px;
     }
 
@@ -1535,21 +1550,21 @@
     .contact-form input,
     .contact-form textarea {
       padding: 15px 14px;
-    }
-    :global(body:not(:has(.homepage-footer))) .contact-form input,
-  :global(body:not(:has(.homepage-footer))) .contact-form textarea {
+
       font-size: 12px;
     }
 
     .contact-form textarea {
       min-height: 190px;
     }
-    :global(body:not(:has(.homepage-footer))) .contact-block p,
-  :global(body:not(:has(.homepage-footer))) .contact-block a {
+
+    .contact-block p,
+    .contact-block a {
       font-size: 13px;
     }
-    :global(body:not(:has(.homepage-footer))) .contact-book-link,
-  :global(body:not(:has(.homepage-footer))) .contact-form button {
+
+    .contact-book-link,
+    .contact-form button {
       font-size: 10px;
     }
   }
@@ -1557,6 +1572,7 @@
   /* =========================================================
      MOBILE
   ========================================================= */
+
   @media (max-width: 767px) {
     .contact {
       padding: 110px 20px;
@@ -1593,18 +1609,17 @@
     .contact-header h2 {
       max-width: 100%;
 
-      line-height: 1.15;
-    }
-    :global(body:not(:has(.homepage-footer))) .contact-header h2 {
       font-size: clamp(22px, 6vw, 27px);
+
+      line-height: 1.15;
     }
 
     .contact-subtitle {
       max-width: 100%;
-      line-height: 1.6;
-    }
-    :global(body:not(:has(.homepage-footer))) .contact-subtitle {
+
       font-size: 14px;
+
+      line-height: 1.6;
     }
 
     .contact-success-box,
@@ -1631,7 +1646,8 @@
 
       padding: 0;
     }
-    :global(body:not(:has(.homepage-footer))) .card-eyebrow {
+
+    .card-eyebrow {
       font-size: 13px;
     }
 
@@ -1650,9 +1666,7 @@
     .contact-form input,
     .contact-form textarea {
       padding: 16px 14px;
-    }
-    :global(body:not(:has(.homepage-footer))) .contact-form input,
-  :global(body:not(:has(.homepage-footer))) .contact-form textarea {
+
       font-size: 13px;
     }
 
@@ -1663,8 +1677,9 @@
     .contact-details {
       padding-top: 26px;
     }
-    :global(body:not(:has(.homepage-footer))) .contact-block p,
-  :global(body:not(:has(.homepage-footer))) .contact-block a {
+
+    .contact-block p,
+    .contact-block a {
       font-size: 14px;
     }
 
@@ -1678,6 +1693,7 @@
   /* =========================================================
      SMALL MOBILE
   ========================================================= */
+
   @media (max-width: 480px) {
     .contact-header-inner {
       padding: 28px 0;
@@ -1692,7 +1708,8 @@
 
       padding-bottom: 20px;
     }
-    :global(body:not(:has(.homepage-footer))) .card-eyebrow {
+
+    .card-eyebrow {
       font-size: 12px;
     }
   }
@@ -1700,6 +1717,7 @@
   /* =========================================================
      VERY SMALL MOBILE
   ========================================================= */
+
   @media (max-width: 420px) {
     .contact {
       padding: 100px 20px;
@@ -1714,10 +1732,12 @@
 
       padding: 28px 0;
     }
-    :global(body:not(:has(.homepage-footer))) .contact-header h2 {
+
+    .contact-header h2 {
       font-size: 22px;
     }
-    :global(body:not(:has(.homepage-footer))) .contact-subtitle {
+
+    .contact-subtitle {
       font-size: 14px;
     }
 
@@ -1728,24 +1748,24 @@
     .contact-form {
       padding: 20px;
     }
-    :global(body:not(:has(.homepage-footer))) .card-eyebrow {
+
+    .card-eyebrow {
       font-size: 11px;
     }
 
     .contact-form input,
     .contact-form textarea {
       padding: 15px 13px;
-    }
-    :global(body:not(:has(.homepage-footer))) .contact-form input,
-  :global(body:not(:has(.homepage-footer))) .contact-form textarea {
+
       font-size: 12px;
     }
 
     .contact-block {
       padding: 17px 0;
     }
-    :global(body:not(:has(.homepage-footer))) .contact-block p,
-  :global(body:not(:has(.homepage-footer))) .contact-block a {
+
+    .contact-block p,
+    .contact-block a {
       font-size: 13px;
     }
 
@@ -1767,9 +1787,7 @@
       min-height: 48px;
 
       padding: 0 14px;
-    }
-    :global(body:not(:has(.homepage-footer))) .contact-book-link,
-  :global(body:not(:has(.homepage-footer))) .contact-form button {
+
       font-size: 10px;
     }
 
@@ -1782,6 +1800,7 @@
   /* =========================================================
      REDUCED MOTION
   ========================================================= */
+
   @media (prefers-reduced-motion: reduce) {
     .contact-header {
       opacity: 1;
@@ -1805,6 +1824,7 @@
       transition-duration: 0.01ms;
     }
   }
+
   @media (min-width: 1025px) {
     .contact {
       position: relative;
@@ -1812,20 +1832,28 @@
 
     .contact-container {
       width: min(1540px, calc(100% - 32px));
+
       padding-right: 40px;
       padding-left: 40px;
+
       box-sizing: border-box;
     }
 
     .contact::before,
     .contact::after {
       content: "";
+
       position: absolute;
+
       top: 0;
       bottom: 0;
+
       width: 1px;
+
       background: rgba(255, 255, 255, 0.08);
+
       pointer-events: none;
+
       transition: background 0.3s ease;
     }
 
@@ -1842,44 +1870,4 @@
       background: rgba(0, 0, 0, 0.08);
     }
   }
-  /* Shared homepage typography; other routes retain their existing styles. */
-  :global(body:has(.homepage-footer)) .contact-header h2 {
-    font-size: var(--text-section);
-    font-weight: var(--weight-semibold);
-  }
-  :global(body:has(.homepage-footer)) .contact-subtitle {
-    font-size: var(--text-intro);
-    font-weight: var(--weight-regular);
-  }
-  :global(body:has(.homepage-footer)) .contact-success-box h3,
-  :global(body:has(.homepage-footer)) .contact-error-box h3 {
-    font-size: var(--text-title);
-    font-weight: var(--weight-bold);
-  }
-  :global(body:has(.homepage-footer)) .contact-success-box p,
-  :global(body:has(.homepage-footer)) .contact-error-box p,
-  :global(body:has(.homepage-footer)) .contact-form input,
-  :global(body:has(.homepage-footer)) .contact-form textarea,
-  :global(body:has(.homepage-footer)) .contact-block p,
-  :global(body:has(.homepage-footer)) .contact-block a {
-    font-size: var(--text-body);
-    font-weight: var(--weight-regular);
-  }
-  :global(body:has(.homepage-footer)) .contact-form input::placeholder,
-  :global(body:has(.homepage-footer)) .contact-form textarea::placeholder {
-    font-weight: var(--weight-regular);
-  }
-  :global(body:has(.homepage-footer)) .contact-technical-error {
-    font-size: var(--text-small);
-    font-weight: var(--weight-regular);
-  }
-  :global(body:has(.homepage-footer)) .card-eyebrow,
-  :global(body:has(.homepage-footer)) .contact-form button,
-  :global(body:has(.homepage-footer)) .contact-block h3,
-  :global(body:has(.homepage-footer)) .social-label,
-  :global(body:has(.homepage-footer)) .contact-book-link {
-    font-size: var(--text-label);
-    font-weight: var(--weight-semibold);
-  }
-
 </style>

@@ -24,7 +24,7 @@ export const baldaufShowcase = {
 
     stats: [
       {
-        value: "#1",
+        value: "TOP 10",
         label: "LOKALE SUCHE",
       },
       {
@@ -131,7 +131,7 @@ export const baldaufShowcase = {
 
     stats: [
       {
-        value: "#1",
+        value: "TOP 10",
         label: "LOCAL SEARCH",
       },
       {
