@@ -109,25 +109,19 @@
             </div>
           {/each}
         </div>
+        <div class="project-image desktop-project-image">
+          <img
+            src={project.heroImage}
+            alt={project.heroImageAlt}
+            width="1448"
+            height="1086"
+            loading="eager"
+            decoding="async"
+          />
+        </div>
       </header>
 
-      <!-- =====================================================
-           DESKTOP IMAGE
 
-           Desktop remains in its current position,
-           underneath the complete header.
-      ====================================================== -->
-
-      <div class="project-image desktop-project-image">
-        <img
-          src={project.heroImage}
-          alt={project.heroImageAlt}
-          width="1448"
-          height="1086"
-          loading="eager"
-          decoding="async"
-        />
-      </div>
 
       <!-- =====================================================
            SINGLE CASE-STUDY RESULT
@@ -2171,6 +2165,92 @@
 
     .graph-timeline span {
       font-size: 7.5px;
+    }
+  }
+
+  @media (min-width: 768px) {
+    .project-header {
+      grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+      grid-template-areas:
+        "copy image"
+        "stats image";
+      column-gap: clamp(24px, 3vw, 48px);
+      row-gap: 28px;
+      align-items: start;
+    }
+
+    .project-header-copy {
+      grid-area: copy;
+      min-width: 0;
+      max-width: none;
+    }
+
+    .header-stats {
+      grid-area: stats;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      align-self: end;
+      width: 100%;
+      min-width: 0;
+    }
+
+    .header-stat {
+      padding: 10px 6px;
+    }
+
+    .header-stat span {
+      font-size: clamp(8px, 0.75vw, 11px);
+      white-space: normal;
+      overflow-wrap: anywhere;
+    }
+
+    .desktop-project-image {
+      grid-area: image;
+      display: block;
+      margin-top: 0;
+    }
+
+    .responsive-project-image {
+      display: none;
+    }
+  }
+
+  @media (min-width: 768px) and (max-width: 1024px) {
+    .project-header {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-areas:
+        "copy image"
+        "stats stats";
+    }
+
+    .desktop-project-image {
+      position: relative;
+      align-self: stretch;
+      min-height: 0;
+    }
+
+    .desktop-project-image img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      object-position: center;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .header-stats {
+      flex-wrap: nowrap;
+      justify-content: space-between;
+      gap: 4px;
+    }
+
+    .header-stat {
+      padding: 8px 2px;
+    }
+
+    .header-stat span {
+      font-size: clamp(7px, 2.2vw, 9px);
     }
   }
 </style>

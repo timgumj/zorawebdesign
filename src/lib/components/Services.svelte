@@ -862,12 +862,38 @@
 
     return foundKey ? serviceKeywords[foundKey] : fallbackServiceTags;
   }
-  function isWebDesignService(service) {
-    const serviceTitle = service?.title?.toLowerCase().trim() ?? "";
+  function getServiceVisual(service) {
+    const title = service?.title?.toLowerCase().trim() ?? "";
 
-    return (
-      serviceTitle.includes("web design") || serviceTitle.includes("webdesign")
-    );
+    if (
+      title.includes("web development") ||
+      title.includes("webentwicklung") ||
+      title.includes("wordpress development")
+    ) {
+      return "/baldauf/webdev.webp";
+    }
+
+    if (title.includes("web shop") || title.includes("webshop")) {
+      return "/baldauf/webshop.webp";
+    }
+
+    if (title.includes("web design") || title.includes("webdesign")) {
+      return "/baldauf/webdesign.webp";
+    }
+
+    if (title.includes("seo")) {
+      return "/baldauf/seo.webp";
+    }
+
+    if (title.includes("hosting")) {
+      return "/baldauf/hosting.webp";
+    }
+
+    if (title.includes("wartung") || title.includes("support")) {
+      return "/baldauf/updates.webp";
+    }
+
+    return null;
   }
   function observeHeader(node) {
     if (typeof IntersectionObserver === "undefined") {
@@ -1363,6 +1389,7 @@
 
           <div class="service-detail-list">
             {#each reorderedServices as service, index}
+              {@const serviceVisual = getServiceVisual(service)}
               <article
                 class="service-detail-panel"
                 class:active={activeServiceIndex === index}
@@ -1392,11 +1419,11 @@
                   {/each}
                 </div>
 
-                {#if isWebDesignService(service)}
+                {#if serviceVisual}
                   <div class="service-webdesign-visual">
                     <img
-                      src="/baldauf/webdesign.webp"
-                      alt="Web design workspace showing responsive website design"
+                      src={serviceVisual}
+                      alt=""
                       loading="lazy"
                       decoding="async"
                     />
@@ -1409,6 +1436,7 @@
 
         <div class="services-grid services-mobile-grid">
           {#each reorderedServices as service, index}
+            {@const serviceVisual = getServiceVisual(service)}
             <article class="service-card">
               <div class="service-bg-number" aria-hidden="true">
                 {String(index + 1).padStart(2, "0")}
@@ -1460,6 +1488,17 @@
                     <span>{tag}</span>
                   {/each}
                 </div>
+
+                {#if serviceVisual}
+                  <div class="service-webdesign-visual">
+                    <img
+                      src={serviceVisual}
+                      alt=""
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </div>
+                {/if}
               </div>
             </article>
           {/each}
