@@ -1,119 +1,77 @@
 <script>
   let { language = "de", onStart = () => {} } = $props();
 
-  const text = $derived(
-    language === "en"
-      ? {
-          eyebrow: "Website Project Planning",
-
-          title: "Website planner",
-
-          description:
-            "Answer a few focused questions and receive a tailored recommendation for the pages, features and level of support your website may need.",
-
-          time: "About 3–5 minutes",
-
-          button: "Plan my website",
-
-          privacy:
-            "No commitment. You decide at the end whether you want to request a personal quote.",
-
-          previewLabel: "Your project",
-
-          previewProgress: "Example",
-
-          previewType: "Website type",
-
-          previewTypeValue: "Business website",
-
-          previewGoals: "Main goals",
-
-          previewGoalOne: "Generate enquiries",
-
-          previewGoalTwo: "Build trust",
-
-          previewScope: "Recommended scope",
-
-          previewScopeValue: "Growth",
-
-          previewNote: "Tailored from your answers",
-
-          outcomeEyebrow: "What you get",
-
-          highlights: [
-            {
-              number: "01",
-              title: "Clarify your project",
-              text: "Define what your website needs to achieve and where you are starting from.",
-            },
-            {
-              number: "02",
-              title: "Choose what you need",
-              text: "Select relevant pages, features, content needs and support.",
-            },
-            {
-              number: "03",
-              title: "Get a recommendation",
-              text: "Receive a suggested project scope based on your answers.",
-            },
-          ],
-        }
-      : {
-          eyebrow: "Website-Projektplanung",
-
-          title: "Website Planner",
-
-          description:
-            "Beantworten Sie einige gezielte Fragen und erhalten Sie eine individuelle Empfehlung für Seiten, Funktionen und den passenden Betreuungsumfang Ihrer Website.",
-
-          time: "Etwa 3–5 Minuten",
-
-          button: "Website planen",
-
-          privacy:
-            "Unverbindlich. Am Ende entscheiden Sie selbst, ob Sie ein persönliches Angebot anfordern möchten.",
-
-          previewLabel: "Ihr Projekt",
-
-          previewProgress: "Beispiel",
-
-          previewType: "Website-Art",
-
-          previewTypeValue: "Unternehmenswebsite",
-
-          previewGoals: "Wichtigste Ziele",
-
-          previewGoalOne: "Mehr Anfragen",
-
-          previewGoalTwo: "Vertrauen aufbauen",
-
-          previewScope: "Empfohlener Umfang",
-
-          previewScopeValue: "Growth",
-
-          previewNote: "Individuell aus Ihren Antworten",
-
-          outcomeEyebrow: "Was Sie erhalten",
-
-          highlights: [
-            {
-              number: "01",
-              title: "Projekt klären",
-              text: "Definieren Sie, was Ihre Website erreichen soll und wo Ihr Projekt aktuell steht.",
-            },
-            {
-              number: "02",
-              title: "Bedarf festlegen",
-              text: "Wählen Sie relevante Seiten, Funktionen, Inhalte und Unterstützung.",
-            },
-            {
-              number: "03",
-              title: "Empfehlung erhalten",
-              text: "Erhalten Sie einen passenden Projektumfang auf Basis Ihrer Antworten.",
-            },
-          ],
-        },
-  );
+  const text = $derived(language === "en" ? {
+  "eyebrow": "Plan your website",
+  "title": "Website planner",
+  "description": "Planning a new website or updating an existing one? Answer a few simple questions about what you need. At the end, you get a summary of your project and a recommendation.",
+  "time": "About 3–5 minutes",
+  "button": "Start planning",
+  "privacy": "No technical knowledge needed. You can request a personal quote at the end, if you like.",
+  "previewLabel": "Your project summary",
+  "previewProgress": "Example",
+  "previewType": "Website type",
+  "previewTypeValue": "Business website",
+  "previewGoals": "What it should do",
+  "previewGoalOne": "Bring in enquiries",
+  "previewGoalTwo": "Show your services",
+  "previewScope": "Your recommendation",
+  "previewScopeValue": "Pages, features and support",
+  "previewNote": "Your result will depend on your answers.",
+  "outcomeEyebrow": "How the planner works",
+  "highlights": [
+    {
+      "icon": "/images/chat-notification-1.webp",
+      "title": "Tell me your plans",
+      "text": "Choose whether you need a new website or want to improve one you already have."
+    },
+    {
+      "icon": "/images/customize-computer.webp",
+      "title": "Choose what you need",
+      "text": "Select your pages and features, and tell me if you need help with text or images."
+    },
+    {
+      "icon": "/images/display-code-2.webp",
+      "title": "See your project summary",
+      "text": "Review the recommendation. If you want to work with me, you can then request a personal quote."
+    }
+  ]
+} : {
+  "eyebrow": "Plane deine Website",
+  "title": "Website-Planer",
+  "description": "Du brauchst eine neue Website oder willst deine bestehende verbessern? Beantworte ein paar einfache Fragen zu deinen Wünschen. Am Ende bekommst du eine Übersicht deines Projekts und eine Empfehlung.",
+  "time": "Etwa 3–5 Minuten",
+  "button": "Planung starten",
+  "privacy": "Du brauchst kein technisches Vorwissen. Wenn du möchtest, kannst du am Ende ein persönliches Angebot anfragen.",
+  "previewLabel": "Deine Projektübersicht",
+  "previewProgress": "Beispiel",
+  "previewType": "Art der Website",
+  "previewTypeValue": "Website für dein Unternehmen",
+  "previewGoals": "Was sie leisten soll",
+  "previewGoalOne": "Anfragen gewinnen",
+  "previewGoalTwo": "Leistungen zeigen",
+  "previewScope": "Deine Empfehlung",
+  "previewScopeValue": "Seiten, Funktionen und Betreuung",
+  "previewNote": "Dein Ergebnis richtet sich nach deinen Antworten.",
+  "outcomeEyebrow": "So funktioniert der Planer",
+  "highlights": [
+    {
+      "icon": "/images/chat-notification-1.webp",
+      "title": "Erzähl von deinem Vorhaben",
+      "text": "Wähle, ob du eine neue Website brauchst oder eine bestehende verbessern willst."
+    },
+    {
+      "icon": "/images/customize-computer.webp",
+      "title": "Wähle, was du brauchst",
+      "text": "Welche Seiten und Funktionen brauchst du? Und brauchst du Hilfe mit Texten oder Bildern?"
+    },
+    {
+      "icon": "/images/display-code-2.webp",
+      "title": "Schau dir dein Ergebnis an",
+      "text": "Du bekommst eine Empfehlung für dein Projekt. Wenn du mit mir arbeiten möchtest, kannst du danach ein Angebot anfragen."
+    }
+  ]
+});
 </script>
 
 <section class="intro-card">
@@ -170,14 +128,8 @@
           </span>
         </div>
 
-        <div class="preview-progress-track">
-          <span></span>
-        </div>
-
         <div class="preview-content">
           <div class="preview-section">
-            <span class="preview-kicker"> 01 </span>
-
             <div>
               <span class="preview-label">
                 {text.previewType}
@@ -190,8 +142,6 @@
           </div>
 
           <div class="preview-section">
-            <span class="preview-kicker"> 02 </span>
-
             <div>
               <span class="preview-label">
                 {text.previewGoals}
@@ -210,8 +160,6 @@
           </div>
 
           <div class="preview-section recommended-section">
-            <span class="preview-kicker"> 03 </span>
-
             <div>
               <span class="preview-label">
                 {text.previewScope}
@@ -244,9 +192,7 @@
   <div class="intro-highlights">
     {#each text.highlights as item}
       <article>
-        <span class="highlight-number">
-          {item.number}
-        </span>
+        <img class="highlight-icon" src={item.icon} alt="" width="40" height="40" loading="lazy" decoding="async" />
 
         <div>
           <h2>
@@ -272,7 +218,7 @@
 
     overflow: hidden;
 
-    border: 1px solid #292929;
+    border: 0;
 
     background: #0b0b0b;
 
@@ -287,6 +233,7 @@
 
   .intro-main {
     display: grid;
+    border-top: 1px solid #292929;
 
     grid-template-columns:
       minmax(0, 1.15fr)
@@ -314,9 +261,9 @@
 
     margin-bottom: 14px;
 
-    color: #4f76ff;
+    color: #ececec;
 
-    font-size: 10px;
+    font-size: 12px;
     font-weight: 700;
 
     line-height: 1;
@@ -355,7 +302,7 @@
 
     color: #a4a4a4;
 
-    font-size: 14px;
+    font-size: 16px;
 
     line-height: 1.7;
   }
@@ -388,17 +335,17 @@
 
     padding: 0 22px;
 
-    border: 1px solid #0043ff;
+    border: 1px solid var(--accent-blue, #0043ff);
 
     border-radius: 0;
 
-    background: #0043ff;
+    background: var(--accent-blue, #0043ff);
 
     color: #ffffff;
 
     font-family: "DM Sans", Arial, sans-serif;
 
-    font-size: 11px;
+    font-size: 12px;
     font-weight: 700;
 
     letter-spacing: 0.08em;
@@ -418,7 +365,7 @@
   }
 
   button:focus-visible {
-    outline: 2px solid #0043ff;
+    outline: 2px solid var(--accent-blue, #0043ff);
 
     outline-offset: 4px;
   }
@@ -426,7 +373,7 @@
   .time-label {
     color: #9a9a9a;
 
-    font-size: 10px;
+    font-size: 12px;
     font-weight: 700;
 
     letter-spacing: 0.07em;
@@ -439,9 +386,9 @@
 
     margin: 18px 0 0;
 
-    color: #696969;
+    color: #a4a4a4;
 
-    font-size: 10px;
+    font-size: 12px;
 
     line-height: 1.55;
   }
@@ -463,7 +410,7 @@
 
     border-left: 1px solid #292929;
 
-    background: #0d0d0d;
+    background: transparent;
 
     box-sizing: border-box;
   }
@@ -474,10 +421,12 @@
 
   .preview-window {
     width: min(390px, 100%);
+    min-width: 0;
+    overflow-wrap: anywhere;
 
-    border: 1px solid #353535;
+    border: 0;
 
-    background: #090909;
+    background: transparent;
   }
 
   .preview-topbar {
@@ -490,13 +439,13 @@
 
     gap: 12px;
 
-    padding: 0 15px;
+    padding: 0;
 
     border-bottom: 1px solid #292929;
 
-    color: #777777;
+    color: #a4a4a4;
 
-    font-size: 9px;
+    font-size: 12px;
     font-weight: 700;
 
     letter-spacing: 0.09em;
@@ -505,26 +454,10 @@
   }
 
   .preview-progress {
-    color: #5f80ff;
+    color: #ececec;
   }
 
-  .preview-progress-track {
-    width: 100%;
-    height: 1px;
 
-    overflow: hidden;
-
-    background: #262626;
-  }
-
-  .preview-progress-track span {
-    display: block;
-
-    width: 46%;
-    height: 100%;
-
-    background: #0043ff;
-  }
 
   .preview-content {
     display: grid;
@@ -537,15 +470,13 @@
   .preview-section {
     display: grid;
 
-    grid-template-columns:
-      24px
-      minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1fr);
 
     gap: 14px;
 
     min-height: 90px;
 
-    padding: 17px;
+    padding: 17px 0;
 
     border-bottom: 1px solid #292929;
 
@@ -556,21 +487,15 @@
     border-bottom: 0;
   }
 
-  .preview-kicker {
-    color: #5f80ff;
-
-    font-size: 9px;
-    font-weight: 700;
-  }
 
   .preview-label {
     display: block;
 
     margin-bottom: 7px;
 
-    color: #747474;
+    color: #a4a4a4;
 
-    font-size: 8px;
+    font-size: 12px;
     font-weight: 700;
 
     letter-spacing: 0.08em;
@@ -598,17 +523,17 @@
 
     flex-wrap: wrap;
 
-    gap: 6px;
+    gap: 8px 16px;
   }
 
   .preview-tags span {
-    padding: 5px 7px;
+    padding: 0;
 
-    border: 1px solid #454545;
+    border: 0;
 
-    color: #5f80ff;
+    color: #ececec;
 
-    font-size: 9px;
+    font-size: 12px;
 
     line-height: 1.3;
   }
@@ -618,11 +543,11 @@
   ========================================================= */
 
   .recommended-section {
-    background: rgba(0, 67, 255, 0.035);
+    background: transparent;
   }
 
   .scope-value {
-    color: #6e8cff !important;
+    color: #ececec;
   }
 
   .recommended-section small {
@@ -630,9 +555,9 @@
 
     margin-top: 6px;
 
-    color: #777777;
+    color: #a4a4a4;
 
-    font-size: 9px;
+    font-size: 12px;
 
     line-height: 1.4;
   }
@@ -650,9 +575,9 @@
   }
 
   .intro-outcome-heading span {
-    color: #5f80ff;
+    color: #ececec;
 
-    font-size: 9px;
+    font-size: 12px;
     font-weight: 700;
 
     letter-spacing: 0.1em;
@@ -666,6 +591,7 @@
 
   .intro-highlights {
     display: grid;
+    border-bottom: 1px solid #292929;
 
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
@@ -679,7 +605,7 @@
 
     gap: 16px;
 
-    align-items: start;
+    align-items: center;
 
     min-height: 122px;
 
@@ -694,13 +620,12 @@
     border-right: 0;
   }
 
-  .highlight-number {
-    color: #5f80ff;
 
-    font-size: 10px;
-    font-weight: 700;
-
-    letter-spacing: 0.08em;
+  .highlight-icon {
+    display: block;
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
   }
 
   .intro-highlights h2 {
@@ -708,7 +633,7 @@
 
     color: #eeeeee;
 
-    font-size: 12px;
+    font-size: 14px;
     font-weight: 600;
 
     line-height: 1.3;
@@ -721,9 +646,9 @@
   .intro-highlights p {
     margin: 0;
 
-    color: #898989;
+    color: #a4a4a4;
 
-    font-size: 10.5px;
+    font-size: 14px;
 
     line-height: 1.55;
   }
@@ -762,7 +687,7 @@
     }
 
     .intro-description {
-      font-size: 12px;
+      font-size: 14px;
     }
 
     .intro-actions {
@@ -828,7 +753,7 @@
     .preview-section {
       min-height: 84px;
 
-      padding: 14px;
+      padding: 14px 0;
     }
 
     .intro-highlights article {

@@ -855,4 +855,8 @@
   .configurator-page :global(.form-privacy-note) {
     font-size: 12px !important;
   }
+  .configurator-page .intro-screen :global(.eyebrow),
+  .configurator-page .intro-screen :global(button) {
+    font-size: 12px !important;
+  }
 </style>
