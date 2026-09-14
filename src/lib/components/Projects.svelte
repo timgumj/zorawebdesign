@@ -1,5 +1,5 @@
 <script>
-  import { onDestroy } from "svelte";
+  import { onDestroy, onMount } from "svelte";
 
   let {
     title,
@@ -24,64 +24,57 @@
   /*
    * 7 projects + Load More = 8 cards on initial load.
    * Every click adds 2 projects.
-   *
-   * Performance change:
-   * only the projects the visitor can actually see are rendered.
-   * Previously all 19 cards existed in the DOM and the remaining
-   * cards were hidden with CSS.
    */
   let visibleCount = $state(7);
   let headerVisible = $state(false);
   let expandedProjectDescription = $state(0);
 
-  /*
-   * =========================================================
-   * SCROLL PREVIEW STATE
-   * =========================================================
-   *
-   * Only one project preview may be active at any time.
-   *
-   * The component does NOT know which project is Eva, reSOMA,
-   * Baldauf, etc.
-   *
-   * It simply checks:
-   *
-   * project.scrollImage
-   *
-   * That property will be supplied from projects.js /
-   * projects-en.js.
-   */
+  /* =========================================================
+     PREVIEW STATE
+  ========================================================= */
+
   let activePreviewIndex = $state(null);
 
-  let previewResetTimer = null;
+  /*
+   * Possible modes:
+   *
+   * desktop = existing desktop timed animation / hover
+   * tap     = touch user manually triggered the animation
+   * scroll  = mobile/tablet preview controlled by page scroll
+   */
+  let activePreviewMode = $state(null);
 
+  /*
+   * Percentage position of each scroll-driven screenshot.
+   * 0 = website top
+   * 100 = website bottom
+   */
+  let previewPositionByIndex = $state({});
+
+  let previewResetTimer = null;
   let initialPreviewPlayed = false;
 
   /*
-   * Mobile projects automatically preview only once per
-   * page visit.
+   * All mounted project preview surfaces.
+   *
+   * This lets us calculate which card should currently own
+   * the touch scroll preview.
    */
-  const mobilePreviewPlayed = new Set();
+  const previewNodes = new Map();
+
+  let touchScrollFrame = null;
 
   const LOAD_MORE_COUNT = 2;
 
-  /*
-   * Default duration of the website screenshot scroll.
-   */
   const PREVIEW_DURATION_MS = 11000;
-
-  /*
-   * Small pause after reaching the footer before the automatic
-   * preview returns to the normal thumbnail.
-   */
   const PREVIEW_END_PAUSE_MS = 900;
 
-  /*
-   * A tiny transparent pixel prevents the browser from downloading
-   * the real project image too early.
-   */
   const EMPTY_IMAGE =
     "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==";
+
+  /* =========================================================
+     HELPERS
+  ========================================================= */
 
   function cleanNumber(value) {
     return String(value ?? "")
@@ -136,29 +129,17 @@
     return tags.filter(Boolean).slice(0, 4);
   }
 
-  /*
-   * A project supports the website-scroll preview only when
-   * its project data explicitly contains:
-   *
-   * scrollImage: "/images/example.webp"
-   */
   function hasScrollPreview(project) {
     return Boolean(String(project?.scrollImage ?? "").trim());
   }
 
-  /*
-   * Used to remember which mobile projects have already
-   * automatically previewed.
-   */
-  function getProjectPreviewKey(project, index) {
-    return String(project?.link || project?.title || project?.number || index);
+  function clamp(value, min = 0, max = 1) {
+    return Math.min(max, Math.max(min, value));
   }
 
-  /*
-   * =========================================================
-   * DEVICE CAPABILITY HELPERS
-   * =========================================================
-   */
+  /* =========================================================
+     DEVICE HELPERS
+  ========================================================= */
 
   function hasFineHover() {
     if (typeof window === "undefined") {
@@ -176,6 +157,23 @@
     return window.matchMedia("(max-width: 767px)").matches;
   }
 
+  function isTabletLayout() {
+    if (typeof window === "undefined") {
+      return false;
+    }
+
+    return window.matchMedia("(min-width: 768px) and (max-width: 1024px)")
+      .matches;
+  }
+
+  function isTouchPreviewLayout() {
+    if (typeof window === "undefined") {
+      return false;
+    }
+
+    return window.innerWidth <= 1024 && !hasFineHover();
+  }
+
   function prefersReducedMotion() {
     if (typeof window === "undefined") {
       return false;
@@ -184,11 +182,9 @@
     return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   }
 
-  /*
-   * =========================================================
-   * PREVIEW CONTROL
-   * =========================================================
-   */
+  /* =========================================================
+     PREVIEW CONTROL
+  ========================================================= */
 
   function clearPreviewResetTimer() {
     if (previewResetTimer) {
@@ -197,15 +193,40 @@
     }
   }
 
-  function stopPreview(index = null) {
+  function scheduleTouchPreviewUpdate() {
+    if (typeof window === "undefined" || !isTouchPreviewLayout()) {
+      return;
+    }
+
+    if (touchScrollFrame !== null) {
+      return;
+    }
+
+    touchScrollFrame = requestAnimationFrame(() => {
+      touchScrollFrame = null;
+
+      updateTouchScrollPreview();
+    });
+  }
+
+  function stopPreview(index = null, { resumeTouch = true } = {}) {
     clearPreviewResetTimer();
 
     if (index === null || activePreviewIndex === index) {
       activePreviewIndex = null;
+      activePreviewMode = null;
+    }
+
+    if (resumeTouch) {
+      scheduleTouchPreviewUpdate();
     }
   }
 
-  function startPreview(project, index, { autoReset = false } = {}) {
+  function startPreview(
+    project,
+    index,
+    { autoReset = false, mode = "desktop" } = {},
+  ) {
     if (!hasScrollPreview(project)) return;
 
     if (prefersReducedMotion()) return;
@@ -213,47 +234,77 @@
     clearPreviewResetTimer();
 
     /*
-     * Reset first if the same card is being restarted.
-     *
-     * This allows a touch user to replay the animation.
+     * Restart the same preview from the beginning.
      */
     if (activePreviewIndex === index) {
       activePreviewIndex = null;
+      activePreviewMode = null;
 
       requestAnimationFrame(() => {
         requestAnimationFrame(() => {
           activePreviewIndex = index;
+          activePreviewMode = mode;
         });
       });
     } else {
       activePreviewIndex = index;
+      activePreviewMode = mode;
     }
 
     if (autoReset) {
       previewResetTimer = setTimeout(() => {
-        if (activePreviewIndex === index) {
+        if (activePreviewIndex === index && activePreviewMode === mode) {
           activePreviewIndex = null;
+          activePreviewMode = null;
         }
 
         previewResetTimer = null;
+
+        /*
+         * After a manual touch preview completes,
+         * hand control back to the scroll system.
+         */
+        scheduleTouchPreviewUpdate();
       }, PREVIEW_DURATION_MS + PREVIEW_END_PAUSE_MS);
     }
   }
 
   /*
-   * =========================================================
-   * DESKTOP
-   *
-   * Desktop mouse hover controls project previews.
-   * =========================================================
+   * Used by mobile/tablet scroll control.
    */
+  function activateScrollPreview(project, index, progress) {
+    if (!hasScrollPreview(project)) return;
+
+    clearPreviewResetTimer();
+
+    const percentage = clamp(progress) * 100;
+
+    const oldValue = previewPositionByIndex[index];
+
+    /*
+     * Avoid tiny unnecessary reactive updates while scrolling.
+     */
+    if (oldValue === undefined || Math.abs(oldValue - percentage) >= 0.2) {
+      previewPositionByIndex[index] = percentage;
+    }
+
+    activePreviewIndex = index;
+    activePreviewMode = "scroll";
+  }
+
+  /* =========================================================
+     DESKTOP
+     Existing hover behaviour remains unchanged.
+  ========================================================= */
 
   function handlePreviewEnter(project, index) {
     if (!hasScrollPreview(project)) return;
 
     if (!hasFineHover()) return;
 
-    startPreview(project, index);
+    startPreview(project, index, {
+      mode: "desktop",
+    });
   }
 
   function handlePreviewLeave(project, index) {
@@ -261,45 +312,35 @@
 
     if (!hasFineHover()) return;
 
-    stopPreview(index);
+    stopPreview(index, {
+      resumeTouch: false,
+    });
   }
 
-  /*
-   * =========================================================
-   * TOUCH
-   *
-   * Tablet uses tap because it still has two columns but does
-   * not have a reliable hover state.
-   *
-   * Mobile can also be tapped to manually replay a preview.
-   * =========================================================
-   */
+  /* =========================================================
+     TOUCH
+  ========================================================= */
 
   function handlePreviewClick(project, index) {
     if (!hasScrollPreview(project)) return;
 
     /*
-     * Desktop is controlled entirely by hover.
+     * Desktop remains entirely hover controlled.
      */
     if (hasFineHover()) return;
 
     /*
-     * Tapping an already running preview stops it.
+     * On mobile/tablet every tap starts or restarts
+     * the complete website animation.
+     *
+     * We intentionally do NOT use tap as an off switch.
      */
-    if (activePreviewIndex === index) {
-      stopPreview(index);
-      return;
-    }
-
     startPreview(project, index, {
       autoReset: true,
+      mode: "tap",
     });
   }
 
-  /*
-   * Keyboard users can activate the website preview using
-   * Enter or Space.
-   */
   function handlePreviewKeydown(event, project, index) {
     if (!hasScrollPreview(project)) return;
 
@@ -309,21 +350,20 @@
 
     event.preventDefault();
 
-    if (activePreviewIndex === index) {
+    if (activePreviewIndex === index && activePreviewMode !== "scroll") {
       stopPreview(index);
       return;
     }
 
     startPreview(project, index, {
       autoReset: true,
+      mode: "tap",
     });
   }
 
-  /*
-   * =========================================================
-   * HEADER OBSERVER
-   * =========================================================
-   */
+  /* =========================================================
+     HEADER OBSERVER
+  ========================================================= */
 
   function observeHeader(node) {
     if (typeof IntersectionObserver === "undefined") {
@@ -356,19 +396,10 @@
     };
   }
 
-  /*
-   * =========================================================
-   * PROJECT IMAGE LAZY LOADER
-   * =========================================================
-   *
-   * The real image starts loading 500px before the image enters
-   * the viewport.
-   *
-   * This action is used by both:
-   *
-   * - project.image
-   * - project.scrollImage
-   */
+  /* =========================================================
+     PROJECT IMAGE LAZY LOADER
+  ========================================================= */
+
   function observeProjectImage(node, imageUrl) {
     let currentUrl = imageUrl;
     let observer;
@@ -428,18 +459,12 @@
     };
   }
 
-  /*
-   * =========================================================
-   * PROJECT LIST
-   * =========================================================
-   */
+  /* =========================================================
+     PROJECT LIST
+  ========================================================= */
 
   const hasMoreProjects = $derived(visibleCount < projects.length);
 
-  /*
-   * Rendering only the visible projects reduces initial DOM
-   * size while preserving the existing Load More behaviour.
-   */
   const visibleProjects = $derived(
     projects.slice(0, Math.min(visibleCount, projects.length)),
   );
@@ -448,42 +473,437 @@
     `${Math.min(visibleCount, projects.length)}/${projects.length}`,
   );
 
-  /*
-   * The first project that actually contains a scrollImage is
-   * the automatic demonstration project.
-   *
-   * This is deliberately NOT hardcoded to array position 0.
-   */
   const firstPreviewIndex = $derived(
     visibleProjects.findIndex((project) => hasScrollPreview(project)),
   );
 
+  /* =========================================================
+     TOUCH SCROLL ENGINE
+  ========================================================= */
+
+  function getVisibleRatio(rect, viewportHeight) {
+    const visibleTop = Math.max(0, rect.top);
+
+    const visibleBottom = Math.min(viewportHeight, rect.bottom);
+
+    const visibleHeight = Math.max(0, visibleBottom - visibleTop);
+
+    const referenceHeight = Math.max(1, Math.min(rect.height, viewportHeight));
+
+    return visibleHeight / referenceHeight;
+  }
+
+  function getPreviewEntries() {
+    if (typeof window === "undefined") {
+      return [];
+    }
+
+    const viewportHeight = window.innerHeight;
+
+    const entries = [];
+
+    for (const { node, config } of previewNodes.values()) {
+      const { project, index } = config;
+
+      if (!hasScrollPreview(project)) {
+        continue;
+      }
+
+      const rect = node.getBoundingClientRect();
+
+      const visibleRatio = getVisibleRatio(rect, viewportHeight);
+
+      entries.push({
+        node,
+        project,
+        index,
+        rect,
+        visibleRatio,
+        center: rect.top + rect.height / 2,
+      });
+    }
+
+    return entries;
+  }
+
   /*
    * =========================================================
-   * PREVIEW VIEWPORT OBSERVER
+   * MOBILE
+   *
+   * One-column cards.
+   *
+   * The card closest to the viewport focus point owns the
+   * preview.
+   *
+   * Screenshot position is tied directly to page scroll.
+   *
+   * Therefore:
+   * - fast scroll = fast screenshot movement
+   * - slow scroll = slow screenshot movement
+   * - stop page = screenshot stops
+   * - scroll upward = screenshot reverses
+   *
+   * There is no timer fighting against the user's scroll.
    * =========================================================
-   *
-   * DESKTOP:
-   * first preview automatically demonstrates once.
-   *
-   * TABLET:
-   * first preview automatically demonstrates once.
-   * Other cards are tap controlled.
-   *
-   * MOBILE:
-   * cards are one column, so each preview automatically runs
-   * once when its image becomes clearly visible.
    */
-  function observeProjectPreview(node, config) {
-    let currentConfig = config;
-    let observer;
 
-    function createObserver() {
-      if (typeof IntersectionObserver === "undefined") {
+  function updateMobileScrollPreview(entries, viewportHeight) {
+    const viewportFocus = viewportHeight * 0.5;
+
+    const candidates = entries.filter((entry) => {
+      return (
+        entry.visibleRatio >= 0.22 &&
+        entry.rect.bottom > viewportHeight * 0.12 &&
+        entry.rect.top < viewportHeight * 0.88
+      );
+    });
+
+    if (!candidates.length) {
+      if (activePreviewMode === "scroll") {
+        stopPreview(activePreviewIndex, {
+          resumeTouch: false,
+        });
+      }
+
+      return;
+    }
+
+    let best = candidates.reduce((currentBest, entry) => {
+      const score = Math.abs(entry.center - viewportFocus);
+
+      if (!currentBest || score < currentBest.score) {
+        return {
+          entry,
+          score,
+        };
+      }
+
+      return currentBest;
+    }, null);
+
+    /*
+     * Hysteresis:
+     *
+     * Keep the currently active card for a little longer
+     * instead of rapidly jumping between neighbouring cards.
+     */
+    if (activePreviewMode === "scroll" && activePreviewIndex !== null) {
+      const currentCandidate = candidates.find(
+        (entry) => entry.index === activePreviewIndex,
+      );
+
+      if (currentCandidate) {
+        const currentScore = Math.abs(currentCandidate.center - viewportFocus);
+
+        const switchMargin = viewportHeight * 0.075;
+
+        if (currentScore <= best.score + switchMargin) {
+          best = {
+            entry: currentCandidate,
+            score: currentScore,
+          };
+        }
+      }
+    }
+
+    const selected = best.entry;
+
+    /*
+     * The screenshot reaches:
+     *
+     * top    while the card is lower in the viewport
+     * bottom while the card is upper in the viewport
+     */
+    const startLine = viewportHeight * 0.82;
+
+    const endLine = viewportHeight * 0.18;
+
+    const progress = clamp(
+      (startLine - selected.center) / (startLine - endLine),
+    );
+
+    activateScrollPreview(selected.project, selected.index, progress);
+  }
+
+  /* =========================================================
+     TABLET ROW GROUPING
+  ========================================================= */
+
+  function buildTabletRows(entries) {
+    const sorted = [...entries].sort((a, b) => {
+      const verticalDifference = a.rect.top - b.rect.top;
+
+      if (Math.abs(verticalDifference) > 40) {
+        return verticalDifference;
+      }
+
+      return a.rect.left - b.rect.left;
+    });
+
+    const rows = [];
+
+    for (const entry of sorted) {
+      let row = rows.find(
+        (candidate) => Math.abs(candidate.referenceTop - entry.rect.top) <= 48,
+      );
+
+      if (!row) {
+        row = {
+          referenceTop: entry.rect.top,
+
+          entries: [],
+        };
+
+        rows.push(row);
+      }
+
+      row.entries.push(entry);
+    }
+
+    return rows.map((row) => {
+      row.entries.sort((a, b) => a.rect.left - b.rect.left);
+
+      const top = Math.min(...row.entries.map((entry) => entry.rect.top));
+
+      const bottom = Math.max(...row.entries.map((entry) => entry.rect.bottom));
+
+      return {
+        ...row,
+        top,
+        bottom,
+        center: top + (bottom - top) / 2,
+      };
+    });
+  }
+
+  /*
+   * =========================================================
+   * TABLET
+   *
+   * Tablet has two columns.
+   *
+   * We therefore treat each pair as one row.
+   *
+   * Only ONE preview in the focused row is active.
+   *
+   * Downward scroll:
+   * left card -> right card
+   *
+   * Upward scroll:
+   * right card -> left card
+   *
+   * There is a small overlap/hysteresis zone around the
+   * middle so tiny scroll movements do not flicker between
+   * columns.
+   * =========================================================
+   */
+
+  function updateTabletScrollPreview(entries, viewportHeight) {
+    const eligibleEntries = entries.filter(
+      (entry) =>
+        entry.visibleRatio >= 0.12 &&
+        entry.rect.bottom > 0 &&
+        entry.rect.top < viewportHeight,
+    );
+
+    if (!eligibleEntries.length) {
+      if (activePreviewMode === "scroll") {
+        stopPreview(activePreviewIndex, {
+          resumeTouch: false,
+        });
+      }
+
+      return;
+    }
+
+    const rows = buildTabletRows(eligibleEntries);
+
+    const viewportFocus = viewportHeight * 0.5;
+
+    let bestRow = rows.reduce((currentBest, row) => {
+      const score = Math.abs(row.center - viewportFocus);
+
+      if (!currentBest || score < currentBest.score) {
+        return {
+          row,
+          score,
+        };
+      }
+
+      return currentBest;
+    }, null);
+
+    /*
+     * Row hysteresis.
+     *
+     * If the current preview belongs to a nearby row,
+     * keep that row until the next row is clearly closer.
+     */
+    if (activePreviewMode === "scroll" && activePreviewIndex !== null) {
+      const currentRow = rows.find((row) =>
+        row.entries.some((entry) => entry.index === activePreviewIndex),
+      );
+
+      if (currentRow) {
+        const currentScore = Math.abs(currentRow.center - viewportFocus);
+
+        const rowSwitchMargin = viewportHeight * 0.08;
+
+        if (currentScore <= bestRow.score + rowSwitchMargin) {
+          bestRow = {
+            row: currentRow,
+            score: currentScore,
+          };
+        }
+      }
+    }
+
+    const row = bestRow.row;
+
+    const rowStart = viewportHeight * 0.84;
+
+    const rowEnd = viewportHeight * 0.16;
+
+    const rowProgress = clamp((rowStart - row.center) / (rowStart - rowEnd));
+
+    /*
+     * One preview-capable project in this row.
+     */
+    if (row.entries.length === 1) {
+      const selected = row.entries[0];
+
+      activateScrollPreview(selected.project, selected.index, rowProgress);
+
+      return;
+    }
+
+    /*
+     * Two-column tablet row.
+     */
+    const first = row.entries[0];
+
+    const second = row.entries[1];
+
+    let selected;
+
+    /*
+     * 44% - 56% creates a deadband.
+     *
+     * This prevents tiny finger movements from rapidly
+     * switching between the two cards.
+     */
+    if (
+      activePreviewMode === "scroll" &&
+      activePreviewIndex === first.index &&
+      rowProgress < 0.56
+    ) {
+      selected = first;
+    } else if (
+      activePreviewMode === "scroll" &&
+      activePreviewIndex === second.index &&
+      rowProgress > 0.44
+    ) {
+      selected = second;
+    } else {
+      selected = rowProgress < 0.5 ? first : second;
+    }
+
+    /*
+     * Each project receives its own full 0 -> 100
+     * scroll range during its half of the tablet row.
+     */
+    let localProgress;
+
+    if (selected.index === first.index) {
+      localProgress = clamp(rowProgress / 0.56);
+    } else {
+      localProgress = clamp((rowProgress - 0.44) / 0.56);
+    }
+
+    activateScrollPreview(selected.project, selected.index, localProgress);
+  }
+
+  /* =========================================================
+     GLOBAL TOUCH PREVIEW UPDATE
+  ========================================================= */
+
+  function updateTouchScrollPreview() {
+    if (!isTouchPreviewLayout() || prefersReducedMotion()) {
+      return;
+    }
+
+    const viewportHeight = window.innerHeight;
+
+    /*
+     * A tap temporarily owns the preview.
+     *
+     * Do not let automatic scroll selection steal it while
+     * the tapped card is still reasonably visible.
+     */
+    if (activePreviewMode === "tap" && activePreviewIndex !== null) {
+      const tappedEntry = getPreviewEntries().find(
+        (entry) => entry.index === activePreviewIndex,
+      );
+
+      if (
+        tappedEntry &&
+        tappedEntry.visibleRatio >= 0.12 &&
+        tappedEntry.rect.bottom > 0 &&
+        tappedEntry.rect.top < viewportHeight
+      ) {
         return;
       }
 
-      observer = new IntersectionObserver(
+      /*
+       * User has scrolled away from the manually selected card.
+       * Release manual control immediately.
+       */
+      stopPreview(activePreviewIndex, {
+        resumeTouch: false,
+      });
+    }
+
+    const entries = getPreviewEntries();
+
+    if (isMobileLayout()) {
+      updateMobileScrollPreview(entries, viewportHeight);
+
+      return;
+    }
+
+    if (isTabletLayout()) {
+      updateTabletScrollPreview(entries, viewportHeight);
+    }
+  }
+
+  /* =========================================================
+     PROJECT PREVIEW ACTION
+  ========================================================= */
+
+  function observeProjectPreview(node, config) {
+    let currentConfig = config;
+
+    let desktopObserver;
+
+    function registerNode() {
+      previewNodes.set(node, {
+        node,
+        config: currentConfig,
+      });
+
+      scheduleTouchPreviewUpdate();
+    }
+
+    registerNode();
+
+    /*
+     * Desktop automatic first-project demonstration.
+     *
+     * Touch devices do NOT use this observer for automatic
+     * playback anymore. They use the scroll engine above.
+     */
+    if (typeof IntersectionObserver !== "undefined") {
+      desktopObserver = new IntersectionObserver(
         ([entry]) => {
           const { project, index, isFirst } = currentConfig;
 
@@ -495,50 +915,18 @@
             return;
           }
 
-          const mobile = isMobileLayout() && !hasFineHover();
-
           /*
-           * MOBILE
-           *
-           * Because there is only one column, viewport activation
-           * works naturally.
+           * Do not run desktop auto-demo logic on
+           * mobile/tablet touch layouts.
            */
-          if (mobile) {
-            const previewKey = getProjectPreviewKey(project, index);
-
-            if (
-              entry.isIntersecting &&
-              entry.intersectionRatio >= 0.55 &&
-              !mobilePreviewPlayed.has(previewKey)
-            ) {
-              mobilePreviewPlayed.add(previewKey);
-
-              startPreview(project, index, {
-                autoReset: true,
-              });
-
-              return;
-            }
-
-            /*
-             * If the visitor scrolls away before the animation
-             * finishes, stop it instead of continuing off-screen.
-             */
-            if (
-              entry.intersectionRatio < 0.15 &&
-              activePreviewIndex === index
-            ) {
-              stopPreview(index);
-            }
-
+          if (isTouchPreviewLayout()) {
             return;
           }
 
-          /*
-           * DESKTOP + TABLET
-           *
-           * Only the first preview automatically demonstrates.
-           */
+          if (!hasFineHover()) {
+            return;
+          }
+
           if (
             isFirst &&
             !initialPreviewPlayed &&
@@ -549,33 +937,52 @@
 
             startPreview(project, index, {
               autoReset: true,
+              mode: "desktop",
             });
           }
         },
         {
           threshold: [0, 0.15, 0.45, 0.55, 0.75, 1],
+
           rootMargin: "0px 0px -4% 0px",
         },
       );
 
-      observer.observe(node);
+      desktopObserver.observe(node);
     }
-
-    createObserver();
 
     return {
       update(nextConfig) {
         currentConfig = nextConfig;
+
+        previewNodes.set(node, {
+          node,
+          config: currentConfig,
+        });
+
+        scheduleTouchPreviewUpdate();
       },
 
       destroy() {
-        observer?.disconnect();
+        desktopObserver?.disconnect();
+
+        previewNodes.delete(node);
+
+        scheduleTouchPreviewUpdate();
       },
     };
   }
 
+  /* =========================================================
+     LOAD MORE
+  ========================================================= */
+
   function loadMoreProjects() {
     visibleCount = Math.min(visibleCount + LOAD_MORE_COUNT, projects.length);
+
+    requestAnimationFrame(() => {
+      scheduleTouchPreviewUpdate();
+    });
   }
 
   function toggleProjectDescription(index) {
@@ -583,8 +990,64 @@
       expandedProjectDescription === index ? null : index;
   }
 
+  /* =========================================================
+     TOUCH SCROLL LISTENERS
+  ========================================================= */
+
+  onMount(() => {
+    function handleScroll() {
+      scheduleTouchPreviewUpdate();
+    }
+
+    function handleResize() {
+      /*
+       * If the device changes to desktop/fine-hover,
+       * release any touch-controlled state.
+       */
+      if (!isTouchPreviewLayout() && activePreviewMode === "scroll") {
+        stopPreview(activePreviewIndex, {
+          resumeTouch: false,
+        });
+      }
+
+      scheduleTouchPreviewUpdate();
+    }
+
+    window.addEventListener("scroll", handleScroll, {
+      passive: true,
+    });
+
+    window.addEventListener("resize", handleResize, {
+      passive: true,
+    });
+
+    window.addEventListener("orientationchange", handleResize, {
+      passive: true,
+    });
+
+    requestAnimationFrame(() => {
+      scheduleTouchPreviewUpdate();
+    });
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+
+      window.removeEventListener("resize", handleResize);
+
+      window.removeEventListener("orientationchange", handleResize);
+    };
+  });
+
   onDestroy(() => {
     clearPreviewResetTimer();
+
+    if (touchScrollFrame !== null) {
+      cancelAnimationFrame(touchScrollFrame);
+
+      touchScrollFrame = null;
+    }
+
+    previewNodes.clear();
   });
 </script>
 
@@ -606,7 +1069,9 @@
       >
         <div class="projects-header-inner">
           <div class="projects-header-main">
-            <h2>{title}</h2>
+            <h2>
+              {title}
+            </h2>
           </div>
 
           {#if subtitle}
@@ -680,6 +1145,9 @@
                   <img
                     class="project-scroll-image"
                     class:active={activePreviewIndex === index}
+                    class:scroll-controlled={activePreviewIndex === index &&
+                      activePreviewMode === "scroll"}
+                    style={`--preview-position: ${previewPositionByIndex[index] ?? 0}%;`}
                     src={EMPTY_IMAGE}
                     alt=""
                     aria-hidden="true"
@@ -1210,7 +1678,6 @@
     position: absolute;
 
     top: -4px;
-
     left: 16px;
 
     z-index: 4;
@@ -1250,11 +1717,6 @@
     flex-shrink: 0;
   }
 
-  /*
-   * There is intentionally NO visible label, icon or instruction.
-   *
-   * The first automatic demonstration teaches the interaction.
-   */
   .project-image-wrap.has-scroll-preview {
     cursor: pointer;
 
@@ -1269,19 +1731,12 @@
     outline-offset: -2px;
   }
 
-  /*
-   * Original project thumbnail.
-   *
-   * This retains the same appearance and scale as the
-   * original Projects component.
-   */
   .project-thumbnail {
     position: relative;
 
     z-index: 1;
 
     width: 100%;
-
     height: 100%;
 
     display: block;
@@ -1297,17 +1752,10 @@
       opacity 0.3s ease;
   }
 
-  /*
-   * =========================================================
-   * FULL WEBSITE SCREENSHOT
-   * =========================================================
-   *
-   * The screenshot is positioned directly over the existing
-   * thumbnail.
-   *
-   * object-position moves the very tall image from its top
-   * to its bottom while the project frame itself stays still.
-   */
+  /* =========================================================
+     FULL WEBSITE SCREENSHOT
+  ========================================================= */
+
   .project-scroll-image {
     position: absolute;
 
@@ -1340,10 +1788,7 @@
   }
 
   /*
-   * Active preview.
-   *
-   * The screenshot fades in and slowly moves from the website
-   * hero to its footer.
+   * Existing desktop/tap animation.
    */
   .project-scroll-image.active {
     opacity: 1;
@@ -1358,8 +1803,28 @@
   }
 
   /*
-   * Fade the normal project thumbnail underneath the screenshot.
+   * =========================================================
+   * TOUCH SCROLL CONTROL
+   * =========================================================
+   *
+   * This overrides the 11-second animation when the page
+   * itself is controlling screenshot progress.
+   *
+   * The short 70ms interpolation removes micro-jitter between
+   * browser scroll frames without making the screenshot lag
+   * behind the finger.
    */
+
+  .project-scroll-image.active.scroll-controlled {
+    object-position: center var(--preview-position, 0%);
+
+    transition:
+      opacity 0.22s ease,
+      object-position 70ms linear;
+
+    will-change: object-position, opacity;
+  }
+
   .project-image-wrap.preview-active .project-thumbnail {
     opacity: 0;
   }
@@ -1613,7 +2078,6 @@
 
   .project-link-arrow {
     width: 16px;
-
     height: 16px;
 
     flex: 0 0 16px;
@@ -1635,15 +2099,12 @@
     }
 
     /*
-     * Preserve the original thumbnail hover scale.
+     * Desktop appearance preserved.
      */
     .project-card:hover .project-thumbnail {
       transform: scale(1);
     }
 
-    /*
-     * The full-page screenshot should not zoom when hovered.
-     */
     .project-card:hover .project-scroll-image {
       transform: scale(0.94);
     }
@@ -1742,6 +2203,31 @@
   }
 
   /* =========================================================
+     TOUCH DEVICES
+     Preserve vertical scrolling through the screenshot.
+  ========================================================= */
+
+  @media (hover: none) and (pointer: coarse) and (max-width: 1024px) {
+    .project-image-wrap.has-scroll-preview {
+      touch-action: pan-y;
+    }
+
+    /*
+     * Prevent sticky browser :hover states from moving cards
+     * after a touch.
+     */
+    .project-card:hover {
+      transform: none;
+
+      box-shadow: none;
+    }
+
+    .project-card:hover .project-thumbnail {
+      transform: scale(0.94);
+    }
+  }
+
+  /* =========================================================
      TABLET
   ========================================================= */
 
@@ -1811,6 +2297,16 @@
 
     .project-image-wrap {
       height: 360px;
+    }
+
+    /*
+     * Tablet scroll movement needs to react closely to finger
+     * position. The normal opacity transition remains soft.
+     */
+    .project-scroll-image.active.scroll-controlled {
+      transition:
+        opacity 0.2s ease,
+        object-position 65ms linear;
     }
   }
 
@@ -1892,9 +2388,6 @@
       padding: 10px;
     }
 
-    /*
-     * Existing thumbnail layout remains 16:9 on mobile.
-     */
     .project-thumbnail {
       height: auto;
 
@@ -1903,9 +2396,6 @@
       object-fit: contain;
     }
 
-    /*
-     * The screenshot sits inside the same 10px mobile padding.
-     */
     .project-scroll-image {
       top: 10px;
       right: 10px;
@@ -1917,6 +2407,15 @@
       height: calc(100% - 20px);
 
       transform: scale(0.94);
+    }
+
+    /*
+     * Mobile should follow the finger very closely.
+     */
+    .project-scroll-image.active.scroll-controlled {
+      transition:
+        opacity 0.2s ease,
+        object-position 55ms linear;
     }
 
     .project-content {
@@ -1963,7 +2462,6 @@
 
     .project-description-toggle {
       width: 36px;
-
       height: 36px;
 
       display: inline-grid;
@@ -2101,12 +2599,9 @@
       transform: none;
     }
 
-    /*
-     * Leave the normal project thumbnail visible.
-     * No long website scrolling animation is performed.
-     */
     .project-scroll-image,
-    .project-scroll-image.active {
+    .project-scroll-image.active,
+    .project-scroll-image.active.scroll-controlled {
       opacity: 0;
 
       object-position: center top;
