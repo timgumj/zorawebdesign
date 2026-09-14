@@ -1634,7 +1634,7 @@
     }
 
     .main-nav {
-      gap: 18px;
+      gap: 22px;
 
       padding: 12px 14px;
 
@@ -1870,9 +1870,11 @@
   }
 
   @media (max-width: 767px) {
-    .main-nav {
-      gap: clamp(6px, 2vw, 12px);
-      padding: 12px 10px;
+    @media (max-width: 767px) {
+      .main-nav {
+        gap: 18px;
+        padding: 18px 10px;
+      }
     }
 
     .main-nav > a,
