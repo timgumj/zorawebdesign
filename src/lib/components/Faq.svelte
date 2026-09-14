@@ -9,7 +9,6 @@
   } = $props();
 
   let headerVisible = $state(false);
-
   let openIndex = $state(null);
 
   function observeHeader(node) {
@@ -25,13 +24,11 @@
       ([entry]) => {
         if (entry.isIntersecting) {
           headerVisible = true;
-
           observer.disconnect();
         }
       },
       {
         threshold: 0.25,
-
         rootMargin: "0px 0px -8% 0px",
       },
     );
@@ -50,7 +47,6 @@
 
     if (openIndex === index) {
       openIndex = null;
-
       return;
     }
 
@@ -60,9 +56,10 @@
 
 <section class="faq" class:full-width={fullWidth} id="faq">
   <span class="section-bottom-line" aria-hidden="true"></span>
+
   <div class="container faq-container">
     <!-- =====================================================
-         BLUE SECTION HEADER
+         SECTION HEADER
     ====================================================== -->
 
     <div class="faq-header" class:visible={headerVisible} use:observeHeader>
@@ -72,7 +69,9 @@
         </div>
 
         {#if subtitle}
-          <p class="faq-subtitle">{subtitle}</p>
+          <p class="faq-subtitle">
+            {subtitle}
+          </p>
         {/if}
       </div>
     </div>
@@ -117,7 +116,11 @@
 
     color: #ffffff;
 
-    font-family: "Space Grotesk", Arial, sans-serif;
+    /*
+     * Same primary typeface used throughout the rest
+     * of the Zora page.
+     */
+    font-family: "DM Sans", Arial, sans-serif;
 
     transition:
       background 0.3s ease,
@@ -203,7 +206,9 @@
 
     display: grid;
 
-    grid-template-columns: var(--section-title-marker-size) minmax(0, 1fr);
+    grid-template-columns:
+      var(--section-title-marker-size)
+      minmax(0, 1fr);
 
     align-items: start;
 
@@ -237,6 +242,7 @@
 
     .faq-header-main::before {
       align-self: center;
+
       margin-top: 0;
     }
   }
@@ -267,15 +273,15 @@
 
     color: #f2f2f2;
 
+    font-size: clamp(24px, 2.15vw, 34px);
+
+    font-weight: 600;
+
     line-height: 1.12;
 
     letter-spacing: -0.035em;
 
     text-transform: none;
-  }
-  :global(body:not(:has(.homepage-footer))) .faq-header h2 {
-    font-size: clamp(24px, 2.15vw, 34px);
-    font-weight: 600;
   }
 
   /* =========================================================
@@ -291,13 +297,13 @@
 
     color: rgba(255, 255, 255, 0.62);
 
+    font-size: 15px;
+
+    font-weight: 400;
+
     line-height: 1.65;
 
     letter-spacing: 0;
-  }
-  :global(body:not(:has(.homepage-footer))) .faq-subtitle {
-    font-size: 16px;
-    font-weight: 400;
   }
 
   :global(body.light) .faq-header {
@@ -321,7 +327,6 @@
       justify-self: end;
 
       margin-left: auto;
-
       margin-right: 0;
 
       padding-right: 0;
@@ -332,12 +337,6 @@
 
   /* =========================================================
      FAQ CONTENT
-
-     Desktop:
-     single centered FAQ column.
-
-     Tablet/mobile:
-     full available width.
   ========================================================= */
 
   .faq-content {
@@ -423,17 +422,21 @@
   .faq-question {
     color: #ffffff;
 
+    /*
+     * Slightly smaller and less heavy than before.
+     * Keeps hierarchy without overpowering the page.
+     */
+    font-size: clamp(15px, 1.05vw, 16px);
+
+    font-weight: 700;
+
     line-height: 1.45;
 
-    letter-spacing: 0.01em;
+    letter-spacing: 0;
 
     text-transform: none;
 
     transition: none;
-  }
-  :global(body:not(:has(.homepage-footer))) .faq-question {
-    font-size: 16px;
-    font-weight: 600;
   }
 
   :global(body.light) .faq-question {
@@ -448,7 +451,6 @@
     position: relative;
 
     width: 18px;
-
     height: 18px;
 
     display: block;
@@ -465,7 +467,6 @@
     position: absolute;
 
     top: 50%;
-
     left: 50%;
 
     background: #0043ff;
@@ -510,15 +511,15 @@
 
     color: #b5b5b5;
 
+    font-size: 15px;
+
+    font-weight: 400;
+
     line-height: 1.65;
 
     letter-spacing: 0;
 
     transition: color 0.3s ease;
-  }
-  :global(body:not(:has(.homepage-footer))) .faq-answer {
-    font-size: 16px;
-    font-weight: 400;
   }
 
   :global(body.light) .faq-answer {
@@ -555,6 +556,8 @@
 
   .faq-answer :global(strong) {
     color: #ffffff;
+
+    font-weight: 600;
   }
 
   :global(body.light) .faq-answer :global(strong) {
@@ -603,25 +606,18 @@
     }
 
     .faq-header h2 {
+      font-size: 23px;
+
+      font-weight: 600;
 
       line-height: 1.15;
     }
-    :global(body:not(:has(.homepage-footer))) .faq-header h2 {
-      font-size: 24px;
-    }
 
     .faq-subtitle {
+      font-size: 13px;
 
       line-height: 1.55;
     }
-    :global(body:not(:has(.homepage-footer))) .faq-subtitle {
-      font-size: 13px;
-    }
-
-    /*
-     * FAQ uses the complete container width
-     * from tablet downward.
-     */
 
     .faq-content {
       width: 100%;
@@ -629,10 +625,28 @@
       margin: 0;
     }
 
+    .faq-item summary {
+      padding: 17px 0;
+    }
+
+    .faq-question {
+      font-size: 14.5px;
+
+      font-weight: 600;
+
+      line-height: 1.45;
+    }
+
     .faq-answer {
       max-width: 94%;
 
-      padding-right: 40px;
+      padding: 0 40px 21px 0;
+
+      font-size: 14px;
+
+      font-weight: 400;
+
+      line-height: 1.62;
     }
   }
 
@@ -676,19 +690,21 @@
     .faq-header h2 {
       max-width: 100%;
 
+      font-size: clamp(21px, 5.4vw, 24px);
+
+      font-weight: 600;
+
       line-height: 1.15;
-    }
-    :global(body:not(:has(.homepage-footer))) .faq-header h2 {
-      font-size: clamp(22px, 6vw, 27px);
     }
 
     .faq-subtitle {
       max-width: 100%;
 
+      font-size: 13.5px;
+
+      font-weight: 400;
+
       line-height: 1.6;
-    }
-    :global(body:not(:has(.homepage-footer))) .faq-subtitle {
-      font-size: 14px;
     }
 
     .faq-content {
@@ -714,27 +730,35 @@
 
       gap: 14px;
 
-      padding: 18px 0;
+      padding: 16px 0;
     }
 
+    /*
+     * Main mobile change:
+     * previously 14px / 600.
+     *
+     * Now slightly smaller and noticeably softer.
+     */
     .faq-question {
+      font-size: 13.5px;
 
-      line-height: 1.45;
-    }
-    :global(body:not(:has(.homepage-footer))) .faq-question {
-      font-size: 14px;
       font-weight: 600;
+
+      line-height: 1.48;
+
+      letter-spacing: 0;
     }
 
     .faq-answer {
       max-width: 100%;
 
-      padding: 0 34px 21px 0;
+      padding: 0 34px 20px 0;
 
-      line-height: 1.6;
-    }
-    :global(body:not(:has(.homepage-footer))) .faq-answer {
-      font-size: 14px;
+      font-size: 13.5px;
+
+      font-weight: 400;
+
+      line-height: 1.62;
     }
 
     .faq-icon {
@@ -776,11 +800,13 @@
 
       padding: 28px 0;
     }
-    :global(body:not(:has(.homepage-footer))) .faq-header h2 {
-      font-size: 22px;
+
+    .faq-header h2 {
+      font-size: 21px;
     }
-    :global(body:not(:has(.homepage-footer))) .faq-subtitle {
-      font-size: 14px;
+
+    .faq-subtitle {
+      font-size: 13px;
     }
 
     .faq-item summary {
@@ -790,15 +816,23 @@
 
       gap: 12px;
 
-      padding: 17px 0;
+      padding: 15px 0;
     }
-    :global(body:not(:has(.homepage-footer))) .faq-question {
-      font-size: 14px;
+
+    .faq-question {
+      font-size: 13px;
+
       font-weight: 600;
+
+      line-height: 1.48;
     }
 
     .faq-answer {
-      padding: 0 30px 20px 0;
+      padding: 0 30px 19px 0;
+
+      font-size: 13px;
+
+      line-height: 1.62;
     }
 
     .faq-icon {
@@ -838,6 +872,11 @@
       transition: none;
     }
   }
+
+  /* =========================================================
+     DESKTOP SHELL LINES
+  ========================================================= */
+
   @media (min-width: 1025px) {
     .faq {
       position: relative;
@@ -846,12 +885,18 @@
     .faq::before,
     .faq::after {
       content: "";
+
       position: absolute;
+
       top: 0;
       bottom: 0;
+
       width: 1px;
+
       background: rgba(255, 255, 255, 0.08);
+
       pointer-events: none;
+
       transition: background 0.3s ease;
     }
 
@@ -868,6 +913,11 @@
       background: rgba(0, 0, 0, 0.08);
     }
   }
+
+  /* =========================================================
+     SECTION BOTTOM LINE
+  ========================================================= */
+
   .section-bottom-line {
     display: none;
   }
@@ -875,13 +925,21 @@
   @media (min-width: 1025px) {
     .section-bottom-line {
       display: block;
+
       position: absolute;
+
       bottom: 0;
+
       left: max(16px, calc((100% - 1540px) / 2));
+
       right: max(16px, calc((100% - 1540px) / 2));
+
       height: 1px;
+
       background: rgba(255, 255, 255, 0.12);
+
       pointer-events: none;
+
       transition: background 0.3s ease;
     }
 
@@ -889,23 +947,4 @@
       background: rgba(0, 0, 0, 0.1);
     }
   }
-
-  /* Shared homepage typography; other routes retain their existing styles. */
-  :global(body:has(.homepage-footer)) .faq-header h2 {
-    font-size: var(--text-section);
-    font-weight: var(--weight-semibold);
-  }
-  :global(body:has(.homepage-footer)) .faq-subtitle {
-    font-size: var(--text-intro);
-    font-weight: var(--weight-regular);
-  }
-  :global(body:has(.homepage-footer)) .faq-question {
-    font-size: var(--text-title);
-    font-weight: var(--weight-bold);
-  }
-  :global(body:has(.homepage-footer)) .faq-answer {
-    font-size: var(--text-body);
-    font-weight: var(--weight-regular);
-  }
-
 </style>

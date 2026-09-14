@@ -862,39 +862,6 @@
 
     return foundKey ? serviceKeywords[foundKey] : fallbackServiceTags;
   }
-  function getServiceVisual(service) {
-    const title = service?.title?.toLowerCase().trim() ?? "";
-
-    if (
-      title.includes("web development") ||
-      title.includes("webentwicklung") ||
-      title.includes("wordpress development")
-    ) {
-      return "/baldauf/webdev.webp";
-    }
-
-    if (title.includes("web shop") || title.includes("webshop")) {
-      return "/baldauf/webshop.webp";
-    }
-
-    if (title.includes("web design") || title.includes("webdesign")) {
-      return "/baldauf/webdesign.webp";
-    }
-
-    if (title.includes("seo")) {
-      return "/baldauf/seo.webp";
-    }
-
-    if (title.includes("hosting")) {
-      return "/baldauf/hosting.webp";
-    }
-
-    if (title.includes("wartung") || title.includes("support")) {
-      return "/baldauf/updates.webp";
-    }
-
-    return null;
-  }
   function observeHeader(node) {
     if (typeof IntersectionObserver === "undefined") {
       headerVisible = true;
@@ -1389,7 +1356,6 @@
 
           <div class="service-detail-list">
             {#each reorderedServices as service, index}
-              {@const serviceVisual = getServiceVisual(service)}
               <article
                 class="service-detail-panel"
                 class:active={activeServiceIndex === index}
@@ -1419,16 +1385,6 @@
                   {/each}
                 </div>
 
-                {#if serviceVisual}
-                  <div class="service-webdesign-visual">
-                    <img
-                      src={serviceVisual}
-                      alt=""
-                      loading="lazy"
-                      decoding="async"
-                    />
-                  </div>
-                {/if}
               </article>
             {/each}
           </div>
@@ -1436,7 +1392,6 @@
 
         <div class="services-grid services-mobile-grid">
           {#each reorderedServices as service, index}
-            {@const serviceVisual = getServiceVisual(service)}
             <article class="service-card">
               <div class="service-bg-number" aria-hidden="true">
                 {String(index + 1).padStart(2, "0")}
@@ -1490,16 +1445,6 @@
                   </button>
                 </div>
 
-                {#if serviceVisual}
-                  <div class="service-webdesign-visual">
-                    <img
-                      src={serviceVisual}
-                      alt=""
-                      loading="lazy"
-                      decoding="async"
-                    />
-                  </div>
-                {/if}
               </div>
             </article>
           {/each}
@@ -7467,103 +7412,6 @@
     .about-editorial-figure {
       display: none;
     }
-  }
-
-  /* =========================================================
-   WEB DESIGN SERVICE VISUAL
-========================================================= */
-
-  .service-webdesign-visual {
-    position: relative;
-    z-index: 1;
-
-    width: 100%;
-    margin-top: 26px;
-
-    overflow: hidden;
-
-    border-top: 1px solid rgba(255, 255, 255, 0.16);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.16);
-
-    background: transparent;
-  }
-
-  /* Small Zora accent line */
-  .service-webdesign-visual::before {
-    content: "";
-
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-
-    z-index: 2;
-
-    width: 3px;
-
-    background: var(--accent-blue);
-
-    pointer-events: none;
-  }
-
-  .service-webdesign-visual img {
-    width: 100%;
-    aspect-ratio: 3 / 1;
-
-    display: block;
-
-    object-fit: cover;
-    object-position: center;
-
-    opacity: 0.68;
-
-    filter: saturate(0.8) brightness(0.82);
-
-    transform: scale(1.005);
-
-    transition:
-      opacity 0.4s ease,
-      filter 0.4s ease,
-      transform 0.6s ease;
-  }
-
-  /* When WEB DESIGN is the active service */
-  .service-detail-panel.active .service-webdesign-visual img {
-    opacity: 1;
-
-    filter: saturate(1) brightness(1);
-
-    transform: scale(1.01);
-  }
-
-  /* Very subtle interaction */
-  @media (hover: hover) and (pointer: fine) {
-    .service-detail-panel.active .service-webdesign-visual:hover img {
-      transform: scale(1.025);
-    }
-  }
-
-  :global(body.light) .service-webdesign-visual {
-    border-top-color: rgba(0, 0, 0, 0.14);
-    border-bottom-color: rgba(0, 0, 0, 0.14);
-
-    background: transparent;
-  }
-
-  :global(body.light) .service-webdesign-visual img {
-    opacity: 0.78;
-  }
-
-  :global(body.light)
-    .service-detail-panel.active
-    .service-webdesign-visual
-    img {
-    opacity: 1;
-
-    filter: saturate(1) brightness(1);
-  }
-  .service-webdesign-visual::before {
-    display: none;
   }
 
   @media (max-width: 767px) {

@@ -1,125 +1,137 @@
 export const projects = [
-  
   {
     number: "01/",
     title: "EVA EICHINGER",
     description:
       "Eva Eichinger ist eine zeitgenössische Künstlerin aus Wien, deren Arbeiten Malerei, persönliche Ausdrucksformen und moderne visuelle Konzepte verbinden.",
     image: "/images/new_website_design_result.webp",
+    scrollImage: "/images/evascreenshot.webp",
     link: "https://www.evaeichinger.com/",
     tags: [
-    "Webdesign/Dev",
-    "SvelteKit",
-    "1 Jahr Support",
-    "Wordpress",
-    
-  ],
+      "Webdesign/Dev",
+      "SvelteKit",
+      "1 Jahr Support",
+      "Wordpress",
+    ],
   },
-   {
+
+  {
     number: "02/",
     title: "ARC NETWORK",
     description:
       "ARC Network. Konzeption, Design und Entwicklung einer modernen, mehrsprachigen Website mit individuellen Funktionen.",
     image: "/images/arcn_website_result-700.webp",
+    scrollImage: "/images/arcnscreenshot.webp",
     alt: "Website Projekt für ARC NETWORK in Wien",
     link: "https://austrianrestoredcitizenship.net/",
     tags: [
-    "Webdesign/Dev",
-    "Wordpress",
-    "PHP",
-    "DIVI Theme",
-  ],
+      "Webdesign/Dev",
+      "Wordpress",
+      "PHP",
+      "DIVI Theme",
+    ],
   },
-  
+
   {
     number: "03/",
-    title: "JUBS VEREIN",
-    description:
-      "JUBS - Verein Jugendförderung Neunkirchen unterstützt junge Menschen durch Beratung, Schulprogramme und soziale Dienstleistungen.",
-    image: "/images/jubs-700.webp",
-    alt: "Website Projekt für JUBS Verein in Wien",
-    link: "https://www.jubs.at/",
-    tags: [
-    "Webdesign/Dev",
-    "Wordpress",
-    "PHP",
-    "3 Jahre Support",
-  ],
-  },
-  {
-    number: "04/",
     title: "RESOMA",
     description:
       "Eine Plattform, die somatisches Coaching, Breathwork und Resilienztraining anbietet, um Stressregulation und persönliches Wohlbefinden zu fördern.",
     image: "/images/resoma-700.webp",
+    scrollImage: "/images/resomascreenshot.webp",
     alt: "Website Projekt für reSOMA in Wien",
     link: "https://resoma.org/",
     tags: [
-    "Webdesign/Dev",
-    "Wordpress",
-    "2 Jahre Support",
-    "DIVI Theme",
-  ],
+      "Webdesign/Dev",
+      "Wordpress",
+      "2 Jahre Support",
+      "DIVI Theme",
+    ],
   },
+
+  {
+    number: "04/",
+    title: "Dr. Bosede Baldauf",
+    description:
+      "Ein klares digitales Projekt mit starker visueller Präsentation und einfacher Nutzerführung.",
+    image: "/images/dr.baldauf-700.webp",
+    scrollImage: "/images/drbaldaufscreenshot.webp",
+    alt: "Website Projekt für Dr. Bosede Oluwatoyin Baldauf",
+    link: "https://www.baldauf-uro.at/",
+    tags: [
+      "Webdesign/Dev",
+      "Wordpress",
+      "SvelteKit",
+      "2 Jahre Support",
+    ],
+  },
+
   {
     number: "05/",
     title: "JAHSON The Scientist",
     description:
       "Jahson ist Musiker, Künstler und Wissenschaftler und verbindet Wissenschaft, Spiritualität und Musik, um Bewusstsein und Heilung zu erforschen.",
     image: "/images/jahson-700.webp",
+    scrollImage: "/images/jahsonscreenshop.webp",
     alt: "Webdesign Projekt für Jahson The Scientist",
     link: "https://jahsonthescientist.com/",
     tags: [
-    "Webdesign/Dev",
-    "Wordpress",
-    "WooCommerce",
-    "4 Jahre Support",
-  ],
+      "Webdesign/Dev",
+      "Wordpress",
+      "WooCommerce",
+      "4 Jahre Support",
+    ],
   },
+
   {
     number: "06/",
-    title: "ONLINE-HYPNOSE",
-    description:
-      "Professionelle Online Hypnose und Coaching zur Bewältigung von Stress, Ängsten und persönlichen Herausforderungen bequem von zu Hause aus.",
-    image: "/images/hypnosie-700.webp",
-    alt: "Website für Online Hypnose und Hypnosetherapie",
-    link: "https://online-hypnose.com/",
-    tags: [
-    "Webdesign/Dev",
-    "Wordpress",
-    "1 Jahr Support",
-    "DIVI Theme",
-  ],
-  },
-  {
-    number: "07/",
-    title: "Dr. Bosede Baldauf",
-    description:
-      "Ein klares digitales Projekt mit starker visueller Präsentation und einfacher Nutzerführung.",
-    image: "/images/dr.baldauf-700.webp",
-    alt: "Website Projekt für Dr. Bosede Oluwatoyin Baldauf",
-    link: "https://www.baldauf-uro.at/",
-    tags: [
-    "Webdesign/Dev",
-    "Wordpress",
-    "SvelteKit",
-    "2 Jahre Support",
-  ],
-  },
-  {
-    number: "08/",
     title: "KATHRIN SIEDER",
     description:
       "Der Online Shop bietet spirituelle Begleitung durch Tiersymbolik, Coaching und kreative Produkte zur Unterstützung von persönlichem Wachstum und Transformation",
     image: "/images/kathrin-700.webp",
+    scrollImage: "/images/kathrinscreenshot.webp",
     alt: "Portfolio Website für Kathrin Sieder",
     link: "https://kathrinsieder.at/",
     tags: [
-    "Webdesign/Dev",
-    "Wordpress",
-    "WooCommerce",
-    "3 Jahre Support",
-  ],
+      "Webdesign/Dev",
+      "Wordpress",
+      "WooCommerce",
+      "3 Jahre Support",
+    ],
+  },
+
+  {
+    number: "07/",
+    title: "JUBS VEREIN",
+    description:
+      "JUBS - Verein Jugendförderung Neunkirchen unterstützt junge Menschen durch Beratung, Schulprogramme und soziale Dienstleistungen.",
+    image: "/images/jubs-700.webp",
+    scrollImage: "/images/jubsscreenshot.webp",
+    alt: "Website Projekt für JUBS Verein in Wien",
+    link: "https://www.jubs.at/",
+    tags: [
+      "Webdesign/Dev",
+      "Wordpress",
+      "PHP",
+      "3 Jahre Support",
+    ],
+  },
+
+  {
+    number: "08/",
+    title: "ONLINE-HYPNOSE",
+    description:
+      "Professionelle Online Hypnose und Coaching zur Bewältigung von Stress, Ängsten und persönlichen Herausforderungen bequem von zu Hause aus.",
+    image: "/images/hypnosie-700.webp",
+    scrollImage: "/images/onlinescreenshop.webp",
+    alt: "Website für Online Hypnose und Hypnosetherapie",
+    link: "https://online-hypnose.com/",
+    tags: [
+      "Webdesign/Dev",
+      "Wordpress",
+      "1 Jahr Support",
+      "DIVI Theme",
+    ],
   },
 
   {
@@ -131,12 +143,13 @@ export const projects = [
     alt: "Website Projekt für Ewa Ernst Dziedzic",
     link: "https://ewaernst.at/",
     tags: [
-    "Webdesign/Dev",
-    "Wordpress",
-    "PHP",
-    "1 Jahr Support",
-  ],
+      "Webdesign/Dev",
+      "Wordpress",
+      "PHP",
+      "1 Jahr Support",
+    ],
   },
+
   {
     number: "10/",
     title: "ANNA HOFBAUER",
@@ -145,14 +158,14 @@ export const projects = [
     image: "/images/anna_hofbauer-700.webp",
     alt: "Portfolio Website für Anna Hofbauer",
     link: "https://annahofbauer.com/",
-     tags: [
-    "Webdesign/Dev",
-    "Wordpress",
-    "PHP",
-    "DIVI Theme",
-  ],
-    
+    tags: [
+      "Webdesign/Dev",
+      "Wordpress",
+      "PHP",
+      "DIVI Theme",
+    ],
   },
+
   {
     number: "11/",
     title: "Imani Rameses",
@@ -161,12 +174,12 @@ export const projects = [
     image: "/images/imani-700.webp",
     alt: "Website Projekt für Imani Rameses",
     link: "https://imanirameses.com/",
-     tags: [
-    "Webdesign/Dev",
-    "Wordpress",
-    "PHP",
-    "1 Jahr Support",
-  ],
+    tags: [
+      "Webdesign/Dev",
+      "Wordpress",
+      "PHP",
+      "1 Jahr Support",
+    ],
   },
 
   {
@@ -178,11 +191,11 @@ export const projects = [
     alt: "Website Projekt für Glücksraum",
     link: "http://www.gluecksraum.at/",
     tags: [
-    "Webdesign/Dev",
-    "Wordpress",
-    "PHP",
-    "DIVI Theme",
-  ],
+      "Webdesign/Dev",
+      "Wordpress",
+      "PHP",
+      "DIVI Theme",
+    ],
   },
 
   {
@@ -194,11 +207,11 @@ export const projects = [
     alt: "Website Projekt für Moha Galerie",
     link: "https://www.moha.at/",
     tags: [
-    "Webdesign/Dev",
-    "Wordpress",
-    "WooCommerce",
-    "DIVI Theme",
-  ],
+      "Webdesign/Dev",
+      "Wordpress",
+      "WooCommerce",
+      "DIVI Theme",
+    ],
   },
 
   {
@@ -209,12 +222,12 @@ export const projects = [
     image: "/images/promove-700.webp",
     alt: "Website Projekt für Pro Move Transport",
     link: "https://promove-transport.at/",
-     tags: [
-    "Webdesign/Dev",
-    "Wordpress",
-    "1 Jahr Support",
-    "DIVI Theme",
-  ],
+    tags: [
+      "Webdesign/Dev",
+      "Wordpress",
+      "1 Jahr Support",
+      "DIVI Theme",
+    ],
   },
 
   {
@@ -226,11 +239,11 @@ export const projects = [
     alt: "Website Projekt für Afrieurotext in Wien",
     link: "https://www.afrieurotext.at/",
     tags: [
-    "Webdesign/Dev",
-    "Wordpress",
-    "2 Jahre Support",
-    "DIVI Theme",
-  ],
+      "Webdesign/Dev",
+      "Wordpress",
+      "2 Jahre Support",
+      "DIVI Theme",
+    ],
   },
 
   {
@@ -242,11 +255,11 @@ export const projects = [
     alt: "Online Buchshop Website für Afrieurotext",
     link: "https://afrieurotextshop.at/",
     tags: [
-    "Webdesign/Dev",
-    "Wordpress",
-    "WooCommerce",
-    "3 Jahre Support",
-  ],
+      "Webdesign/Dev",
+      "Wordpress",
+      "WooCommerce",
+      "3 Jahre Support",
+    ],
   },
 
   {
@@ -258,14 +271,14 @@ export const projects = [
     alt: "Porfolio webdesign Website für AEWTASS",
     link: "https://aewtass.org/",
     tags: [
-    "Webdesign/Dev",
-    "Wordpress",
-    "2 Jahre Support",
-    "DIVI Theme",
-  ],
+      "Webdesign/Dev",
+      "Wordpress",
+      "2 Jahre Support",
+      "DIVI Theme",
+    ],
   },
 
-   {
+  {
     number: "18/",
     title: "BEAT FEURER",
     description:
@@ -273,15 +286,15 @@ export const projects = [
     image: "/images/beatfeurer-700.webp",
     alt: "Porfolio webdesign Website für BEAT FEURER",
     link: "https://beatfeurer.com/",
-     tags: [
-    "Webdesign/Dev",
-    "Wordpress",
-    "PHP",
-    "DIVI Theme",
-  ],
+    tags: [
+      "Webdesign/Dev",
+      "Wordpress",
+      "PHP",
+      "DIVI Theme",
+    ],
   },
 
-    {
+  {
     number: "19/",
     title: "NEDRET VEREIN",
     description:
@@ -289,11 +302,11 @@ export const projects = [
     image: "/images/nedret-700.webp",
     alt: "Porfolio webdesign Website für NEDRET",
     link: "https://nedret.at/",
-     tags: [
-    "Webdesign/Dev",
-    "Wordpress",
-    "PHP",
-    "DIVI Theme",
-  ],
+    tags: [
+      "Webdesign/Dev",
+      "Wordpress",
+      "PHP",
+      "DIVI Theme",
+    ],
   },
 ];

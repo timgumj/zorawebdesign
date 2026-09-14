@@ -483,13 +483,11 @@
                 aria-controls="website-projects-dropdown-panel"
                 onclick={toggleProjects}
               >
-
                 <span class="menu-label">
                   {projectsMenu.label}
                 </span>
 
                 <span class="dropdown-arrow" aria-hidden="true"></span>
-
               </button>
 
               <div
@@ -503,11 +501,9 @@
                     title={menuItem.title}
                     onclick={handleDropdownItemClick}
                   >
-
                     <span>
                       {menuItem.label}
                     </span>
-
                   </a>
                 {/each}
               </div>
@@ -520,11 +516,9 @@
               class:contact-nav-link={item.id === "contact"}
               onclick={(event) => handleNavClick(event, item)}
             >
-
               <span class="menu-label">
                 {item.label}
               </span>
-
             </a>
           {/if}
 
@@ -544,13 +538,11 @@
                 aria-controls="website-tools-dropdown-panel"
                 onclick={toggleFreebies}
               >
-
                 <span class="menu-label">
                   {freebiesMenu.label}
                 </span>
 
                 <span class="dropdown-arrow" aria-hidden="true"></span>
-
               </button>
 
               <div
@@ -564,11 +556,9 @@
                     title={menuItem.title}
                     onclick={handleDropdownItemClick}
                   >
-
                     <span>
                       {menuItem.label}
                     </span>
-
                   </a>
                 {/each}
               </div>
@@ -585,7 +575,6 @@
             class="lang-link"
             onclick={handleDropdownItemClick}
           >
-
             <svg class="language-globe" viewBox="0 0 24 24" aria-hidden="true">
               <circle cx="12" cy="12" r="9"></circle>
 
@@ -597,7 +586,6 @@
             <span class="menu-label">
               {clean(nav.languageLabel)}
             </span>
-
           </a>
         </div>
       </nav>
@@ -616,7 +604,6 @@
     : "Switch to the English version"}
   onclick={handleDropdownItemClick}
 >
-
   <svg class="language-globe" viewBox="0 0 24 24" aria-hidden="true">
     <circle cx="12" cy="12" r="9"></circle>
 
@@ -628,7 +615,6 @@
   <span>
     {clean(nav.languageLabel)}
   </span>
-
 </a>
 
 <style>
@@ -1512,7 +1498,6 @@
     }
 
     .brand-subtext {
-
       text-align: center;
     }
     :global(body:not(:has(.homepage-footer))) .brand-subtext {
@@ -1530,7 +1515,7 @@
 
       justify-content: center;
 
-      gap: 18px;
+      gap: 22px;
 
       padding: 14px 18px;
 
@@ -1554,8 +1539,8 @@
       flex: 0 0 auto;
     }
     :global(body:not(:has(.homepage-footer))) .main-nav > a,
-  :global(body:not(:has(.homepage-footer))) .dropdown-trigger,
-  :global(body:not(:has(.homepage-footer))) .lang-link {
+    :global(body:not(:has(.homepage-footer))) .dropdown-trigger,
+    :global(body:not(:has(.homepage-footer))) .lang-link {
       font-size: 0.82rem;
       font-weight: 600;
     }
@@ -1640,7 +1625,6 @@
     }
 
     .brand-subtext {
-
       letter-spacing: 0.06em;
 
       text-align: center;
@@ -1650,14 +1634,14 @@
     }
 
     .main-nav {
-      gap: 14px;
+      gap: 18px;
 
       padding: 12px 14px;
 
       justify-content: center;
     }
     :global(body:not(:has(.homepage-footer))) .main-nav > a,
-  :global(body:not(:has(.homepage-footer))) .dropdown-trigger {
+    :global(body:not(:has(.homepage-footer))) .dropdown-trigger {
       font-size: 0.76rem;
       font-weight: 600;
     }
@@ -1898,8 +1882,8 @@
       justify-content: center;
     }
     :global(body:not(:has(.homepage-footer))) .main-nav > a,
-  :global(body:not(:has(.homepage-footer))) .dropdown-trigger,
-  :global(body:not(:has(.homepage-footer))) .lang-link {
+    :global(body:not(:has(.homepage-footer))) .dropdown-trigger,
+    :global(body:not(:has(.homepage-footer))) .lang-link {
       font-size: calc(0.76rem - 2px);
     }
   }
@@ -1930,13 +1914,12 @@
 
   @media (max-width: 767px) {
     :global(body:has(.homepage-footer)) .main-nav > a,
-  :global(body:has(.homepage-footer)) .dropdown-trigger,
-  :global(body:has(.homepage-footer)) .lang-link,
-  :global(body:has(.homepage-footer)) .dropdown-panel a {
+    :global(body:has(.homepage-footer)) .dropdown-trigger,
+    :global(body:has(.homepage-footer)) .lang-link,
+    :global(body:has(.homepage-footer)) .dropdown-panel a {
       font-size: 12px;
     }
-}
-
+  }
 
   .main-nav > a.contact-nav-link {
     text-decoration-line: underline;
