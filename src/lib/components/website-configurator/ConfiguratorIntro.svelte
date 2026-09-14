@@ -219,6 +219,8 @@
     overflow: hidden;
 
     border: 0;
+    border-left: 1px solid #292929;
+    border-right: 1px solid #292929;
 
     background: #0b0b0b;
 
@@ -567,6 +569,7 @@
   ========================================================= */
 
   .intro-outcome-heading {
+    text-align: center;
     padding: 16px 24px;
 
     border-top: 1px solid #292929;
