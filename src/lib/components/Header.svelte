@@ -19,11 +19,10 @@
   } = $props();
 
   function clean(text) {
-    return String(text ?? "").replace(/[\[\]*]/g, "");
+    return String(text ?? "").replace(/[**\[\]***]/g, "");
   }
 
   let activeSection = $state("");
-
   let brandClicked = $state(false);
 
   let freebiesOpen = $state(false);
@@ -76,7 +75,6 @@
 
   let projectsMenu = $derived({
     label: clean(nav.projects || (isEnglishPage ? "PROJECTS" : "PROJEKTE")),
-
     items: isEnglishPage
       ? [
           {
@@ -106,7 +104,6 @@
 
   let freebiesMenu = $derived({
     label: "TOOLS",
-
     items: isEnglishPage
       ? [
           {
@@ -157,7 +154,6 @@
     const triggerRect = dropdownTriggerElement.getBoundingClientRect();
 
     const dropdownWidth = window.innerWidth <= 640 ? 184 : 200;
-
     const viewportPadding = 12;
     const halfDropdownWidth = dropdownWidth / 2;
 
@@ -629,15 +625,10 @@
   .language-globe {
     width: 15px;
     height: 15px;
-
     flex: 0 0 auto;
-
     fill: none;
-
     stroke: #0043ff;
-
     stroke-width: 1.6;
-
     stroke-linecap: round;
     stroke-linejoin: round;
   }
@@ -648,11 +639,8 @@
 
   .site-header {
     position: sticky;
-
     top: 0;
-
     z-index: 1000;
-
     width: 100%;
 
     background: radial-gradient(
@@ -679,7 +667,6 @@
 
   :global(body.light) .site-header {
     background: #ffffff;
-
     border-bottom: 0;
 
     backdrop-filter: none;
@@ -696,9 +683,7 @@
     content: "";
 
     position: absolute;
-
     z-index: 2;
-
     left: 50%;
     bottom: 0;
 
@@ -709,7 +694,6 @@
     background: rgba(255, 255, 255, 0.1);
 
     transform: translateX(-50%);
-
     pointer-events: none;
 
     transition: background 0.3s ease;
@@ -730,7 +714,6 @@
     width: min(1540px, calc(100% - 32px));
 
     min-height: 78px;
-
     margin: 0 auto;
 
     display: grid;
@@ -752,7 +735,6 @@
     width: min(1540px, calc(100% - 32px));
 
     min-height: 78px;
-
     margin: 0 auto;
 
     display: grid;
@@ -766,11 +748,13 @@
     box-sizing: border-box;
 
     border-left: 1px solid rgba(255, 255, 255, 0.08);
+
     border-right: 1px solid rgba(255, 255, 255, 0.08);
   }
 
   :global(body.light) .header-grid {
     border-left-color: rgba(0, 0, 0, 0.1);
+
     border-right-color: rgba(0, 0, 0, 0.1);
   }
 
@@ -779,7 +763,6 @@
     min-height: 78px;
 
     display: flex;
-
     align-items: center;
   }
 
@@ -799,7 +782,6 @@
 
   .header-right {
     padding: 0 24px;
-
     justify-content: flex-end;
   }
 
@@ -809,21 +791,17 @@
 
   .brand-block {
     position: relative;
-
     isolation: isolate;
 
     max-width: 380px;
 
     display: inline-flex;
-
     flex-direction: column;
-
     justify-content: center;
 
     gap: 5px;
 
     color: inherit;
-
     text-decoration: none;
 
     -webkit-tap-highlight-color: transparent;
@@ -831,7 +809,6 @@
 
   .brand {
     display: inline-flex;
-
     align-items: center;
 
     gap: 0.42em;
@@ -839,11 +816,8 @@
     color: #ffffff;
 
     font-size: 1.18rem;
-
     font-weight: 600;
-
     line-height: 1;
-
     letter-spacing: 0.015em;
 
     transition:
@@ -864,7 +838,6 @@
     border-radius: 50%;
 
     display: inline-block;
-
     flex-shrink: 0;
 
     background: #0043ff;
@@ -896,7 +869,6 @@
     color: rgba(255, 255, 255, 0.46);
 
     line-height: 1.2;
-
     letter-spacing: 0.08em;
 
     text-transform: uppercase;
@@ -905,6 +877,7 @@
       color 0.25s ease,
       transform 0.25s ease;
   }
+
   :global(body:not(:has(.homepage-footer))) .brand-subtext {
     font-size: 0.66rem;
     font-weight: 500;
@@ -1014,7 +987,6 @@
     min-height: 78px;
 
     display: flex;
-
     align-items: center;
 
     gap: 28px;
@@ -1032,13 +1004,13 @@
     letter-spacing: -0.005em;
 
     text-decoration: none;
-
     text-transform: none;
 
     transition:
       color 0.2s ease,
       opacity 0.2s ease;
   }
+
   :global(body:not(:has(.homepage-footer))) .main-nav > a,
   :global(body:not(:has(.homepage-footer))) .dropdown-trigger,
   :global(body:not(:has(.homepage-footer))) .lang-link {
@@ -1060,7 +1032,6 @@
     position: relative;
 
     display: inline-flex;
-
     align-items: center;
 
     gap: 0.32em;
@@ -1071,6 +1042,7 @@
   /*
    * NO BLUE HOVER UNDERLINE
    */
+
   .main-nav > a::after,
   .main-nav > a:hover::after,
   .main-nav > a.active::after,
@@ -1078,7 +1050,6 @@
   .lang-link:hover::after,
   .lang-link.active::after {
     content: none;
-
     display: none;
   }
 
@@ -1114,7 +1085,6 @@
     min-height: 78px;
 
     display: flex;
-
     align-items: center;
   }
 
@@ -1126,7 +1096,6 @@
     position: relative;
 
     display: inline-flex;
-
     align-items: center;
 
     gap: 0.32em;
@@ -1176,7 +1145,6 @@
     margin: 0 0.13em 3px 0.12em;
 
     display: inline-block;
-
     flex: 0 0 auto;
 
     border-right: 1.5px solid #0043ff;
@@ -1213,7 +1181,6 @@
 
   .dropdown-panel {
     position: absolute;
-
     z-index: 1020;
 
     top: calc(100% - 6px);
@@ -1264,7 +1231,6 @@
     min-height: 42px;
 
     display: inline-flex;
-
     align-items: center;
 
     gap: 0.38em;
@@ -1278,7 +1244,6 @@
     line-height: 1.2;
 
     text-decoration: none;
-
     text-transform: none;
 
     box-shadow: none;
@@ -1288,6 +1253,7 @@
       color 0.18s ease,
       padding-left 0.18s ease;
   }
+
   :global(body:not(:has(.homepage-footer))) .dropdown-panel a {
     font-size: 0.84rem;
     font-weight: 600;
@@ -1386,7 +1352,6 @@
     border-left: 1px solid rgba(255, 255, 255, 0.08);
 
     display: flex;
-
     align-items: center;
   }
 
@@ -1398,7 +1363,6 @@
     position: relative;
 
     display: inline-flex;
-
     align-items: center;
 
     gap: 0.34em;
@@ -1431,6 +1395,7 @@
      * Desktop architectural bottom line
      * is not needed on tablet/mobile.
      */
+
     .site-header::after {
       display: none;
     }
@@ -1446,6 +1411,7 @@
     /*
      * Desktop outer edge rails disappear.
      */
+
     .header-grid::before,
     .header-grid::after {
       display: none;
@@ -1455,6 +1421,7 @@
      * Tablet separator between logo
      * and navigation remains.
      */
+
     .header-left {
       min-height: auto;
 
@@ -1500,6 +1467,7 @@
     .brand-subtext {
       text-align: center;
     }
+
     :global(body:not(:has(.homepage-footer))) .brand-subtext {
       font-size: 0.63rem;
     }
@@ -1538,6 +1506,7 @@
     .lang-link {
       flex: 0 0 auto;
     }
+
     :global(body:not(:has(.homepage-footer))) .main-nav > a,
     :global(body:not(:has(.homepage-footer))) .dropdown-trigger,
     :global(body:not(:has(.homepage-footer))) .lang-link {
@@ -1597,6 +1566,7 @@
 
   /* =========================================================
      MOBILE
+     CLAMPED FOR SMALLER VIEWPORTS
   ========================================================= */
 
   @media (max-width: 640px) {
@@ -1629,26 +1599,61 @@
 
       text-align: center;
     }
+
     :global(body:not(:has(.homepage-footer))) .brand-subtext {
       font-size: 0.61rem;
     }
 
+    /*
+     * MOBILE CLAMP:
+     *
+     * The navigation spacing now progressively
+     * gets smaller as the screen gets narrower.
+     *
+     * safe center keeps the centered layout while
+     * preventing inaccessible clipped content if
+     * an exceptionally narrow viewport still overflows.
+     */
+
     .main-nav {
-      gap: 22px;
+      gap: clamp(6px, 2vw, 13px);
 
-      padding: 12px 14px;
+      padding-block: clamp(12px, 3.8vw, 18px);
 
-      justify-content: center;
+      padding-inline: clamp(6px, 2vw, 10px);
+
+      justify-content: safe center;
     }
+
+    /*
+     * MOBILE FONT CLAMP
+     */
+
     :global(body:not(:has(.homepage-footer))) .main-nav > a,
     :global(body:not(:has(.homepage-footer))) .dropdown-trigger {
-      font-size: 0.76rem;
+      font-size: clamp(0.58rem, 2.7vw, 0.75rem);
+
       font-weight: 600;
     }
 
+    /*
+     * MOBILE DROPDOWN TRIGGER SPACING
+     */
+
+    .dropdown-trigger {
+      gap: clamp(2px, 0.7vw, 4px);
+    }
+
+    /*
+     * MOBILE ARROW CLAMP
+     */
+
     .dropdown-arrow {
-      width: 5px;
-      height: 5px;
+      width: clamp(4px, 1.2vw, 5px);
+
+      height: clamp(4px, 1.2vw, 5px);
+
+      margin: 0 clamp(0px, 0.2vw, 1px) 3px clamp(0px, 0.2vw, 1px);
 
       border-right-width: 1.4px;
 
@@ -1664,8 +1669,10 @@
 
       padding: 0 13px;
     }
+
     :global(body:not(:has(.homepage-footer))) .dropdown-panel a {
-      font-size: 0.8rem;
+      font-size: clamp(0.66rem, 2.7vw, 0.8rem);
+
       font-weight: 600;
     }
 
@@ -1734,8 +1741,10 @@
         background 0.2s ease,
         transform 0.2s ease;
     }
+
     :global(body:not(:has(.homepage-footer))) .mobile-language-switcher {
       font-size: 0.72rem;
+
       font-weight: 600;
     }
 
@@ -1813,11 +1822,13 @@
 
     .header-right {
       border-top: 1px solid rgba(255, 255, 255, 0.08);
+
       border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     }
 
     :global(body.light) .header-right {
       border-top-color: rgba(0, 0, 0, 0.1);
+
       border-bottom-color: rgba(0, 0, 0, 0.1);
     }
   }
@@ -1830,12 +1841,15 @@
     .header-left,
     .header-right {
       min-height: auto;
+
       justify-content: center;
+
       box-sizing: border-box;
     }
 
     .header-left {
       padding: 16px 12px;
+
       text-align: center;
     }
 
@@ -1845,22 +1859,30 @@
 
     .brand-block {
       max-width: 100%;
+
       align-items: center;
+
       text-align: center;
     }
 
     .brand,
     .brand-subtext {
       justify-content: center;
+
       text-align: center;
     }
 
     .main-nav {
       width: 100%;
+
       min-height: auto;
+
       box-sizing: border-box;
+
       justify-content: center;
+
       padding: 14px 18px;
+
       gap: 18px;
     }
 
@@ -1869,64 +1891,126 @@
     }
   }
 
+  /* =========================================================
+     MOBILE RESPONSIVE NAV CLAMPS
+  ========================================================= */
+
   @media (max-width: 767px) {
-    @media (max-width: 767px) {
-      .main-nav {
-        gap: 18px;
-        padding: 18px 10px;
-      }
+    /*
+     * This rule appears after the 1024px rule,
+     * so it controls the final mobile spacing.
+     */
+
+    .main-nav {
+      gap: clamp(6px, 2vw, 18px);
+
+      padding-block: clamp(13px, 2.4vw, 18px);
+
+      padding-inline: clamp(6px, 1.8vw, 10px);
+
+      justify-content: safe center;
     }
 
     .main-nav > a,
     .dropdown-trigger,
     .lang-link {
       text-align: center;
+
       justify-content: center;
     }
+
+    /*
+     * Final mobile font sizing.
+     *
+     * ~9.3px at very narrow screens
+     * ~10px around 375px
+     * ~11.5px around 430px
+     * max 12px on larger mobile.
+     */
+
     :global(body:not(:has(.homepage-footer))) .main-nav > a,
     :global(body:not(:has(.homepage-footer))) .dropdown-trigger,
     :global(body:not(:has(.homepage-footer))) .lang-link {
-      font-size: calc(0.76rem - 2px);
+      font-size: clamp(0.58rem, 2.7vw, 0.75rem);
+    }
+
+    /*
+     * Keep dropdown arrows from adding
+     * too much width on small phones.
+     */
+
+    .dropdown-trigger {
+      gap: clamp(2px, 0.7vw, 4px);
+    }
+
+    .dropdown-arrow {
+      width: clamp(4px, 1.2vw, 5px);
+
+      height: clamp(4px, 1.2vw, 5px);
+
+      margin-left: clamp(0px, 0.2vw, 1px);
+
+      margin-right: clamp(0px, 0.2vw, 1px);
     }
   }
 
   @media (max-width: 767px) {
     .dropdown-panel a {
       min-height: 28px;
+
       padding-block: 4px;
     }
+
     :global(body:not(:has(.homepage-footer))) .dropdown-panel a {
-      font-size: calc(0.76rem - 2px);
+      font-size: clamp(0.66rem, 2.7vw, 0.8rem);
     }
   }
 
-  /* Shared homepage typography; other routes retain their existing styles. */
+  /* Shared homepage typography;
+     other routes retain their existing styles. */
+
   :global(body:has(.homepage-footer)) .brand-subtext,
   :global(body:has(.homepage-footer)) .mobile-language-switcher {
     font-size: var(--text-label);
+
     font-weight: var(--weight-semibold);
   }
+
   :global(body:has(.homepage-footer)) .main-nav > a,
   :global(body:has(.homepage-footer)) .dropdown-trigger,
   :global(body:has(.homepage-footer)) .lang-link,
   :global(body:has(.homepage-footer)) .dropdown-panel a {
     font-size: 13px;
+
     font-weight: var(--weight-semibold);
   }
+
+  /*
+   * HOMEPAGE MOBILE CLAMP
+   *
+   * This used to force everything to 12px,
+   * which overrode the responsive mobile sizing.
+   */
 
   @media (max-width: 767px) {
     :global(body:has(.homepage-footer)) .main-nav > a,
     :global(body:has(.homepage-footer)) .dropdown-trigger,
-    :global(body:has(.homepage-footer)) .lang-link,
+    :global(body:has(.homepage-footer)) .lang-link {
+      font-size: clamp(0.58rem, 2.7vw, 0.75rem);
+    }
+
     :global(body:has(.homepage-footer)) .dropdown-panel a {
-      font-size: 12px;
+      font-size: clamp(0.66rem, 2.7vw, 0.75rem);
     }
   }
 
   .main-nav > a.contact-nav-link {
     text-decoration-line: underline;
+
     text-decoration-color: #0043ff;
+
     text-decoration-thickness: 1px;
+
     text-underline-offset: 4px;
   }
 </style>

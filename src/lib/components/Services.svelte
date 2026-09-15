@@ -4594,14 +4594,22 @@
     }
 
     .experience-list {
-      display: grid;
+      display: flex;
 
-      grid-template-columns: repeat(4, minmax(0, 1fr));
+      align-items: flex-start;
 
-      gap: 4px;
+      justify-content: space-between;
+
+      gap: clamp(2px, 0.8vw, 4px);
     }
 
     .experience-item {
+      width: auto;
+
+      min-width: 0;
+
+      flex: 0 1 auto;
+
       padding: 0;
     }
 
@@ -4611,6 +4619,8 @@
     }
 
     .experience-title {
+      width: auto;
+
       align-items: flex-start;
 
       text-align: left;
@@ -4618,6 +4628,21 @@
       font-size: clamp(11px, 2.8vw, 16px);
 
       line-height: 1.3;
+    }
+
+    .experience-title-first,
+    .experience-title-rest {
+      white-space: nowrap;
+    }
+
+    .experience-title-first {
+      font-size: clamp(10px, 2.65vw, 13px);
+    }
+
+    .experience-title-rest {
+      font-size: clamp(7px, 2.05vw, 10px);
+
+      line-height: 1.2;
     }
 
     .about-profile::before {
@@ -4810,18 +4835,46 @@
       grid-template-columns: 1fr;
     }
 
-    .service-card {
-      min-height: 0;
-
-      padding: 28px 18px 30px 10px;
-
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
-
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    .service-bg-number {
+      display: none;
     }
 
-    :global(body.light) .service-card {
+    .services-mobile-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .service-card {
+      min-height: 0;
+      padding: 28px 0 30px;
+      border: 0;
+    }
+
+    .service-card + .service-card {
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    :global(body.light) .services-mobile-grid {
       border-color: rgba(0, 0, 0, 0.1);
+    }
+
+    :global(body.light) .service-card + .service-card {
+      border-top-color: rgba(0, 0, 0, 0.1);
+    }
+
+    /* iPhone / iPad Safari */
+    @supports (-webkit-touch-callout: none) {
+      .services-mobile-grid {
+        border-top-width: 0.5px;
+        border-bottom-width: 0.5px;
+      }
+
+      .service-card + .service-card {
+        border-top-width: 0.5px;
+      }
     }
 
     .service-content {
