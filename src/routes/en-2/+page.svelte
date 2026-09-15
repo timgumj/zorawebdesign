@@ -789,7 +789,7 @@
 <Header {nav} />
 <ThemeToggle />
 
-<main>
+<main class="homepage-section-dividers">
   <Hero {hero} projects={translatedProjects} />
 
   <Services

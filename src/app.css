@@ -91,3 +91,64 @@ option {
     --text-label: 11px;
   }
 }
+
+/* Homepage section dividers: retain the existing mobile headers. */
+@media (min-width: 768px) {
+  main.homepage-section-dividers {
+    --homepage-divider-width: clamp(140px, calc(50vw - 240px), 500px);
+    --homepage-divider-color: #fff;
+  }
+
+  body.light main.homepage-section-dividers {
+    --homepage-divider-color: #000;
+  }
+
+  main.homepage-section-dividers :is(.services-header, .process-header, .faq-header, .contact-header, .reviews-header, .projects-header) {
+    border-bottom: 0;
+  }
+
+  main.homepage-section-dividers :is(.services-header-inner, .process-header-inner, .faq-header-inner, .contact-header-inner, .reviews-header-inner, .projects-header-inner) {
+    --heading-gap: clamp(16px, 2vw, 32px);
+    --heading-description-width: min(38%, 460px);
+    grid-template-columns:
+      fit-content(calc(100% - var(--heading-description-width) - var(--homepage-divider-width) - var(--heading-gap) * 2))
+      minmax(var(--homepage-divider-width), 1fr)
+      var(--heading-description-width);
+    column-gap: var(--heading-gap);
+    align-items: center;
+  }
+
+  main.homepage-section-dividers :is(.services-header-inner, .process-header-inner, .faq-header-inner, .contact-header-inner, .reviews-header-inner, .projects-header-inner)::after {
+    content: "";
+    grid-column: 2;
+    grid-row: 1;
+    justify-self: center;
+    align-self: center;
+    width: var(--homepage-divider-width);
+    height: 1px;
+    background: var(--homepage-divider-color);
+    pointer-events: none;
+  }
+
+  main.homepage-section-dividers :is(.services-header-main, .process-header-main, .faq-header-main, .contact-header-main, .reviews-header-main, .projects-header-main) {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  main.homepage-section-dividers :is(.services-subtitle, .process-subtitle, .faq-subtitle, .contact-subtitle, .reviews-subtitle, .projects-subtitle) {
+    grid-column: 3;
+    grid-row: 1;
+    width: 100%;
+    margin-inline: 0;
+  }
+}
+
+/* Close the top edge of the homepage FAQ list using its separator color. */
+main.homepage-section-dividers .faq-item:first-child {
+  border-top: 1px solid;
+  border-top-color: rgba(255, 255, 255, 0.22);
+}
+
+body.light main.homepage-section-dividers .faq-item:first-child {
+  border-top-color: rgba(0, 0, 0, 0.2);
+}

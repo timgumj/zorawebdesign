@@ -3,6 +3,106 @@
 
   const feature = $derived(project.feature);
 
+  const projectScrollImage = $derived(
+    project.scrollImage || "/images/drbaldaufscreenshot.webp",
+  );
+
+  let previewActive = $state(false);
+
+  let previewResetTimer = null;
+
+  function prefersReducedMotion() {
+    if (typeof window === "undefined") {
+      return false;
+    }
+
+    return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  }
+
+  function startPreview() {
+    if (prefersReducedMotion()) {
+      return;
+    }
+
+    window.clearTimeout(previewResetTimer);
+
+    /*
+     * Reset first so every new viewport
+     * activation starts from the TOP.
+     */
+    previewActive = false;
+
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        previewActive = true;
+      });
+    });
+  }
+
+  function stopPreview() {
+    window.clearTimeout(previewResetTimer);
+
+    previewActive = false;
+  }
+
+  function observeFeaturedPreview(node) {
+    if (typeof IntersectionObserver === "undefined") {
+      previewActive = true;
+
+      return {
+        destroy() {},
+      };
+    }
+
+    let hasActivated = false;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        /*
+         * Start when the image becomes
+         * clearly visible in the viewport.
+         */
+        if (
+          entry.isIntersecting &&
+          entry.intersectionRatio >= 0.4 &&
+          !hasActivated
+        ) {
+          hasActivated = true;
+
+          startPreview();
+
+          return;
+        }
+
+        /*
+         * Re-arm once the user has genuinely
+         * scrolled away from the image.
+         */
+        if (!entry.isIntersecting || entry.intersectionRatio < 0.1) {
+          hasActivated = false;
+
+          stopPreview();
+        }
+      },
+
+      {
+        threshold: [0, 0.1, 0.25, 0.4, 0.6, 0.8, 1],
+
+        rootMargin: "0px 0px -4% 0px",
+      },
+    );
+
+    observer.observe(node);
+
+    return {
+      destroy() {
+        observer.disconnect();
+
+        window.clearTimeout(previewResetTimer);
+      },
+    };
+  }
+
   const projectAchievements = $derived(
     language === "de"
       ? [
@@ -27,6 +127,7 @@
 >
   <div class="featured-shell">
     <span class="shell-line edge-left" aria-hidden="true"></span>
+
     <span class="shell-line edge-right" aria-hidden="true"></span>
 
     <div class="featured-container">
@@ -50,7 +151,9 @@
 
           <ul class="project-achievements">
             {#each projectAchievements as achievement}
-              <li>{achievement}</li>
+              <li>
+                {achievement}
+              </li>
             {/each}
           </ul>
 
@@ -82,16 +185,42 @@
           </a>
 
           <!-- =================================================
-               TABLET / MOBILE IMAGE
+               MOBILE IMAGE
           ================================================== -->
 
-          <div class="project-image responsive-project-image">
+          <div
+            class="project-image responsive-project-image"
+            class:preview-active={previewActive}
+            use:observeFeaturedPreview
+          >
+            <!--
+              THUMBNAIL STAYS IN NORMAL DOCUMENT FLOW.
+
+              THIS IS WHAT SETS THE ORIGINAL IMAGE HEIGHT.
+            -->
+
             <img
+              class="project-thumbnail"
               src={project.heroImage}
               alt={project.heroImageAlt}
               width="1448"
               height="1086"
               loading="eager"
+              decoding="async"
+            />
+
+            <!--
+              LONG SCREENSHOT SITS ON TOP OF THE THUMBNAIL
+              BUT NEVER CHANGES THE WRAPPER HEIGHT.
+            -->
+
+            <img
+              class="project-scroll-image"
+              class:active={previewActive}
+              src={projectScrollImage}
+              alt=""
+              aria-hidden="true"
+              loading="lazy"
               decoding="async"
             />
           </div>
@@ -124,13 +253,37 @@
              DESKTOP / TABLET IMAGE
         ================================================== -->
 
-        <div class="project-image desktop-project-image">
+        <div
+          class="project-image desktop-project-image"
+          class:preview-active={previewActive}
+          use:observeFeaturedPreview
+        >
+          <!--
+            ORIGINAL THUMBNAIL DEFINES HEIGHT.
+          -->
+
           <img
+            class="project-thumbnail"
             src={project.heroImage}
             alt={project.heroImageAlt}
             width="1448"
             height="1086"
             loading="eager"
+            decoding="async"
+          />
+
+          <!--
+            FULL WEBSITE SCREENSHOT IS CLIPPED
+            TO EXACTLY THE SAME HEIGHT.
+          -->
+
+          <img
+            class="project-scroll-image"
+            class:active={previewActive}
+            src={projectScrollImage}
+            alt=""
+            aria-hidden="true"
+            loading="lazy"
             decoding="async"
           />
         </div>
@@ -205,12 +358,22 @@
                 ============================================ -->
 
                 <div class="chart-key">
-                  <span class="visitors-label">
-                    {feature.graph.visitorsLegend}
+                  <span class="chart-key-item">
+                    <span class="chart-key-dot visitors-dot" aria-hidden="true"
+                    ></span>
+
+                    <span>
+                      {feature.graph.visitorsLegend}
+                    </span>
                   </span>
 
-                  <span class="enquiries-label">
-                    {feature.graph.enquiriesLegend}
+                  <span class="chart-key-item">
+                    <span class="chart-key-dot enquiries-dot" aria-hidden="true"
+                    ></span>
+
+                    <span>
+                      {feature.graph.enquiriesLegend}
+                    </span>
                   </span>
                 </div>
 
@@ -221,6 +384,9 @@
                 <div class="graph-area">
                   <div class="graph-plot">
                     <!-- HORIZONTAL GRID -->
+
+                    <span class="graph-grid graph-grid-top" aria-hidden="true"
+                    ></span>
 
                     <span class="graph-grid graph-grid-a" aria-hidden="true"
                     ></span>
@@ -249,7 +415,7 @@
                     ></span>
 
                     <!-- =======================================
-                         SVG LINES + FILLS
+                         ANGULAR GRAPH
                     ======================================== -->
 
                     <svg
@@ -263,16 +429,20 @@
                       <path
                         class="enquiries-fill"
                         d="
-                          M0 294
-                          C90 292 155 287 220 270
-                          C270 256 290 208 320 169
-                          C350 132 382 128 417 157
-                          C451 187 474 212 507 201
-                          C548 188 573 148 612 120
-                          C646 97 676 108 710 132
-                          C744 156 771 151 806 122
-                          C842 94 868 83 898 93
-                          C932 104 963 65 1000 34
+                          M0 300
+                          L130 299
+                          L205 286
+                          L280 168
+                          L350 150
+                          L420 225
+                          L505 158
+                          L585 96
+                          L655 70
+                          L725 104
+                          L790 55
+                          L855 180
+                          L930 108
+                          L1000 36
                           L1000 320
                           L0 320
                           Z
@@ -284,16 +454,20 @@
                       <path
                         class="enquiries-line"
                         d="
-                          M0 294
-                          C90 292 155 287 220 270
-                          C270 256 290 208 320 169
-                          C350 132 382 128 417 157
-                          C451 187 474 212 507 201
-                          C548 188 573 148 612 120
-                          C646 97 676 108 710 132
-                          C744 156 771 151 806 122
-                          C842 94 868 83 898 93
-                          C932 104 963 65 1000 34
+                          M0 300
+                          L130 299
+                          L205 286
+                          L280 168
+                          L350 150
+                          L420 225
+                          L505 158
+                          L585 96
+                          L655 70
+                          L725 104
+                          L790 55
+                          L855 180
+                          L930 108
+                          L1000 36
                         "
                       ></path>
 
@@ -303,11 +477,19 @@
                         class="visitors-fill"
                         d="
                           M0 300
-                          C125 296 210 287 300 265
-                          C391 244 468 230 548 207
-                          C632 183 699 157 762 125
-                          C824 93 873 62 921 40
-                          C955 24 980 17 1000 13
+                          L110 294
+                          L205 282
+                          L300 260
+                          L390 248
+                          L490 220
+                          L575 180
+                          L650 125
+                          L715 58
+                          L770 50
+                          L825 20
+                          L875 30
+                          L930 12
+                          L1000 4
                           L1000 320
                           L0 320
                           Z
@@ -320,19 +502,25 @@
                         class="visitors-line"
                         d="
                           M0 300
-                          C125 296 210 287 300 265
-                          C391 244 468 230 548 207
-                          C632 183 699 157 762 125
-                          C824 93 873 62 921 40
-                          C955 24 980 17 1000 13
+                          L110 294
+                          L205 282
+                          L300 260
+                          L390 248
+                          L490 220
+                          L575 180
+                          L650 125
+                          L715 58
+                          L770 50
+                          L825 20
+                          L875 30
+                          L930 12
+                          L1000 4
                         "
                       ></path>
                     </svg>
                   </div>
 
-                  <!-- =========================================
-                       X AXIS
-                  ========================================== -->
+                  <!-- X AXIS -->
 
                   <div class="graph-timeline">
                     {#each feature.graph.timeline as period}
@@ -360,6 +548,7 @@
     --accent-blue: #0043ff;
 
     --section-bg: #0c0c0c;
+
     --graph-bg: #242526;
 
     --evidence-height: 330px;
@@ -451,7 +640,7 @@
   }
 
   /* =========================================================
-     FEATURED PROJECT KICKER
+     KICKER
   ========================================================= */
 
   .project-kicker {
@@ -468,7 +657,9 @@
     color: #fff;
 
     font-size: 11px;
+
     font-weight: 600;
+
     line-height: 1;
 
     letter-spacing: 0.12em;
@@ -482,7 +673,9 @@
     color: #fff;
 
     font-size: clamp(24px, 2.1vw, 34px);
+
     font-weight: 600;
+
     line-height: 1.08;
 
     letter-spacing: -0.035em;
@@ -500,7 +693,9 @@
     color: rgba(255, 255, 255, 0.72);
 
     font-size: 16px;
+
     font-weight: 500;
+
     line-height: 1.55;
   }
 
@@ -516,7 +711,9 @@
     color: #999;
 
     font-size: 16px;
+
     font-weight: 400;
+
     line-height: 1.55;
   }
 
@@ -531,6 +728,8 @@
   }
 
   .project-achievements li::before {
+    content: "";
+
     position: absolute;
 
     top: 0.72em;
@@ -542,8 +741,6 @@
     border-radius: 50%;
 
     background: var(--accent-blue);
-
-    content: "";
 
     transform: translateY(-50%);
   }
@@ -562,7 +759,9 @@
     color: #fff;
 
     font-size: 12px;
+
     font-weight: 600;
+
     line-height: 1;
 
     letter-spacing: 0.05em;
@@ -586,10 +785,18 @@
   }
 
   /* =========================================================
-     PROJECT IMAGES
+     PROJECT IMAGE
+
+     IMPORTANT:
+     NO FIXED HEIGHT.
+     NO ASPECT-RATIO ON WRAPPER.
+
+     THE THUMBNAIL ITSELF DEFINES THE ORIGINAL HEIGHT.
   ========================================================= */
 
   .project-image {
+    position: relative;
+
     width: 100%;
 
     overflow: hidden;
@@ -601,11 +808,79 @@
     box-sizing: border-box;
   }
 
-  .project-image img {
+  /*
+   * NORMAL IMAGE FLOW.
+   *
+   * This is exactly what keeps the image
+   * at the same height it originally had.
+   */
+  .project-thumbnail {
+    position: relative;
+
+    z-index: 1;
+
     display: block;
 
     width: 100%;
+
     height: auto;
+
+    opacity: 1;
+
+    transition: opacity 0.3s ease;
+  }
+
+  /*
+   * THE FULL SCREENSHOT FILLS ONLY
+   * THE THUMBNAIL'S EXISTING VIEWPORT.
+   *
+   * It cannot increase the wrapper height.
+   */
+  .project-scroll-image {
+    position: absolute;
+
+    inset: 0;
+
+    z-index: 2;
+
+    display: block;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    object-position: center top;
+
+    opacity: 0;
+
+    pointer-events: none;
+
+    backface-visibility: hidden;
+
+    transition: opacity 0.3s ease;
+  }
+
+  /*
+   * TOP -> BOTTOM WEBSITE SCROLL.
+   *
+   * Same image viewport height
+   * as the normal thumbnail.
+   */
+  .project-scroll-image.active {
+    opacity: 1;
+
+    object-position: center bottom;
+
+    transition:
+      opacity 0.3s ease,
+      object-position 11s cubic-bezier(0.22, 0.61, 0.36, 1);
+
+    will-change: object-position, opacity;
+  }
+
+  .project-image.preview-active .project-thumbnail {
+    opacity: 0;
   }
 
   .desktop-project-image {
@@ -654,6 +929,7 @@
     color: #fff;
 
     font-size: 22px;
+
     line-height: 1;
 
     font-weight: 700;
@@ -669,7 +945,9 @@
     color: rgba(255, 255, 255, 0.52);
 
     font-size: 11px;
+
     font-weight: 500;
+
     line-height: 1.3;
 
     letter-spacing: 0.045em;
@@ -693,6 +971,7 @@
     width: 100%;
 
     border-top: 1px solid rgba(255, 255, 255, 0.12);
+
     border-bottom: 1px solid rgba(255, 255, 255, 0.12);
   }
 
@@ -740,7 +1019,9 @@
     color: rgba(255, 255, 255, 0.78);
 
     font-size: 11px;
+
     font-weight: 700;
+
     line-height: 1.3;
 
     letter-spacing: 0.06em;
@@ -798,6 +1079,7 @@
     box-sizing: border-box;
 
     border-top: 1px solid var(--growth-border);
+
     border-bottom: 1px solid var(--growth-border);
   }
 
@@ -842,14 +1124,12 @@
     color: rgba(255, 255, 255, 0.67);
 
     font-size: 11px;
+
     font-weight: 600;
+
     line-height: 1.25;
 
     letter-spacing: 0.035em;
-  }
-
-  .growth-value span {
-    text-transform: none;
   }
 
   .growth-metric small {
@@ -875,29 +1155,44 @@
 
     align-items: flex-start;
 
-    gap: 9px;
+    gap: 10px;
 
     margin-top: 21px;
   }
 
-  .chart-key span {
-    width: fit-content;
+  .chart-key-item {
+    display: inline-flex;
 
-    padding-bottom: 4px;
+    align-items: center;
+
+    gap: 9px;
+
+    width: fit-content;
 
     color: rgba(255, 255, 255, 0.82);
 
     font-size: 12px;
+
     font-weight: 500;
+
     line-height: 1.2;
   }
 
-  .chart-key .visitors-label {
-    border-bottom: 1px solid var(--accent-blue);
+  .chart-key-dot {
+    width: 9px;
+    height: 9px;
+
+    flex: 0 0 9px;
+
+    border-radius: 50%;
   }
 
-  .chart-key .enquiries-label {
-    border-bottom: 1px solid #c9d0ee;
+  .visitors-dot {
+    background: var(--accent-blue);
+  }
+
+  .enquiries-dot {
+    background: #c9d0ee;
   }
 
   /* =========================================================
@@ -922,9 +1217,7 @@
     overflow: hidden;
   }
 
-  /* =========================================================
-     HORIZONTAL GRID
-  ========================================================= */
+  /* HORIZONTAL GRID */
 
   .graph-grid {
     position: absolute;
@@ -939,6 +1232,10 @@
     background: rgba(255, 255, 255, 0.055);
   }
 
+  .graph-grid-top {
+    top: 0;
+  }
+
   .graph-grid-a {
     top: 25%;
   }
@@ -951,9 +1248,7 @@
     top: 75%;
   }
 
-  /* =========================================================
-     VERTICAL GRID
-  ========================================================= */
+  /* VERTICAL GRID */
 
   .graph-v-grid {
     position: absolute;
@@ -988,9 +1283,7 @@
     left: 90%;
   }
 
-  /* =========================================================
-     SVG
-  ========================================================= */
+  /* SVG */
 
   .graph-svg {
     position: absolute;
@@ -1007,9 +1300,7 @@
     overflow: visible;
   }
 
-  /* =========================================================
-     ENQUIRIES
-  ========================================================= */
+  /* ENQUIRIES */
 
   .enquiries-fill {
     fill: rgba(201, 208, 238, 0.11);
@@ -1022,16 +1313,14 @@
 
     stroke-width: 1.4;
 
-    stroke-linejoin: round;
+    stroke-linejoin: miter;
 
-    stroke-linecap: round;
+    stroke-linecap: square;
 
     vector-effect: non-scaling-stroke;
   }
 
-  /* =========================================================
-     VISITORS
-  ========================================================= */
+  /* VISITORS */
 
   .visitors-fill {
     fill: rgba(0, 67, 255, 0.22);
@@ -1044,9 +1333,9 @@
 
     stroke-width: 1.8;
 
-    stroke-linejoin: round;
+    stroke-linejoin: miter;
 
-    stroke-linecap: round;
+    stroke-linecap: square;
 
     vector-effect: non-scaling-stroke;
   }
@@ -1071,7 +1360,9 @@
     color: rgba(255, 255, 255, 0.55);
 
     font-size: 10px;
+
     font-weight: 500;
+
     line-height: 1.2;
 
     text-align: center;
@@ -1145,8 +1436,6 @@
 
       white-space: normal;
 
-      overflow-wrap: normal;
-
       text-align: left;
     }
 
@@ -1154,6 +1443,12 @@
       grid-area: image;
 
       display: block;
+
+      /*
+       * NO stretching.
+       * Height comes from thumbnail.
+       */
+      align-self: start;
 
       margin-top: 0;
     }
@@ -1197,25 +1492,19 @@
       font-size: 14px;
     }
 
+    /*
+     * IMPORTANT:
+     * Removed the old absolute/stretch rule here.
+     *
+     * The thumbnail now keeps its own original height,
+     * while screenshot scroll remains inside it.
+     */
     .desktop-project-image {
       position: relative;
 
-      align-self: stretch;
+      align-self: start;
 
       min-height: 0;
-    }
-
-    .desktop-project-image img {
-      position: absolute;
-
-      inset: 0;
-
-      width: 100%;
-      height: 100%;
-
-      object-fit: contain;
-
-      object-position: center;
     }
 
     .header-stats {
@@ -1230,33 +1519,17 @@
 
     .header-stat strong {
       font-size: 20px;
-
-      text-align: left;
     }
 
     .header-stat span {
       font-size: 9px;
-
-      text-align: left;
     }
 
     .feature-visual-inner {
       padding: 28px 24px;
     }
 
-    .search-chart {
-      width: 100%;
-    }
-
-    .growth-metrics {
-      gap: 8px;
-    }
-
     .growth-metric {
-      width: max-content;
-
-      min-width: 0;
-
       padding: 9px 11px;
     }
 
@@ -1332,9 +1605,7 @@
       margin-top: 28px;
     }
 
-    /* =====================================================
-       HEADER STATS
-    ====================================================== */
+    /* HEADER STATS */
 
     .header-stats {
       display: flex;
@@ -1364,21 +1635,15 @@
 
     .header-stat strong {
       font-size: 19px;
-
-      text-align: left;
     }
 
     .header-stat span {
       font-size: clamp(7px, 2.2vw, 9px);
 
       white-space: normal;
-
-      text-align: left;
     }
 
-    /* =====================================================
-       GRAPH
-    ====================================================== */
+    /* GRAPH */
 
     .feature-dashboard {
       margin-top: 28px;
@@ -1388,10 +1653,6 @@
       padding: 22px 14px;
     }
 
-    .search-chart {
-      width: 100%;
-    }
-
     .chart-top {
       display: block;
     }
@@ -1399,10 +1660,6 @@
     .chart-heading span {
       font-size: 10px;
     }
-
-    /* =====================================================
-       GROWTH METRICS
-    ====================================================== */
 
     .growth-metrics {
       display: flex;
@@ -1417,23 +1674,12 @@
     }
 
     .growth-metric {
-      flex: 0 0 auto;
-
       width: fit-content;
-
-      min-width: 0;
 
       padding: 8px 11px;
     }
 
-    .growth-metric::before,
-    .growth-metric::after {
-      width: 8px;
-    }
-
     .growth-value {
-      width: auto;
-
       gap: 5px;
     }
 
@@ -1444,41 +1690,32 @@
     .growth-value span,
     .growth-metric small {
       font-size: 9px;
-
-      line-height: 1.2;
     }
 
     .growth-metric small {
-      width: auto;
-
       margin-top: 6px;
 
       white-space: nowrap;
     }
 
-    /* =====================================================
-       KEY
-    ====================================================== */
-
     .chart-key {
       margin-top: 17px;
     }
 
-    .chart-key span {
+    .chart-key-item {
       font-size: 11px;
     }
 
-    /* =====================================================
-       GRAPH
-    ====================================================== */
+    .chart-key-dot {
+      width: 8px;
+      height: 8px;
+
+      flex: 0 0 8px;
+    }
 
     .graph-area {
       margin-top: 24px;
     }
-
-    /* =====================================================
-       X AXIS
-    ====================================================== */
 
     .graph-timeline {
       margin-top: 12px;
@@ -1527,6 +1764,18 @@
 
     .graph-timeline span {
       font-size: 7.5px;
+    }
+  }
+
+  /* =========================================================
+     REDUCED MOTION
+  ========================================================= */
+
+  @media (prefers-reduced-motion: reduce) {
+    .project-scroll-image.active {
+      object-position: center top;
+
+      transition: opacity 0.2s ease;
     }
   }
 </style>

@@ -167,7 +167,7 @@
 <Header nav={page.nav} />
 <ThemeToggle />
 
-<main>
+<main class="homepage-section-dividers">
   <Hero hero={page.hero} {projects} />
 
   <Services

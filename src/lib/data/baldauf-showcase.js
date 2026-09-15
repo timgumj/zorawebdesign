@@ -1,8 +1,10 @@
 export const baldaufShowcase = {
   de: {
-    sectionTitle: "FEATURED PROJECT",
+    sectionTitle:
+      "FEATURED PROJECT",
 
-    projectTitle: "DR. BOSEDE BALDAUF",
+    projectTitle:
+      "DR. BOSEDE BALDAUF",
 
     projectLead:
       "Website-Relaunch für mehr lokale Sichtbarkeit, Geschwindigkeit und eine klarere Patientenreise.",
@@ -12,6 +14,13 @@ export const baldaufShowcase = {
 
     heroImage:
       "/baldauf/baldauf-homepage.webp",
+
+    /*
+     * Full-page preview used when the
+     * featured image enters the viewport.
+     */
+    scrollImage:
+      "/images/drbaldaufscreenshot.webp",
 
     heroImageAlt:
       "Website der urologischen Ordination Dr. Bosede Baldauf in Wien",
@@ -27,14 +36,18 @@ export const baldaufShowcase = {
         value: "TOP 10",
         label: "LOKALE SUCHE",
       },
+
       {
         value: "200×",
-        label: "WEBSITE-BESUCHE",
+        label:
+          "WEBSITE-BESUCHE",
       },
+
       {
         value: "28×",
         label: "ANFRAGEN",
       },
+
       {
         value: "100",
         label: "SEO",
@@ -107,9 +120,11 @@ export const baldaufShowcase = {
   },
 
   en: {
-    sectionTitle: "FEATURED PROJECT",
+    sectionTitle:
+      "FEATURED PROJECT",
 
-    projectTitle: "DR. BOSEDE BALDAUF",
+    projectTitle:
+      "DR. BOSEDE BALDAUF",
 
     projectLead:
       "Website relaunch for stronger local visibility, speed and a clearer patient journey.",
@@ -119,6 +134,13 @@ export const baldaufShowcase = {
 
     heroImage:
       "/baldauf/baldauf-homepage.webp",
+
+    /*
+     * Full-page preview used when the
+     * featured image enters the viewport.
+     */
+    scrollImage:
+      "/images/drbaldaufscreenshot.webp",
 
     heroImageAlt:
       "Website of the Dr. Bosede Baldauf urology clinic in Vienna",
@@ -134,14 +156,18 @@ export const baldaufShowcase = {
         value: "TOP 10",
         label: "LOCAL SEARCH",
       },
+
       {
         value: "200×",
-        label: "WEBSITE VISITS",
+        label:
+          "WEBSITE VISITS",
       },
+
       {
         value: "28×",
         label: "ENQUIRIES",
       },
+
       {
         value: "100",
         label: "SEO",
