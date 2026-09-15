@@ -1370,7 +1370,10 @@
       ====================================================== -->
 
       {#if stats}
-        <section class="premium-about" aria-labelledby="premium-about-title">
+        <section
+          class="premium-about"
+          aria-label={problemLanguage === "en" ? "About me" : "Über mich"}
+        >
           <aside
             class="experience-rail"
             aria-label={experienceLabel}
@@ -1433,17 +1436,6 @@
               </div>
 
               <div class="about-image-caption">
-                <h2 id="premium-about-title" class="about-editorial-title">
-                  <span class="about-availability">
-                    <span class="about-availability-pulse" aria-hidden="true"
-                    ></span>
-
-                    <span class="about-title-static">
-                      {resolvedProblemTitle}
-                    </span>
-                  </span>
-                </h2>
-
                 <div class="about-mobile-identity">
                   <span class="profile-name">
                     {profileName}
@@ -1475,10 +1467,6 @@
 
               <div class="about-editorial-figure">
                 <span class="about-reveal-frame" aria-hidden="true"></span>
-
-                <span class="profile-name">
-                  {profileName}
-                </span>
 
                 <span class="profile-role">
                   {#each profileRole.split(/\s*·\s*/) as role}
@@ -1587,18 +1575,6 @@
                 <div class="service-detail-number" aria-hidden="true">
                   {String(index + 1).padStart(2, "0")}
                 </div>
-
-                {#if service.icon}
-                  <div class="service-detail-icon-wrap" aria-hidden="true">
-                    <img
-                      src={service.icon}
-                      alt=""
-                      class="service-detail-icon"
-                      loading="lazy"
-                      decoding="async"
-                    />
-                  </div>
-                {/if}
 
                 <div class="service-detail-heading">
                   <h3>
@@ -1840,6 +1816,7 @@
     color: #111111;
   }
 
+  /* DESKTOP */
   .services-shell {
     --shell-x: 40px;
 
@@ -1849,7 +1826,8 @@
 
     margin: 0 auto;
 
-    padding: 96px var(--shell-x) 140px;
+    /* was 96px */
+    padding: 224px var(--shell-x) 140px;
 
     box-sizing: border-box;
   }
@@ -3527,7 +3505,7 @@
 
     font: inherit;
 
-    font-size: calc(var(--services-component-title-size) - 2px);
+    font-size: calc(var(--services-component-title-size) - 4px);
 
     font-weight: 700;
 
@@ -3645,6 +3623,16 @@
     border-bottom-color: rgba(0, 0, 0, 0.14);
   }
 
+  @media (min-width: 1025px) {
+    :global(body.light) .service-detail-list {
+      border-top: 0;
+
+      border-bottom: 0;
+
+      background: #f5f5f5;
+    }
+  }
+
   .service-detail-panel {
     position: absolute;
 
@@ -3680,6 +3668,16 @@
       opacity 0.2s ease,
       transform 0.26s cubic-bezier(0.16, 1, 0.3, 1),
       visibility 0s linear 0.22s;
+  }
+
+  @media (min-width: 1025px) {
+    :global(body.light) .service-detail-panel {
+      padding: 34px 32px;
+    }
+
+    :global(body.light) .service-detail-number {
+      right: 32px;
+    }
   }
 
   .service-detail-panel.active {
@@ -4105,6 +4103,17 @@
     color: #111111;
   }
 
+  @media (min-width: 1025px) {
+    :global(body.light) .website-tool-card {
+      background: #f5f5f5;
+    }
+
+    :global(body.light) .website-tool-card::before,
+    :global(body.light) .website-tool-card::after {
+      display: none;
+    }
+  }
+
   .website-tool-card-inner {
     width: 100%;
 
@@ -4284,9 +4293,9 @@
 
       width: 90%;
 
-      padding: 84px 0 96px;
+      /* 92px × 2 */
+      padding: 184px 0 96px;
     }
-
     .shell-line,
     .shell-bottom-line {
       display: none;
@@ -4801,6 +4810,12 @@
       --services-title-marker-size: clamp(26.4px, 7.2vw, 32.4px);
 
       width: 100%;
+
+      align-items: center;
+    }
+
+    .services-header-main::before {
+      margin-top: 0;
     }
 
     .services-header h2 {
@@ -5126,6 +5141,20 @@
     .service-trigger,
     .service-trigger-icon {
       transition: none;
+    }
+  }
+
+  /* =========================================================
+   DESKTOP LIGHT MODE
+   ALIGN TO SERVICES WORKSPACE WIDTH
+========================================================= */
+
+  @media (min-width: 1025px) {
+    :global(body.light) .free-tools-section {
+      width: 100%;
+      max-width: 1180px;
+      margin-left: auto;
+      margin-right: auto;
     }
   }
 </style>

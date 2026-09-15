@@ -50,6 +50,7 @@
    * [DE] means the current page is English.
    * [EN] means the current page is German.
    */
+
   let isEnglishPage = $derived(clean(nav.languageLabel).toUpperCase() === "DE");
 
   let navItems = $derived([
@@ -59,18 +60,21 @@
       id: "services",
       title: `Zum Abschnitt ${clean(nav.services)} springen`,
     },
+
     {
       href: nav.projectsLink || "#projects",
       label: clean(nav.projects),
       id: "projects",
       title: `Zum Abschnitt ${clean(nav.projects)} springen`,
     },
+
     {
       href: nav.reviewsLink || "#reviews",
       label: clean(nav.reviews || "Bewertungen"),
       id: "reviews",
       title: `Zum Abschnitt ${clean(nav.reviews || "Bewertungen")} springen`,
     },
+
     {
       href: nav.contactLink || "#contact",
       label: clean(nav.contact),
@@ -79,34 +83,16 @@
     },
   ]);
 
+  /*
+   * Kept here so nothing else in the
+   * component structure needs changing.
+   *
+   * It is no longer rendered as a menu.
+   */
   let projectsMenu = $derived({
     label: clean(nav.projects || (isEnglishPage ? "PROJECTS" : "PROJEKTE")),
 
-    items: isEnglishPage
-      ? [
-          {
-            label: "ALL PROJECTS",
-            href: "/en-2/#projects",
-            title: "View all projects",
-          },
-          {
-            label: "FEATURED PROJECT",
-            href: "/en-2/featured-project/",
-            title: "View the featured project",
-          },
-        ]
-      : [
-          {
-            label: "ALLE PROJEKTE",
-            href: "/#projects",
-            title: "Alle Projekte ansehen",
-          },
-          {
-            label: "REFERENZPROJEKT",
-            href: "/referenzprojekt/",
-            title: "Referenzprojekt ansehen",
-          },
-        ],
+    items: [],
   });
 
   let freebiesMenu = $derived({
@@ -245,7 +231,6 @@
     const dropdownWidth = window.innerWidth <= 640 ? 184 : 200;
 
     const viewportPadding = 12;
-
     const halfDropdownWidth = dropdownWidth / 2;
 
     let centerPosition = triggerRect.left + triggerRect.width / 2;
@@ -275,7 +260,6 @@
     const dropdownWidth = window.innerWidth <= 640 ? 184 : 200;
 
     const viewportPadding = 12;
-
     const halfDropdownWidth = dropdownWidth / 2;
 
     let centerPosition = triggerRect.left + triggerRect.width / 2;
@@ -604,66 +588,24 @@
       </svg>
     </button>
 
-    <!-- DESKTOP / TABLET NAVIGATION -->
+    <!-- =====================================================
+         DESKTOP / TABLET NAVIGATION
+
+         ORDER:
+         SERVICES
+         TOOLS
+         PROJECTS
+         REVIEWS
+         CONTACT
+    ====================================================== -->
 
     <div class="header-right">
       <nav class="main-nav" aria-label="Main navigation">
         {#each navItems as item, index}
-          {#if item.id === "projects"}
-            <div
-              bind:this={projectDropdownElement}
-              class="nav-dropdown"
-              class:open={projectsOpen}
-              style={`--mobile-dropdown-top: ${projectMobileDropdownTop}px; --mobile-dropdown-left: ${projectMobileDropdownLeft}px;`}
-            >
-              <button
-                bind:this={projectDropdownTriggerElement}
-                type="button"
-                class="dropdown-trigger"
-                class:active={activeSection === "projects"}
-                aria-label={`${projectsOpen ? "Close" : "Open"} ${projectsMenu.label} menu`}
-                aria-expanded={projectsOpen}
-                aria-controls="website-projects-dropdown-panel"
-                onclick={toggleProjects}
-              >
-                <span class="menu-label">
-                  {projectsMenu.label}
-                </span>
-
-                <span class="dropdown-arrow" aria-hidden="true"></span>
-              </button>
-
-              <div
-                id="website-projects-dropdown-panel"
-                class="dropdown-panel"
-                aria-hidden={!projectsOpen}
-              >
-                {#each projectsMenu.items as menuItem}
-                  <a
-                    href={menuItem.href}
-                    title={menuItem.title}
-                    onclick={handleDropdownItemClick}
-                  >
-                    <span>
-                      {menuItem.label}
-                    </span>
-                  </a>
-                {/each}
-              </div>
-            </div>
-          {:else}
-            <a
-              href={item.href}
-              title={item.title}
-              class:active={activeSection === item.id}
-              class:contact-nav-link={item.id === "contact"}
-              onclick={(event) => handleNavClick(event, item)}
-            >
-              <span class="menu-label">
-                {item.label}
-              </span>
-            </a>
-          {/if}
+          <!--
+            TOOLS IS INSERTED DIRECTLY
+            BEFORE PROJECTS.
+          -->
 
           {#if index === 1 && freebiesMenu}
             <div
@@ -707,6 +649,23 @@
               </div>
             </div>
           {/if}
+
+          <!--
+            PROJECTS IS NOW JUST A NORMAL LINK.
+            NO DROPDOWN.
+          -->
+
+          <a
+            href={item.href}
+            title={item.title}
+            class:active={activeSection === item.id}
+            class:contact-nav-link={item.id === "contact"}
+            onclick={(event) => handleNavClick(event, item)}
+          >
+            <span class="menu-label">
+              {item.label}
+            </span>
+          </a>
         {/each}
 
         <!-- LANGUAGE -->
@@ -737,6 +696,15 @@
 
   <!-- =======================================================
        MOBILE FULL-SCREEN MENU
+
+       ORDER:
+       SERVICES
+       TOOLS
+         WEBSITE PLANNER
+         WEBSITE AUDIT
+       PROJECTS
+       REVIEWS
+       CONTACT
   ======================================================== -->
 
   <div
@@ -746,33 +714,10 @@
     aria-hidden={!mobileMenuOpen}
   >
     <nav class="mobile-menu-nav" aria-label="Mobile navigation">
-      {#each navItems as item}
-        {#if item.id === "projects"}
-          <section class="mobile-menu-group">
-            <a
-              href={item.href}
-              class="mobile-menu-parent"
-              class:active={activeSection === item.id}
-              tabindex={mobileMenuOpen ? 0 : -1}
-              onclick={(event) => handleMobileNavClick(event, item)}
-            >
-              {projectsMenu.label}
-            </a>
+      {#each navItems as item, index}
+        <!-- TOOLS BEFORE PROJECTS -->
 
-            <div class="mobile-menu-children">
-              {#each projectsMenu.items as menuItem}
-                <a
-                  href={menuItem.href}
-                  title={menuItem.title}
-                  tabindex={mobileMenuOpen ? 0 : -1}
-                  onclick={handleMobileChildClick}
-                >
-                  {menuItem.label}
-                </a>
-              {/each}
-            </div>
-          </section>
-
+        {#if index === 1 && freebiesMenu}
           <section class="mobile-menu-group">
             <div class="mobile-menu-parent mobile-menu-parent-static">
               {freebiesMenu.label}
@@ -791,20 +736,22 @@
               {/each}
             </div>
           </section>
-        {:else}
-          <section class="mobile-menu-group">
-            <a
-              href={item.href}
-              class="mobile-menu-parent"
-              class:active={activeSection === item.id}
-              class:mobile-contact-link={item.id === "contact"}
-              tabindex={mobileMenuOpen ? 0 : -1}
-              onclick={(event) => handleMobileNavClick(event, item)}
-            >
-              {item.label}
-            </a>
-          </section>
         {/if}
+
+        <!-- ALL MAIN ITEMS INCLUDING PROJECTS -->
+
+        <section class="mobile-menu-group">
+          <a
+            href={item.href}
+            class="mobile-menu-parent"
+            class:active={activeSection === item.id}
+            class:mobile-contact-link={item.id === "contact"}
+            tabindex={mobileMenuOpen ? 0 : -1}
+            onclick={(event) => handleMobileNavClick(event, item)}
+          >
+            {item.label}
+          </a>
+        </section>
       {/each}
     </nav>
   </div>
@@ -1261,6 +1208,7 @@
 
   .dropdown-arrow {
     width: 6px;
+
     height: 6px;
 
     margin: 0 0.13em 3px 0.12em;
@@ -1606,11 +1554,6 @@
       text-align: left;
     }
 
-    /*
-     * Natural logo width.
-     * Do NOT stretch ZORA and WEBDESIGN.
-     */
-
     .brand-block {
       width: max-content;
 
@@ -1643,23 +1586,9 @@
       white-space: nowrap;
     }
 
-    /*
-     * Hide incoming page tagline on mobile.
-     * Mobile always uses:
-     * SEO • WEB DESIGN • BRANDING
-     */
-
     .brand-subtext-desktop {
       display: none;
     }
-
-    /*
-     * Same width as compact logo above.
-     *
-     * Individual words remain compact.
-     * Only the spaces between the three
-     * groups expand slightly.
-     */
 
     .brand-subtext-mobile {
       width: 100%;
@@ -1695,10 +1624,6 @@
       color: rgba(0, 0, 0, 0.52);
     }
 
-    /*
-     * The groups themselves remain compact.
-     */
-
     .brand-subtext-mobile span {
       display: inline-block;
 
@@ -1723,6 +1648,7 @@
       z-index: 5102;
 
       width: 44px;
+
       height: 44px;
 
       display: inline-flex;
@@ -1752,6 +1678,7 @@
 
     .mobile-menu-icon {
       width: 30px;
+
       height: 22px;
 
       display: block;
@@ -1797,6 +1724,7 @@
       width: 100vw;
 
       height: 100vh;
+
       height: 100dvh;
 
       display: flex;
@@ -1868,12 +1796,6 @@
     ====================================================== */
 
     .mobile-menu-nav {
-      /*
-       * Extra offset protects space
-       * around the theme switch on the
-       * far-left edge.
-       */
-
       --mobile-menu-inset: clamp(44px, 11vw, 60px);
 
       width: 100%;
