@@ -193,12 +193,6 @@
             class:preview-active={previewActive}
             use:observeFeaturedPreview
           >
-            <!--
-              THUMBNAIL STAYS IN NORMAL DOCUMENT FLOW.
-
-              THIS IS WHAT SETS THE ORIGINAL IMAGE HEIGHT.
-            -->
-
             <img
               class="project-thumbnail"
               src={project.heroImage}
@@ -208,11 +202,6 @@
               loading="eager"
               decoding="async"
             />
-
-            <!--
-              LONG SCREENSHOT SITS ON TOP OF THE THUMBNAIL
-              BUT NEVER CHANGES THE WRAPPER HEIGHT.
-            -->
 
             <img
               class="project-scroll-image"
@@ -258,10 +247,6 @@
           class:preview-active={previewActive}
           use:observeFeaturedPreview
         >
-          <!--
-            ORIGINAL THUMBNAIL DEFINES HEIGHT.
-          -->
-
           <img
             class="project-thumbnail"
             src={project.heroImage}
@@ -271,11 +256,6 @@
             loading="eager"
             decoding="async"
           />
-
-          <!--
-            FULL WEBSITE SCREENSHOT IS CLIPPED
-            TO EXACTLY THE SAME HEIGHT.
-          -->
 
           <img
             class="project-scroll-image"
@@ -415,16 +395,22 @@
                     ></span>
 
                     <!-- =======================================
-                         ANGULAR GRAPH
+                         DESKTOP + TABLET GRAPH
+                         SHARP / ANGULAR
                     ======================================== -->
 
                     <svg
-                      class="graph-svg"
+                      class="graph-svg graph-svg-desktop"
                       viewBox="0 0 1000 320"
                       preserveAspectRatio="none"
                       aria-hidden="true"
                     >
-                      <!-- ENQUIRIES FILL -->
+                      <!-- =====================================
+                           ENQUIRIES FILL
+
+                           Final section:
+                           small dip -> clear upward rise.
+                      ====================================== -->
 
                       <path
                         class="enquiries-fill"
@@ -440,9 +426,9 @@
                           L655 70
                           L725 104
                           L790 55
-                          L855 180
-                          L930 108
-                          L1000 36
+                          L855 78
+                          L930 58
+                          L1000 38
                           L1000 320
                           L0 320
                           Z
@@ -465,13 +451,15 @@
                           L655 70
                           L725 104
                           L790 55
-                          L855 180
-                          L930 108
-                          L1000 36
+                          L855 78
+                          L930 58
+                          L1000 38
                         "
                       ></path>
 
-                      <!-- VISITORS FILL -->
+                      <!-- =====================================
+                           VISITORS FILL
+                      ====================================== -->
 
                       <path
                         class="visitors-fill"
@@ -515,6 +503,116 @@
                           L875 30
                           L930 12
                           L1000 4
+                        "
+                      ></path>
+                    </svg>
+
+                    <!-- =======================================
+                         MOBILE GRAPH
+                         SMOOTH / ROUNDED
+                    ======================================== -->
+
+                    <svg
+                      class="graph-svg graph-svg-mobile"
+                      viewBox="0 0 1000 320"
+                      preserveAspectRatio="none"
+                      aria-hidden="true"
+                    >
+                      <!-- =====================================
+                           MOBILE ENQUIRIES FILL
+                      ====================================== -->
+
+                      <path
+                        class="enquiries-fill"
+                        d="
+                          M0 300
+                          C70 300 150 296 205 286
+                          C245 278 255 195 280 168
+                          C300 150 328 145 350 150
+                          C382 157 400 208 420 225
+                          C445 242 476 180 505 158
+                          C540 132 558 110 585 96
+                          C610 84 635 72 655 70
+                          C685 69 705 92 725 104
+                          C748 116 768 74 790 55
+                          C812 40 835 62 855 78
+                          C880 90 906 69 930 58
+                          C954 48 978 42 1000 38
+                          L1000 320
+                          L0 320
+                          Z
+                        "
+                      ></path>
+
+                      <!-- =====================================
+                           MOBILE ENQUIRIES LINE
+                      ====================================== -->
+
+                      <path
+                        class="enquiries-line mobile-enquiries-line"
+                        d="
+                          M0 300
+                          C70 300 150 296 205 286
+                          C245 278 255 195 280 168
+                          C300 150 328 145 350 150
+                          C382 157 400 208 420 225
+                          C445 242 476 180 505 158
+                          C540 132 558 110 585 96
+                          C610 84 635 72 655 70
+                          C685 69 705 92 725 104
+                          C748 116 768 74 790 55
+                          C812 40 835 62 855 78
+                          C880 90 906 69 930 58
+                          C954 48 978 42 1000 38
+                        "
+                      ></path>
+
+                      <!-- =====================================
+                           MOBILE VISITORS FILL
+                      ====================================== -->
+
+                      <path
+                        class="visitors-fill"
+                        d="
+                          M0 300
+                          C65 299 145 290 205 282
+                          C245 276 272 266 300 260
+                          C334 252 360 246 390 248
+                          C428 251 460 232 490 220
+                          C528 205 552 192 575 180
+                          C608 164 632 143 650 125
+                          C676 102 698 72 715 58
+                          C735 42 752 48 770 50
+                          C790 52 807 28 825 20
+                          C844 11 858 23 875 30
+                          C894 39 912 19 930 12
+                          C952 5 977 6 1000 4
+                          L1000 320
+                          L0 320
+                          Z
+                        "
+                      ></path>
+
+                      <!-- =====================================
+                           MOBILE VISITORS LINE
+                      ====================================== -->
+
+                      <path
+                        class="visitors-line mobile-visitors-line"
+                        d="
+                          M0 300
+                          C65 299 145 290 205 282
+                          C245 276 272 266 300 260
+                          C334 252 360 246 390 248
+                          C428 251 460 232 490 220
+                          C528 205 552 192 575 180
+                          C608 164 632 143 650 125
+                          C676 102 698 72 715 58
+                          C735 42 752 48 770 50
+                          C790 52 807 28 825 20
+                          C844 11 858 23 875 30
+                          C894 39 912 19 930 12
+                          C952 5 977 6 1000 4
                         "
                       ></path>
                     </svg>
@@ -786,12 +884,6 @@
 
   /* =========================================================
      PROJECT IMAGE
-
-     IMPORTANT:
-     NO FIXED HEIGHT.
-     NO ASPECT-RATIO ON WRAPPER.
-
-     THE THUMBNAIL ITSELF DEFINES THE ORIGINAL HEIGHT.
   ========================================================= */
 
   .project-image {
@@ -808,12 +900,6 @@
     box-sizing: border-box;
   }
 
-  /*
-   * NORMAL IMAGE FLOW.
-   *
-   * This is exactly what keeps the image
-   * at the same height it originally had.
-   */
   .project-thumbnail {
     position: relative;
 
@@ -830,12 +916,6 @@
     transition: opacity 0.3s ease;
   }
 
-  /*
-   * THE FULL SCREENSHOT FILLS ONLY
-   * THE THUMBNAIL'S EXISTING VIEWPORT.
-   *
-   * It cannot increase the wrapper height.
-   */
   .project-scroll-image {
     position: absolute;
 
@@ -861,12 +941,6 @@
     transition: opacity 0.3s ease;
   }
 
-  /*
-   * TOP -> BOTTOM WEBSITE SCROLL.
-   *
-   * Same image viewport height
-   * as the normal thumbnail.
-   */
   .project-scroll-image.active {
     opacity: 1;
 
@@ -1283,7 +1357,9 @@
     left: 90%;
   }
 
-  /* SVG */
+  /* =========================================================
+     SVG
+  ========================================================= */
 
   .graph-svg {
     position: absolute;
@@ -1300,7 +1376,22 @@
     overflow: visible;
   }
 
-  /* ENQUIRIES */
+  /*
+   * Desktop / tablet gets the angular graph.
+   * Mobile SVG is hidden until the mobile breakpoint.
+   */
+
+  .graph-svg-desktop {
+    display: block;
+  }
+
+  .graph-svg-mobile {
+    display: none;
+  }
+
+  /* =========================================================
+     ENQUIRIES
+  ========================================================= */
 
   .enquiries-fill {
     fill: rgba(201, 208, 238, 0.11);
@@ -1320,7 +1411,9 @@
     vector-effect: non-scaling-stroke;
   }
 
-  /* VISITORS */
+  /* =========================================================
+     VISITORS
+  ========================================================= */
 
   .visitors-fill {
     fill: rgba(0, 67, 255, 0.22);
@@ -1444,10 +1537,6 @@
 
       display: block;
 
-      /*
-       * NO stretching.
-       * Height comes from thumbnail.
-       */
       align-self: start;
 
       margin-top: 0;
@@ -1492,13 +1581,6 @@
       font-size: 14px;
     }
 
-    /*
-     * IMPORTANT:
-     * Removed the old absolute/stretch rule here.
-     *
-     * The thumbnail now keeps its own original height,
-     * while screenshot scroll remains inside it.
-     */
     .desktop-project-image {
       position: relative;
 
@@ -1603,6 +1685,33 @@
       width: 100%;
 
       margin-top: 28px;
+    }
+
+    /* =====================================================
+       MOBILE GRAPH VERSION
+
+       Desktop angular SVG disappears.
+       Smooth curved SVG becomes visible.
+    ====================================================== */
+
+    .graph-svg-desktop {
+      display: none;
+    }
+
+    .graph-svg-mobile {
+      display: block;
+    }
+
+    /*
+     * Give the mobile lines softer joins/caps.
+     * The actual SVG paths are also Bézier curves.
+     */
+
+    .mobile-enquiries-line,
+    .mobile-visitors-line {
+      stroke-linejoin: round;
+
+      stroke-linecap: round;
     }
 
     /* HEADER STATS */

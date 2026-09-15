@@ -3240,6 +3240,21 @@
     padding-top: 24px;
   }
 
+  /* =========================================================
+   ABOUT EXPERIENCE — DESKTOP
+   Keep experience above image, hide duplicate inside image
+========================================================= */
+
+  @media (min-width: 1025px) {
+    .experience-rail {
+      display: block;
+    }
+
+    .about-experience-stack {
+      display: none;
+    }
+  }
+
   .about-experience-card {
     color: #ffffff;
 
