@@ -50,7 +50,6 @@
    * [DE] means the current page is English.
    * [EN] means the current page is German.
    */
-
   let isEnglishPage = $derived(clean(nav.languageLabel).toUpperCase() === "DE");
 
   let navItems = $derived([
@@ -93,7 +92,7 @@
           {
             label: "FEATURED PROJECT",
             href: "/en-2/featured-project/",
-            title: "View the Eva Eichinger featured project",
+            title: "View the featured project",
           },
         ]
       : [
@@ -105,7 +104,7 @@
           {
             label: "REFERENZPROJEKT",
             href: "/referenzprojekt/",
-            title: "Das Referenzprojekt Eva Eichinger ansehen",
+            title: "Referenzprojekt ansehen",
           },
         ],
   });
@@ -150,6 +149,7 @@
     }
 
     previousBodyOverflow = document.body.style.overflow;
+
     previousHtmlOverflow = document.documentElement.style.overflow;
 
     document.body.style.overflow = "hidden";
@@ -162,6 +162,7 @@
     }
 
     document.body.style.overflow = previousBodyOverflow;
+
     document.documentElement.style.overflow = previousHtmlOverflow;
   }
 
@@ -244,6 +245,7 @@
     const dropdownWidth = window.innerWidth <= 640 ? 184 : 200;
 
     const viewportPadding = 12;
+
     const halfDropdownWidth = dropdownWidth / 2;
 
     let centerPosition = triggerRect.left + triggerRect.width / 2;
@@ -273,6 +275,7 @@
     const dropdownWidth = window.innerWidth <= 640 ? 184 : 200;
 
     const viewportPadding = 12;
+
     const halfDropdownWidth = dropdownWidth / 2;
 
     let centerPosition = triggerRect.left + triggerRect.width / 2;
@@ -560,8 +563,21 @@
           ZORA<span class="brand-dot"></span>WEBDESIGN
         </span>
 
-        <span class="brand-subtext">
+        <!-- DESKTOP / TABLET TAGLINE -->
+
+        <span class="brand-subtext brand-subtext-desktop">
           {clean(nav.tagline)}
+        </span>
+
+        <!-- MOBILE TAGLINE -->
+
+        <span
+          class="brand-subtext-mobile"
+          aria-label="SEO, Web Design, Branding"
+        >
+          <span>SEO</span>
+          <span>WEB DESIGN</span>
+          <span>BRANDING</span>
         </span>
       </a>
     </div>
@@ -825,7 +841,8 @@
 
   .mobile-language-switcher,
   .mobile-menu-toggle,
-  .mobile-menu-overlay {
+  .mobile-menu-overlay,
+  .brand-subtext-mobile {
     display: none;
   }
 
@@ -838,8 +855,11 @@
     fill: none;
 
     stroke: #0043ff;
+
     stroke-width: 1.6;
+
     stroke-linecap: round;
+
     stroke-linejoin: round;
   }
 
@@ -866,6 +886,7 @@
     border-bottom: 0;
 
     backdrop-filter: blur(18px);
+
     -webkit-backdrop-filter: blur(18px);
 
     transition:
@@ -879,6 +900,7 @@
     border-bottom: 0;
 
     backdrop-filter: none;
+
     -webkit-backdrop-filter: none;
   }
 
@@ -937,11 +959,13 @@
     box-sizing: border-box;
 
     border-left: 1px solid rgba(255, 255, 255, 0.08);
+
     border-right: 1px solid rgba(255, 255, 255, 0.08);
   }
 
   :global(body.light) .header-grid {
     border-left-color: rgba(0, 0, 0, 0.1);
+
     border-right-color: rgba(0, 0, 0, 0.1);
   }
 
@@ -1094,7 +1118,7 @@
   }
 
   /* =========================================================
-     BRAND CLICK ANIMATION
+     BRAND CLICK
   ========================================================= */
 
   .brand-clicked .brand {
@@ -1103,34 +1127,6 @@
 
   .brand-clicked .brand-dot {
     animation: dotPulse 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
-  }
-
-  .brand-clicked::after {
-    content: "";
-
-    position: absolute;
-
-    top: 50%;
-    left: -14px;
-
-    width: 34px;
-    height: 34px;
-
-    border: 1px solid rgba(255, 255, 255, 0.32);
-
-    border-radius: 50%;
-
-    opacity: 0;
-
-    transform: translateY(-50%) scale(0.65);
-
-    animation: brandRing 0.6s ease;
-
-    pointer-events: none;
-  }
-
-  :global(body.light) .brand-clicked::after {
-    border-color: rgba(0, 67, 255, 0.28);
   }
 
   @keyframes brandPulse {
@@ -1161,20 +1157,6 @@
     }
   }
 
-  @keyframes brandRing {
-    0% {
-      opacity: 0.45;
-
-      transform: translateY(-50%) scale(0.65);
-    }
-
-    100% {
-      opacity: 0;
-
-      transform: translateY(-50%) scale(1.35);
-    }
-  }
-
   /* =========================================================
      MAIN NAV
   ========================================================= */
@@ -1202,8 +1184,6 @@
 
     text-decoration: none;
 
-    text-transform: none;
-
     transition:
       color 0.2s ease,
       opacity 0.2s ease;
@@ -1230,30 +1210,7 @@
 
     align-items: center;
 
-    gap: 0.32em;
-
     white-space: nowrap;
-  }
-
-  .main-nav > a::after,
-  .main-nav > a:hover::after,
-  .main-nav > a.active::after,
-  .lang-link::after,
-  .lang-link:hover::after,
-  .lang-link.active::after {
-    content: none;
-
-    display: none;
-  }
-
-  .main-nav > a:hover,
-  .main-nav > a.active {
-    color: #ffffff;
-  }
-
-  :global(body.light) .main-nav > a:hover,
-  :global(body.light) .main-nav > a.active {
-    color: #000000;
   }
 
   .menu-label {
@@ -1300,29 +1257,6 @@
     cursor: pointer;
 
     white-space: nowrap;
-
-    -webkit-tap-highlight-color: transparent;
-
-    transition:
-      color 0.2s ease,
-      opacity 0.2s ease,
-      transform 0.22s ease;
-  }
-
-  .dropdown-trigger:hover,
-  .dropdown-trigger.active,
-  .nav-dropdown.open .dropdown-trigger {
-    color: #ffffff;
-  }
-
-  :global(body.light) .dropdown-trigger:hover,
-  :global(body.light) .dropdown-trigger.active,
-  :global(body.light) .nav-dropdown.open .dropdown-trigger {
-    color: #000000;
-  }
-
-  .dropdown-trigger:hover .menu-label {
-    transform: translateY(-1px);
   }
 
   .dropdown-arrow {
@@ -1331,39 +1265,16 @@
 
     margin: 0 0.13em 3px 0.12em;
 
-    display: inline-block;
-
-    flex: 0 0 auto;
-
     border-right: 1.5px solid #0043ff;
+
     border-bottom: 1.5px solid #0043ff;
 
     transform: rotate(45deg);
-
-    transform-origin: center;
-
-    transition:
-      transform 0.2s ease,
-      margin 0.2s ease;
-
-    color: #0043ff;
   }
 
   .nav-dropdown.open .dropdown-arrow {
-    margin-bottom: -2px;
-
     transform: rotate(225deg);
   }
-
-  .dropdown-trigger:focus-visible {
-    outline: 1px solid #0043ff;
-
-    outline-offset: 6px;
-  }
-
-  /* =========================================================
-     DROPDOWN PANEL
-  ========================================================= */
 
   .dropdown-panel {
     position: absolute;
@@ -1371,24 +1282,18 @@
     z-index: 1020;
 
     top: calc(100% - 6px);
+
     left: -12px;
 
     min-width: 220px;
 
     display: grid;
 
-    gap: 0;
-
     padding: 8px 0;
 
     border: 1px solid rgba(255, 255, 255, 0.1);
 
     background: rgba(5, 6, 10, 0.98);
-
-    box-shadow: 0 18px 42px rgba(0, 0, 0, 0.22);
-
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
 
     opacity: 0;
 
@@ -1404,94 +1309,6 @@
       transform 0.18s ease;
   }
 
-  :global(body.light) .dropdown-panel {
-    border-color: rgba(0, 0, 0, 0.12);
-
-    background: rgba(255, 255, 255, 0.99);
-
-    box-shadow: 0 18px 42px rgba(0, 0, 0, 0.1);
-  }
-
-  .dropdown-panel a {
-    min-height: 42px;
-
-    display: inline-flex;
-
-    align-items: center;
-
-    gap: 0.38em;
-
-    padding: 0 14px;
-
-    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-
-    color: #ffffff;
-
-    line-height: 1.2;
-
-    text-decoration: none;
-
-    text-transform: none;
-
-    box-shadow: none;
-
-    transition:
-      background 0.18s ease,
-      color 0.18s ease,
-      padding-left 0.18s ease;
-  }
-
-  :global(body:not(:has(.homepage-footer))) .dropdown-panel a {
-    font-size: 0.84rem;
-
-    font-weight: 600;
-  }
-
-  .dropdown-panel a:last-child {
-    border-bottom: 0;
-  }
-
-  :global(body.light) .dropdown-panel a {
-    border-bottom-color: rgba(0, 0, 0, 0.07);
-
-    color: #000000;
-  }
-
-  .dropdown-panel a:hover,
-  .dropdown-panel a:focus-visible {
-    background: rgba(255, 255, 255, 0.055);
-
-    color: #ffffff;
-
-    padding-left: 17px;
-
-    box-shadow: none;
-  }
-
-  :global(body.light) .dropdown-panel a:hover,
-  :global(body.light) .dropdown-panel a:focus-visible {
-    background: rgba(0, 0, 0, 0.045);
-
-    color: #000000;
-  }
-
-  .dropdown-panel a::after,
-  .dropdown-panel a:hover::after,
-  .dropdown-panel a:focus::after,
-  .dropdown-panel a:focus-visible::after {
-    content: none;
-
-    display: none;
-
-    opacity: 0;
-
-    transform: none;
-  }
-
-  .dropdown-panel a:hover span {
-    transform: none;
-  }
-
   .nav-dropdown.open .dropdown-panel {
     opacity: 1;
 
@@ -1501,6 +1318,34 @@
 
     transform: translateY(0);
   }
+
+  .dropdown-panel a {
+    min-height: 42px;
+
+    display: inline-flex;
+
+    align-items: center;
+
+    padding: 0 14px;
+
+    color: #ffffff;
+
+    text-decoration: none;
+  }
+
+  :global(body.light) .dropdown-panel {
+    background: #ffffff;
+
+    border-color: rgba(0, 0, 0, 0.12);
+  }
+
+  :global(body.light) .dropdown-panel a {
+    color: #000000;
+  }
+
+  /* =========================================================
+     DESKTOP HOVER
+  ========================================================= */
 
   @media (min-width: 901px) and (hover: hover) {
     .nav-dropdown:hover .dropdown-panel,
@@ -1512,13 +1357,6 @@
       pointer-events: auto;
 
       transform: translateY(0);
-    }
-
-    .nav-dropdown:hover .dropdown-arrow,
-    .nav-dropdown:focus-within .dropdown-arrow {
-      margin-bottom: -2px;
-
-      transform: rotate(225deg);
     }
   }
 
@@ -1540,32 +1378,12 @@
     align-items: center;
   }
 
-  :global(body.light) .lang-switch {
-    border-left-color: rgba(0, 0, 0, 0.1);
-  }
-
   .lang-link {
-    position: relative;
-
     display: inline-flex;
 
     align-items: center;
 
     gap: 0.34em;
-
-    white-space: nowrap;
-  }
-
-  .lang-link:hover {
-    color: #ffffff;
-  }
-
-  :global(body.light) .lang-link:hover {
-    color: #000000;
-  }
-
-  .lang-link .language-globe {
-    stroke: #0043ff;
   }
 
   /* =========================================================
@@ -1573,10 +1391,6 @@
   ========================================================= */
 
   @media (max-width: 900px) {
-    .site-header {
-      overflow: visible;
-    }
-
     .site-header::after {
       display: none;
     }
@@ -1585,13 +1399,6 @@
       width: min(100%, calc(100% - 28px));
 
       grid-template-columns: 1fr;
-
-      overflow: visible;
-    }
-
-    .header-grid::before,
-    .header-grid::after {
-      display: none;
     }
 
     .header-left {
@@ -1599,17 +1406,11 @@
 
       padding: 16px 18px;
 
-      border-right: none;
-
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      border-right: 0;
 
       justify-content: center;
 
       text-align: center;
-    }
-
-    :global(body.light) .header-left {
-      border-bottom-color: rgba(0, 0, 0, 0.1);
     }
 
     .header-right {
@@ -1618,13 +1419,9 @@
       padding: 0;
 
       justify-content: center;
-
-      overflow: visible;
     }
 
     .brand-block {
-      max-width: 100%;
-
       align-items: center;
     }
 
@@ -1632,16 +1429,10 @@
       font-size: 1.05rem;
 
       justify-content: center;
-
-      text-align: center;
     }
 
     .brand-subtext {
       text-align: center;
-    }
-
-    :global(body:not(:has(.homepage-footer))) .brand-subtext {
-      font-size: 0.63rem;
     }
 
     .main-nav {
@@ -1660,44 +1451,14 @@
       padding: 14px 18px;
 
       overflow-x: auto;
-      overflow-y: hidden;
 
       white-space: nowrap;
 
       scrollbar-width: none;
-
-      -webkit-overflow-scrolling: touch;
     }
 
     .main-nav::-webkit-scrollbar {
       display: none;
-    }
-
-    .main-nav > a,
-    .dropdown-trigger,
-    .lang-link {
-      flex: 0 0 auto;
-    }
-
-    :global(body:not(:has(.homepage-footer))) .main-nav > a,
-    :global(body:not(:has(.homepage-footer))) .dropdown-trigger,
-    :global(body:not(:has(.homepage-footer))) .lang-link {
-      font-size: 0.82rem;
-
-      font-weight: 600;
-    }
-
-    .main-nav > a:hover .menu-label,
-    .dropdown-trigger:hover .menu-label {
-      transform: translateY(-1px);
-    }
-
-    .nav-dropdown {
-      position: relative;
-
-      min-height: auto;
-
-      flex: 0 0 auto;
     }
 
     .dropdown-panel {
@@ -1706,13 +1467,10 @@
       z-index: 5000;
 
       top: var(--mobile-dropdown-top);
+
       left: var(--mobile-dropdown-left);
 
       width: 200px;
-
-      min-width: 0;
-
-      max-width: calc(100vw - 24px);
 
       transform: translate(-50%, 6px);
     }
@@ -1720,33 +1478,13 @@
     .nav-dropdown.open .dropdown-panel {
       transform: translate(-50%, 0);
     }
-
-    .lang-switch {
-      min-height: auto;
-
-      margin-left: 0;
-
-      padding-left: 16px;
-
-      flex: 0 0 auto;
-    }
-
-    .lang-link {
-      padding: 0;
-    }
   }
 
   /* =========================================================
-     TABLET SUPPORT
+     <=1024 SUPPORT
   ========================================================= */
 
   @media (max-width: 1024px) {
-    .site-header::after,
-    .header-grid::before,
-    .header-grid::after {
-      display: none;
-    }
-
     .header-grid,
     .header-left,
     .lang-switch,
@@ -1757,149 +1495,12 @@
 
     .header-right {
       border-top: 1px solid rgba(255, 255, 255, 0.08);
+
       border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     }
 
     :global(body.light) .header-right {
-      border-top-color: rgba(0, 0, 0, 0.1);
-      border-bottom-color: rgba(0, 0, 0, 0.1);
-    }
-  }
-
-  @media (max-width: 1024px) {
-    .header-grid {
-      grid-template-columns: 1fr;
-    }
-
-    .header-left,
-    .header-right {
-      min-height: auto;
-
-      justify-content: center;
-
-      box-sizing: border-box;
-    }
-
-    .header-left {
-      padding: 16px 12px;
-
-      text-align: center;
-    }
-
-    .header-right {
-      padding: 0;
-    }
-
-    .brand-block {
-      max-width: 100%;
-
-      align-items: center;
-
-      text-align: center;
-    }
-
-    .brand,
-    .brand-subtext {
-      justify-content: center;
-
-      text-align: center;
-    }
-
-    .main-nav {
-      width: 100%;
-
-      min-height: auto;
-
-      box-sizing: border-box;
-
-      justify-content: center;
-
-      padding: 14px 18px;
-
-      gap: 18px;
-    }
-
-    .lang-switch {
-      min-height: auto;
-    }
-  }
-
-  /* =========================================================
-     MOBILE LANGUAGE SWITCH
-  ========================================================= */
-
-  @media (max-width: 640px) {
-    .lang-switch {
-      display: none;
-    }
-
-    .mobile-language-switcher {
-      position: fixed;
-
-      z-index: 5200;
-
-      right: max(14px, env(safe-area-inset-right));
-
-      bottom: max(14px, env(safe-area-inset-bottom));
-
-      width: auto;
-
-      min-width: 48px;
-
-      height: 42px;
-
-      padding: 0 10px;
-
-      display: inline-flex;
-
-      align-items: center;
-
-      justify-content: center;
-
-      gap: 0.3em;
-
-      border: 1px solid rgba(0, 67, 255, 0.82);
-
-      background: rgba(4, 5, 8, 0.9);
-
-      color: #ffffff;
-
-      font-family: inherit;
-
-      line-height: 1;
-
-      text-decoration: none;
-
-      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.24);
-
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-
-      -webkit-tap-highlight-color: transparent;
-    }
-
-    :global(body:not(:has(.homepage-footer))) .mobile-language-switcher {
-      font-size: 0.72rem;
-
-      font-weight: 600;
-    }
-
-    :global(body.light) .mobile-language-switcher {
-      background: rgba(255, 255, 255, 0.96);
-
-      color: #000000;
-
-      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.12);
-    }
-
-    .mobile-language-switcher::after {
-      content: none;
-
-      display: none;
-    }
-
-    .mobile-language-switcher .language-globe {
-      stroke: #0043ff;
+      border-color: rgba(0, 0, 0, 0.1);
     }
   }
 
@@ -1934,8 +1535,8 @@
   }
 
   /* =========================================================
-     MOBILE HAMBURGER
-     ONLY <= 640PX
+     MOBILE ONLY
+     <= 640PX
   ========================================================= */
 
   @media (max-width: 640px) {
@@ -1974,16 +1575,11 @@
 
       padding: 0 clamp(14px, 4vw, 20px);
 
-      box-sizing: border-box;
-
       border: 0;
 
-      /*
-       * Only horizontal line
-       * in mobile menu.
-       */
-
       border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+
+      box-sizing: border-box;
     }
 
     :global(body.light) .header-grid {
@@ -1991,39 +1587,38 @@
     }
 
     /* =====================================================
-       LOGO
+       COMPACT MOBILE LOGO
     ====================================================== */
 
     .header-left {
-      position: relative;
-
-      z-index: 5102;
-
       min-width: 0;
 
       min-height: 72px;
-
-      display: flex;
-
-      align-items: center;
-
-      justify-content: flex-start;
 
       padding: 0;
 
       border: 0;
 
+      display: flex;
+
+      justify-content: flex-start;
+
       text-align: left;
     }
 
-    .brand-block {
-      width: clamp(142px, 39vw, 168px);
+    /*
+     * Natural logo width.
+     * Do NOT stretch ZORA and WEBDESIGN.
+     */
 
-      max-width: none;
+    .brand-block {
+      width: max-content;
+
+      max-width: calc(100vw - 90px);
 
       display: inline-flex;
 
-      align-items: stretch;
+      align-items: flex-start;
 
       gap: 5px;
 
@@ -2031,41 +1626,83 @@
     }
 
     .brand {
+      width: auto;
+
+      display: inline-flex;
+
+      justify-content: flex-start;
+
+      align-items: center;
+
+      gap: 0.34em;
+
+      font-size: clamp(0.82rem, 3.35vw, 0.96rem);
+
+      letter-spacing: 0.005em;
+
+      white-space: nowrap;
+    }
+
+    /*
+     * Hide incoming page tagline on mobile.
+     * Mobile always uses:
+     * SEO • WEB DESIGN • BRANDING
+     */
+
+    .brand-subtext-desktop {
+      display: none;
+    }
+
+    /*
+     * Same width as compact logo above.
+     *
+     * Individual words remain compact.
+     * Only the spaces between the three
+     * groups expand slightly.
+     */
+
+    .brand-subtext-mobile {
       width: 100%;
+
+      display: flex;
+
+      align-items: center;
 
       justify-content: space-between;
 
-      gap: 0;
-
-      font-size: clamp(0.79rem, 3.25vw, 0.96rem);
-
-      text-align: left;
-    }
-
-    .brand-subtext {
-      width: 100%;
-
-      display: block;
+      gap: 4px;
 
       margin: 0;
 
-      white-space: nowrap;
+      color: rgba(255, 255, 255, 0.46);
 
-      overflow: visible;
-
-      text-align: justify;
-      text-align-last: justify;
-
-      letter-spacing: 0;
-
-      line-height: 1.15;
-    }
-
-    :global(body:has(.homepage-footer)) .brand-subtext,
-    :global(body:not(:has(.homepage-footer))) .brand-subtext {
-      font-size: clamp(0.43rem, 1.62vw, 0.51rem);
+      font-size: clamp(0.42rem, 1.55vw, 0.49rem);
 
       font-weight: 500;
+
+      line-height: 1;
+
+      letter-spacing: 0.015em;
+
+      white-space: nowrap;
+
+      text-transform: uppercase;
+
+      box-sizing: border-box;
+    }
+
+    :global(body.light) .brand-subtext-mobile {
+      color: rgba(0, 0, 0, 0.52);
+    }
+
+    /*
+     * The groups themselves remain compact.
+     */
+
+    .brand-subtext-mobile span {
+      display: inline-block;
+
+      white-space: nowrap;
     }
 
     /* =====================================================
@@ -2077,7 +1714,7 @@
     }
 
     /* =====================================================
-       HAMBURGER
+       TWO-LINE HAMBURGER
     ====================================================== */
 
     .mobile-menu-toggle {
@@ -2138,14 +1775,6 @@
       transition: transform 0.38s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    .mobile-menu-line-one {
-      transform: translateY(0) rotate(0);
-    }
-
-    .mobile-menu-line-two {
-      transform: translateY(0) rotate(0);
-    }
-
     .mobile-menu-toggle.open .mobile-menu-line-one {
       transform: translateY(5px) rotate(45deg);
     }
@@ -2155,7 +1784,7 @@
     }
 
     /* =====================================================
-       FULL SCREEN MENU
+       FULL VIEWPORT MENU
     ====================================================== */
 
     .mobile-menu-overlay {
@@ -2174,17 +1803,13 @@
 
       flex-direction: column;
 
-      /*
-       * Header occupies 72px.
-       * Menu uses everything beneath.
-       */
-
       padding: calc(72px + env(safe-area-inset-top)) clamp(18px, 5vw, 24px)
         calc(18px + env(safe-area-inset-bottom));
 
       box-sizing: border-box;
 
       overflow-x: hidden;
+
       overflow-y: auto;
 
       overscroll-behavior: contain;
@@ -2238,16 +1863,20 @@
 
     /* =====================================================
        MENU
-       RIGHT ALIGNED + VERTICALLY CENTERED
+       LEFT ALIGNED
+       VERTICALLY CENTERED
     ====================================================== */
 
     .mobile-menu-nav {
-      width: 100%;
-
       /*
-       * This consumes the full area below
-       * the 72px header.
+       * Extra offset protects space
+       * around the theme switch on the
+       * far-left edge.
        */
+
+      --mobile-menu-inset: clamp(44px, 11vw, 60px);
+
+      width: 100%;
 
       flex: 1;
 
@@ -2255,28 +1884,20 @@
 
       flex-direction: column;
 
-      /*
-       * Vertically center all menu groups
-       * inside available viewport space.
-       */
-
       justify-content: center;
 
-      /*
-       * Move menu to right.
-       */
-
-      align-items: flex-end;
+      align-items: flex-start;
 
       gap: clamp(21px, 4.6vh, 34px);
 
       margin: 0;
 
-      padding: clamp(18px, 3vh, 28px) 0;
+      padding: clamp(18px, 3vh, 28px) 0 clamp(18px, 3vh, 28px)
+        var(--mobile-menu-inset);
 
       box-sizing: border-box;
 
-      text-align: right;
+      text-align: left;
     }
 
     .mobile-menu-group {
@@ -2286,7 +1907,7 @@
 
       flex-direction: column;
 
-      align-items: flex-end;
+      align-items: flex-start;
 
       margin: 0;
 
@@ -2294,15 +1915,11 @@
 
       border: 0;
 
-      text-align: right;
-    }
-
-    .mobile-menu-group:last-child {
-      border: 0;
+      text-align: left;
     }
 
     /* =====================================================
-       PARENTS
+       PARENT ITEMS
     ====================================================== */
 
     .mobile-menu-parent {
@@ -2326,7 +1943,7 @@
 
       letter-spacing: -0.04em;
 
-      text-align: right;
+      text-align: left;
 
       text-decoration: none;
 
@@ -2342,16 +1959,12 @@
       opacity: 0.65;
     }
 
-    .mobile-menu-parent.active {
-      color: inherit;
-    }
-
     .mobile-menu-parent-static {
       cursor: default;
     }
 
     /* =====================================================
-       CONTACT UNDERLINE
+       CONTACT
     ====================================================== */
 
     .mobile-menu-parent.mobile-contact-link {
@@ -2377,19 +1990,15 @@
 
       flex-direction: column;
 
-      align-items: flex-end;
+      align-items: flex-start;
 
-      /*
-       * Slightly more space from parent.
-       */
-
-      gap: 12px;
+      gap: 13px;
 
       margin-top: 13px;
 
       padding: 0;
 
-      text-align: right;
+      text-align: left;
     }
 
     .mobile-menu-children a {
@@ -2405,19 +2014,15 @@
 
       color: rgba(255, 255, 255, 0.5);
 
-      /*
-       * Slightly larger than before.
-       */
-
-      font-size: clamp(0.72rem, 3vw, 0.84rem);
+      font-size: clamp(0.73rem, 3vw, 0.85rem);
 
       font-weight: 600;
 
       line-height: 1.4;
 
-      letter-spacing: 0.04em;
+      letter-spacing: 0.035em;
 
-      text-align: right;
+      text-align: left;
 
       text-decoration: none;
 
@@ -2443,24 +2048,71 @@
     :global(body.light) .mobile-menu-children a:focus-visible {
       color: #000000;
     }
+
+    /* =====================================================
+       MOBILE LANGUAGE SWITCH
+    ====================================================== */
+
+    .lang-switch {
+      display: none;
+    }
+
+    .mobile-language-switcher {
+      position: fixed;
+
+      z-index: 5200;
+
+      right: max(14px, env(safe-area-inset-right));
+
+      bottom: max(14px, env(safe-area-inset-bottom));
+
+      min-width: 48px;
+
+      height: 42px;
+
+      padding: 0 10px;
+
+      display: inline-flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      gap: 0.3em;
+
+      border: 1px solid rgba(0, 67, 255, 0.82);
+
+      background: rgba(4, 5, 8, 0.9);
+
+      color: #ffffff;
+
+      text-decoration: none;
+
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.24);
+
+      backdrop-filter: blur(14px);
+
+      -webkit-backdrop-filter: blur(14px);
+    }
+
+    :global(body.light) .mobile-language-switcher {
+      background: rgba(255, 255, 255, 0.96);
+
+      color: #000000;
+    }
   }
 
   /* =========================================================
-     SHORT MOBILE SCREENS
+     SHORT MOBILE VIEWPORT
   ========================================================= */
 
   @media (max-width: 640px) and (max-height: 720px) {
     .mobile-menu-nav {
-      /*
-       * Still centered, but reduce gaps
-       * enough to fit short iPhones.
-       */
-
-      justify-content: center;
-
       gap: 16px;
 
-      padding: 12px 0;
+      padding-top: 12px;
+
+      padding-bottom: 12px;
     }
 
     .mobile-menu-parent {
@@ -2470,11 +2122,11 @@
     .mobile-menu-children {
       margin-top: 8px;
 
-      gap: 8px;
+      gap: 9px;
     }
 
     .mobile-menu-children a {
-      font-size: clamp(0.68rem, 2.7vw, 0.77rem);
+      font-size: clamp(0.68rem, 2.7vw, 0.78rem);
     }
   }
 

@@ -28,7 +28,7 @@
   });
 
   const nav = {
-    tagline: "SEO • WEBDESIGN • WORDPRESS",
+    tagline: "SEO • Webdesign • Branding",
 
     services: "[LEISTUNGEN]",
     projects: "[PROJEKTE]",
