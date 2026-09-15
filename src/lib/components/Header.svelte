@@ -19,7 +19,7 @@
   } = $props();
 
   function clean(text) {
-    return String(text ?? "").replace(/[**\[\]***]/g, "");
+    return String(text ?? "").replace(/[\*\[\]]/g, "");
   }
 
   let activeSection = $state("");
@@ -27,6 +27,9 @@
 
   let freebiesOpen = $state(false);
   let projectsOpen = $state(false);
+
+  let mobileMenuOpen = $state(false);
+  let mobileMenuButtonElement = $state(null);
 
   let dropdownElement = $state(null);
   let dropdownTriggerElement = $state(null);
@@ -40,10 +43,14 @@
   let projectMobileDropdownTop = $state(0);
   let projectMobileDropdownLeft = $state(0);
 
+  let previousBodyOverflow = "";
+  let previousHtmlOverflow = "";
+
   /*
    * [DE] means the current page is English.
    * [EN] means the current page is German.
    */
+
   let isEnglishPage = $derived(clean(nav.languageLabel).toUpperCase() === "DE");
 
   let navItems = $derived([
@@ -75,6 +82,7 @@
 
   let projectsMenu = $derived({
     label: clean(nav.projects || (isEnglishPage ? "PROJECTS" : "PROJEKTE")),
+
     items: isEnglishPage
       ? [
           {
@@ -104,6 +112,7 @@
 
   let freebiesMenu = $derived({
     label: "TOOLS",
+
     items: isEnglishPage
       ? [
           {
@@ -131,9 +140,88 @@
         ],
   });
 
+  /* =========================================================
+     MOBILE MENU
+  ========================================================= */
+
+  function lockMobileScroll() {
+    if (typeof document === "undefined") {
+      return;
+    }
+
+    previousBodyOverflow = document.body.style.overflow;
+    previousHtmlOverflow = document.documentElement.style.overflow;
+
+    document.body.style.overflow = "hidden";
+    document.documentElement.style.overflow = "hidden";
+  }
+
+  function unlockMobileScroll() {
+    if (typeof document === "undefined") {
+      return;
+    }
+
+    document.body.style.overflow = previousBodyOverflow;
+    document.documentElement.style.overflow = previousHtmlOverflow;
+  }
+
+  function openMobileMenu() {
+    if (mobileMenuOpen) {
+      return;
+    }
+
+    closeFreebies();
+    closeProjects();
+
+    mobileMenuOpen = true;
+
+    lockMobileScroll();
+  }
+
+  function closeMobileMenu() {
+    if (!mobileMenuOpen) {
+      return;
+    }
+
+    mobileMenuOpen = false;
+
+    unlockMobileScroll();
+  }
+
+  function toggleMobileMenu() {
+    if (mobileMenuOpen) {
+      closeMobileMenu();
+    } else {
+      openMobileMenu();
+    }
+  }
+
+  function handleMobileNavClick(event, item) {
+    closeMobileMenu();
+    closeFreebies();
+    closeProjects();
+
+    if (!item?.href?.startsWith("#")) {
+      return;
+    }
+
+    scrollToSection(event, item.id);
+  }
+
+  function handleMobileChildClick() {
+    closeMobileMenu();
+    closeFreebies();
+    closeProjects();
+  }
+
+  /* =========================================================
+     BRAND
+  ========================================================= */
+
   function animateBrand() {
     brandClicked = true;
 
+    closeMobileMenu();
     closeFreebies();
     closeProjects();
 
@@ -154,6 +242,7 @@
     const triggerRect = dropdownTriggerElement.getBoundingClientRect();
 
     const dropdownWidth = window.innerWidth <= 640 ? 184 : 200;
+
     const viewportPadding = 12;
     const halfDropdownWidth = dropdownWidth / 2;
 
@@ -269,7 +358,21 @@
   }
 
   function handleDocumentKeyDown(event) {
-    if (event.key !== "Escape" || (!freebiesOpen && !projectsOpen)) {
+    if (event.key !== "Escape") {
+      return;
+    }
+
+    if (mobileMenuOpen) {
+      closeMobileMenu();
+
+      requestAnimationFrame(() => {
+        mobileMenuButtonElement?.focus();
+      });
+
+      return;
+    }
+
+    if (!freebiesOpen && !projectsOpen) {
       return;
     }
 
@@ -284,6 +387,10 @@
   }
 
   function handleViewportChange() {
+    if (mobileMenuOpen && window.innerWidth > 640) {
+      closeMobileMenu();
+    }
+
     if (!freebiesOpen && !projectsOpen) {
       return;
     }
@@ -422,6 +529,8 @@
     return () => {
       observer.disconnect();
 
+      unlockMobileScroll();
+
       window.removeEventListener("hashchange", setActiveFromHash);
 
       window.removeEventListener("resize", handleViewportChange);
@@ -435,7 +544,7 @@
   });
 </script>
 
-<header class="site-header">
+<header class="site-header" class:mobile-menu-open={mobileMenuOpen}>
   <div class="header-grid">
     <!-- LOGO -->
 
@@ -457,7 +566,29 @@
       </a>
     </div>
 
-    <!-- NAVIGATION -->
+    <!-- MOBILE HAMBURGER -->
+
+    <button
+      bind:this={mobileMenuButtonElement}
+      class="mobile-menu-toggle"
+      class:open={mobileMenuOpen}
+      type="button"
+      aria-label={mobileMenuOpen
+        ? "Close navigation menu"
+        : "Open navigation menu"}
+      aria-expanded={mobileMenuOpen}
+      aria-controls="mobile-navigation"
+      onclick={toggleMobileMenu}
+    >
+      <svg class="mobile-menu-icon" viewBox="0 0 32 24" aria-hidden="true">
+        <path class="mobile-menu-line mobile-menu-line-one" d="M3 7H29"></path>
+
+        <path class="mobile-menu-line mobile-menu-line-two" d="M10 17H29"
+        ></path>
+      </svg>
+    </button>
+
+    <!-- DESKTOP / TABLET NAVIGATION -->
 
     <div class="header-right">
       <nav class="main-nav" aria-label="Main navigation">
@@ -587,6 +718,80 @@
       </nav>
     </div>
   </div>
+
+  <!-- =======================================================
+       MOBILE FULL-SCREEN MENU
+  ======================================================== -->
+
+  <div
+    id="mobile-navigation"
+    class="mobile-menu-overlay"
+    class:open={mobileMenuOpen}
+    aria-hidden={!mobileMenuOpen}
+  >
+    <nav class="mobile-menu-nav" aria-label="Mobile navigation">
+      {#each navItems as item}
+        {#if item.id === "projects"}
+          <section class="mobile-menu-group">
+            <a
+              href={item.href}
+              class="mobile-menu-parent"
+              class:active={activeSection === item.id}
+              tabindex={mobileMenuOpen ? 0 : -1}
+              onclick={(event) => handleMobileNavClick(event, item)}
+            >
+              {projectsMenu.label}
+            </a>
+
+            <div class="mobile-menu-children">
+              {#each projectsMenu.items as menuItem}
+                <a
+                  href={menuItem.href}
+                  title={menuItem.title}
+                  tabindex={mobileMenuOpen ? 0 : -1}
+                  onclick={handleMobileChildClick}
+                >
+                  {menuItem.label}
+                </a>
+              {/each}
+            </div>
+          </section>
+
+          <section class="mobile-menu-group">
+            <div class="mobile-menu-parent mobile-menu-parent-static">
+              {freebiesMenu.label}
+            </div>
+
+            <div class="mobile-menu-children">
+              {#each freebiesMenu.items as menuItem}
+                <a
+                  href={menuItem.href}
+                  title={menuItem.title}
+                  tabindex={mobileMenuOpen ? 0 : -1}
+                  onclick={handleMobileChildClick}
+                >
+                  {menuItem.label}
+                </a>
+              {/each}
+            </div>
+          </section>
+        {:else}
+          <section class="mobile-menu-group">
+            <a
+              href={item.href}
+              class="mobile-menu-parent"
+              class:active={activeSection === item.id}
+              class:mobile-contact-link={item.id === "contact"}
+              tabindex={mobileMenuOpen ? 0 : -1}
+              onclick={(event) => handleMobileNavClick(event, item)}
+            >
+              {item.label}
+            </a>
+          </section>
+        {/if}
+      {/each}
+    </nav>
+  </div>
 </header>
 
 <!-- MOBILE LANGUAGE SWITCH -->
@@ -618,15 +823,20 @@
      SHARED
   ========================================================= */
 
-  .mobile-language-switcher {
+  .mobile-language-switcher,
+  .mobile-menu-toggle,
+  .mobile-menu-overlay {
     display: none;
   }
 
   .language-globe {
     width: 15px;
     height: 15px;
+
     flex: 0 0 auto;
+
     fill: none;
+
     stroke: #0043ff;
     stroke-width: 1.6;
     stroke-linecap: round;
@@ -639,8 +849,11 @@
 
   .site-header {
     position: sticky;
+
     top: 0;
+
     z-index: 1000;
+
     width: 100%;
 
     background: radial-gradient(
@@ -650,11 +863,6 @@
       ),
       linear-gradient(180deg, rgba(9, 10, 14, 0.96), rgba(4, 5, 8, 0.94));
 
-    /*
-     * IMPORTANT:
-     * No full-browser-width bottom border.
-     * Desktop bottom line is created with ::after.
-     */
     border-bottom: 0;
 
     backdrop-filter: blur(18px);
@@ -667,6 +875,7 @@
 
   :global(body.light) .site-header {
     background: #ffffff;
+
     border-bottom: 0;
 
     backdrop-filter: none;
@@ -675,15 +884,15 @@
 
   /* =========================================================
      HEADER BOTTOM LINE
-     SAME WIDTH AS HERO + SERVICES
-     DESKTOP ONLY
   ========================================================= */
 
   .site-header::after {
     content: "";
 
     position: absolute;
+
     z-index: 2;
+
     left: 50%;
     bottom: 0;
 
@@ -694,6 +903,7 @@
     background: rgba(255, 255, 255, 0.1);
 
     transform: translateX(-50%);
+
     pointer-events: none;
 
     transition: background 0.3s ease;
@@ -705,7 +915,6 @@
 
   /* =========================================================
      HEADER GRID
-     SAME DESKTOP WIDTH AS HERO + SERVICES
   ========================================================= */
 
   .header-grid {
@@ -714,27 +923,7 @@
     width: min(1540px, calc(100% - 32px));
 
     min-height: 78px;
-    margin: 0 auto;
 
-    display: grid;
-
-    grid-template-columns:
-      1fr
-      auto;
-
-    align-items: stretch;
-  }
-
-  /* =========================================================
-     OUTER VERTICAL LINES
-  ========================================================= */
-
-  .header-grid {
-    position: relative;
-
-    width: min(1540px, calc(100% - 32px));
-
-    min-height: 78px;
     margin: 0 auto;
 
     display: grid;
@@ -748,13 +937,11 @@
     box-sizing: border-box;
 
     border-left: 1px solid rgba(255, 255, 255, 0.08);
-
     border-right: 1px solid rgba(255, 255, 255, 0.08);
   }
 
   :global(body.light) .header-grid {
     border-left-color: rgba(0, 0, 0, 0.1);
-
     border-right-color: rgba(0, 0, 0, 0.1);
   }
 
@@ -763,12 +950,9 @@
     min-height: 78px;
 
     display: flex;
+
     align-items: center;
   }
-
-  /* =========================================================
-     LOGO / NAV SEPARATOR
-  ========================================================= */
 
   .header-left {
     padding: 0 24px;
@@ -782,6 +966,7 @@
 
   .header-right {
     padding: 0 24px;
+
     justify-content: flex-end;
   }
 
@@ -791,17 +976,21 @@
 
   .brand-block {
     position: relative;
+
     isolation: isolate;
 
     max-width: 380px;
 
     display: inline-flex;
+
     flex-direction: column;
+
     justify-content: center;
 
     gap: 5px;
 
     color: inherit;
+
     text-decoration: none;
 
     -webkit-tap-highlight-color: transparent;
@@ -809,6 +998,7 @@
 
   .brand {
     display: inline-flex;
+
     align-items: center;
 
     gap: 0.42em;
@@ -816,8 +1006,11 @@
     color: #ffffff;
 
     font-size: 1.18rem;
+
     font-weight: 600;
+
     line-height: 1;
+
     letter-spacing: 0.015em;
 
     transition:
@@ -838,6 +1031,7 @@
     border-radius: 50%;
 
     display: inline-block;
+
     flex-shrink: 0;
 
     background: #0043ff;
@@ -869,6 +1063,7 @@
     color: rgba(255, 255, 255, 0.46);
 
     line-height: 1.2;
+
     letter-spacing: 0.08em;
 
     text-transform: uppercase;
@@ -880,6 +1075,7 @@
 
   :global(body:not(:has(.homepage-footer))) .brand-subtext {
     font-size: 0.66rem;
+
     font-weight: 500;
   }
 
@@ -987,6 +1183,7 @@
     min-height: 78px;
 
     display: flex;
+
     align-items: center;
 
     gap: 28px;
@@ -1004,6 +1201,7 @@
     letter-spacing: -0.005em;
 
     text-decoration: none;
+
     text-transform: none;
 
     transition:
@@ -1015,6 +1213,7 @@
   :global(body:not(:has(.homepage-footer))) .dropdown-trigger,
   :global(body:not(:has(.homepage-footer))) .lang-link {
     font-size: 0.96rem;
+
     font-weight: 600;
   }
 
@@ -1024,24 +1223,17 @@
     color: #000000;
   }
 
-  /* =========================================================
-     NORMAL MENU ITEMS
-  ========================================================= */
-
   .main-nav > a {
     position: relative;
 
     display: inline-flex;
+
     align-items: center;
 
     gap: 0.32em;
 
     white-space: nowrap;
   }
-
-  /*
-   * NO BLUE HOVER UNDERLINE
-   */
 
   .main-nav > a::after,
   .main-nav > a:hover::after,
@@ -1050,6 +1242,7 @@
   .lang-link:hover::after,
   .lang-link.active::after {
     content: none;
+
     display: none;
   }
 
@@ -1076,7 +1269,7 @@
   }
 
   /* =========================================================
-     DROPDOWN WRAPPER
+     DROPDOWN
   ========================================================= */
 
   .nav-dropdown {
@@ -1085,17 +1278,15 @@
     min-height: 78px;
 
     display: flex;
+
     align-items: center;
   }
-
-  /* =========================================================
-     DROPDOWN TRIGGER
-  ========================================================= */
 
   .dropdown-trigger {
     position: relative;
 
     display: inline-flex;
+
     align-items: center;
 
     gap: 0.32em;
@@ -1134,10 +1325,6 @@
     transform: translateY(-1px);
   }
 
-  /* =========================================================
-     BLUE DROPDOWN ARROW
-  ========================================================= */
-
   .dropdown-arrow {
     width: 6px;
     height: 6px;
@@ -1145,10 +1332,10 @@
     margin: 0 0.13em 3px 0.12em;
 
     display: inline-block;
+
     flex: 0 0 auto;
 
     border-right: 1.5px solid #0043ff;
-
     border-bottom: 1.5px solid #0043ff;
 
     transform: rotate(45deg);
@@ -1176,15 +1363,14 @@
 
   /* =========================================================
      DROPDOWN PANEL
-     NEUTRAL ONLY
   ========================================================= */
 
   .dropdown-panel {
     position: absolute;
+
     z-index: 1020;
 
     top: calc(100% - 6px);
-
     left: -12px;
 
     min-width: 220px;
@@ -1202,7 +1388,6 @@
     box-shadow: 0 18px 42px rgba(0, 0, 0, 0.22);
 
     backdrop-filter: blur(10px);
-
     -webkit-backdrop-filter: blur(10px);
 
     opacity: 0;
@@ -1231,6 +1416,7 @@
     min-height: 42px;
 
     display: inline-flex;
+
     align-items: center;
 
     gap: 0.38em;
@@ -1244,6 +1430,7 @@
     line-height: 1.2;
 
     text-decoration: none;
+
     text-transform: none;
 
     box-shadow: none;
@@ -1256,6 +1443,7 @@
 
   :global(body:not(:has(.homepage-footer))) .dropdown-panel a {
     font-size: 0.84rem;
+
     font-weight: 600;
   }
 
@@ -1314,10 +1502,6 @@
     transform: translateY(0);
   }
 
-  /* =========================================================
-     DESKTOP DROPDOWN HOVER
-  ========================================================= */
-
   @media (min-width: 901px) and (hover: hover) {
     .nav-dropdown:hover .dropdown-panel,
     .nav-dropdown:focus-within .dropdown-panel {
@@ -1339,7 +1523,7 @@
   }
 
   /* =========================================================
-     LANGUAGE SWITCH
+     LANGUAGE
   ========================================================= */
 
   .lang-switch {
@@ -1352,6 +1536,7 @@
     border-left: 1px solid rgba(255, 255, 255, 0.08);
 
     display: flex;
+
     align-items: center;
   }
 
@@ -1363,6 +1548,7 @@
     position: relative;
 
     display: inline-flex;
+
     align-items: center;
 
     gap: 0.34em;
@@ -1391,11 +1577,6 @@
       overflow: visible;
     }
 
-    /*
-     * Desktop architectural bottom line
-     * is not needed on tablet/mobile.
-     */
-
     .site-header::after {
       display: none;
     }
@@ -1408,19 +1589,10 @@
       overflow: visible;
     }
 
-    /*
-     * Desktop outer edge rails disappear.
-     */
-
     .header-grid::before,
     .header-grid::after {
       display: none;
     }
-
-    /*
-     * Tablet separator between logo
-     * and navigation remains.
-     */
 
     .header-left {
       min-height: auto;
@@ -1511,6 +1683,7 @@
     :global(body:not(:has(.homepage-footer))) .dropdown-trigger,
     :global(body:not(:has(.homepage-footer))) .lang-link {
       font-size: 0.82rem;
+
       font-weight: 600;
     }
 
@@ -1533,7 +1706,6 @@
       z-index: 5000;
 
       top: var(--mobile-dropdown-top);
-
       left: var(--mobile-dropdown-left);
 
       width: 200px;
@@ -1565,245 +1737,8 @@
   }
 
   /* =========================================================
-     MOBILE
-     CLAMPED FOR SMALLER VIEWPORTS
+     TABLET SUPPORT
   ========================================================= */
-
-  @media (max-width: 640px) {
-    .site-header {
-      position: sticky;
-    }
-
-    .header-grid {
-      width: 100%;
-    }
-
-    .header-left {
-      padding: 14px 12px;
-    }
-
-    .header-right {
-      padding: 0;
-    }
-
-    .brand {
-      font-size: 0.88rem;
-
-      justify-content: center;
-
-      text-align: center;
-    }
-
-    .brand-subtext {
-      letter-spacing: 0.06em;
-
-      text-align: center;
-    }
-
-    :global(body:not(:has(.homepage-footer))) .brand-subtext {
-      font-size: 0.61rem;
-    }
-
-    /*
-     * MOBILE CLAMP:
-     *
-     * The navigation spacing now progressively
-     * gets smaller as the screen gets narrower.
-     *
-     * safe center keeps the centered layout while
-     * preventing inaccessible clipped content if
-     * an exceptionally narrow viewport still overflows.
-     */
-
-    .main-nav {
-      gap: clamp(6px, 2vw, 13px);
-
-      padding-block: clamp(12px, 3.8vw, 18px);
-
-      padding-inline: clamp(6px, 2vw, 10px);
-
-      justify-content: safe center;
-    }
-
-    /*
-     * MOBILE FONT CLAMP
-     */
-
-    :global(body:not(:has(.homepage-footer))) .main-nav > a,
-    :global(body:not(:has(.homepage-footer))) .dropdown-trigger {
-      font-size: clamp(0.58rem, 2.7vw, 0.75rem);
-
-      font-weight: 600;
-    }
-
-    /*
-     * MOBILE DROPDOWN TRIGGER SPACING
-     */
-
-    .dropdown-trigger {
-      gap: clamp(2px, 0.7vw, 4px);
-    }
-
-    /*
-     * MOBILE ARROW CLAMP
-     */
-
-    .dropdown-arrow {
-      width: clamp(4px, 1.2vw, 5px);
-
-      height: clamp(4px, 1.2vw, 5px);
-
-      margin: 0 clamp(0px, 0.2vw, 1px) 3px clamp(0px, 0.2vw, 1px);
-
-      border-right-width: 1.4px;
-
-      border-bottom-width: 1.4px;
-    }
-
-    .dropdown-panel {
-      width: 184px;
-    }
-
-    .dropdown-panel a {
-      min-height: 42px;
-
-      padding: 0 13px;
-    }
-
-    :global(body:not(:has(.homepage-footer))) .dropdown-panel a {
-      font-size: clamp(0.66rem, 2.7vw, 0.8rem);
-
-      font-weight: 600;
-    }
-
-    /* =====================================================
-       HIDE REGULAR LANGUAGE SWITCH
-    ====================================================== */
-
-    .lang-switch {
-      display: none;
-    }
-
-    /* =====================================================
-       FIXED MOBILE LANGUAGE SWITCH
-    ====================================================== */
-
-    .mobile-language-switcher {
-      position: fixed;
-
-      z-index: 1200;
-
-      right: max(14px, env(safe-area-inset-right));
-
-      bottom: max(14px, env(safe-area-inset-bottom));
-
-      width: auto;
-
-      min-width: 48px;
-
-      height: 42px;
-
-      padding: 0 10px;
-
-      display: inline-flex;
-
-      align-items: center;
-
-      justify-content: center;
-
-      gap: 0.3em;
-
-      border: 1px solid rgba(0, 67, 255, 0.82);
-
-      background: rgba(4, 5, 8, 0.9);
-
-      color: #ffffff;
-
-      font-family: inherit;
-
-      line-height: 1;
-
-      letter-spacing: 0;
-
-      text-decoration: none;
-
-      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.24);
-
-      backdrop-filter: blur(14px);
-
-      -webkit-backdrop-filter: blur(14px);
-
-      -webkit-tap-highlight-color: transparent;
-
-      transition:
-        color 0.2s ease,
-        border-color 0.2s ease,
-        background 0.2s ease,
-        transform 0.2s ease;
-    }
-
-    :global(body:not(:has(.homepage-footer))) .mobile-language-switcher {
-      font-size: 0.72rem;
-
-      font-weight: 600;
-    }
-
-    .mobile-language-switcher:hover {
-      color: #ffffff;
-
-      transform: translateY(-2px);
-    }
-
-    :global(body.light) .mobile-language-switcher {
-      background: rgba(255, 255, 255, 0.96);
-
-      color: #000000;
-
-      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.12);
-    }
-
-    :global(body.light) .mobile-language-switcher:hover {
-      color: #000000;
-    }
-
-    .mobile-language-switcher::after {
-      content: none;
-
-      display: none;
-    }
-
-    .mobile-language-switcher .language-globe {
-      stroke: #0043ff;
-    }
-
-    .mobile-language-switcher:focus-visible {
-      outline: 2px solid #0043ff;
-
-      outline-offset: 3px;
-    }
-  }
-
-  /* =========================================================
-     REDUCED MOTION
-  ========================================================= */
-
-  @media (prefers-reduced-motion: reduce) {
-    .brand,
-    .brand-dot,
-    .brand-subtext,
-    .dropdown-panel,
-    .dropdown-trigger,
-    .dropdown-arrow,
-    .menu-label,
-    .main-nav a,
-    .mobile-language-switcher {
-      transition-duration: 0.01ms;
-
-      animation-duration: 0.01ms;
-
-      animation-iteration-count: 1;
-    }
-  }
 
   @media (max-width: 1024px) {
     .site-header::after,
@@ -1822,13 +1757,11 @@
 
     .header-right {
       border-top: 1px solid rgba(255, 255, 255, 0.08);
-
       border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     }
 
     :global(body.light) .header-right {
       border-top-color: rgba(0, 0, 0, 0.1);
-
       border-bottom-color: rgba(0, 0, 0, 0.1);
     }
   }
@@ -1892,82 +1825,87 @@
   }
 
   /* =========================================================
-     MOBILE RESPONSIVE NAV CLAMPS
+     MOBILE LANGUAGE SWITCH
   ========================================================= */
 
-  @media (max-width: 767px) {
-    /*
-     * This rule appears after the 1024px rule,
-     * so it controls the final mobile spacing.
-     */
-
-    .main-nav {
-      gap: clamp(6px, 2vw, 18px);
-
-      padding-block: clamp(13px, 2.4vw, 18px);
-
-      padding-inline: clamp(6px, 1.8vw, 10px);
-
-      justify-content: safe center;
+  @media (max-width: 640px) {
+    .lang-switch {
+      display: none;
     }
 
-    .main-nav > a,
-    .dropdown-trigger,
-    .lang-link {
-      text-align: center;
+    .mobile-language-switcher {
+      position: fixed;
+
+      z-index: 5200;
+
+      right: max(14px, env(safe-area-inset-right));
+
+      bottom: max(14px, env(safe-area-inset-bottom));
+
+      width: auto;
+
+      min-width: 48px;
+
+      height: 42px;
+
+      padding: 0 10px;
+
+      display: inline-flex;
+
+      align-items: center;
 
       justify-content: center;
+
+      gap: 0.3em;
+
+      border: 1px solid rgba(0, 67, 255, 0.82);
+
+      background: rgba(4, 5, 8, 0.9);
+
+      color: #ffffff;
+
+      font-family: inherit;
+
+      line-height: 1;
+
+      text-decoration: none;
+
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.24);
+
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+
+      -webkit-tap-highlight-color: transparent;
     }
 
-    /*
-     * Final mobile font sizing.
-     *
-     * ~9.3px at very narrow screens
-     * ~10px around 375px
-     * ~11.5px around 430px
-     * max 12px on larger mobile.
-     */
+    :global(body:not(:has(.homepage-footer))) .mobile-language-switcher {
+      font-size: 0.72rem;
 
-    :global(body:not(:has(.homepage-footer))) .main-nav > a,
-    :global(body:not(:has(.homepage-footer))) .dropdown-trigger,
-    :global(body:not(:has(.homepage-footer))) .lang-link {
-      font-size: clamp(0.58rem, 2.7vw, 0.75rem);
+      font-weight: 600;
     }
 
-    /*
-     * Keep dropdown arrows from adding
-     * too much width on small phones.
-     */
+    :global(body.light) .mobile-language-switcher {
+      background: rgba(255, 255, 255, 0.96);
 
-    .dropdown-trigger {
-      gap: clamp(2px, 0.7vw, 4px);
+      color: #000000;
+
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.12);
     }
 
-    .dropdown-arrow {
-      width: clamp(4px, 1.2vw, 5px);
+    .mobile-language-switcher::after {
+      content: none;
 
-      height: clamp(4px, 1.2vw, 5px);
+      display: none;
+    }
 
-      margin-left: clamp(0px, 0.2vw, 1px);
-
-      margin-right: clamp(0px, 0.2vw, 1px);
+    .mobile-language-switcher .language-globe {
+      stroke: #0043ff;
     }
   }
 
-  @media (max-width: 767px) {
-    .dropdown-panel a {
-      min-height: 28px;
-
-      padding-block: 4px;
-    }
-
-    :global(body:not(:has(.homepage-footer))) .dropdown-panel a {
-      font-size: clamp(0.66rem, 2.7vw, 0.8rem);
-    }
-  }
-
-  /* Shared homepage typography;
-     other routes retain their existing styles. */
+  /* =========================================================
+     HOMEPAGE TYPOGRAPHY
+  ========================================================= */
 
   :global(body:has(.homepage-footer)) .brand-subtext,
   :global(body:has(.homepage-footer)) .mobile-language-switcher {
@@ -1985,25 +1923,6 @@
     font-weight: var(--weight-semibold);
   }
 
-  /*
-   * HOMEPAGE MOBILE CLAMP
-   *
-   * This used to force everything to 12px,
-   * which overrode the responsive mobile sizing.
-   */
-
-  @media (max-width: 767px) {
-    :global(body:has(.homepage-footer)) .main-nav > a,
-    :global(body:has(.homepage-footer)) .dropdown-trigger,
-    :global(body:has(.homepage-footer)) .lang-link {
-      font-size: clamp(0.58rem, 2.7vw, 0.75rem);
-    }
-
-    :global(body:has(.homepage-footer)) .dropdown-panel a {
-      font-size: clamp(0.66rem, 2.7vw, 0.75rem);
-    }
-  }
-
   .main-nav > a.contact-nav-link {
     text-decoration-line: underline;
 
@@ -2012,5 +1931,576 @@
     text-decoration-thickness: 1px;
 
     text-underline-offset: 4px;
+  }
+
+  /* =========================================================
+     MOBILE HAMBURGER
+     ONLY <= 640PX
+  ========================================================= */
+
+  @media (max-width: 640px) {
+    /* =====================================================
+       HEADER
+    ====================================================== */
+
+    .site-header {
+      min-height: 72px;
+
+      overflow: visible;
+    }
+
+    .site-header::after {
+      display: none;
+    }
+
+    .header-grid {
+      position: relative;
+
+      z-index: 5100;
+
+      width: 100%;
+
+      min-height: 72px;
+
+      display: grid;
+
+      grid-template-columns:
+        minmax(0, 1fr)
+        auto;
+
+      align-items: center;
+
+      margin: 0;
+
+      padding: 0 clamp(14px, 4vw, 20px);
+
+      box-sizing: border-box;
+
+      border: 0;
+
+      /*
+       * Only horizontal line
+       * in mobile menu.
+       */
+
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    :global(body.light) .header-grid {
+      border-bottom-color: rgba(0, 0, 0, 0.1);
+    }
+
+    /* =====================================================
+       LOGO
+    ====================================================== */
+
+    .header-left {
+      position: relative;
+
+      z-index: 5102;
+
+      min-width: 0;
+
+      min-height: 72px;
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: flex-start;
+
+      padding: 0;
+
+      border: 0;
+
+      text-align: left;
+    }
+
+    .brand-block {
+      width: clamp(142px, 39vw, 168px);
+
+      max-width: none;
+
+      display: inline-flex;
+
+      align-items: stretch;
+
+      gap: 5px;
+
+      text-align: left;
+    }
+
+    .brand {
+      width: 100%;
+
+      justify-content: space-between;
+
+      gap: 0;
+
+      font-size: clamp(0.79rem, 3.25vw, 0.96rem);
+
+      text-align: left;
+    }
+
+    .brand-subtext {
+      width: 100%;
+
+      display: block;
+
+      margin: 0;
+
+      white-space: nowrap;
+
+      overflow: visible;
+
+      text-align: justify;
+      text-align-last: justify;
+
+      letter-spacing: 0;
+
+      line-height: 1.15;
+    }
+
+    :global(body:has(.homepage-footer)) .brand-subtext,
+    :global(body:not(:has(.homepage-footer))) .brand-subtext {
+      font-size: clamp(0.43rem, 1.62vw, 0.51rem);
+
+      font-weight: 500;
+    }
+
+    /* =====================================================
+       HIDE NORMAL NAV
+    ====================================================== */
+
+    .header-right {
+      display: none;
+    }
+
+    /* =====================================================
+       HAMBURGER
+    ====================================================== */
+
+    .mobile-menu-toggle {
+      position: relative;
+
+      z-index: 5102;
+
+      width: 44px;
+      height: 44px;
+
+      display: inline-flex;
+
+      align-items: center;
+
+      justify-content: flex-end;
+
+      margin: 0;
+
+      padding: 0;
+
+      border: 0;
+
+      background: transparent;
+
+      color: #ffffff;
+
+      cursor: pointer;
+
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    :global(body.light) .mobile-menu-toggle {
+      color: #050505;
+    }
+
+    .mobile-menu-icon {
+      width: 30px;
+      height: 22px;
+
+      display: block;
+
+      overflow: visible;
+    }
+
+    .mobile-menu-line {
+      fill: none;
+
+      stroke: currentColor;
+
+      stroke-width: 1.5;
+
+      stroke-linecap: round;
+
+      transform-box: fill-box;
+
+      transform-origin: center;
+
+      transition: transform 0.38s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .mobile-menu-line-one {
+      transform: translateY(0) rotate(0);
+    }
+
+    .mobile-menu-line-two {
+      transform: translateY(0) rotate(0);
+    }
+
+    .mobile-menu-toggle.open .mobile-menu-line-one {
+      transform: translateY(5px) rotate(45deg);
+    }
+
+    .mobile-menu-toggle.open .mobile-menu-line-two {
+      transform: translate(-3px, -5px) rotate(-45deg) scaleX(1.36);
+    }
+
+    /* =====================================================
+       FULL SCREEN MENU
+    ====================================================== */
+
+    .mobile-menu-overlay {
+      position: fixed;
+
+      z-index: 5000;
+
+      inset: 0;
+
+      width: 100vw;
+
+      height: 100vh;
+      height: 100dvh;
+
+      display: flex;
+
+      flex-direction: column;
+
+      /*
+       * Header occupies 72px.
+       * Menu uses everything beneath.
+       */
+
+      padding: calc(72px + env(safe-area-inset-top)) clamp(18px, 5vw, 24px)
+        calc(18px + env(safe-area-inset-bottom));
+
+      box-sizing: border-box;
+
+      overflow-x: hidden;
+      overflow-y: auto;
+
+      overscroll-behavior: contain;
+
+      background: linear-gradient(
+        180deg,
+        rgba(8, 9, 13, 0.998),
+        rgba(3, 4, 7, 0.998)
+      );
+
+      color: #ffffff;
+
+      opacity: 0;
+
+      visibility: hidden;
+
+      pointer-events: none;
+
+      transform: translateY(-10px);
+
+      transition:
+        opacity 0.28s ease,
+        visibility 0.28s ease,
+        transform 0.38s cubic-bezier(0.16, 1, 0.3, 1);
+
+      -webkit-overflow-scrolling: touch;
+    }
+
+    :global(body.light) .mobile-menu-overlay {
+      background: #ffffff;
+
+      color: #050505;
+    }
+
+    .mobile-menu-overlay.open {
+      opacity: 1;
+
+      visibility: visible;
+
+      pointer-events: auto;
+
+      transform: translateY(0);
+    }
+
+    .mobile-menu-overlay::before,
+    .mobile-menu-overlay::after {
+      content: none;
+
+      display: none;
+    }
+
+    /* =====================================================
+       MENU
+       RIGHT ALIGNED + VERTICALLY CENTERED
+    ====================================================== */
+
+    .mobile-menu-nav {
+      width: 100%;
+
+      /*
+       * This consumes the full area below
+       * the 72px header.
+       */
+
+      flex: 1;
+
+      display: flex;
+
+      flex-direction: column;
+
+      /*
+       * Vertically center all menu groups
+       * inside available viewport space.
+       */
+
+      justify-content: center;
+
+      /*
+       * Move menu to right.
+       */
+
+      align-items: flex-end;
+
+      gap: clamp(21px, 4.6vh, 34px);
+
+      margin: 0;
+
+      padding: clamp(18px, 3vh, 28px) 0;
+
+      box-sizing: border-box;
+
+      text-align: right;
+    }
+
+    .mobile-menu-group {
+      width: 100%;
+
+      display: flex;
+
+      flex-direction: column;
+
+      align-items: flex-end;
+
+      margin: 0;
+
+      padding: 0;
+
+      border: 0;
+
+      text-align: right;
+    }
+
+    .mobile-menu-group:last-child {
+      border: 0;
+    }
+
+    /* =====================================================
+       PARENTS
+    ====================================================== */
+
+    .mobile-menu-parent {
+      width: auto;
+
+      min-height: 0;
+
+      display: inline-block;
+
+      margin: 0;
+
+      padding: 0;
+
+      color: inherit;
+
+      font-size: clamp(1.55rem, 6.75vw, 2.2rem);
+
+      font-weight: 600;
+
+      line-height: 1;
+
+      letter-spacing: -0.04em;
+
+      text-align: right;
+
+      text-decoration: none;
+
+      text-transform: uppercase;
+
+      -webkit-tap-highlight-color: transparent;
+
+      transition: opacity 0.2s ease;
+    }
+
+    .mobile-menu-parent:hover,
+    .mobile-menu-parent:focus-visible {
+      opacity: 0.65;
+    }
+
+    .mobile-menu-parent.active {
+      color: inherit;
+    }
+
+    .mobile-menu-parent-static {
+      cursor: default;
+    }
+
+    /* =====================================================
+       CONTACT UNDERLINE
+    ====================================================== */
+
+    .mobile-menu-parent.mobile-contact-link {
+      text-decoration-line: underline;
+
+      text-decoration-color: #0043ff;
+
+      text-decoration-thickness: 1px;
+
+      text-underline-offset: 6px;
+
+      text-decoration-skip-ink: auto;
+    }
+
+    /* =====================================================
+       CHILD ITEMS
+    ====================================================== */
+
+    .mobile-menu-children {
+      width: 100%;
+
+      display: flex;
+
+      flex-direction: column;
+
+      align-items: flex-end;
+
+      /*
+       * Slightly more space from parent.
+       */
+
+      gap: 12px;
+
+      margin-top: 13px;
+
+      padding: 0;
+
+      text-align: right;
+    }
+
+    .mobile-menu-children a {
+      width: auto;
+
+      min-height: 0;
+
+      display: block;
+
+      margin: 0;
+
+      padding: 0;
+
+      color: rgba(255, 255, 255, 0.5);
+
+      /*
+       * Slightly larger than before.
+       */
+
+      font-size: clamp(0.72rem, 3vw, 0.84rem);
+
+      font-weight: 600;
+
+      line-height: 1.4;
+
+      letter-spacing: 0.04em;
+
+      text-align: right;
+
+      text-decoration: none;
+
+      text-transform: uppercase;
+
+      transition:
+        color 0.2s ease,
+        opacity 0.2s ease;
+    }
+
+    :global(body.light) .mobile-menu-children a {
+      color: rgba(0, 0, 0, 0.5);
+    }
+
+    .mobile-menu-children a:hover,
+    .mobile-menu-children a:focus-visible {
+      color: #ffffff;
+
+      opacity: 1;
+    }
+
+    :global(body.light) .mobile-menu-children a:hover,
+    :global(body.light) .mobile-menu-children a:focus-visible {
+      color: #000000;
+    }
+  }
+
+  /* =========================================================
+     SHORT MOBILE SCREENS
+  ========================================================= */
+
+  @media (max-width: 640px) and (max-height: 720px) {
+    .mobile-menu-nav {
+      /*
+       * Still centered, but reduce gaps
+       * enough to fit short iPhones.
+       */
+
+      justify-content: center;
+
+      gap: 16px;
+
+      padding: 12px 0;
+    }
+
+    .mobile-menu-parent {
+      font-size: clamp(1.35rem, 5.8vw, 1.8rem);
+    }
+
+    .mobile-menu-children {
+      margin-top: 8px;
+
+      gap: 8px;
+    }
+
+    .mobile-menu-children a {
+      font-size: clamp(0.68rem, 2.7vw, 0.77rem);
+    }
+  }
+
+  /* =========================================================
+     REDUCED MOTION
+  ========================================================= */
+
+  @media (prefers-reduced-motion: reduce) {
+    .brand,
+    .brand-dot,
+    .brand-subtext,
+    .dropdown-panel,
+    .dropdown-trigger,
+    .dropdown-arrow,
+    .menu-label,
+    .main-nav a,
+    .mobile-language-switcher,
+    .mobile-menu-overlay,
+    .mobile-menu-line,
+    .mobile-menu-parent,
+    .mobile-menu-children a {
+      transition-duration: 0.01ms;
+
+      animation-duration: 0.01ms;
+
+      animation-iteration-count: 1;
+    }
   }
 </style>
