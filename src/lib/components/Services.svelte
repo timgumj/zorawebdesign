@@ -2712,9 +2712,13 @@
 
     display: grid;
 
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(4, max-content);
 
-    gap: 90px;
+    justify-content: space-between;
+
+    align-items: center;
+
+    column-gap: clamp(12px, 1vw, 20px);
   }
 
   .experience-item {

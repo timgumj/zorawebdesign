@@ -872,17 +872,12 @@
 
     width: 100%;
 
-    background: radial-gradient(
-        circle at 18% 0%,
-        rgba(32, 32, 32, 0.075),
-        transparent 32%
-      ),
-      linear-gradient(180deg, rgba(9, 10, 14, 0.96), rgba(4, 5, 8, 0.94));
+    background: #000000;
 
     border-bottom: 0;
 
-    backdrop-filter: blur(18px);
-    -webkit-backdrop-filter: blur(18px);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
 
     transition:
       background 0.3s ease,
