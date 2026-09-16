@@ -17,7 +17,11 @@
       { key: "munich", label: "MÜNCHEN", href: "/webdesign/muenchen/" },
     ],
     en: [
-      { key: "salzburg", label: "SALZBURG", href: "/en-2/web-design/salzburg/" },
+      {
+        key: "salzburg",
+        label: "SALZBURG",
+        href: "/en-2/web-design/salzburg/",
+      },
       { key: "graz", label: "GRAZ", href: "/en-2/web-design/graz/" },
       { key: "munich", label: "MUNICH", href: "/en-2/web-design/munich/" },
     ],
@@ -34,14 +38,21 @@
     </div>
 
     <div class="footer-service-areas">
-      <p>{language === "de" ? "WEBDESIGN REGIONEN" : "WEB DESIGN SERVICE AREAS"}</p>
-      <nav aria-label={language === "de" ? "Webdesign Regionen" : "Web design service areas"}>
+      <p>
+        {language === "de" ? "WEBDESIGN REGIONEN" : "WEB DESIGN SERVICE AREAS"}
+      </p>
+      <nav
+        aria-label={language === "de"
+          ? "Webdesign Regionen"
+          : "Web design service areas"}
+      >
         {#each serviceAreas as area}
           <a
             href={area.href}
             class:active={area.key === currentArea}
             aria-current={area.key === currentArea ? "page" : undefined}
-          >{area.label}</a>
+            >{area.label}</a
+          >
         {/each}
       </nav>
     </div>
@@ -80,9 +91,9 @@
   }
 
   :global(body.light) .site-footer {
-    background: #f7f7f4;
+    background: #ffffff;
     color: #111111;
-    border-top: 0;
+    border-top: 1px solid rgba(17, 17, 17, 0.12);
   }
 
   .footer-row {
@@ -256,7 +267,7 @@
       justify-self: start;
     }
     :global(body:not(:has(.homepage-footer))) .footer-meta p,
-  :global(body:not(:has(.homepage-footer))) .footer-imprint-link {
+    :global(body:not(:has(.homepage-footer))) .footer-imprint-link {
       font-size: 12.96px;
     }
 
@@ -299,7 +310,7 @@
       letter-spacing: 0.12em;
     }
     :global(body:not(:has(.homepage-footer))) .footer-meta p,
-  :global(body:not(:has(.homepage-footer))) .footer-imprint-link {
+    :global(body:not(:has(.homepage-footer))) .footer-imprint-link {
       font-size: 11.34px;
     }
 
@@ -339,5 +350,4 @@
     font-size: var(--text-label);
     font-weight: var(--weight-semibold);
   }
-
 </style>

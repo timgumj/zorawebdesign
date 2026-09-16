@@ -769,8 +769,8 @@
     --step-border-hover: #505050;
 
     --step-accent: #0043ff;
-    --step-accent-hover: #1b56ff;
-    --step-accent-soft: rgba(0, 67, 255, 0.08);
+    --step-accent-hover: #0043ff;
+    --step-accent-soft: transparent;
 
     width: 100%;
 
@@ -824,7 +824,7 @@
 
     color: var(--step-text);
 
-    font-size: clamp(26px, 2.5vw, 36px);
+    font-size: clamp(22px, calc(2.5vw - 4px), 32px);
 
     font-weight: 600;
 

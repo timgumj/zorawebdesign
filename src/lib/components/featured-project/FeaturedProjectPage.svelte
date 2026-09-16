@@ -187,7 +187,7 @@
   />
 </svelte:head>
 
-<Header nav={content.nav} />
+<Header nav={content.nav} showStaticThemeIcon={false} />
 
 <ThemeToggle />
 

@@ -834,6 +834,8 @@
   ========================================================= */
 
   .contact-form {
+    --form-border: rgba(255, 255, 255, 0.16);
+
     position: relative;
 
     width: 100%;
@@ -847,7 +849,7 @@
     display: flex;
     flex-direction: column;
 
-    border: 1px solid rgba(255, 255, 255, 0.16);
+    border: 0;
 
     background: #050505;
 
@@ -864,11 +866,41 @@
   }
 
   :global(body.light) .contact-form {
+    --form-border: rgba(0, 0, 0, 0.15);
+
     background: #ffffff;
 
-    border-color: rgba(0, 0, 0, 0.15);
-
     color: #111111;
+  }
+
+  .contact-form::before,
+  .contact-form::after {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    bottom: 0;
+
+    width: 24px;
+
+    border-top: 1px solid var(--form-border);
+
+    border-bottom: 1px solid var(--form-border);
+
+    pointer-events: none;
+  }
+
+  .contact-form::before {
+    left: 0;
+
+    border-left: 1px solid var(--form-border);
+  }
+
+  .contact-form::after {
+    right: 0;
+
+    border-right: 1px solid var(--form-border);
   }
 
   /* =========================================================
@@ -901,6 +933,21 @@
 
   :global(body.light) .contact-info {
     color: #111111;
+  }
+
+  .contact-info .card-header,
+  .contact-info .contact-block {
+    border-bottom: 0;
+  }
+
+  .contact-form .card-header {
+    border-bottom: 0;
+  }
+
+  .contact-info .contact-block a {
+    border-bottom: 0;
+
+    padding-bottom: 0;
   }
 
   /* =========================================================

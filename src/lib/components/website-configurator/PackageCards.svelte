@@ -620,7 +620,7 @@
   }
 
   .package-card.selected {
-    background: rgba(0, 67, 255, 0.06);
+    background: transparent;
 
     box-shadow: inset 0 0 0 1px #0043ff;
   }
@@ -666,7 +666,7 @@
 
   .recommended .package-top h3,
   .selected .package-top h3 {
-    color: #6f8dff;
+    color: #0043ff;
   }
 
   .badges {
@@ -702,7 +702,7 @@
   .recommended-badge {
     border-color: #0043ff;
 
-    color: #6f8dff;
+    color: #0043ff;
   }
 
   .selected-badge {
@@ -730,7 +730,7 @@
   }
 
   .scope span {
-    color: #6f8dff;
+    color: #0043ff;
 
     font-size: 11px;
     font-weight: 600;
@@ -759,7 +759,7 @@
   }
 
   .personalised .section-label {
-    color: #6f8dff;
+    color: #0043ff;
   }
 
   ul {
@@ -798,7 +798,7 @@
 
     fill: none;
 
-    stroke: #5f80ff;
+    stroke: #0043ff;
 
     stroke-width: 1.8;
 

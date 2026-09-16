@@ -124,12 +124,20 @@
   <link rel="canonical" href={page.canonical} />
   <link
     rel="alternate"
-    hreflang={page.language === "de" ? (page.countryCode === "DE" ? "de-DE" : "de-AT") : "en"}
+    hreflang={page.language === "de"
+      ? page.countryCode === "DE"
+        ? "de-DE"
+        : "de-AT"
+      : "en"}
     href={page.canonical}
   />
   <link
     rel="alternate"
-    hreflang={page.language === "de" ? "en" : page.countryCode === "DE" ? "de-DE" : "de-AT"}
+    hreflang={page.language === "de"
+      ? "en"
+      : page.countryCode === "DE"
+        ? "de-DE"
+        : "de-AT"}
     href={pairedUrl}
   />
   <link
@@ -148,10 +156,7 @@
     property="og:image"
     content="https://www.zorawebdesign.com/images/meet-700.webp"
   />
-  <meta
-    property="og:image:alt"
-    content={`Julius Timgum – ${page.seoTitle}`}
-  />
+  <meta property="og:image:alt" content={`Julius Timgum – ${page.seoTitle}`} />
 
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content={page.seoTitle} />
@@ -164,7 +169,7 @@
   {@html `<script type="application/ld+json">${JSON.stringify(structuredData).replace(/</g, "\\u003c")}<\/script>`}
 </svelte:head>
 
-<Header nav={page.nav} />
+<Header nav={page.nav} showStaticThemeIcon={false} />
 <ThemeToggle />
 
 <main class="homepage-section-dividers">
@@ -202,12 +207,32 @@
     toolsMoreLabel={isGerman ? "MEHR" : "MORE"}
     toolLinks={isGerman
       ? [
-          { title: "WEBSITE-PROJEKTPLANER", text: "Finde heraus, welche Seiten und Funktionen dein Projekt wirklich braucht.", href: "/website-konfigurator/", linkLabel: "PROJEKT PLANEN" },
-          { title: "KOSTENLOSER WEBSITE-AUDIT", text: "Prüfe deine Website auf SEO, Leistung, Sicherheit und Barrierefreiheit.", href: "/website-audit/", linkLabel: "WEBSITE PRÜFEN" },
+          {
+            title: "WEBSITE-PROJEKTPLANER",
+            text: "Finde heraus, welche Seiten und Funktionen dein Projekt wirklich braucht.",
+            href: "/website-konfigurator/",
+            linkLabel: "PROJEKT PLANEN",
+          },
+          {
+            title: "KOSTENLOSER WEBSITE-AUDIT",
+            text: "Prüfe deine Website auf SEO, Leistung, Sicherheit und Barrierefreiheit.",
+            href: "/website-audit/",
+            linkLabel: "WEBSITE PRÜFEN",
+          },
         ]
       : [
-          { title: "WEBSITE PROJECT PLANNER", text: "Clarify the pages and functionality your project genuinely needs.", href: "/en-2/website-configurator/", linkLabel: "PLAN YOUR PROJECT" },
-          { title: "FREE WEBSITE AUDIT", text: "Check your website for SEO, performance, security and accessibility.", href: "/en-2/website-audit/", linkLabel: "CHECK YOUR WEBSITE" },
+          {
+            title: "WEBSITE PROJECT PLANNER",
+            text: "Clarify the pages and functionality your project genuinely needs.",
+            href: "/en-2/website-configurator/",
+            linkLabel: "PLAN YOUR PROJECT",
+          },
+          {
+            title: "FREE WEBSITE AUDIT",
+            text: "Check your website for SEO, performance, security and accessibility.",
+            href: "/en-2/website-audit/",
+            linkLabel: "CHECK YOUR WEBSITE",
+          },
         ]}
   />
 
@@ -223,11 +248,17 @@
       : "Selected website projects covering design, WordPress development, performance optimization, and custom branding."}
     {projects}
     loadMoreCopy={isGerman ? "Mehr sehen" : "Load more"}
-    loadMoreText={isGerman ? "Weitere Projekte laden" : "Load additional projects"}
-    loadMoreAria={isGerman ? "Weitere Projekte laden" : "Load additional projects"}
+    loadMoreText={isGerman
+      ? "Weitere Projekte laden"
+      : "Load additional projects"}
+    loadMoreAria={isGerman
+      ? "Weitere Projekte laden"
+      : "Load additional projects"}
     viewProjectText="LIVE SITE"
     viewDetailsText={isGerman ? "Details ansehen" : "View details"}
-    viewDetailsLink={isGerman ? "/referenzprojekt/" : "/en-2/reference-project/"}
+    viewDetailsLink={isGerman
+      ? "/referenzprojekt/"
+      : "/en-2/reference-project/"}
     projectTagsLabel={isGerman ? "Projektleistungen" : "Project services"}
     defaultProjectTags={isGerman
       ? ["Webdesign", "WordPress", "Performance", "Support"]
@@ -241,8 +272,18 @@
       : "A clear project process from the first consultation to launch and ongoing website support."}
     steps={page.process}
     imageCredits={isGerman
-      ? ["Projektgespräch mit Ines und Andy – JUBS", "Konzept und Design", "Website Launch mit Isabella – reSOMA", "Support und Wartung"]
-      : ["Project meeting with Ines and Andy – JUBS", "Concept and design", "Website launch with Isabella – reSOMA", "Support and maintenance"]}
+      ? [
+          "Projektgespräch mit Ines und Andy – JUBS",
+          "Konzept und Design",
+          "Website Launch mit Isabella – reSOMA",
+          "Support und Wartung",
+        ]
+      : [
+          "Project meeting with Ines and Andy – JUBS",
+          "Concept and design",
+          "Website launch with Isabella – reSOMA",
+          "Support and maintenance",
+        ]}
   />
 
   <Reviews
@@ -290,7 +331,9 @@
     background: #000;
     color: #f4f4f4;
     font-family: "DM Sans", Arial, sans-serif;
-    transition: background 0.3s ease, color 0.3s ease;
+    transition:
+      background 0.3s ease,
+      color 0.3s ease;
   }
 
   :global(body.light) {

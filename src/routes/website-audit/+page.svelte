@@ -735,11 +735,11 @@
 
 <style>
   :global(:root) {
-    --audit-bg: #111111;
-    --audit-card: #0d0d0d;
-    --audit-line: rgba(255, 255, 255, 0.12);
-    --audit-line-strong: rgba(255, 255, 255, 0.18);
-    --audit-muted: #9a9a9a;
+    --audit-bg: #080808;
+    --audit-card: #0c0c0c;
+    --audit-line: #292929;
+    --audit-line-strong: #3a3a3a;
+    --audit-muted: #888888;
     --audit-blue: #0043ff;
   }
 
@@ -770,7 +770,8 @@
 
   .audit-page {
     width: 100%;
-    padding: 48px 0;
+
+    padding: clamp(72px, 6vw, 88px) 0 clamp(36px, 5vw, 64px);
 
     background: var(--audit-bg);
     color: #ffffff;
@@ -779,11 +780,18 @@
   }
 
   .audit-shell {
-    width: min(1320px, calc(100% - 56px));
+    width: 100%;
+
+    max-width: 1600px;
 
     margin: 0 auto;
 
+    padding-inline: clamp(20px, 4vw, 64px);
+
+    box-sizing: border-box;
+
     display: flex;
+
     flex-direction: column;
 
     gap: 14px;
@@ -819,21 +827,7 @@
 
     border: 1px solid var(--audit-line);
 
-    background: #0d0d0d;
-  }
-
-  .hero::before {
-    content: "";
-
-    position: absolute;
-
-    top: -1px;
-    left: -1px;
-
-    width: 76px;
-    height: 2px;
-
-    background: var(--audit-blue);
+    background: var(--audit-card);
   }
 
   .hero-copy {
@@ -868,7 +862,7 @@
 
     color: var(--audit-muted);
 
-    font-size: 14px;
+    font-size: 12px;
     font-weight: 400;
     line-height: 1.6;
   }
@@ -899,7 +893,7 @@
 
     border: 1px solid var(--audit-line-strong);
 
-    background: #111111;
+    background: var(--audit-card);
   }
 
   .audit-form::before {
@@ -964,12 +958,12 @@
 
     outline: none;
 
-    background: #090909;
+    background: var(--audit-bg);
     color: #ffffff;
 
     font-family: inherit;
 
-    font-size: 14px;
+    font-size: 12px;
     line-height: 1.3;
 
     transition:
@@ -984,7 +978,7 @@
   input:focus {
     border-color: var(--audit-blue);
 
-    background: #0c0c0c;
+    background: var(--audit-bg);
   }
 
   input:focus-visible {
@@ -1063,7 +1057,7 @@
 
     color: #ffffff;
 
-    font-size: clamp(19px, 1.8vw, 25px);
+    font-size: clamp(24px, 2.5vw, 32px);
 
     font-weight: 500;
     line-height: 1.15;
@@ -1076,7 +1070,7 @@
   p {
     color: var(--audit-muted);
 
-    font-size: 14px;
+    font-size: 12px;
     line-height: 1.65;
   }
 
@@ -1126,7 +1120,7 @@
 
     border: 1px solid var(--audit-line);
 
-    background: #0d0d0d;
+    background: var(--audit-card);
   }
 
   .includes-heading {
@@ -1166,7 +1160,7 @@
 
     border: 1px solid rgba(255, 255, 255, 0.09);
 
-    background: #111111;
+    background: var(--audit-bg);
     color: #ffffff;
 
     font-size: 9px;
@@ -1205,7 +1199,7 @@
 
     border: 1px solid var(--audit-line);
 
-    background: #0d0d0d;
+    background: var(--audit-card);
   }
 
   .loading-card strong {
@@ -1270,7 +1264,7 @@
 
     border: 1px solid var(--audit-line);
 
-    background: #0d0d0d;
+    background: var(--audit-card);
   }
 
   .report-top {
@@ -1318,7 +1312,7 @@
 
     border: 1px solid var(--audit-line);
 
-    background: #111111;
+    background: var(--audit-bg);
   }
 
   .audit-meta-list strong {
@@ -1371,6 +1365,8 @@
     padding-top: 48px;
     padding-bottom: 0;
 
+    background: var(--audit-bg) !important;
+
     overflow-x: clip;
   }
 
@@ -1396,16 +1392,26 @@
 
   .audit-shell :global(.faq-header),
   .audit-shell :global(.faq-header.visible) {
-    width: 100%;
-    max-width: 100%;
+    width: calc(100% - 48px);
+    max-width: none;
 
     margin-bottom: 46px;
+    margin-left: auto;
+    margin-right: auto;
 
     opacity: 1 !important;
 
     transform: none !important;
 
     transition: none !important;
+  }
+
+  .audit-shell :global(.faq-header-main::before) {
+    animation: none !important;
+
+    transform: none !important;
+
+    box-shadow: none !important;
   }
 
   .audit-shell :global(.faq-header-inner) {
@@ -1447,11 +1453,11 @@
 
   @media (max-width: 1024px) {
     .audit-page {
-      padding: 38px 0;
+      padding: 72px 0 44px;
     }
 
     .audit-shell {
-      width: calc(100% - 40px);
+      padding-inline: 20px;
 
       gap: 12px;
     }
@@ -1528,11 +1534,11 @@
 
   @media (max-width: 767px) {
     .audit-page {
-      padding: 28px 0;
+      padding: 66px 0 34px;
     }
 
     .audit-shell {
-      width: calc(100% - 28px);
+      padding-inline: 16px;
 
       gap: 10px;
     }
@@ -1623,11 +1629,11 @@
 
   @media (max-width: 480px) {
     .audit-page {
-      padding: 24px 0;
+      padding-top: 62px;
     }
 
     .audit-shell {
-      width: calc(100% - 24px);
+      padding-inline: 14px;
     }
 
     .hero {

@@ -209,7 +209,7 @@
     --accent-blue: #0043ff;
 
     padding: 0;
-    background: #111111;
+    background: #000000;
     color: #ffffff;
     font-family: "Space Grotesk", Arial, sans-serif;
 
@@ -491,12 +491,19 @@
      PROCESS LIST
   ========================================================= */
   .process-list {
+    width: 100%;
+
     display: flex;
     flex-direction: column;
+    box-sizing: border-box;
   }
 
   .process-stage {
     position: relative;
+
+    width: 100%;
+    margin: 0;
+    box-sizing: border-box;
 
     display: grid;
 
@@ -632,7 +639,8 @@
      STAGE CONTENT
   ========================================================= */
   .stage-content {
-    max-width: 620px;
+    width: 100%;
+    max-width: none;
   }
 
   .stage-content h3 {
@@ -656,7 +664,7 @@
   }
 
   .stage-content p {
-    max-width: 620px;
+    max-width: none;
 
     margin: 0;
 
@@ -692,13 +700,14 @@
   ========================================================= */
   .stage-right {
     width: 100%;
+    max-width: none;
 
     min-height: 300px;
   }
 
   .stage-image-wrap {
     width: 100%;
-    max-width: 460px;
+    max-width: 100%;
 
     margin: 0 auto;
 

@@ -3,106 +3,6 @@
 
   const feature = $derived(project.feature);
 
-  const projectScrollImage = $derived(
-    project.scrollImage || "/images/drbaldaufscreenshot.webp",
-  );
-
-  let previewActive = $state(false);
-
-  let previewResetTimer = null;
-
-  function prefersReducedMotion() {
-    if (typeof window === "undefined") {
-      return false;
-    }
-
-    return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  }
-
-  function startPreview() {
-    if (prefersReducedMotion()) {
-      return;
-    }
-
-    window.clearTimeout(previewResetTimer);
-
-    /*
-     * Reset first so every new viewport
-     * activation starts from the TOP.
-     */
-    previewActive = false;
-
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => {
-        previewActive = true;
-      });
-    });
-  }
-
-  function stopPreview() {
-    window.clearTimeout(previewResetTimer);
-
-    previewActive = false;
-  }
-
-  function observeFeaturedPreview(node) {
-    if (typeof IntersectionObserver === "undefined") {
-      previewActive = true;
-
-      return {
-        destroy() {},
-      };
-    }
-
-    let hasActivated = false;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        /*
-         * Start when the image becomes
-         * clearly visible in the viewport.
-         */
-        if (
-          entry.isIntersecting &&
-          entry.intersectionRatio >= 0.4 &&
-          !hasActivated
-        ) {
-          hasActivated = true;
-
-          startPreview();
-
-          return;
-        }
-
-        /*
-         * Re-arm once the user has genuinely
-         * scrolled away from the image.
-         */
-        if (!entry.isIntersecting || entry.intersectionRatio < 0.1) {
-          hasActivated = false;
-
-          stopPreview();
-        }
-      },
-
-      {
-        threshold: [0, 0.1, 0.25, 0.4, 0.6, 0.8, 1],
-
-        rootMargin: "0px 0px -4% 0px",
-      },
-    );
-
-    observer.observe(node);
-
-    return {
-      destroy() {
-        observer.disconnect();
-
-        window.clearTimeout(previewResetTimer);
-      },
-    };
-  }
-
   const projectAchievements = $derived(
     language === "de"
       ? [
@@ -188,11 +88,7 @@
                MOBILE IMAGE
           ================================================== -->
 
-          <div
-            class="project-image responsive-project-image"
-            class:preview-active={previewActive}
-            use:observeFeaturedPreview
-          >
+          <div class="project-image responsive-project-image">
             <img
               class="project-thumbnail"
               src={project.heroImage}
@@ -200,16 +96,6 @@
               width="1448"
               height="1086"
               loading="eager"
-              decoding="async"
-            />
-
-            <img
-              class="project-scroll-image"
-              class:active={previewActive}
-              src={projectScrollImage}
-              alt=""
-              aria-hidden="true"
-              loading="lazy"
               decoding="async"
             />
           </div>
@@ -242,11 +128,7 @@
              DESKTOP / TABLET IMAGE
         ================================================== -->
 
-        <div
-          class="project-image desktop-project-image"
-          class:preview-active={previewActive}
-          use:observeFeaturedPreview
-        >
+        <div class="project-image desktop-project-image">
           <img
             class="project-thumbnail"
             src={project.heroImage}
@@ -254,16 +136,6 @@
             width="1448"
             height="1086"
             loading="eager"
-            decoding="async"
-          />
-
-          <img
-            class="project-scroll-image"
-            class:active={previewActive}
-            src={projectScrollImage}
-            alt=""
-            aria-hidden="true"
-            loading="lazy"
             decoding="async"
           />
         </div>
@@ -645,7 +517,7 @@
   .featured-project {
     --accent-blue: #0043ff;
 
-    --section-bg: #0c0c0c;
+    --section-bg: #000000;
 
     --graph-bg: #242526;
 
@@ -692,6 +564,16 @@
     width: 100%;
   }
 
+  @media (min-width: 1025px) {
+    :global(body.light) .featured-project {
+      background: #ffffff;
+    }
+
+    :global(body.light) .featured-shell {
+      background: #000000;
+    }
+  }
+
   .shell-line {
     position: absolute;
 
@@ -736,10 +618,6 @@
   .project-header-copy {
     max-width: 760px;
   }
-
-  /* =========================================================
-     KICKER
-  ========================================================= */
 
   .project-kicker {
     display: inline-block;
@@ -914,47 +792,6 @@
     opacity: 1;
 
     transition: opacity 0.3s ease;
-  }
-
-  .project-scroll-image {
-    position: absolute;
-
-    inset: 0;
-
-    z-index: 2;
-
-    display: block;
-
-    width: 100%;
-    height: 100%;
-
-    object-fit: cover;
-
-    object-position: center top;
-
-    opacity: 0;
-
-    pointer-events: none;
-
-    backface-visibility: hidden;
-
-    transition: opacity 0.3s ease;
-  }
-
-  .project-scroll-image.active {
-    opacity: 1;
-
-    object-position: center bottom;
-
-    transition:
-      opacity 0.3s ease,
-      object-position 11s cubic-bezier(0.22, 0.61, 0.36, 1);
-
-    will-change: object-position, opacity;
-  }
-
-  .project-image.preview-active .project-thumbnail {
-    opacity: 0;
   }
 
   .desktop-project-image {
@@ -1873,18 +1710,6 @@
 
     .graph-timeline span {
       font-size: 7.5px;
-    }
-  }
-
-  /* =========================================================
-     REDUCED MOTION
-  ========================================================= */
-
-  @media (prefers-reduced-motion: reduce) {
-    .project-scroll-image.active {
-      object-position: center top;
-
-      transition: opacity 0.2s ease;
     }
   }
 </style>

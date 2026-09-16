@@ -188,27 +188,24 @@
   }
 
   /* =========================================================
-     TIMERS
+     PREVIEW TIMERS
   ========================================================= */
 
   function clearPreviewResetTimer() {
-    if (previewResetTimer) {
+    if (previewResetTimer !== null) {
       clearTimeout(previewResetTimer);
+
       previewResetTimer = null;
     }
   }
 
   function clearMobileActivationTimer() {
-    if (mobileActivationTimer) {
+    if (mobileActivationTimer !== null) {
       clearTimeout(mobileActivationTimer);
 
       mobileActivationTimer = null;
     }
   }
-
-  /* =========================================================
-     PREVIEW CONTROL
-  ========================================================= */
 
   function scheduleTouchPreviewUpdate() {
     if (typeof window === "undefined" || !isTouchPreviewLayout()) {
@@ -1446,7 +1443,7 @@
   :global(body.light) .projects {
     background: #fff;
 
-    color: #111;
+    color: #fff;
   }
 
   .projects-shell {

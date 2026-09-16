@@ -906,6 +906,8 @@
     "/images/hubspot.png",
     "/images/mailchimp.png",
     "/images/openai.png",
+    "/images/vercel-logotype-dark.svg",
+    "/images/svelte.png",
     "/images/woocommerce.png",
     "/images/shopify.png",
     "/images/wordpress.png",
@@ -1366,6 +1368,28 @@
       {/if}
 
       <!-- =====================================================
+           SERVICES HEADER
+      ====================================================== -->
+
+      <div
+        class="services-header"
+        class:visible={headerVisible}
+        use:observeHeader
+      >
+        <div class="services-header-inner">
+          <div class="services-header-main">
+            <h2>{title}</h2>
+          </div>
+
+          {#if subtitle}
+            <p class="services-subtitle">
+              {subtitle}
+            </p>
+          {/if}
+        </div>
+      </div>
+
+      <!-- =====================================================
            ABOUT
       ====================================================== -->
 
@@ -1417,6 +1441,16 @@
                   </p>
                 </article>
               {/each}
+            </div>
+
+            <div class="about-rail-copy">
+              <span class="about-kicker">
+                {problemEyebrow || stats?.eyebrow || eyebrow}
+              </span>
+
+              <p class="about-editorial-text">
+                {problemText}
+              </p>
             </div>
           </aside>
 
@@ -1497,28 +1531,6 @@
           </div>
         </section>
       {/if}
-
-      <!-- =====================================================
-           SERVICES HEADER
-      ====================================================== -->
-
-      <div
-        class="services-header"
-        class:visible={headerVisible}
-        use:observeHeader
-      >
-        <div class="services-header-inner">
-          <div class="services-header-main">
-            <h2>{title}</h2>
-          </div>
-
-          {#if subtitle}
-            <p class="services-subtitle">
-              {subtitle}
-            </p>
-          {/if}
-        </div>
-      </div>
 
       <!-- =====================================================
            SERVICES
@@ -1759,6 +1771,8 @@
             <div class="tools-marquee-track">
               {#each marqueeTools as tool, index}
                 <div
+                  class:tool-marquee-item-compact={tool.includes("vercel")}
+                  class:tool-marquee-item-svelte={tool.includes("svelte")}
                   class="tool-marquee-item"
                   aria-hidden={index >= tools.length}
                 >
@@ -1799,7 +1813,7 @@
 
     overflow: clip;
 
-    background: #0c0c0c;
+    background: #000000;
 
     color: #ffffff;
 
@@ -2678,9 +2692,9 @@
   .premium-about {
     width: 100%;
 
-    margin: 0 auto;
+    margin: 80px auto 0;
 
-    padding: 0 0 92px;
+    padding: 0;
   }
 
   .experience-rail {
@@ -3003,6 +3017,10 @@
     pointer-events: none;
   }
 
+  .about-rail-copy {
+    display: none;
+  }
+
   .about-editorial-figure {
     grid-column: 1;
 
@@ -3081,8 +3099,6 @@
     bottom: 0;
 
     width: 18px;
-
-    border-top: 1px solid var(--profile-border);
 
     border-bottom: 1px solid var(--profile-border);
   }
@@ -3192,14 +3208,14 @@
   }
 
   :global(body.light) .about-editorial-text {
-    --editorial-border: #ffffff;
+    --editorial-border: #111111;
 
-    color: rgba(255, 255, 255, 0.9);
+    color: rgba(17, 17, 17, 0.9);
   }
 
   :global(body.light) .about-kicker,
   :global(body.light) .profile-name {
-    color: #ffffff;
+    color: #111111;
   }
 
   .about-experience-stack {
@@ -3224,12 +3240,155 @@
 ========================================================= */
 
   @media (min-width: 1025px) {
+    .premium-about {
+      display: grid;
+
+      grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+
+      align-items: center;
+
+      gap: clamp(28px, 3vw, 54px);
+    }
+
     .experience-rail {
-      display: block;
+      display: flex;
+
+      flex-direction: column;
+
+      gap: 28px;
+
+      grid-column: 2;
+
+      grid-row: 1;
+
+      margin-bottom: 0;
+    }
+
+    .about-rail-copy {
+      display: flex;
+
+      flex-direction: column;
+
+      gap: 12px;
+    }
+
+    .about-editorial {
+      grid-column: 1;
+
+      grid-row: 1;
+    }
+
+    .about-profile {
+      min-height: 660px;
+    }
+
+    .about-below-copy {
+      display: none;
+    }
+
+    .about-top-copy {
+      grid-column: auto;
+
+      grid-row: auto;
+
+      align-self: center;
+
+      max-width: 100%;
+    }
+
+    .about-editorial-figure {
+      display: none;
     }
 
     .about-experience-stack {
       display: none;
+    }
+
+    .about-rail-copy .about-kicker {
+      margin: 0;
+
+      color: #ffffff;
+
+      font-size: 11px;
+
+      font-weight: 700;
+
+      line-height: 1.2;
+
+      letter-spacing: 0.11em;
+
+      text-transform: uppercase;
+
+      text-shadow: 0 1px 14px rgba(0, 0, 0, 0.44);
+    }
+
+    .about-rail-copy .about-editorial-text {
+      max-width: 100%;
+
+      margin: 0;
+
+      padding: 17px 24px;
+
+      color: rgba(255, 255, 255, 0.9);
+
+      font-size: 15px;
+
+      line-height: 1.62;
+
+      text-align: left;
+
+      text-shadow: 0 1px 16px rgba(0, 0, 0, 0.4);
+    }
+
+    .about-rail-copy .about-editorial-text::before,
+    .about-rail-copy .about-editorial-text::after {
+      content: "";
+
+      position: absolute;
+
+      top: 0;
+      bottom: 0;
+
+      width: 28px;
+
+      border-top: 1px solid #ffffff;
+
+      border-bottom: 1px solid #ffffff;
+    }
+
+    .about-rail-copy .about-editorial-text::before {
+      left: 0;
+
+      border-left: 1px solid #ffffff;
+    }
+
+    .about-rail-copy .about-editorial-text::after {
+      right: 0;
+
+      border-right: 1px solid #ffffff;
+    }
+
+    :global(body.light) .about-rail-copy .about-kicker {
+      color: #111111;
+
+      text-shadow: none;
+    }
+
+    :global(body.light) .about-rail-copy .about-editorial-text {
+      color: rgba(17, 17, 17, 0.9);
+
+      text-shadow: none;
+    }
+
+    :global(body.light) .about-rail-copy .about-editorial-text::before,
+    :global(body.light) .about-rail-copy .about-editorial-text::after {
+      border-top-color: #111111;
+
+      border-bottom-color: #111111;
+
+      border-left-color: #111111;
+
+      border-right-color: #111111;
     }
   }
 
@@ -3306,7 +3465,7 @@
   .services-header {
     width: 100%;
 
-    margin: 112px 0 0;
+    margin: var(--services-block-gap) 0 0;
 
     border-bottom: 1px solid var(--accent-blue);
 
@@ -3338,7 +3497,7 @@
 
     gap: 80px;
 
-    padding: 44px 0;
+    padding: clamp(24px, 2.4vw, 44px) 0;
   }
 
   .services-header-main {
@@ -3433,7 +3592,7 @@
   .services-showcase {
     width: 100%;
 
-    margin-top: var(--services-block-gap);
+    margin-top: 80px;
 
     padding: clamp(30px, 3.3vw, 48px);
 
@@ -4104,6 +4263,41 @@
   }
 
   @media (min-width: 1025px) {
+    :global(body.dark) .tools-marquee-card {
+      width: 100%;
+
+      max-width: 1180px;
+
+      margin: 20px auto 0;
+    }
+
+    :global(body.dark) .free-tools-heading {
+      width: 100%;
+
+      max-width: 1180px;
+
+      margin: 0 auto 42px;
+    }
+
+    :global(body.dark) .free-tools-grid {
+      width: 100%;
+
+      max-width: 1180px;
+
+      margin: 0 auto;
+    }
+
+    :global(body.dark) .website-tool-card {
+      width: 100%;
+
+      background: #242526;
+    }
+
+    :global(body.dark) .website-tool-card::before,
+    :global(body.dark) .website-tool-card::after {
+      display: none;
+    }
+
     :global(body.light) .website-tool-card {
       background: #f5f5f5;
     }
@@ -4261,10 +4455,22 @@
     display: block;
 
     object-fit: contain;
+
+    filter: brightness(0) invert(1);
+  }
+
+  .tool-marquee-item-compact img {
+    width: 55px;
+    height: 55px;
+  }
+
+  .tool-marquee-item-svelte img {
+    width: 33px;
+    height: 33px;
   }
 
   :global(body.light) .tool-marquee-item img {
-    filter: invert(1) brightness(0.12);
+    filter: brightness(0);
   }
 
   @keyframes toolsMarquee {
@@ -4320,6 +4526,10 @@
     }
 
     /* ABOUT */
+
+    .premium-about {
+      margin-top: 56px;
+    }
 
     .experience-rail {
       display: none;
@@ -4407,7 +4617,7 @@
     /* HEADER */
 
     .services-header {
-      margin-top: 92px;
+      margin-top: var(--services-block-gap);
     }
 
     .services-header-inner {
@@ -4417,7 +4627,7 @@
 
       gap: 38px;
 
-      padding: 36px 0;
+      padding: 30px 0;
     }
 
     .services-subtitle {
@@ -4429,6 +4639,8 @@
     /* CLICK-ONLY SERVICES */
 
     .services-showcase {
+      margin-top: 56px;
+
       padding: 28px;
     }
 
@@ -4595,7 +4807,9 @@
     /* ABOUT */
 
     .premium-about {
-      padding-bottom: 62px;
+      margin-top: 50px;
+
+      padding-bottom: 0;
     }
 
     .experience-toolbar {
@@ -4735,6 +4949,10 @@
       padding: 12px 14px;
     }
 
+    :global(body.light) .about-top-copy {
+      --editorial-border: #ffffff;
+    }
+
     .about-top-copy::before,
     .about-top-copy::after {
       content: "";
@@ -4769,6 +4987,10 @@
       font-size: 10px;
     }
 
+    :global(body.light) .about-kicker {
+      color: #ffffff;
+    }
+
     .about-editorial-text {
       margin: 0;
 
@@ -4777,6 +4999,10 @@
       font-size: 12.5px;
 
       line-height: 1.6;
+    }
+
+    :global(body.light) .about-editorial-text {
+      color: rgba(255, 255, 255, 0.9);
     }
 
     .about-editorial-text::before,
@@ -4791,7 +5017,7 @@
     /* HEADER */
 
     .services-header {
-      margin-top: 76px;
+      margin: 0 0 50px;
     }
 
     .services-header-inner {
@@ -4803,7 +5029,7 @@
 
       gap: 24px;
 
-      padding: 32px 0;
+      padding: 28px 0;
     }
 
     .services-header-main {
@@ -4831,6 +5057,8 @@
     /* MOBILE SERVICES */
 
     .services-showcase {
+      margin-top: 50px;
+
       padding: 0;
 
       background: transparent;
@@ -5058,6 +5286,18 @@
       width: 82px;
 
       height: 82px;
+    }
+
+    .tool-marquee-item-compact img {
+      width: 41px;
+
+      height: 41px;
+    }
+
+    .tool-marquee-item-svelte img {
+      width: 25px;
+
+      height: 25px;
     }
   }
 

@@ -786,7 +786,7 @@
   {@html `<script type="application/ld+json">${JSON.stringify(localBusinessSchema)}</script>`}
 </svelte:head>
 
-<Header {nav} />
+<Header {nav} showStaticThemeIcon={false} />
 <ThemeToggle />
 
 <main class="homepage-section-dividers">

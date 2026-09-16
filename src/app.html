@@ -24,7 +24,9 @@
         ]);
 
         const defaultTheme =
-          pathname === "/webdesign/salzburg/" ? "dark" : "light";
+          pathname === "/" || pathname === "/webdesign/salzburg/"
+            ? "dark"
+            : "light";
 
         const storageKey = cityPaths.has(pathname)
           ? `site-theme:${pathname}`

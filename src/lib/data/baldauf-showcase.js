@@ -1,7 +1,7 @@
 export const baldaufShowcase = {
   de: {
     sectionTitle:
-      "FEATURED PROJECT",
+      "AUSGEWÄHLTES PROJEKT",
 
     projectTitle:
       "DR. BOSEDE BALDAUF",
@@ -14,13 +14,6 @@ export const baldaufShowcase = {
 
     heroImage:
       "/baldauf/baldauf-homepage.webp",
-
-    /*
-     * Full-page preview used when the
-     * featured image enters the viewport.
-     */
-    scrollImage:
-      "/images/drbaldaufscreenshot.webp",
 
     heroImageAlt:
       "Website der urologischen Ordination Dr. Bosede Baldauf in Wien",
@@ -134,13 +127,6 @@ export const baldaufShowcase = {
 
     heroImage:
       "/baldauf/baldauf-homepage.webp",
-
-    /*
-     * Full-page preview used when the
-     * featured image enters the viewport.
-     */
-    scrollImage:
-      "/images/drbaldaufscreenshot.webp",
 
     heroImageAlt:
       "Website of the Dr. Bosede Baldauf urology clinic in Vienna",

@@ -29,7 +29,9 @@ export function getThemeSettings(pathname = "/") {
 
   return {
     defaultTheme:
-      normalizedPath === "/webdesign/salzburg/" ? "dark" : "light",
+      normalizedPath === "/" || normalizedPath === "/webdesign/salzburg/"
+        ? "dark"
+        : "light",
     storageKey: isCityPage
       ? `${GLOBAL_THEME_STORAGE_KEY}:${normalizedPath}`
       : GLOBAL_THEME_STORAGE_KEY,

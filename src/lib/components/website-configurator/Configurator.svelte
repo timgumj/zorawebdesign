@@ -572,64 +572,6 @@
     box-sizing: border-box;
   }
 
-  /* =========================================================
-     COMPACT PLANNER STATUS
-  ========================================================= */
-
-  .planner-status {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    gap: 16px;
-
-    width: 100%;
-
-    margin: 0 0 clamp(16px, 1.8vw, 22px);
-
-    padding: 0 0 12px;
-
-    border-bottom: 1px solid #292929;
-  }
-
-  .planner-label {
-    color: #eeeeee;
-
-    font-size: 10px;
-    font-weight: 700;
-
-    line-height: 1;
-
-    letter-spacing: 0.08em;
-
-    text-transform: uppercase;
-  }
-
-  .planner-step {
-    color: #5f80ff;
-
-    /*
-     * Previously 9px.
-     * Increased to 12px for readability/accessibility.
-     */
-    font-size: 12px;
-    font-weight: 700;
-
-    line-height: 1.2;
-
-    letter-spacing: 0.06em;
-
-    text-transform: uppercase;
-  }
-
-  .planner-step.planner-complete {
-    color: #f5f5f5;
-  }
-
-  /* =========================================================
-     SCREEN
-  ========================================================= */
-
   .screen-shell {
     width: 100%;
 

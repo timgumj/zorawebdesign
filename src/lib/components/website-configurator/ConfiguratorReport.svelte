@@ -1518,9 +1518,9 @@
 
     border: 1px solid #0043ff;
 
-    background: rgba(0, 67, 255, 0.08);
+    background: transparent;
 
-    color: #5f80ff;
+    color: #0043ff;
   }
 
   .completion-mark > span {

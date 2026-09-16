@@ -16,6 +16,20 @@
       languageLabel: "",
       freebies: null,
     },
+
+    /*
+     * TRUE:
+     * Homepage / pages that support light mode.
+     *
+     * FALSE:
+     * Audit / Configurator / pages that are dark-only.
+     *
+     * When false:
+     * - no desktop theme-control container
+     * - navigation moves to the right
+     * - no mobile/tablet placeholder is created
+     */
+    showThemeControl = true,
   } = $props();
 
   function clean(text) {
@@ -23,12 +37,14 @@
   }
 
   let activeSection = $state("");
+
   let brandClicked = $state(false);
 
   let freebiesOpen = $state(false);
   let projectsOpen = $state(false);
 
   let mobileMenuOpen = $state(false);
+
   let mobileMenuButtonElement = $state(null);
 
   let dropdownElement = $state(null);
@@ -50,7 +66,6 @@
    * [DE] means the current page is English.
    * [EN] means the current page is German.
    */
-
   let isEnglishPage = $derived(clean(nav.languageLabel).toUpperCase() === "DE");
 
   let navItems = $derived([
@@ -60,21 +75,18 @@
       id: "services",
       title: `Zum Abschnitt ${clean(nav.services)} springen`,
     },
-
     {
       href: nav.projectsLink || "#projects",
       label: clean(nav.projects),
       id: "projects",
       title: `Zum Abschnitt ${clean(nav.projects)} springen`,
     },
-
     {
       href: nav.reviewsLink || "#reviews",
       label: clean(nav.reviews || "Bewertungen"),
       id: "reviews",
       title: `Zum Abschnitt ${clean(nav.reviews || "Bewertungen")} springen`,
     },
-
     {
       href: nav.contactLink || "#contact",
       label: clean(nav.contact),
@@ -84,14 +96,11 @@
   ]);
 
   /*
-   * Kept here so nothing else in the
-   * component structure needs changing.
-   *
-   * It is no longer rendered as a menu.
+   * Kept so the rest of the component structure
+   * does not need to change.
    */
   let projectsMenu = $derived({
     label: clean(nav.projects || (isEnglishPage ? "PROJECTS" : "PROJEKTE")),
-
     items: [],
   });
 
@@ -135,7 +144,6 @@
     }
 
     previousBodyOverflow = document.body.style.overflow;
-
     previousHtmlOverflow = document.documentElement.style.overflow;
 
     document.body.style.overflow = "hidden";
@@ -148,7 +156,6 @@
     }
 
     document.body.style.overflow = previousBodyOverflow;
-
     document.documentElement.style.overflow = previousHtmlOverflow;
   }
 
@@ -231,6 +238,7 @@
     const dropdownWidth = window.innerWidth <= 640 ? 184 : 200;
 
     const viewportPadding = 12;
+
     const halfDropdownWidth = dropdownWidth / 2;
 
     let centerPosition = triggerRect.left + triggerRect.width / 2;
@@ -260,6 +268,7 @@
     const dropdownWidth = window.innerWidth <= 640 ? 184 : 200;
 
     const viewportPadding = 12;
+
     const halfDropdownWidth = dropdownWidth / 2;
 
     let centerPosition = triggerRect.left + triggerRect.width / 2;
@@ -374,7 +383,7 @@
   }
 
   function handleViewportChange() {
-    if (mobileMenuOpen && window.innerWidth > 640) {
+    if (mobileMenuOpen && window.innerWidth > 900) {
       closeMobileMenu();
     }
 
@@ -492,9 +501,12 @@
           activeSection = visible[0].target.id;
         }
       },
+
       {
         root: null,
+
         rootMargin: "-32% 0px -52% 0px",
+
         threshold: [0.15, 0.3, 0.45, 0.6],
       },
     );
@@ -531,9 +543,15 @@
   });
 </script>
 
-<header class="site-header" class:mobile-menu-open={mobileMenuOpen}>
+<header
+  class="site-header"
+  class:no-theme-control={!showThemeControl}
+  class:mobile-menu-open={mobileMenuOpen}
+>
   <div class="header-grid">
-    <!-- LOGO -->
+    <!-- =====================================================
+         LOGO
+    ====================================================== -->
 
     <div class="header-left">
       <a
@@ -547,7 +565,7 @@
           ZORA<span class="brand-dot"></span>WEBDESIGN
         </span>
 
-        <!-- DESKTOP / TABLET TAGLINE -->
+        <!-- DESKTOP TAGLINE -->
 
         <span class="brand-subtext brand-subtext-desktop">
           {clean(nav.tagline)}
@@ -560,13 +578,17 @@
           aria-label="SEO, Web Design, Branding"
         >
           <span>SEO</span>
+
           <span>WEB DESIGN</span>
+
           <span>BRANDING</span>
         </span>
       </a>
     </div>
 
-    <!-- MOBILE HAMBURGER -->
+    <!-- =====================================================
+         MOBILE HAMBURGER
+    ====================================================== -->
 
     <button
       bind:this={mobileMenuButtonElement}
@@ -589,23 +611,20 @@
     </button>
 
     <!-- =====================================================
-         DESKTOP / TABLET NAVIGATION
+         DESKTOP NAVIGATION
 
-         ORDER:
          SERVICES
          TOOLS
          PROJECTS
          REVIEWS
          CONTACT
+         LANGUAGE
     ====================================================== -->
 
     <div class="header-right">
       <nav class="main-nav" aria-label="Main navigation">
         {#each navItems as item, index}
-          <!--
-            TOOLS IS INSERTED DIRECTLY
-            BEFORE PROJECTS.
-          -->
+          <!-- TOOLS BEFORE PROJECTS -->
 
           {#if index === 1 && freebiesMenu}
             <div
@@ -650,10 +669,7 @@
             </div>
           {/if}
 
-          <!--
-            PROJECTS IS NOW JUST A NORMAL LINK.
-            NO DROPDOWN.
-          -->
+          <!-- NORMAL NAV ITEM -->
 
           <a
             href={item.href}
@@ -692,19 +708,53 @@
         </div>
       </nav>
     </div>
+
+    <!-- =====================================================
+         DESKTOP THEME CONTROL AREA
+
+         Only exists on pages supporting light mode.
+
+         Your actual ThemeToggle logic can remain separate.
+         This area simply preserves the exact homepage header
+         composition and right-side icon position.
+
+         On dark-only pages this entire column does not exist.
+    ====================================================== -->
+
+    {#if showThemeControl}
+      <div class="header-theme-area" aria-hidden="true">
+        <span class="header-theme-icon">
+          <!-- SUN — DARK MODE -->
+
+          <svg
+            class="theme-svg theme-sun"
+            viewBox="0 0 24 24"
+            aria-hidden="true"
+          >
+            <circle cx="12" cy="12" r="4"></circle>
+
+            <path
+              d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.42-1.41M17.66 6.34l1.41-1.41"
+            ></path>
+          </svg>
+
+          <!-- MOON — LIGHT MODE -->
+
+          <svg
+            class="theme-svg theme-moon"
+            viewBox="0 0 24 24"
+            aria-hidden="true"
+          >
+            <path d="M20.5 14.1A8.5 8.5 0 0 1 9.9 3.5 8.5 8.5 0 1 0 20.5 14.1Z"
+            ></path>
+          </svg>
+        </span>
+      </div>
+    {/if}
   </div>
 
   <!-- =======================================================
        MOBILE FULL-SCREEN MENU
-
-       ORDER:
-       SERVICES
-       TOOLS
-         WEBSITE PLANNER
-         WEBSITE AUDIT
-       PROJECTS
-       REVIEWS
-       CONTACT
   ======================================================== -->
 
   <div
@@ -738,7 +788,7 @@
           </section>
         {/if}
 
-        <!-- ALL MAIN ITEMS INCLUDING PROJECTS -->
+        <!-- ALL MAIN ITEMS -->
 
         <section class="mobile-menu-group">
           <a
@@ -757,7 +807,9 @@
   </div>
 </header>
 
-<!-- MOBILE LANGUAGE SWITCH -->
+<!-- =========================================================
+     MOBILE LANGUAGE SWITCH
+========================================================= -->
 
 <a
   class="mobile-language-switcher"
@@ -802,11 +854,8 @@
     fill: none;
 
     stroke: #0043ff;
-
     stroke-width: 1.6;
-
     stroke-linecap: round;
-
     stroke-linejoin: round;
   }
 
@@ -833,7 +882,6 @@
     border-bottom: 0;
 
     backdrop-filter: blur(18px);
-
     -webkit-backdrop-filter: blur(18px);
 
     transition:
@@ -847,7 +895,6 @@
     border-bottom: 0;
 
     backdrop-filter: none;
-
     -webkit-backdrop-filter: none;
   }
 
@@ -884,6 +931,12 @@
 
   /* =========================================================
      HEADER GRID
+
+     LIGHT MODE PAGES:
+     LOGO | CENTRED NAV | THEME CONTROL
+
+     DARK-ONLY PAGES:
+     LOGO | RIGHT-ALIGNED NAV
   ========================================================= */
 
   .header-grid {
@@ -897,10 +950,6 @@
 
     display: grid;
 
-    grid-template-columns:
-      1fr
-      auto;
-
     align-items: stretch;
 
     box-sizing: border-box;
@@ -910,6 +959,31 @@
     border-right: 1px solid rgba(255, 255, 255, 0.08);
   }
 
+  /*
+   * DEFAULT / THEME-ENABLED DESKTOP.
+   *
+   * Equal outer columns keep the
+   * navigation perfectly centred.
+   */
+  .site-header:not(.no-theme-control) .header-grid {
+    grid-template-columns:
+      minmax(0, 1fr)
+      auto
+      minmax(0, 1fr);
+  }
+
+  /*
+   * DARK-ONLY PAGE.
+   *
+   * No fake third column.
+   * Navigation naturally moves right.
+   */
+  .site-header.no-theme-control .header-grid {
+    grid-template-columns:
+      minmax(0, 1fr)
+      auto;
+  }
+
   :global(body.light) .header-grid {
     border-left-color: rgba(0, 0, 0, 0.1);
 
@@ -917,7 +991,8 @@
   }
 
   .header-left,
-  .header-right {
+  .header-right,
+  .header-theme-area {
     min-height: 78px;
 
     display: flex;
@@ -928,14 +1003,33 @@
   .header-left {
     padding: 0 24px;
 
-    border-right: 1px solid rgba(255, 255, 255, 0.08);
+    grid-column: 1;
   }
 
   :global(body.light) .header-left {
     border-right-color: rgba(0, 0, 0, 0.1);
   }
 
-  .header-right {
+  /*
+   * THEME-ENABLED:
+   * nav lives in centre column.
+   */
+  .site-header:not(.no-theme-control) .header-right {
+    grid-column: 2;
+
+    padding: 0 24px;
+
+    justify-content: center;
+  }
+
+  /*
+   * DARK-ONLY:
+   * nav is the last column and
+   * therefore aligns to the right.
+   */
+  .site-header.no-theme-control .header-right {
+    grid-column: 2;
+
     padding: 0 24px;
 
     justify-content: flex-end;
@@ -958,7 +1052,7 @@
 
     justify-content: center;
 
-    gap: 5px;
+    gap: 2px;
 
     color: inherit;
 
@@ -1136,12 +1230,23 @@
       opacity 0.2s ease;
   }
 
-  :global(body:not(:has(.homepage-footer))) .main-nav > a,
-  :global(body:not(:has(.homepage-footer))) .dropdown-trigger,
-  :global(body:not(:has(.homepage-footer))) .lang-link {
-    font-size: 0.96rem;
+  .main-nav > a,
+  .dropdown-trigger,
+  .lang-link {
+    font-size: 16px;
 
-    font-weight: 600;
+    font-weight: 700;
+  }
+
+  @media (min-width: 901px) {
+    .main-nav > a,
+    .dropdown-trigger,
+    .lang-link,
+    .dropdown-panel a {
+      font-size: 16px;
+
+      font-weight: 700;
+    }
   }
 
   :global(body.light) .main-nav > a,
@@ -1218,6 +1323,8 @@
     border-bottom: 1.5px solid #0043ff;
 
     transform: rotate(45deg);
+
+    transition: transform 0.18s ease;
   }
 
   .nav-dropdown.open .dropdown-arrow {
@@ -1315,11 +1422,11 @@
   .lang-switch {
     min-height: 78px;
 
-    margin-left: 8px;
+    margin-left: 28px;
 
-    padding-left: 22px;
+    padding-left: 0;
 
-    border-left: 1px solid rgba(255, 255, 255, 0.08);
+    border-left: 0;
 
     display: flex;
 
@@ -1335,15 +1442,133 @@
   }
 
   /* =========================================================
-     TABLET
+     DESKTOP THEME AREA
+  ========================================================= */
+
+  .header-theme-area {
+    grid-column: 3;
+
+    justify-content: flex-end;
+
+    padding: 0 24px;
+
+    box-sizing: border-box;
+  }
+
+  .header-theme-icon {
+    width: 32px;
+
+    height: 32px;
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    flex: 0 0 32px;
+
+    color: #ffffff;
+
+    line-height: 1;
+
+    pointer-events: none;
+  }
+
+  :global(body.light) .header-theme-icon {
+    color: #050505;
+  }
+
+  .theme-svg {
+    width: 18px;
+
+    height: 18px;
+
+    display: block;
+
+    fill: none;
+
+    stroke: currentColor;
+
+    stroke-width: 1.65;
+
+    stroke-linecap: round;
+
+    stroke-linejoin: round;
+  }
+
+  /*
+   * DARK MODE = SUN
+   */
+  .theme-sun {
+    display: block;
+  }
+
+  .theme-moon {
+    display: none;
+  }
+
+  /*
+   * LIGHT MODE = MOON
+   */
+  :global(body.light) .theme-sun {
+    display: none;
+  }
+
+  :global(body.light) .theme-moon {
+    display: block;
+  }
+
+  /* =========================================================
+     DESKTOP
+  ========================================================= */
+
+  @media (min-width: 901px) {
+    /*
+     * DARK-ONLY pages:
+     * make navigation properly flush toward
+     * the right-hand header edge.
+     */
+    .site-header.no-theme-control .header-right {
+      justify-self: end;
+    }
+
+    /*
+     * Homepage/theme pages:
+     * navigation remains centred.
+     */
+    .site-header:not(.no-theme-control) .header-right {
+      justify-self: center;
+    }
+
+    .header-left {
+      border-right: 0;
+    }
+  }
+
+  /* =========================================================
+     TABLET LEGACY SUPPORT
   ========================================================= */
 
   @media (max-width: 900px) {
+    /*
+     * On tablet/mobile there is NO
+     * header theme-control container.
+     *
+     * Your separate ThemeToggle can remain
+     * on supported pages only.
+     */
+    .header-theme-area {
+      display: none;
+    }
+
     .site-header::after {
       display: none;
     }
 
-    .header-grid {
+    .header-grid,
+    .site-header:not(.no-theme-control) .header-grid,
+    .site-header.no-theme-control .header-grid {
       width: min(100%, calc(100% - 28px));
 
       grid-template-columns: 1fr;
@@ -1467,9 +1692,9 @@
   :global(body:has(.homepage-footer)) .dropdown-trigger,
   :global(body:has(.homepage-footer)) .lang-link,
   :global(body:has(.homepage-footer)) .dropdown-panel a {
-    font-size: 13px;
+    font-size: 16px;
 
-    font-weight: var(--weight-semibold);
+    font-weight: 700;
   }
 
   .main-nav > a.contact-nav-link {
@@ -1483,11 +1708,11 @@
   }
 
   /* =========================================================
-     MOBILE ONLY
-     <= 640PX
+     MOBILE + TABLET
+     <= 900PX
   ========================================================= */
 
-  @media (max-width: 640px) {
+  @media (max-width: 900px) {
     /* =====================================================
        HEADER
     ====================================================== */
@@ -1502,7 +1727,9 @@
       display: none;
     }
 
-    .header-grid {
+    .header-grid,
+    .site-header:not(.no-theme-control) .header-grid,
+    .site-header.no-theme-control .header-grid {
       position: relative;
 
       z-index: 5100;
@@ -1539,6 +1766,8 @@
     ====================================================== */
 
     .header-left {
+      grid-column: 1;
+
       min-width: 0;
 
       min-height: 72px;
@@ -1631,10 +1860,11 @@
     }
 
     /* =====================================================
-       HIDE NORMAL NAV
+       HIDE DESKTOP NAV + THEME AREA
     ====================================================== */
 
-    .header-right {
+    .header-right,
+    .header-theme-area {
       display: none;
     }
 
@@ -1646,6 +1876,8 @@
       position: relative;
 
       z-index: 5102;
+
+      grid-column: 2;
 
       width: 44px;
 
@@ -1724,7 +1956,6 @@
       width: 100vw;
 
       height: 100vh;
-
       height: 100dvh;
 
       display: flex;
@@ -1737,7 +1968,6 @@
       box-sizing: border-box;
 
       overflow-x: hidden;
-
       overflow-y: auto;
 
       overscroll-behavior: contain;
@@ -1791,8 +2021,6 @@
 
     /* =====================================================
        MENU
-       LEFT ALIGNED
-       VERTICALLY CENTERED
     ====================================================== */
 
     .mobile-menu-nav {

@@ -112,7 +112,7 @@
 
     padding: 130px 0;
 
-    background: #111111;
+    background: #000000;
 
     color: #ffffff;
 

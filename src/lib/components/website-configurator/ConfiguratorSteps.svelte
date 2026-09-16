@@ -289,7 +289,7 @@
     --planner-border: #deded9;
 
     --planner-accent: #0043ff;
-    --planner-accent-hover: #173fff;
+    --planner-accent-hover: #0043ff;
 
     --planner-disabled-bg: #eeeeeb;
     --planner-disabled-text: #9d9d98;
@@ -317,16 +317,14 @@
     --planner-border: #292929;
 
     --planner-accent: #0043ff;
-    --planner-accent-hover: #1b56ff;
+    --planner-accent-hover: #0043ff;
 
     --planner-disabled-bg: #151515;
     --planner-disabled-text: #555555;
   }
 
   /* =========================================================
-     FULL WIDTH
-
-     Uses the complete width of the parent page container.
+     FULL WIDTH INSIDE PAGE CONTAINER
   ========================================================= */
 
   .step-shell {

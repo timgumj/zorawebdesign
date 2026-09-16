@@ -79,13 +79,7 @@
   onclick={toggleTheme}
   aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
 >
-  <span class="theme-icon">
-    {theme === "dark" ? "☀" : "☾"}
-  </span>
-
-  <span class="theme-text">
-    {theme === "dark" ? "LIGHT MODE" : "DARK MODE"}
-  </span>
+  <span class="theme-icon" aria-hidden="true">☀</span>
 </button>
 
 <style>
@@ -122,15 +116,15 @@
   }
 
   .theme-side-toggle.is-light {
-    background: #000000;
-    color: #ffffff;
-    border-color: #000000;
+    background: #ffffff;
+    color: #0d1117;
+    border-color: rgba(13, 17, 23, 0.16);
   }
 
   .theme-side-toggle.is-light:hover {
-    background: #000000;
-    color: #ffffff;
-    border-color: #000000;
+    background: #ffffff;
+    color: #0d1117;
+    border-color: rgba(13, 17, 23, 0.16);
   }
 
   .theme-icon {
@@ -143,6 +137,46 @@
     font-weight: 700;
     letter-spacing: 0.16em;
     line-height: 1;
+  }
+
+  @media (min-width: 901px) {
+    .theme-side-toggle {
+      position: fixed;
+      top: 18px;
+      right: calc((100vw - min(1540px, calc(100% - 32px))) / 2 + 18px);
+      left: auto;
+      z-index: 1100;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.24);
+      background: rgba(9, 10, 14, 0.72);
+      color: #ffffff;
+      transform: none;
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+    }
+
+    .theme-side-toggle.is-light {
+      background: rgba(255, 255, 255, 0.9);
+      color: #0d1117;
+      border-color: rgba(13, 17, 23, 0.1);
+    }
+
+    .theme-side-toggle:hover {
+      transform: translateY(-1px);
+    }
+
+    .theme-icon {
+      font-size: 16px;
+      line-height: 1;
+    }
+
+    .theme-text {
+      display: none;
+    }
   }
 
   /* Tablet */
