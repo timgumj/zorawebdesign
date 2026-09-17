@@ -5,6 +5,7 @@
   import ThemeToggle from "$lib/components/ThemeToggle.svelte";
   import Hero from "$lib/components/Hero.svelte";
   import Services from "$lib/components/Services.svelte";
+  import ProjectsHeader from "$lib/components/ProjectsHeader.svelte";
   import FeaturedProjectShowcase from "$lib/components/FeaturedProjectShowcase.svelte";
   import { baldaufShowcase } from "$lib/data/baldauf-showcase.js";
   import Projects from "$lib/components/Projects.svelte";
@@ -15,87 +16,132 @@
   import Footer from "$lib/components/Footer.svelte";
 
   let { page, projects = [] } = $props();
+
   let CookieConsent = $state(null);
 
   let isGerman = $derived(page.language === "de");
+
   let pairedUrl = $derived(
     `https://www.zorawebdesign.com${page.alternatePath}`,
   );
+
   let homeUrl = $derived(
     isGerman
       ? "https://www.zorawebdesign.com/"
       : "https://www.zorawebdesign.com/en-2/",
   );
+
   let contact = $derived(page.contact);
 
   let structuredData = $derived({
     "@context": "https://schema.org",
+
     "@graph": [
       {
         "@type": "Service",
+
         "@id": `${page.canonical}#service`,
+
         name: page.seoTitle,
+
         serviceType: isGerman
           ? "Webdesign und WordPress-Entwicklung"
           : "Web design and WordPress development",
+
         description: page.metaDescription,
+
         url: page.canonical,
+
         areaServed: {
           "@type": "City",
+
           name: page.city,
+
           containedInPlace: {
             "@type": "AdministrativeArea",
+
             name: page.region,
           },
         },
+
         provider: {
           "@type": "ProfessionalService",
+
           "@id": "https://www.zorawebdesign.com/#business",
+
           name: "Zora Web Design",
+
           url: "https://www.zorawebdesign.com/",
+
           telephone: "+43 677 648 598 39",
+
           email: "info@zorawebdesign.com",
+
           address: {
             "@type": "PostalAddress",
+
             streetAddress: "Hackengasse 22",
+
             postalCode: "1150",
+
             addressLocality: "Wien",
+
             addressCountry: "AT",
           },
         },
       },
+
       {
         "@type": "BreadcrumbList",
+
         "@id": `${page.canonical}#breadcrumbs`,
+
         itemListElement: [
           {
             "@type": "ListItem",
+
             position: 1,
+
             name: isGerman ? "Startseite" : "Home",
+
             item: homeUrl,
           },
+
           {
             "@type": "ListItem",
+
             position: 2,
+
             name: isGerman ? "Webdesign Regionen" : "Web design service areas",
+
             item: homeUrl,
           },
+
           {
             "@type": "ListItem",
+
             position: 3,
+
             name: page.city,
+
             item: page.canonical,
           },
         ],
       },
+
       {
         "@type": "FAQPage",
+
         "@id": `${page.canonical}#faq-schema`,
+
         mainEntity: page.faq.map((item) => ({
           "@type": "Question",
+
           name: item.question,
+
           acceptedAnswer: {
             "@type": "Answer",
+
             text: item.answer,
           },
         })),
@@ -108,6 +154,7 @@
 
     const cookieTimer = setTimeout(async () => {
       const module = await import("$lib/components/CookieConsent.svelte");
+
       CookieConsent = module.default;
     }, 1200);
 
@@ -117,11 +164,15 @@
 
 <svelte:head>
   <title>{page.seoTitle}</title>
+
   <meta name="description" content={page.metaDescription} />
+
   <meta name="robots" content="index, follow, max-image-preview:large" />
+
   <meta name="author" content="Julius Timgum – Zora Web Design" />
 
   <link rel="canonical" href={page.canonical} />
+
   <link
     rel="alternate"
     hreflang={page.language === "de"
@@ -131,6 +182,7 @@
       : "en"}
     href={page.canonical}
   />
+
   <link
     rel="alternate"
     hreflang={page.language === "de"
@@ -140,6 +192,7 @@
         : "de-AT"}
     href={pairedUrl}
   />
+
   <link
     rel="alternate"
     hreflang="x-default"
@@ -147,20 +200,30 @@
   />
 
   <meta property="og:type" content="website" />
+
   <meta property="og:site_name" content="Zora Web Design" />
+
   <meta property="og:locale" content={page.locale} />
+
   <meta property="og:title" content={page.seoTitle} />
+
   <meta property="og:description" content={page.metaDescription} />
+
   <meta property="og:url" content={page.canonical} />
+
   <meta
     property="og:image"
     content="https://www.zorawebdesign.com/images/meet-700.webp"
   />
+
   <meta property="og:image:alt" content={`Julius Timgum – ${page.seoTitle}`} />
 
   <meta name="twitter:card" content="summary_large_image" />
+
   <meta name="twitter:title" content={page.seoTitle} />
+
   <meta name="twitter:description" content={page.metaDescription} />
+
   <meta
     name="twitter:image"
     content="https://www.zorawebdesign.com/images/meet-700.webp"
@@ -170,6 +233,7 @@
 </svelte:head>
 
 <Header nav={page.nav} showStaticThemeIcon={false} />
+
 <ThemeToggle />
 
 <main class="homepage-section-dividers">
@@ -181,7 +245,7 @@
     services={page.services}
     stats={page.stats}
     experienceLabel={isGerman ? "Erfahrungspunkt" : "Experience point"}
-    toolsLabel={isGerman ? "TOOLS" : "TOOLS"}
+    toolsLabel="TOOLS"
     toolsAlt={isGerman ? "Werkzeuge" : "Tools"}
     serviceKeywordsLabel={isGerman ? "Leistungsmerkmale" : "Service keywords"}
     serviceDescriptionToggleLabel={isGerman
@@ -209,61 +273,80 @@
       ? [
           {
             title: "WEBSITE-PROJEKTPLANER",
+
             text: "Finde heraus, welche Seiten und Funktionen dein Projekt wirklich braucht.",
+
             href: "/website-konfigurator/",
+
             linkLabel: "PROJEKT PLANEN",
           },
+
           {
             title: "KOSTENLOSER WEBSITE-AUDIT",
+
             text: "Prüfe deine Website auf SEO, Leistung, Sicherheit und Barrierefreiheit.",
+
             href: "/website-audit/",
+
             linkLabel: "WEBSITE PRÜFEN",
           },
         ]
       : [
           {
             title: "WEBSITE PROJECT PLANNER",
+
             text: "Clarify the pages and functionality your project genuinely needs.",
+
             href: "/en-2/website-configurator/",
+
             linkLabel: "PLAN YOUR PROJECT",
           },
+
           {
             title: "FREE WEBSITE AUDIT",
+
             text: "Check your website for SEO, performance, security and accessibility.",
+
             href: "/en-2/website-audit/",
+
             linkLabel: "CHECK YOUR WEBSITE",
           },
         ]}
   />
 
-  <FeaturedProjectShowcase
-    project={isGerman ? baldaufShowcase.de : baldaufShowcase.en}
-    language={page.language}
-  />
+  <div id="projects">
+    <ProjectsHeader
+      title={isGerman ? "PROJEKTE" : "PROJECTS"}
+      subtitle={isGerman
+        ? "Ausgewählte Webdesign, WordPress und Branding Projekte für Selbstständige, Unternehmen, Kreative und Organisationen."
+        : "Selected website projects covering design, WordPress development, performance optimization, and custom branding."}
+    />
 
-  <Projects
-    title={isGerman ? `PROJEKTE` : "PROJECTS"}
-    subtitle={isGerman
-      ? "Ausgewählte Webdesign, WordPress und Branding Projekte für Selbstständige, Unternehmen, Kreative und Organisationen."
-      : "Selected website projects covering design, WordPress development, performance optimization, and custom branding."}
-    {projects}
-    loadMoreCopy={isGerman ? "Mehr sehen" : "Load more"}
-    loadMoreText={isGerman
-      ? "Weitere Projekte laden"
-      : "Load additional projects"}
-    loadMoreAria={isGerman
-      ? "Weitere Projekte laden"
-      : "Load additional projects"}
-    viewProjectText="LIVE SITE"
-    viewDetailsText={isGerman ? "Details ansehen" : "View details"}
-    viewDetailsLink={isGerman
-      ? "/referenzprojekt/"
-      : "/en-2/reference-project/"}
-    projectTagsLabel={isGerman ? "Projektleistungen" : "Project services"}
-    defaultProjectTags={isGerman
-      ? ["Webdesign", "WordPress", "Performance", "Support"]
-      : ["Web design", "WordPress", "Performance", "Support"]}
-  />
+    <FeaturedProjectShowcase
+      project={isGerman ? baldaufShowcase.de : baldaufShowcase.en}
+      language={page.language}
+    />
+
+    <Projects
+      {projects}
+      loadMoreCopy={isGerman ? "Mehr sehen" : "Load more"}
+      loadMoreText={isGerman
+        ? "Weitere Projekte laden"
+        : "Load additional projects"}
+      loadMoreAria={isGerman
+        ? "Weitere Projekte laden"
+        : "Load additional projects"}
+      viewProjectText="LIVE SITE"
+      viewDetailsText={isGerman ? "Details ansehen" : "View details"}
+      viewDetailsLink={isGerman
+        ? "/referenzprojekt/"
+        : "/en-2/reference-project/"}
+      projectTagsLabel={isGerman ? "Projektleistungen" : "Project services"}
+      defaultProjectTags={isGerman
+        ? ["Webdesign", "WordPress", "Performance", "Support"]
+        : ["Web design", "WordPress", "Performance", "Support"]}
+    />
+  </div>
 
   <Process
     title={isGerman ? "PROJEKTABLAUF" : "MY PROCESS"}
@@ -328,9 +411,13 @@
 
   :global(body) {
     margin: 0;
+
     background: #000;
+
     color: #f4f4f4;
+
     font-family: "DM Sans", Arial, sans-serif;
+
     transition:
       background 0.3s ease,
       color 0.3s ease;
@@ -338,11 +425,13 @@
 
   :global(body.light) {
     background: #fff;
+
     color: #111;
   }
 
   :global(body.dark) {
     background: #000;
+
     color: #f4f4f4;
   }
 
@@ -352,6 +441,7 @@
 
   :global(.container) {
     width: min(1440px, 88%);
+
     margin: 0 auto;
   }
 

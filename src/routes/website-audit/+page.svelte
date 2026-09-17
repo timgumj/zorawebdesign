@@ -1,11 +1,16 @@
 <script>
   import { onMount, tick } from "svelte";
+
   import Header from "$lib/components/Header.svelte";
   import Footer from "$lib/components/Footer.svelte";
   import Faq from "$lib/components/Faq.svelte";
+
   import { isAuditExcludedUrl } from "$lib/data/audit-excluded-hosts.js";
+
   import { generateAuditPdf } from "./components/generateAuditPdf.js";
+
   import AuditLeadModal from "./components/AuditLeadModal.svelte";
+
   import {
     buildAuditSummary,
     normalizeUrl,
@@ -53,20 +58,24 @@
 
     hero: {
       eyebrow: "Kostenloser Website-Audit",
+
       title: "Website kostenlos prüfen",
 
       description:
         "Kostenloser Website-Audit mit über 50 automatisierten Prüfungen. Ergebnisse sofort ansehen und einen detaillierten PDF-Bericht mit priorisierten Empfehlungen für SEO, Performance, Sicherheit und Barrierefreiheit herunterladen.",
 
       websiteLabel: "Website-URL",
+
       placeholder: "https://beispiel.at",
 
       checking: "Wird geprüft...",
+
       runAudit: "Audit starten",
     },
 
     intro: {
       eyebrow: "Enthalten",
+
       title: "Das wird geprüft",
 
       checks: [
@@ -88,12 +97,14 @@
 
     report: {
       eyebrow: "Abgeschlossen",
+
       title: "Ihr Bericht ist bereit",
 
       description:
         "Laden Sie den vollständigen Website-Audit als PDF herunter.",
 
       website: "Website",
+
       generated: "Erstellt",
 
       download: "PDF herunterladen",
@@ -134,6 +145,7 @@
 
     faq: {
       eyebrow: "FAQ",
+
       title: "Fragen zum Website-Audit",
 
       items: [
@@ -169,6 +181,7 @@
   };
 
   const nav = content.nav;
+
   const auditFaqItems = content.faq.items;
 
   const storageKey = "website-audit-last-url";
@@ -178,18 +191,23 @@
   let websiteUrl = $state("");
 
   let auditStarted = $state(false);
+
   let loading = $state(false);
 
   let error = $state("");
+
   let result = $state(null);
 
   let showLeadModal = $state(false);
+
   let submittingLead = $state(false);
 
   let leadError = $state("");
+
   let leadSubmitted = $state(false);
 
   let reportGeneratedAt = $state("");
+
   let downloadTrigger = $state();
 
   let leadForm = $state({
@@ -277,9 +295,11 @@
 
   function resetLeadState() {
     showLeadModal = false;
+
     submittingLead = false;
 
     leadError = "";
+
     leadSubmitted = false;
 
     leadForm.acceptedDisclaimer = false;
@@ -293,7 +313,9 @@
 
   async function runAudit() {
     error = "";
+
     result = null;
+
     reportGeneratedAt = "";
 
     resetLeadState();
@@ -313,6 +335,7 @@
     }
 
     auditStarted = true;
+
     loading = true;
 
     saveUrlToBrowser();
@@ -386,6 +409,7 @@
     }
 
     showLeadModal = false;
+
     leadError = "";
 
     tick().then(() => {
@@ -400,6 +424,7 @@
 
     const payload = {
       formType: "audit",
+
       language,
 
       name: leadForm.name.trim(),
@@ -465,6 +490,7 @@
       }
 
       leadSubmitted = true;
+
       showLeadModal = false;
 
       await tick();
@@ -481,12 +507,16 @@
 </script>
 
 <svelte:head>
-  <title>{content.documentTitle}</title>
+  <title>
+    {content.documentTitle}
+  </title>
 
   <meta name="description" content={content.metaDescription} />
 
   <meta name="robots" content="index, follow" />
+
   <meta name="author" content="Julius Timgum" />
+
   <meta name="publisher" content="Zora Web Design" />
 
   <link rel="canonical" href="https://www.zorawebdesign.com/website-audit/" />
@@ -510,6 +540,7 @@
   />
 
   <meta property="og:type" content="website" />
+
   <meta property="og:site_name" content="Zora Web Design" />
 
   <meta
@@ -544,6 +575,10 @@
 
 <section class="audit-page no-print">
   <div class="audit-shell">
+    <!-- =====================================================
+         HERO
+    ====================================================== -->
+
     <header class="hero" id="audit-tool">
       <div class="hero-copy">
         <span class="eyebrow">
@@ -578,6 +613,7 @@
               onkeydown={(event) => {
                 if (event.key === "Enter" && !loading) {
                   event.preventDefault();
+
                   runAudit();
                 }
               }}
@@ -596,6 +632,10 @@
         {/if}
       </div>
     </header>
+
+    <!-- =====================================================
+         WHAT IS CHECKED
+    ====================================================== -->
 
     {#if !auditStarted}
       <section class="audit-includes" aria-labelledby="audit-includes-title">
@@ -623,6 +663,10 @@
       </section>
     {/if}
 
+    <!-- =====================================================
+         LOADING
+    ====================================================== -->
+
     {#if loading}
       <div class="loading-card" aria-live="polite" aria-busy="true">
         <div class="loader" aria-hidden="true"></div>
@@ -638,6 +682,10 @@
         </div>
       </div>
     {/if}
+
+    <!-- =====================================================
+         RESULTS
+    ====================================================== -->
 
     {#if result}
       <div class="results results-minimal">
@@ -708,6 +756,10 @@
       </div>
     {/if}
 
+    <!-- =====================================================
+         FAQ
+    ====================================================== -->
+
     {#if !auditStarted}
       <Faq
         eyebrow={content.faq.eyebrow}
@@ -734,29 +786,36 @@
 <Footer language="de" />
 
 <style>
+  /* =========================================================
+     GLOBAL AUDIT VARIABLES
+  ========================================================= */
+
   :global(:root) {
-    --audit-bg: #080808;
-    --audit-card: #0c0c0c;
-    --audit-line: #292929;
-    --audit-line-strong: #3a3a3a;
-    --audit-muted: #888888;
+    --audit-bg: #000000;
+    --audit-card: #000000;
+
+    --audit-line: rgba(255, 255, 255, 0.12);
+
+    --audit-line-strong: rgba(255, 255, 255, 0.18);
+
+    --audit-muted: #9a9a9a;
+
     --audit-blue: #0043ff;
   }
 
-  /*
-   * Reserve scrollbar space from first paint.
-   * This prevents the entire layout becoming
-   * slightly narrower if a scrollbar appears.
-   */
   :global(html) {
     scrollbar-gutter: stable;
+
     overflow-x: clip;
   }
 
   :global(body) {
     margin: 0;
-    background: var(--audit-bg);
+
+    background: #000000 !important;
+
     color: #ffffff;
+
     overflow-x: clip;
   }
 
@@ -771,30 +830,27 @@
   .audit-page {
     width: 100%;
 
-    padding: clamp(72px, 6vw, 88px) 0 clamp(36px, 5vw, 64px);
+    padding: 48px 0 0;
 
-    background: var(--audit-bg);
+    background: #000000;
+
     color: #ffffff;
 
     overflow-x: clip;
   }
 
   .audit-shell {
-    width: 100%;
-
-    max-width: 1600px;
+    width: min(1320px, calc(100% - 56px));
 
     margin: 0 auto;
-
-    padding-inline: clamp(20px, 4vw, 64px);
-
-    box-sizing: border-box;
 
     display: flex;
 
     flex-direction: column;
 
     gap: 14px;
+
+    background: #000000;
   }
 
   h1,
@@ -811,6 +867,7 @@
     position: relative;
 
     width: 100%;
+
     min-width: 0;
 
     display: grid;
@@ -827,7 +884,11 @@
 
     border: 1px solid var(--audit-line);
 
-    background: var(--audit-card);
+    background: #000000;
+  }
+
+  .hero::before {
+    display: none;
   }
 
   .hero-copy {
@@ -848,6 +909,7 @@
     font-size: clamp(30px, 3vw, 43px);
 
     font-weight: 500;
+
     line-height: 1.08;
 
     letter-spacing: -0.04em;
@@ -862,8 +924,10 @@
 
     color: var(--audit-muted);
 
-    font-size: 12px;
+    font-size: 14px;
+
     font-weight: 400;
+
     line-height: 1.6;
   }
 
@@ -873,7 +937,9 @@
 
   .hero-panel {
     width: 100%;
+
     min-width: 0;
+
     max-width: 520px;
 
     justify-self: end;
@@ -883,6 +949,7 @@
     position: relative;
 
     width: 100%;
+
     min-width: 0;
 
     display: grid;
@@ -893,7 +960,7 @@
 
     border: 1px solid var(--audit-line-strong);
 
-    background: var(--audit-card);
+    background: #000000;
   }
 
   .audit-form::before {
@@ -902,12 +969,15 @@
     position: absolute;
 
     top: 17px;
+
     right: 18px;
 
     color: rgba(255, 255, 255, 0.2);
 
     font-size: 9px;
+
     font-weight: 700;
+
     line-height: 1;
 
     letter-spacing: 0.08em;
@@ -933,7 +1003,9 @@
     color: var(--audit-blue);
 
     font-size: 9px;
+
     font-weight: 700;
+
     line-height: 1.2;
 
     letter-spacing: 0.15em;
@@ -947,7 +1019,9 @@
 
   input {
     width: 100%;
+
     min-width: 0;
+
     min-height: 50px;
 
     padding: 13px 14px;
@@ -958,17 +1032,17 @@
 
     outline: none;
 
-    background: var(--audit-bg);
+    background: #000000;
+
     color: #ffffff;
 
     font-family: inherit;
 
-    font-size: 12px;
+    font-size: 14px;
+
     line-height: 1.3;
 
-    transition:
-      border-color 0.2s ease,
-      background 0.2s ease;
+    transition: border-color 0.2s ease;
   }
 
   input:hover {
@@ -978,7 +1052,7 @@
   input:focus {
     border-color: var(--audit-blue);
 
-    background: var(--audit-bg);
+    background: #000000;
   }
 
   input:focus-visible {
@@ -999,9 +1073,11 @@
     display: inline-flex;
 
     align-items: center;
+
     justify-content: center;
 
     width: 100%;
+
     min-height: 50px;
 
     padding: 0 20px;
@@ -1017,7 +1093,9 @@
     font-family: inherit;
 
     font-size: 10px;
+
     font-weight: 700;
+
     line-height: 1;
 
     letter-spacing: 0.09em;
@@ -1033,7 +1111,8 @@
   }
 
   button:hover:not(:disabled) {
-    background: transparent;
+    background: #000000;
+
     color: #ffffff;
   }
 
@@ -1045,6 +1124,7 @@
 
   button:disabled {
     opacity: 0.45;
+
     cursor: not-allowed;
   }
 
@@ -1057,9 +1137,10 @@
 
     color: #ffffff;
 
-    font-size: clamp(24px, 2.5vw, 32px);
+    font-size: clamp(19px, 1.8vw, 25px);
 
     font-weight: 500;
+
     line-height: 1.15;
 
     letter-spacing: -0.025em;
@@ -1070,7 +1151,8 @@
   p {
     color: var(--audit-muted);
 
-    font-size: 12px;
+    font-size: 14px;
+
     line-height: 1.65;
   }
 
@@ -1084,7 +1166,9 @@
     color: #ffffff;
 
     font-size: 12px;
+
     font-weight: 500;
+
     line-height: 1.5;
   }
 
@@ -1094,7 +1178,9 @@
     color: #ffffff;
 
     font-size: 12px;
+
     font-weight: 500;
+
     line-height: 1.5;
   }
 
@@ -1104,6 +1190,7 @@
 
   .audit-includes {
     width: 100%;
+
     min-width: 0;
 
     display: grid;
@@ -1120,7 +1207,7 @@
 
     border: 1px solid var(--audit-line);
 
-    background: var(--audit-card);
+    background: #000000;
   }
 
   .includes-heading {
@@ -1141,6 +1228,7 @@
     gap: 6px;
 
     margin: 0;
+
     padding: 0;
 
     list-style: none;
@@ -1148,6 +1236,7 @@
 
   .audit-checks li {
     min-width: 0;
+
     min-height: 38px;
 
     display: flex;
@@ -1160,11 +1249,14 @@
 
     border: 1px solid rgba(255, 255, 255, 0.09);
 
-    background: var(--audit-bg);
+    background: #000000;
+
     color: #ffffff;
 
     font-size: 9px;
+
     font-weight: 600;
+
     line-height: 1.3;
 
     letter-spacing: 0.04em;
@@ -1178,6 +1270,7 @@
     color: var(--audit-blue);
 
     font-size: 10px;
+
     line-height: 1;
   }
 
@@ -1187,6 +1280,7 @@
 
   .loading-card {
     width: 100%;
+
     min-width: 0;
 
     display: flex;
@@ -1199,7 +1293,7 @@
 
     border: 1px solid var(--audit-line);
 
-    background: var(--audit-card);
+    background: #000000;
   }
 
   .loading-card strong {
@@ -1210,7 +1304,9 @@
     color: #ffffff;
 
     font-size: 11px;
+
     font-weight: 600;
+
     line-height: 1.3;
 
     letter-spacing: 0.06em;
@@ -1226,6 +1322,7 @@
 
   .loader {
     width: 25px;
+
     height: 25px;
 
     flex: 0 0 auto;
@@ -1249,6 +1346,7 @@
 
   .results {
     width: 100%;
+
     min-width: 0;
 
     display: grid;
@@ -1258,13 +1356,14 @@
 
   .section-card {
     width: 100%;
+
     min-width: 0;
 
     padding: 24px 26px;
 
     border: 1px solid var(--audit-line);
 
-    background: var(--audit-card);
+    background: #000000;
   }
 
   .report-top {
@@ -1312,7 +1411,7 @@
 
     border: 1px solid var(--audit-line);
 
-    background: var(--audit-bg);
+    background: #000000;
   }
 
   .audit-meta-list strong {
@@ -1323,7 +1422,9 @@
     color: #ffffff;
 
     font-size: 12px;
+
     font-weight: 500;
+
     line-height: 1.4;
 
     overflow-wrap: anywhere;
@@ -1348,56 +1449,87 @@
     margin: 0;
 
     font-size: 11px;
+
     line-height: 1.5;
   }
 
   /* =========================================================
-     FAQ STABILITY ON AUDIT PAGE
+     FAQ — AUDIT PAGE ONLY
   ========================================================= */
 
   .audit-shell :global(.faq) {
     width: 100% !important;
+
     max-width: 100% !important;
 
     margin-left: 0 !important;
+
     margin-right: 0 !important;
 
-    padding-top: 48px;
-    padding-bottom: 0;
+    padding-top: 48px !important;
 
-    background: var(--audit-bg) !important;
+    padding-bottom: 0 !important;
+
+    background: #000000 !important;
+
+    color: #ffffff !important;
 
     overflow-x: clip;
   }
 
-  /*
-   * Safety override in case full-width is ever
-   * accidentally enabled on this page.
-   *
-   * Do not allow 100vw / negative margin behavior.
-   */
   .audit-shell :global(.faq.full-width) {
     width: 100% !important;
+
     max-width: 100% !important;
 
     margin-left: 0 !important;
+
     margin-right: 0 !important;
   }
 
   .audit-shell :global(.faq-container) {
-    width: 100%;
-    max-width: 100%;
+    width: 100% !important;
+
+    max-width: 100% !important;
+
     min-width: 0;
+
+    margin: 0 !important;
+
+    background: #000000 !important;
   }
+
+  /* =========================================================
+     REMOVE FAQ BOTTOM SECTION LINE
+  ========================================================= */
+
+  .audit-shell :global(.section-bottom-line) {
+    display: none !important;
+
+    width: 0 !important;
+
+    height: 0 !important;
+
+    background: transparent !important;
+  }
+
+  /* =========================================================
+     FAQ HEADER
+  ========================================================= */
 
   .audit-shell :global(.faq-header),
   .audit-shell :global(.faq-header.visible) {
-    width: calc(100% - 48px);
-    max-width: none;
+    width: 100% !important;
+
+    max-width: 100% !important;
 
     margin-bottom: 46px;
-    margin-left: auto;
-    margin-right: auto;
+
+    border-bottom: 0 !important;
+
+    background: #000000 !important;
+
+    color: #ffffff !important;
 
     opacity: 1 !important;
 
@@ -1406,29 +1538,128 @@
     transition: none !important;
   }
 
-  .audit-shell :global(.faq-header-main::before) {
-    animation: none !important;
+  /*
+   * Same horizontal width as FAQ accordion.
+   */
 
-    transform: none !important;
+  .audit-shell :global(.faq-header-inner) {
+    width: min(920px, 100%) !important;
+
+    max-width: 920px !important;
+
+    min-width: 0;
+
+    min-height: 0 !important;
+
+    margin: 0 auto !important;
+
+    padding: 38px 0 !important;
+
+    display: block !important;
+
+    background: #000000 !important;
+  }
+
+  /* =========================================================
+     REMOVE BLUE FAQ CIRCLE
+  ========================================================= */
+
+  .audit-shell :global(.faq-header-main) {
+    width: 100% !important;
+
+    display: block !important;
+
+    grid-template-columns: none !important;
+
+    gap: 0 !important;
+
+    margin: 0 !important;
+
+    padding: 0 !important;
+  }
+
+  .audit-shell :global(.faq-header-main::before) {
+    content: none !important;
+
+    display: none !important;
+
+    width: 0 !important;
+
+    height: 0 !important;
+
+    margin: 0 !important;
+
+    background: transparent !important;
+
+    animation: none !important;
 
     box-shadow: none !important;
   }
 
-  .audit-shell :global(.faq-header-inner) {
-    width: 100%;
-    max-width: 100%;
-    min-width: 0;
+  /* =========================================================
+     FAQ TITLE
+  ========================================================= */
 
-    min-height: 190px;
+  .audit-shell :global(.faq-header h2) {
+    max-width: 100% !important;
 
-    padding-top: 38px;
-    padding-bottom: 38px;
+    margin: 0 !important;
+
+    padding: 0 !important;
+
+    color: #ffffff !important;
+
+    text-align: left !important;
   }
 
-  .audit-shell :global(.faq-content-grid) {
-    width: 100%;
-    max-width: 100%;
+  /* =========================================================
+     FAQ CONTENT
+  ========================================================= */
+
+  .audit-shell :global(.faq-content) {
+    width: min(920px, 100%) !important;
+
+    max-width: 920px !important;
+
     min-width: 0;
+
+    margin: 0 auto !important;
+
+    background: #000000 !important;
+  }
+
+  .audit-shell :global(.faq-list) {
+    width: 100% !important;
+
+    max-width: 100% !important;
+
+    margin: 0 !important;
+
+    background: #000000 !important;
+  }
+
+  .audit-shell :global(.faq-item) {
+    background: #000000 !important;
+  }
+
+  /* =========================================================
+     REMOVE FINAL FAQ HORIZONTAL LINE
+  ========================================================= */
+
+  .audit-shell :global(.faq-item:last-child) {
+    border-bottom: 0 !important;
+  }
+
+  .audit-shell :global(.faq-question) {
+    color: #ffffff !important;
+  }
+
+  .audit-shell :global(.faq-answer) {
+    color: #b5b5b5 !important;
+  }
+
+  .audit-shell :global(.faq-answer strong) {
+    color: #ffffff !important;
   }
 
   /* =========================================================
@@ -1453,11 +1684,11 @@
 
   @media (max-width: 1024px) {
     .audit-page {
-      padding: 72px 0 44px;
+      padding: 38px 0 0;
     }
 
     .audit-shell {
-      padding-inline: 20px;
+      width: calc(100% - 40px);
 
       gap: 12px;
     }
@@ -1476,6 +1707,7 @@
 
     .hero-panel {
       width: 100%;
+
       max-width: none;
 
       justify-self: stretch;
@@ -1513,18 +1745,43 @@
       max-width: 420px;
     }
 
+    /* FAQ */
+
     .audit-shell :global(.faq) {
-      padding-top: 38px;
-      padding-bottom: 0;
+      padding-top: 38px !important;
+
+      padding-bottom: 0 !important;
     }
 
     .audit-shell :global(.faq-header),
     .audit-shell :global(.faq-header.visible) {
+      margin-bottom: 38px;
+
+      border-bottom: 0 !important;
+
       opacity: 1 !important;
 
       transform: none !important;
 
       transition: none !important;
+    }
+
+    .audit-shell :global(.faq-header-inner) {
+      width: 100% !important;
+
+      max-width: 100% !important;
+
+      margin: 0 !important;
+
+      padding: 30px 0 !important;
+    }
+
+    .audit-shell :global(.faq-content) {
+      width: 100% !important;
+
+      max-width: 100% !important;
+
+      margin: 0 !important;
     }
   }
 
@@ -1534,11 +1791,11 @@
 
   @media (max-width: 767px) {
     .audit-page {
-      padding: 66px 0 34px;
+      padding: 28px 0 0;
     }
 
     .audit-shell {
-      padding-inline: 16px;
+      width: calc(100% - 28px);
 
       gap: 10px;
     }
@@ -1557,11 +1814,13 @@
       margin-bottom: 10px;
 
       font-size: 27px;
+
       line-height: 1.1;
     }
 
     .hero-copy p {
       font-size: 13px;
+
       line-height: 1.55;
     }
 
@@ -1602,14 +1861,17 @@
       width: 100%;
     }
 
+    /* FAQ */
+
     .audit-shell :global(.faq) {
-      padding-top: 28px;
-      padding-bottom: 0;
+      padding: 28px 0 0 !important;
     }
 
     .audit-shell :global(.faq-header),
     .audit-shell :global(.faq-header.visible) {
       margin-bottom: 34px;
+
+      border-bottom: 0 !important;
 
       opacity: 1 !important;
 
@@ -1619,7 +1881,27 @@
     }
 
     .audit-shell :global(.faq-header-inner) {
-      min-height: 0;
+      width: 100% !important;
+
+      max-width: 100% !important;
+
+      min-height: 0 !important;
+
+      margin: 0 !important;
+
+      padding: 28px 0 !important;
+    }
+
+    .audit-shell :global(.faq-header-main) {
+      width: 100% !important;
+    }
+
+    .audit-shell :global(.faq-content) {
+      width: 100% !important;
+
+      max-width: 100% !important;
+
+      margin: 0 !important;
     }
   }
 
@@ -1629,11 +1911,11 @@
 
   @media (max-width: 480px) {
     .audit-page {
-      padding-top: 62px;
+      padding: 24px 0 0;
     }
 
     .audit-shell {
-      padding-inline: 14px;
+      width: calc(100% - 24px);
     }
 
     .hero {
@@ -1657,8 +1939,11 @@
     }
 
     .audit-shell :global(.faq) {
-      padding-top: 24px;
-      padding-bottom: 0;
+      padding: 24px 0 0 !important;
+    }
+
+    .audit-shell :global(.faq-header-inner) {
+      padding: 24px 0 !important;
     }
   }
 

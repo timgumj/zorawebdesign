@@ -3,7 +3,7 @@ export const projects = [
     number: "01/",
     title: "EVA EICHINGER",
     description:
-      "Eva Eichinger ist eine zeitgenössische Künstlerin aus Wien, deren Arbeiten Malerei, persönliche Ausdrucksformen und moderne visuelle Konzepte verbinden.",
+      "Portfolio-Website für die Wiener Künstlerin Eva Eichinger.",
     image: "/images/new_website_design_result.webp",
     scrollImage: "/images/evascreenshot.webp",
     link: "https://www.evaeichinger.com/",
@@ -19,7 +19,7 @@ export const projects = [
     number: "02/",
     title: "ARC NETWORK",
     description:
-      "ARC Network. Konzeption, Design und Entwicklung einer modernen, mehrsprachigen Website mit individuellen Funktionen.",
+      "Mehrsprachige Website für das Austrian Restored Citizenship Network.",
     image: "/images/arcn_website_result-700.webp",
     scrollImage: "/images/arcnscreenshot.webp",
     alt: "Website Projekt für ARC NETWORK in Wien",
@@ -36,7 +36,7 @@ export const projects = [
     number: "03/",
     title: "RESOMA",
     description:
-      "Eine Plattform, die somatisches Coaching, Breathwork und Resilienztraining anbietet, um Stressregulation und persönliches Wohlbefinden zu fördern.",
+      "Website für somatisches Coaching, Breathwork und Resilienztraining.",
     image: "/images/resoma-700.webp",
     scrollImage: "/images/resomascreenshot.webp",
     alt: "Website Projekt für reSOMA in Wien",
@@ -53,7 +53,7 @@ export const projects = [
     number: "04/",
     title: "Dr. Bosede Baldauf",
     description:
-      "Ein klares digitales Projekt mit starker visueller Präsentation und einfacher Nutzerführung.",
+      "Moderne Praxis-Website für Dr. Bosede Baldauf.",
     image: "/images/dr.baldauf-700.webp",
     scrollImage: "/images/drbaldaufscreenshot.webp",
     alt: "Website Projekt für Dr. Bosede Oluwatoyin Baldauf",
@@ -70,7 +70,7 @@ export const projects = [
     number: "05/",
     title: "JAHSON The Scientist",
     description:
-      "Jahson ist Musiker, Künstler und Wissenschaftler und verbindet Wissenschaft, Spiritualität und Musik, um Bewusstsein und Heilung zu erforschen.",
+      "Website für den Musiker, Künstler und Wissenschaftler Jahson.",
     image: "/images/jahson-700.webp",
     scrollImage: "/images/jahsonscreenshop.webp",
     alt: "Webdesign Projekt für Jahson The Scientist",
@@ -87,7 +87,7 @@ export const projects = [
     number: "06/",
     title: "KATHRIN SIEDER",
     description:
-      "Der Online Shop bietet spirituelle Begleitung durch Tiersymbolik, Coaching und kreative Produkte zur Unterstützung von persönlichem Wachstum und Transformation",
+      "Online-Shop für Coaching, Tiersymbolik und kreative Produkte.",
     image: "/images/kathrin-700.webp",
     scrollImage: "/images/kathrinscreenshot.webp",
     alt: "Portfolio Website für Kathrin Sieder",
@@ -104,7 +104,7 @@ export const projects = [
     number: "07/",
     title: "JUBS VEREIN",
     description:
-      "JUBS - Verein Jugendförderung Neunkirchen unterstützt junge Menschen durch Beratung, Schulprogramme und soziale Dienstleistungen.",
+      "Website für den Jugendförderungsverein JUBS Neunkirchen.",
     image: "/images/jubs-700.webp",
     scrollImage: "/images/jubsscreenshot.webp",
     alt: "Website Projekt für JUBS Verein in Wien",
@@ -121,7 +121,7 @@ export const projects = [
     number: "08/",
     title: "ONLINE-HYPNOSE",
     description:
-      "Professionelle Online Hypnose und Coaching zur Bewältigung von Stress, Ängsten und persönlichen Herausforderungen bequem von zu Hause aus.",
+      "Website für Online-Hypnose und Coaching.",
     image: "/images/hypnosie-700.webp",
     scrollImage: "/images/onlinescreenshop.webp",
     alt: "Website für Online Hypnose und Hypnosetherapie",
@@ -138,7 +138,7 @@ export const projects = [
     number: "09/",
     title: "EWA ERNST-DZIEDZIG",
     description:
-      "Politikwissenschaftlerin, ehemalige Parlamentsabgeordnete und Beraterin mit Schwerpunkt auf Demokratie, Menschenrechten und internationaler Politik.",
+      "Website für die Politikwissenschaftlerin Ewa Ernst-Dziedzic.",
     image: "/images/ewaernst-700.webp",
     alt: "Website Projekt für Ewa Ernst Dziedzic",
     link: "https://ewaernst.at/",
@@ -154,7 +154,7 @@ export const projects = [
     number: "10/",
     title: "ANNA HOFBAUER",
     description:
-      "In Wien ansässige bildende Künstlerin, die mit Skulptur und Fotografie narrative und räumliche Konzepte erforscht.",
+      "Portfolio-Website für die Wiener Künstlerin Anna Hofbauer.",
     image: "/images/anna_hofbauer-700.webp",
     alt: "Portfolio Website für Anna Hofbauer",
     link: "https://annahofbauer.com/",
@@ -170,7 +170,7 @@ export const projects = [
     number: "11/",
     title: "Imani Rameses",
     description:
-      "Künstler und Kognitionswissenschaftler, der Identität, Wahrnehmung und Bewusstsein durch Performance und Forschung erforscht.",
+      "Portfolio-Website für Künstler und Kognitionswissenschaftler Imani Rameses.",
     image: "/images/imani-700.webp",
     alt: "Website Projekt für Imani Rameses",
     link: "https://imanirameses.com/",
@@ -186,7 +186,7 @@ export const projects = [
     number: "12/",
     title: "GLÜCKSRAUM",
     description:
-      "Ganzheitlicher Wellness und Gemeinschaftsraum, der ein inspirierendes Umfeld für Gesundheit, persönliches Wachstum, Achtsamkeit und die Entfaltung individueller Talente bietet.",
+      "Website für Wellness, Achtsamkeit und persönliche Entwicklung.",
     image: "/images/glucksraum-700.webp",
     alt: "Website Projekt für Glücksraum",
     link: "http://www.gluecksraum.at/",
@@ -202,7 +202,7 @@ export const projects = [
     number: "13/",
     title: "MOHA GALERIE",
     description:
-      "Zeitgenössische Schmuckgalerie mit handgefertigten Schmuckstücken unabhängiger Designerinnen und Designer, mit Fokus auf einzigartiges Design, faire Materialien und individuelle Handwerkskunst.",
+      "Online-Shop für zeitgenössischen handgefertigten Schmuck.",
     image: "/images/moha-700.webp",
     alt: "Website Projekt für Moha Galerie",
     link: "https://www.moha.at/",
@@ -218,7 +218,7 @@ export const projects = [
     number: "14/",
     title: "Pro-Move Transport",
     description:
-      "ProMove Transport bietet professionelle Umzugs und Transportdienstleistungen in Österreich an, einschließlich privater und geschäftlicher Übersiedlungen sowie Logistikservices.",
+      "Website für Umzugs-, Transport- und Logistikdienstleistungen.",
     image: "/images/promove-700.webp",
     alt: "Website Projekt für Pro Move Transport",
     link: "https://promove-transport.at/",
@@ -234,7 +234,7 @@ export const projects = [
     number: "15/",
     title: "Afrieurotext",
     description:
-      "AFRIEUROTEXT ist eine in Wien ansässige gemeinnützige Organisation, die den kulturellen Austausch zwischen afrikanischen und europäischen Gemeinschaften durch Kunst, Bildung und Veranstaltungen fördert.",
+      "Website für die Wiener Kulturorganisation AFRIEUROTEXT.",
     image: "/images/Afrieurotext-700.webp",
     alt: "Website Projekt für Afrieurotext in Wien",
     link: "https://www.afrieurotext.at/",
@@ -250,7 +250,7 @@ export const projects = [
     number: "16/",
     title: "Afrieurotext Bookshop",
     description:
-      "AFRIEUROTEXT betreibt einen Online Buchshop und fördert den kulturellen Austausch zwischen afrikanischen und europäischen Gemeinschaften durch Literatur, Kunst, Bildung und Veranstaltungen.",
+      "Online-Buchshop für AFRIEUROTEXT.",
     image: "/images/afrieurotext_bookshop-700.webp",
     alt: "Online Buchshop Website für Afrieurotext",
     link: "https://afrieurotextshop.at/",
@@ -266,7 +266,7 @@ export const projects = [
     number: "17/",
     title: "AEWTASS VEREIN",
     description:
-      "Webdesign Projekt für AEWTASS, eine gemeinnützige Organisation in Wien, Österreich, die sich für Gleichberechtigung, Vielfalt und inklusive Bildung in Schulen einsetzt.",
+      "Website für den gemeinnützigen Verein AEWTASS in Wien.",
     image: "/images/aewtass-700.webp",
     alt: "Porfolio webdesign Website für AEWTASS",
     link: "https://aewtass.org/",
@@ -282,7 +282,7 @@ export const projects = [
     number: "18/",
     title: "BEAT FEURER",
     description:
-      "Webdesign Projekt für BEAT FEURER, ein Architekturunternehmen aus Der Schweiz, das sich auf innovative und nachhaltige architektonische Lösungen spezialisiert hat.",
+      "Portfolio-Website für das Schweizer Architekturbüro Beat Feurer.",
     image: "/images/beatfeurer-700.webp",
     alt: "Porfolio webdesign Website für BEAT FEURER",
     link: "https://beatfeurer.com/",
@@ -298,7 +298,7 @@ export const projects = [
     number: "19/",
     title: "NEDRET VEREIN",
     description:
-      "Webdesign Projekt für NEDRET, eine Verein zur Förderung sozial benachteiligter Menschen",
+      "Website für den sozialen Verein NEDRET.",
     image: "/images/nedret-700.webp",
     alt: "Porfolio webdesign Website für NEDRET",
     link: "https://nedret.at/",

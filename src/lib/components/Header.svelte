@@ -23,11 +23,6 @@
      *
      * FALSE:
      * Audit / Configurator / pages that are dark-only.
-     *
-     * When false:
-     * - no desktop theme-control container
-     * - navigation moves to the right
-     * - no mobile/tablet placeholder is created
      */
     showThemeControl = true,
   } = $props();
@@ -37,14 +32,12 @@
   }
 
   let activeSection = $state("");
-
   let brandClicked = $state(false);
 
   let freebiesOpen = $state(false);
   let projectsOpen = $state(false);
 
   let mobileMenuOpen = $state(false);
-
   let mobileMenuButtonElement = $state(null);
 
   let dropdownElement = $state(null);
@@ -63,10 +56,19 @@
   let previousHtmlOverflow = "";
 
   /*
-   * [DE] means the current page is English.
-   * [EN] means the current page is German.
+   * Tracks the existing global ThemeToggle state
+   * so the icon in the mobile header always matches.
+   */
+  let mobileThemeIsLight = $state(false);
+  let themeClassObserver = null;
+
+  /*
+   * [DE] means current page is English.
+   * [EN] means current page is German.
    */
   let isEnglishPage = $derived(clean(nav.languageLabel).toUpperCase() === "DE");
+
+  let blogLink = $derived(isEnglishPage ? "/en-2/blog/" : "/blog/");
 
   let navItems = $derived([
     {
@@ -75,18 +77,32 @@
       id: "services",
       title: `Zum Abschnitt ${clean(nav.services)} springen`,
     },
+
     {
       href: nav.projectsLink || "#projects",
       label: clean(nav.projects),
       id: "projects",
       title: `Zum Abschnitt ${clean(nav.projects)} springen`,
     },
+
     {
       href: nav.reviewsLink || "#reviews",
       label: clean(nav.reviews || "Bewertungen"),
       id: "reviews",
       title: `Zum Abschnitt ${clean(nav.reviews || "Bewertungen")} springen`,
     },
+
+    /*
+     * BLOG
+     * Same visible label in English and German.
+     */
+    {
+      href: blogLink,
+      label: "BLOG",
+      id: "blog",
+      title: isEnglishPage ? "Open the blog" : "Blog öffnen",
+    },
+
     {
       href: nav.contactLink || "#contact",
       label: clean(nav.contact),
@@ -94,6 +110,8 @@
       title: `Zum Abschnitt ${clean(nav.contact)} springen`,
     },
   ]);
+
+  let contactItem = $derived(navItems.find((item) => item.id === "contact"));
 
   /*
    * Kept so the rest of the component structure
@@ -135,6 +153,78 @@
   });
 
   /* =========================================================
+     MOBILE THEME CONTROL
+  ========================================================= */
+
+  function syncMobileThemeState() {
+    if (typeof document === "undefined") {
+      return;
+    }
+
+    mobileThemeIsLight =
+      document.body.classList.contains("light") ||
+      document.documentElement.classList.contains("light");
+  }
+
+  function toggleMobileTheme() {
+    if (typeof document === "undefined") {
+      return;
+    }
+
+    /*
+     * Use the existing ThemeToggle component so there is
+     * only one theme state / localStorage implementation.
+     */
+    const existingThemeToggle = document.querySelector(".theme-side-toggle");
+
+    if (existingThemeToggle instanceof HTMLButtonElement) {
+      existingThemeToggle.click();
+
+      requestAnimationFrame(() => {
+        syncMobileThemeState();
+      });
+
+      return;
+    }
+
+    /*
+     * Small fallback in case a supported page renders the
+     * Header without the separate ThemeToggle component.
+     */
+    const nextTheme = mobileThemeIsLight ? "dark" : "light";
+
+    document.documentElement.classList.remove("light", "dark");
+
+    document.body.classList.remove("light", "dark");
+
+    document.documentElement.classList.add(nextTheme);
+    document.body.classList.add(nextTheme);
+
+    syncMobileThemeState();
+  }
+
+  function handleMobileContactIconClick(event) {
+    if (!contactItem) {
+      return;
+    }
+
+    closeFreebies();
+    closeProjects();
+
+    if (!contactItem.href?.startsWith("#")) {
+      return;
+    }
+
+    const section = document.getElementById(contactItem.id);
+
+    if (!section) {
+      return;
+    }
+
+    scrollToSection(event, contactItem.id);
+  }
+
+  /* =========================================================
      MOBILE MENU
   ========================================================= */
 
@@ -144,6 +234,7 @@
     }
 
     previousBodyOverflow = document.body.style.overflow;
+
     previousHtmlOverflow = document.documentElement.style.overflow;
 
     document.body.style.overflow = "hidden";
@@ -156,6 +247,7 @@
     }
 
     document.body.style.overflow = previousBodyOverflow;
+
     document.documentElement.style.overflow = previousHtmlOverflow;
   }
 
@@ -224,6 +316,10 @@
     }, 850);
   }
 
+  /* =========================================================
+     DROPDOWNS
+  ========================================================= */
+
   function isMobileOrTablet() {
     return window.innerWidth <= 900;
   }
@@ -238,7 +334,6 @@
     const dropdownWidth = window.innerWidth <= 640 ? 184 : 200;
 
     const viewportPadding = 12;
-
     const halfDropdownWidth = dropdownWidth / 2;
 
     let centerPosition = triggerRect.left + triggerRect.width / 2;
@@ -268,7 +363,6 @@
     const dropdownWidth = window.innerWidth <= 640 ? 184 : 200;
 
     const viewportPadding = 12;
-
     const halfDropdownWidth = dropdownWidth / 2;
 
     let centerPosition = triggerRect.left + triggerRect.width / 2;
@@ -402,6 +496,10 @@
     }
   }
 
+  /* =========================================================
+     SCROLL NAVIGATION
+  ========================================================= */
+
   function getHeaderOffset() {
     const header = document.querySelector(".site-header");
 
@@ -462,8 +560,30 @@
     }
   }
 
+  /* =========================================================
+     MOUNT
+  ========================================================= */
+
   onMount(() => {
     setActiveFromHash();
+    syncMobileThemeState();
+
+    /*
+     * Watch theme class changes made by ThemeToggle.
+     */
+    themeClassObserver = new MutationObserver(() => {
+      syncMobileThemeState();
+    });
+
+    themeClassObserver.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["class"],
+    });
+
+    themeClassObserver.observe(document.body, {
+      attributes: true,
+      attributeFilter: ["class"],
+    });
 
     if (window.location.hash) {
       const id = window.location.hash.replace("#", "");
@@ -487,7 +607,12 @@
       });
     }
 
+    /*
+     * Only observe real #section navigation.
+     * BLOG is a normal page link and is ignored here.
+     */
     const sections = navItems
+      .filter((item) => item.href?.startsWith("#"))
       .map((item) => document.getElementById(item.id))
       .filter(Boolean);
 
@@ -504,9 +629,7 @@
 
       {
         root: null,
-
         rootMargin: "-32% 0px -52% 0px",
-
         threshold: [0.15, 0.3, 0.45, 0.6],
       },
     );
@@ -527,6 +650,9 @@
 
     return () => {
       observer.disconnect();
+
+      themeClassObserver?.disconnect();
+      themeClassObserver = null;
 
       unlockMobileScroll();
 
@@ -565,50 +691,107 @@
           ZORA<span class="brand-dot"></span>WEBDESIGN
         </span>
 
-        <!-- DESKTOP TAGLINE -->
-
         <span class="brand-subtext brand-subtext-desktop">
           {clean(nav.tagline)}
         </span>
-
-        <!-- MOBILE TAGLINE -->
 
         <span
           class="brand-subtext-mobile"
           aria-label="SEO, Web Design, Branding"
         >
           <span>SEO</span>
-
           <span>WEB DESIGN</span>
-
           <span>BRANDING</span>
         </span>
       </a>
     </div>
 
     <!-- =====================================================
-         MOBILE HAMBURGER
+         MOBILE / TABLET HEADER ICONS
+
+         CONTACT → THEME → MENU
     ====================================================== -->
 
-    <button
-      bind:this={mobileMenuButtonElement}
-      class="mobile-menu-toggle"
-      class:open={mobileMenuOpen}
-      type="button"
-      aria-label={mobileMenuOpen
-        ? "Close navigation menu"
-        : "Open navigation menu"}
-      aria-expanded={mobileMenuOpen}
-      aria-controls="mobile-navigation"
-      onclick={toggleMobileMenu}
-    >
-      <svg class="mobile-menu-icon" viewBox="0 0 32 24" aria-hidden="true">
-        <path class="mobile-menu-line mobile-menu-line-one" d="M3 7H29"></path>
+    <div class="mobile-header-actions">
+      <!-- CONTACT -->
 
-        <path class="mobile-menu-line mobile-menu-line-two" d="M10 17H29"
-        ></path>
-      </svg>
-    </button>
+      <a
+        class="mobile-header-icon mobile-contact-action"
+        href={contactItem?.href || "#contact"}
+        title={isEnglishPage ? "Contact" : "Kontakt"}
+        aria-label={isEnglishPage ? "Go to contact" : "Zum Kontakt"}
+        onclick={handleMobileContactIconClick}
+      >
+        <svg class="mobile-contact-svg" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M4 5.5h16v13H4z"></path>
+          <path d="m4.8 6.4 7.2 6 7.2-6"></path>
+        </svg>
+      </a>
+
+      <!-- THEME -->
+
+      {#if showThemeControl}
+        <button
+          type="button"
+          class="mobile-header-icon mobile-theme-action"
+          aria-label={mobileThemeIsLight
+            ? "Switch to dark mode"
+            : "Switch to light mode"}
+          onclick={toggleMobileTheme}
+        >
+          {#if mobileThemeIsLight}
+            <!-- MOON -->
+
+            <svg
+              class="mobile-theme-svg"
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+            >
+              <path
+                d="M20.5 14.1A8.5 8.5 0 0 1 9.9 3.5 8.5 8.5 0 1 0 20.5 14.1Z"
+              ></path>
+            </svg>
+          {:else}
+            <!-- SUN -->
+
+            <svg
+              class="mobile-theme-svg"
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+            >
+              <circle cx="12" cy="12" r="4"></circle>
+
+              <path
+                d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.42-1.41M17.66 6.34l1.41-1.41"
+              ></path>
+            </svg>
+          {/if}
+        </button>
+      {/if}
+
+      <!-- HAMBURGER -->
+
+      <button
+        bind:this={mobileMenuButtonElement}
+        class="mobile-menu-toggle"
+        class:open={mobileMenuOpen}
+        type="button"
+        aria-label={mobileMenuOpen
+          ? "Close navigation menu"
+          : "Open navigation menu"}
+        aria-expanded={mobileMenuOpen}
+        aria-controls="mobile-navigation"
+        onclick={toggleMobileMenu}
+      >
+        <svg class="mobile-menu-icon" viewBox="0 0 32 24" aria-hidden="true">
+          <path class="mobile-menu-line mobile-menu-line-one" d="M3 7H29"
+          ></path>
+
+          <path class="mobile-menu-line mobile-menu-line-two" d="M10 17H29"
+          ></path>
+        </svg>
+      </button>
+    </div>
 
     <!-- =====================================================
          DESKTOP NAVIGATION
@@ -617,6 +800,7 @@
          TOOLS
          PROJECTS
          REVIEWS
+         BLOG
          CONTACT
          LANGUAGE
     ====================================================== -->
@@ -710,21 +894,13 @@
     </div>
 
     <!-- =====================================================
-         DESKTOP THEME CONTROL AREA
-
-         Only exists on pages supporting light mode.
-
-         Your actual ThemeToggle logic can remain separate.
-         This area simply preserves the exact homepage header
-         composition and right-side icon position.
-
-         On dark-only pages this entire column does not exist.
+         DESKTOP THEME CONTROL PLACEHOLDER
     ====================================================== -->
 
     {#if showThemeControl}
       <div class="header-theme-area" aria-hidden="true">
         <span class="header-theme-icon">
-          <!-- SUN — DARK MODE -->
+          <!-- SUN -->
 
           <svg
             class="theme-svg theme-sun"
@@ -738,7 +914,7 @@
             ></path>
           </svg>
 
-          <!-- MOON — LIGHT MODE -->
+          <!-- MOON -->
 
           <svg
             class="theme-svg theme-moon"
@@ -839,7 +1015,7 @@
   ========================================================= */
 
   .mobile-language-switcher,
-  .mobile-menu-toggle,
+  .mobile-header-actions,
   .mobile-menu-overlay,
   .brand-subtext-mobile {
     display: none;
@@ -855,6 +1031,7 @@
 
     stroke: #0043ff;
     stroke-width: 1.6;
+
     stroke-linecap: round;
     stroke-linejoin: round;
   }
@@ -908,7 +1085,6 @@
     bottom: 0;
 
     width: min(1540px, calc(100% - 32px));
-
     height: 1px;
 
     background: rgba(255, 255, 255, 0.1);
@@ -926,12 +1102,6 @@
 
   /* =========================================================
      HEADER GRID
-
-     LIGHT MODE PAGES:
-     LOGO | CENTRED NAV | THEME CONTROL
-
-     DARK-ONLY PAGES:
-     LOGO | RIGHT-ALIGNED NAV
   ========================================================= */
 
   .header-grid {
@@ -954,12 +1124,6 @@
     border-right: 1px solid rgba(255, 255, 255, 0.08);
   }
 
-  /*
-   * DEFAULT / THEME-ENABLED DESKTOP.
-   *
-   * Equal outer columns keep the
-   * navigation perfectly centred.
-   */
   .site-header:not(.no-theme-control) .header-grid {
     grid-template-columns:
       minmax(0, 1fr)
@@ -967,12 +1131,6 @@
       minmax(0, 1fr);
   }
 
-  /*
-   * DARK-ONLY PAGE.
-   *
-   * No fake third column.
-   * Navigation naturally moves right.
-   */
   .site-header.no-theme-control .header-grid {
     grid-template-columns:
       minmax(0, 1fr)
@@ -981,7 +1139,6 @@
 
   :global(body.light) .header-grid {
     border-left-color: rgba(0, 0, 0, 0.1);
-
     border-right-color: rgba(0, 0, 0, 0.1);
   }
 
@@ -996,19 +1153,15 @@
   }
 
   .header-left {
-    padding: 0 24px;
-
     grid-column: 1;
+
+    padding: 0 24px;
   }
 
-  :global(body.light) .header-left {
-    border-right-color: rgba(0, 0, 0, 0.1);
-  }
+  /* =========================================================
+     DESKTOP HEADER RIGHT
+  ========================================================= */
 
-  /*
-   * THEME-ENABLED:
-   * nav lives in centre column.
-   */
   .site-header:not(.no-theme-control) .header-right {
     grid-column: 2;
 
@@ -1017,11 +1170,6 @@
     justify-content: center;
   }
 
-  /*
-   * DARK-ONLY:
-   * nav is the last column and
-   * therefore aligns to the right.
-   */
   .site-header.no-theme-control .header-right {
     grid-column: 2;
 
@@ -1066,7 +1214,6 @@
     color: #ffffff;
 
     font-size: 1.18rem;
-
     font-weight: 600;
 
     line-height: 1;
@@ -1135,7 +1282,6 @@
 
   :global(body:not(:has(.homepage-footer))) .brand-subtext {
     font-size: 0.66rem;
-
     font-weight: 500;
   }
 
@@ -1204,7 +1350,7 @@
 
     align-items: center;
 
-    gap: 28px;
+    gap: clamp(18px, 1.7vw, 28px);
   }
 
   .main-nav > a,
@@ -1213,6 +1359,9 @@
     color: #ffffff;
 
     font-family: inherit;
+
+    font-size: 16px;
+    font-weight: 700;
 
     line-height: 1;
 
@@ -1223,25 +1372,6 @@
     transition:
       color 0.2s ease,
       opacity 0.2s ease;
-  }
-
-  .main-nav > a,
-  .dropdown-trigger,
-  .lang-link {
-    font-size: 16px;
-
-    font-weight: 700;
-  }
-
-  @media (min-width: 901px) {
-    .main-nav > a,
-    .dropdown-trigger,
-    .lang-link,
-    .dropdown-panel a {
-      font-size: 16px;
-
-      font-weight: 700;
-    }
   }
 
   :global(body.light) .main-nav > a,
@@ -1308,7 +1438,6 @@
 
   .dropdown-arrow {
     width: 6px;
-
     height: 6px;
 
     margin: 0 0.13em 3px 0.12em;
@@ -1332,7 +1461,6 @@
     z-index: 1020;
 
     top: calc(100% - 6px);
-
     left: -12px;
 
     min-width: 220px;
@@ -1380,6 +1508,9 @@
 
     color: #ffffff;
 
+    font-size: 16px;
+    font-weight: 700;
+
     text-decoration: none;
   }
 
@@ -1394,7 +1525,7 @@
   }
 
   /* =========================================================
-     DESKTOP HOVER
+     DESKTOP DROPDOWN HOVER
   ========================================================= */
 
   @media (min-width: 901px) and (hover: hover) {
@@ -1417,11 +1548,7 @@
   .lang-switch {
     min-height: 78px;
 
-    margin-left: 28px;
-
-    padding-left: 0;
-
-    border-left: 0;
+    margin-left: clamp(18px, 1.7vw, 28px);
 
     display: flex;
 
@@ -1452,13 +1579,11 @@
 
   .header-theme-icon {
     width: 32px;
-
     height: 32px;
 
     display: inline-flex;
 
     align-items: center;
-
     justify-content: center;
 
     flex: 0 0 32px;
@@ -1476,7 +1601,6 @@
 
   .theme-svg {
     width: 18px;
-
     height: 18px;
 
     display: block;
@@ -1488,13 +1612,9 @@
     stroke-width: 1.65;
 
     stroke-linecap: round;
-
     stroke-linejoin: round;
   }
 
-  /*
-   * DARK MODE = SUN
-   */
   .theme-sun {
     display: block;
   }
@@ -1503,9 +1623,6 @@
     display: none;
   }
 
-  /*
-   * LIGHT MODE = MOON
-   */
   :global(body.light) .theme-sun {
     display: none;
   }
@@ -1519,19 +1636,10 @@
   ========================================================= */
 
   @media (min-width: 901px) {
-    /*
-     * DARK-ONLY pages:
-     * make navigation properly flush toward
-     * the right-hand header edge.
-     */
     .site-header.no-theme-control .header-right {
       justify-self: end;
     }
 
-    /*
-     * Homepage/theme pages:
-     * navigation remains centred.
-     */
     .site-header:not(.no-theme-control) .header-right {
       justify-self: center;
     }
@@ -1542,134 +1650,17 @@
   }
 
   /* =========================================================
-     TABLET LEGACY SUPPORT
+     CONTACT DESKTOP
   ========================================================= */
 
-  @media (max-width: 900px) {
-    /*
-     * On tablet/mobile there is NO
-     * header theme-control container.
-     *
-     * Your separate ThemeToggle can remain
-     * on supported pages only.
-     */
-    .header-theme-area {
-      display: none;
-    }
+  .main-nav > a.contact-nav-link {
+    text-decoration-line: underline;
 
-    .site-header::after {
-      display: none;
-    }
+    text-decoration-color: #0043ff;
 
-    .header-grid,
-    .site-header:not(.no-theme-control) .header-grid,
-    .site-header.no-theme-control .header-grid {
-      width: min(100%, calc(100% - 28px));
+    text-decoration-thickness: 1px;
 
-      grid-template-columns: 1fr;
-    }
-
-    .header-left {
-      min-height: auto;
-
-      padding: 16px 18px;
-
-      border-right: 0;
-
-      justify-content: center;
-
-      text-align: center;
-    }
-
-    .header-right {
-      min-height: auto;
-
-      padding: 0;
-
-      justify-content: center;
-    }
-
-    .brand-block {
-      align-items: center;
-    }
-
-    .brand {
-      font-size: 1.05rem;
-
-      justify-content: center;
-    }
-
-    .brand-subtext {
-      text-align: center;
-    }
-
-    .main-nav {
-      width: 100%;
-
-      min-height: auto;
-
-      display: flex;
-
-      flex-wrap: nowrap;
-
-      justify-content: center;
-
-      gap: 22px;
-
-      padding: 14px 18px;
-
-      overflow-x: auto;
-
-      white-space: nowrap;
-
-      scrollbar-width: none;
-    }
-
-    .main-nav::-webkit-scrollbar {
-      display: none;
-    }
-
-    .dropdown-panel {
-      position: fixed;
-
-      z-index: 5000;
-
-      top: var(--mobile-dropdown-top);
-
-      left: var(--mobile-dropdown-left);
-
-      width: 200px;
-
-      transform: translate(-50%, 6px);
-    }
-
-    .nav-dropdown.open .dropdown-panel {
-      transform: translate(-50%, 0);
-    }
-  }
-
-  /* =========================================================
-     <=1024 SUPPORT
-  ========================================================= */
-
-  @media (max-width: 1024px) {
-    .header-grid,
-    .header-left,
-    .lang-switch,
-    .dropdown-panel,
-    .dropdown-panel a {
-      border: 0;
-    }
-
-    .header-right {
-      border-top: 1px solid rgba(255, 255, 255, 0.08);
-
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-    }
-
-    :global(body.light) .header-right {
-      border-color: rgba(0, 0, 0, 0.1);
-    }
+    text-underline-offset: 4px;
   }
 
   /* =========================================================
@@ -1692,22 +1683,21 @@
     font-weight: 700;
   }
 
-  .main-nav > a.contact-nav-link {
-    text-decoration-line: underline;
-
-    text-decoration-color: #0043ff;
-
-    text-decoration-thickness: 1px;
-
-    text-underline-offset: 4px;
-  }
-
   /* =========================================================
      MOBILE + TABLET
      <= 900PX
   ========================================================= */
 
   @media (max-width: 900px) {
+    /*
+     * Hide the old floating ThemeToggle on tablet/mobile.
+     * The new header theme icon triggers the same button
+     * programmatically.
+     */
+    :global(.theme-side-toggle) {
+      display: none !important;
+    }
+
     /* =====================================================
        HEADER
     ====================================================== */
@@ -1730,7 +1720,6 @@
       z-index: 5100;
 
       width: 100%;
-
       min-height: 72px;
 
       display: grid;
@@ -1743,7 +1732,7 @@
 
       margin: 0;
 
-      padding: 0 clamp(14px, 4vw, 20px);
+      padding: 0 clamp(14px, 3.5vw, 20px);
 
       border: 0;
 
@@ -1757,14 +1746,13 @@
     }
 
     /* =====================================================
-       COMPACT MOBILE LOGO
+       LOGO
     ====================================================== */
 
     .header-left {
       grid-column: 1;
 
       min-width: 0;
-
       min-height: 72px;
 
       padding: 0;
@@ -1781,7 +1769,7 @@
     .brand-block {
       width: max-content;
 
-      max-width: calc(100vw - 90px);
+      max-width: calc(100vw - 175px);
 
       display: inline-flex;
 
@@ -1798,12 +1786,11 @@
       display: inline-flex;
 
       justify-content: flex-start;
-
       align-items: center;
 
       gap: 0.34em;
 
-      font-size: clamp(0.82rem, 3.35vw, 0.96rem);
+      font-size: clamp(0.78rem, 2.8vw, 0.96rem);
 
       letter-spacing: 0.005em;
 
@@ -1820,7 +1807,6 @@
       display: flex;
 
       align-items: center;
-
       justify-content: space-between;
 
       gap: 4px;
@@ -1829,7 +1815,7 @@
 
       color: rgba(255, 255, 255, 0.46);
 
-      font-size: clamp(0.42rem, 1.55vw, 0.49rem);
+      font-size: clamp(0.4rem, 1.35vw, 0.49rem);
 
       font-weight: 500;
 
@@ -1855,7 +1841,7 @@
     }
 
     /* =====================================================
-       HIDE DESKTOP NAV + THEME AREA
+       HIDE DESKTOP ITEMS
     ====================================================== */
 
     .header-right,
@@ -1864,7 +1850,114 @@
     }
 
     /* =====================================================
-       TWO-LINE HAMBURGER
+       MOBILE HEADER ACTIONS
+
+       CONTACT → THEME → MENU
+    ====================================================== */
+
+    .mobile-header-actions {
+      position: relative;
+
+      z-index: 5102;
+
+      grid-column: 2;
+
+      display: flex;
+
+      align-items: center;
+      justify-content: flex-end;
+
+      gap: clamp(5px, 1.5vw, 10px);
+
+      min-width: 0;
+    }
+
+    /*
+     * Transparent visual treatment.
+     * The 38px hit area is only for usability —
+     * there is no visible box.
+     */
+
+    .mobile-header-icon {
+      width: 38px;
+      height: 42px;
+
+      flex: 0 0 38px;
+
+      padding: 0;
+      margin: 0;
+
+      border: 0;
+
+      display: inline-flex;
+
+      align-items: center;
+      justify-content: center;
+
+      background: transparent;
+
+      color: #ffffff;
+
+      text-decoration: none;
+
+      cursor: pointer;
+
+      -webkit-tap-highlight-color: transparent;
+
+      transition:
+        opacity 0.2s ease,
+        color 0.2s ease;
+    }
+
+    :global(body.light) .mobile-header-icon {
+      color: #050505;
+    }
+
+    .mobile-contact-svg {
+      width: 20px;
+      height: 20px;
+
+      display: block;
+
+      fill: none;
+
+      stroke: currentColor;
+
+      stroke-width: 1.45;
+
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .mobile-theme-svg {
+      width: 19px;
+      height: 19px;
+
+      display: block;
+
+      fill: none;
+
+      stroke: currentColor;
+
+      stroke-width: 1.55;
+
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    /*
+     * Once menu opens, keep only the X visible.
+     */
+
+    .site-header.mobile-menu-open .mobile-contact-action,
+    .site-header.mobile-menu-open .mobile-theme-action {
+      opacity: 0;
+
+      pointer-events: none;
+    }
+
+    /* =====================================================
+       HAMBURGER
     ====================================================== */
 
     .mobile-menu-toggle {
@@ -1872,20 +1965,17 @@
 
       z-index: 5102;
 
-      grid-column: 2;
-
-      width: 44px;
-
+      width: 42px;
       height: 44px;
+
+      flex: 0 0 42px;
 
       display: inline-flex;
 
       align-items: center;
-
       justify-content: flex-end;
 
       margin: 0;
-
       padding: 0;
 
       border: 0;
@@ -1904,8 +1994,7 @@
     }
 
     .mobile-menu-icon {
-      width: 30px;
-
+      width: 29px;
       height: 22px;
 
       display: block;
@@ -2015,7 +2104,7 @@
     }
 
     /* =====================================================
-       MENU
+       MOBILE MENU
     ====================================================== */
 
     .mobile-menu-nav {
@@ -2030,10 +2119,9 @@
       flex-direction: column;
 
       justify-content: center;
-
       align-items: flex-start;
 
-      gap: clamp(21px, 4.6vh, 34px);
+      gap: clamp(18px, 4vh, 30px);
 
       margin: 0;
 
@@ -2055,7 +2143,6 @@
       align-items: flex-start;
 
       margin: 0;
-
       padding: 0;
 
       border: 0;
@@ -2064,7 +2151,7 @@
     }
 
     /* =====================================================
-       PARENT ITEMS
+       MOBILE PARENT ITEMS
     ====================================================== */
 
     .mobile-menu-parent {
@@ -2075,12 +2162,11 @@
       display: inline-block;
 
       margin: 0;
-
       padding: 0;
 
       color: inherit;
 
-      font-size: clamp(1.55rem, 6.75vw, 2.2rem);
+      font-size: clamp(1.48rem, 6.35vw, 2.1rem);
 
       font-weight: 600;
 
@@ -2137,7 +2223,7 @@
 
       align-items: flex-start;
 
-      gap: 13px;
+      gap: 12px;
 
       margin-top: 13px;
 
@@ -2154,7 +2240,6 @@
       display: block;
 
       margin: 0;
-
       padding: 0;
 
       color: rgba(255, 255, 255, 0.5);
@@ -2212,7 +2297,6 @@
       bottom: max(14px, env(safe-area-inset-bottom));
 
       min-width: 48px;
-
       height: 42px;
 
       padding: 0 10px;
@@ -2220,7 +2304,6 @@
       display: inline-flex;
 
       align-items: center;
-
       justify-content: center;
 
       gap: 0.3em;
@@ -2236,7 +2319,6 @@
       box-shadow: 0 10px 28px rgba(0, 0, 0, 0.24);
 
       backdrop-filter: blur(14px);
-
       -webkit-backdrop-filter: blur(14px);
     }
 
@@ -2248,30 +2330,69 @@
   }
 
   /* =========================================================
+     VERY NARROW MOBILE
+  ========================================================= */
+
+  @media (max-width: 390px) {
+    .header-grid,
+    .site-header:not(.no-theme-control) .header-grid,
+    .site-header.no-theme-control .header-grid {
+      padding: 0 12px;
+    }
+
+    .mobile-header-actions {
+      gap: 2px;
+    }
+
+    .mobile-header-icon {
+      width: 34px;
+
+      flex-basis: 34px;
+    }
+
+    .mobile-menu-toggle {
+      width: 38px;
+
+      flex-basis: 38px;
+    }
+
+    .brand-block {
+      max-width: calc(100vw - 148px);
+    }
+
+    .brand {
+      font-size: 0.76rem;
+    }
+
+    .brand-subtext-mobile {
+      font-size: 0.39rem;
+    }
+  }
+
+  /* =========================================================
      SHORT MOBILE VIEWPORT
   ========================================================= */
 
   @media (max-width: 640px) and (max-height: 720px) {
     .mobile-menu-nav {
-      gap: 16px;
+      gap: 14px;
 
       padding-top: 12px;
-
       padding-bottom: 12px;
     }
 
     .mobile-menu-parent {
-      font-size: clamp(1.35rem, 5.8vw, 1.8rem);
+      font-size: clamp(1.28rem, 5.5vw, 1.7rem);
     }
 
     .mobile-menu-children {
       margin-top: 8px;
 
-      gap: 9px;
+      gap: 8px;
     }
 
     .mobile-menu-children a {
-      font-size: clamp(0.68rem, 2.7vw, 0.78rem);
+      font-size: clamp(0.66rem, 2.6vw, 0.76rem);
     }
   }
 
@@ -2292,7 +2413,8 @@
     .mobile-menu-overlay,
     .mobile-menu-line,
     .mobile-menu-parent,
-    .mobile-menu-children a {
+    .mobile-menu-children a,
+    .mobile-header-icon {
       transition-duration: 0.01ms;
 
       animation-duration: 0.01ms;

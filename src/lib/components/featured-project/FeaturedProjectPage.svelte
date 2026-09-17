@@ -3,14 +3,21 @@
 
   import Header from "$lib/components/Header.svelte";
   import Footer from "$lib/components/Footer.svelte";
-  import ThemeToggle from "$lib/components/ThemeToggle.svelte";
 
-  let { content, media, websiteUrl = "https://evaeichinger.com" } = $props();
-
-  let comparisonPosition = $state(50);
+  let { content, media, websiteUrl = "" } = $props();
 
   let lightboxImage = $state("");
   let lightboxAlt = $state("");
+
+  const projectWebsiteUrl = $derived(websiteUrl || content.websiteUrl || "#");
+
+  const fullWebsiteScreenshot = $derived(
+    media.fullWebsiteScreenshot ?? media.newWebsiteImage ?? "",
+  );
+
+  const isBaldauf = $derived(
+    Boolean(media.ranking && media.performance && media.booking),
+  );
 
   const configuratorUrl = $derived(
     content.language === "de"
@@ -30,80 +37,307 @@
         },
   );
 
-  const performanceScores = [
-    ["98", "Performance"],
-    ["95", "Accessibility"],
-    ["96", "Best Practices"],
-    ["100", "SEO"],
-  ];
+  /* =========================================================
+     PROJECT FACTS
+  ========================================================= */
 
-  function getTechnologyItem(name) {
-    return (
-      content.technology?.items?.find(
-        (item) => item.name?.toLowerCase() === name.toLowerCase(),
-      ) ?? {}
-    );
-  }
+  const projectFacts = $derived(
+    content.meta?.map((item) => item[1]).filter(Boolean) ?? [],
+  );
 
-  const technologyCards = $derived([
-    {
-      ...getTechnologyItem("WordPress"),
+  /* =========================================================
+     TECHNOLOGY STACK
+  ========================================================= */
 
-      name: "WordPress",
+  const technologyStack = $derived(
+    content.technology?.items?.map((item) => item.name).filter(Boolean) ?? [
+      "SvelteKit",
+      "WordPress",
+      "Vercel",
+    ],
+  );
 
-      role:
-        getTechnologyItem("WordPress").role ??
-        (content.language === "de"
-          ? "Headless Content-Management"
-          : "Headless Content Management"),
+  /* =========================================================
+     OVERVIEW ITEMS
+  ========================================================= */
 
-      image: media.wordpress,
+  const overviewItems = $derived(
+    content.overview?.items ??
+      content.overview?.bullets ??
+      content.approach?.cards?.slice(0, 3).map((item) => item.text) ??
+      content.challenge?.points?.slice(0, 3) ??
+      [],
+  );
 
-      description:
-        getTechnologyItem("WordPress").description ??
-        (content.language === "de"
-          ? "WordPress bleibt das vertraute und einfach bedienbare System für Inhalte, Bilder und redaktionelle Änderungen."
-          : "WordPress remains the familiar and easy-to-use system for content, images and editorial updates."),
-    },
+  /* =========================================================
+     RESULT SCORES
+  ========================================================= */
 
-    {
-      ...getTechnologyItem("Vercel"),
+  const performanceScores = $derived(
+    isBaldauf
+      ? content.language === "de"
+        ? [
+            ["TOP 10", "LOKALE SUCHE"],
+            ["200×", "WEBSITE-BESUCHE"],
+            ["28×", "ANFRAGEN"],
+            ["100", "SEO"],
+          ]
+        : [
+            ["TOP 10", "LOCAL SEARCH"],
+            ["200×", "WEBSITE VISITS"],
+            ["28×", "ENQUIRIES"],
+            ["100", "SEO"],
+          ]
+      : content.performance?.scores?.length
+        ? content.performance.scores.map((score) => [score.value, score.label])
+        : [
+            ["98", "Performance"],
+            [
+              "95",
+              content.language === "de" ? "Barrierefreiheit" : "Accessibility",
+            ],
+            ["96", "Best Practices"],
+            ["100", "SEO"],
+          ],
+  );
 
-      name: "Vercel",
+  /* =========================================================
+     COPY
+  ========================================================= */
 
-      role:
-        getTechnologyItem("Vercel").role ??
-        (content.language === "de"
-          ? "Deployment & Auslieferung"
-          : "Deployment & Delivery"),
+  const copy = $derived(
+    content.language === "de"
+      ? {
+          overviewTitle: content.overview?.eyebrow ?? "PROJEKTÜBERSICHT",
 
-      image: media.vercel,
+          overviewText: content.overview?.introduction ?? "",
 
-      description:
-        getTechnologyItem("Vercel").description ??
-        (content.language === "de"
-          ? "Automatisierte Deployments über GitHub sorgen für eine schnelle und zuverlässige Auslieferung der Website."
-          : "Automated deployments through GitHub provide fast and reliable delivery of the website."),
-    },
+          transformationTitle:
+            content.transformation?.title ?? "WEBSITE TRANSFORMATION",
 
-    {
-      ...getTechnologyItem("SvelteKit"),
+          oldWebsite: content.comparison?.before?.label ?? "ALTE WEBSITE",
 
-      name: "SvelteKit",
+          oldWebsiteTitle: content.comparison?.before?.title ?? "Ausgangspunkt",
 
-      role: getTechnologyItem("SvelteKit").role ?? "Frontend Framework",
+          newWebsite: content.comparison?.after?.label ?? "NEUE WEBSITE",
 
-      image: media.sveltekit ?? "/images/sveltekit_eva_result.webp",
+          newWebsiteTitle: content.comparison?.after?.title ?? "Neues Design",
 
-      description:
-        getTechnologyItem("SvelteKit").description ??
-        (content.language === "de"
-          ? "Das individuelle Frontend wurde mit SvelteKit entwickelt. Dadurch bleibt die Website schnell, flexibel und unabhängig von einem schweren Page Builder."
-          : "The custom frontend was built with SvelteKit, keeping the website fast, flexible and independent from a heavy page builder."),
-    },
-  ]);
+          fullWebsite: "GESAMTE WEBSITE",
+
+          fullWebsiteTitle: "Scroll-Ansicht",
+
+          resultTitle: isBaldauf
+            ? "HOHE TERMINAUSLASTUNG"
+            : (content.results?.eyebrow ?? "ERGEBNIS"),
+
+          resultText: isBaldauf
+            ? "Die gestiegene Suchsichtbarkeit führt inzwischen zu deutlich mehr Nachfrage nach Terminen."
+            : (content.results?.description ?? content.results?.title ?? ""),
+
+          performanceTest: isBaldauf
+            ? "TERMINBUCHUNG"
+            : (content.performance?.eyebrow ?? "PERFORMANCE TEST"),
+
+          ctaTitle: content.cta?.title ?? "HAST DU EIN PROJEKT IM KOPF?",
+
+          ctaText: content.cta?.description ?? "",
+
+          ctaButton: content.cta?.button ?? "PROJEKT STARTEN",
+
+          liveWebsite: content.hero?.websiteButton ?? "LIVE-WEBSITE",
+
+          rankingLabel: "GOOGLE RANKING",
+
+          rankingTitle: "Lokale Sichtbarkeit",
+
+          performanceLabel: "CORE WEB VITALS",
+
+          performanceTitle: "Technische Performance",
+        }
+      : {
+          overviewTitle: content.overview?.eyebrow ?? "PROJECT OVERVIEW",
+
+          overviewText: content.overview?.introduction ?? "",
+
+          transformationTitle:
+            content.transformation?.title ?? "WEBSITE TRANSFORMATION",
+
+          oldWebsite: content.comparison?.before?.label ?? "OLD WEBSITE",
+
+          oldWebsiteTitle:
+            content.comparison?.before?.title ?? "Starting Point",
+
+          newWebsite: content.comparison?.after?.label ?? "NEW WEBSITE",
+
+          newWebsiteTitle: content.comparison?.after?.title ?? "New Design",
+
+          fullWebsite: "FULL WEBSITE",
+
+          fullWebsiteTitle: "Scroll View",
+
+          resultTitle: isBaldauf
+            ? "HIGH APPOINTMENT DEMAND"
+            : (content.results?.eyebrow ?? "RESULT"),
+
+          resultText: isBaldauf
+            ? "Increased search visibility is now generating significantly stronger appointment demand."
+            : (content.results?.description ?? content.results?.title ?? ""),
+
+          performanceTest: isBaldauf
+            ? "APPOINTMENT BOOKING"
+            : (content.performance?.eyebrow ?? "PERFORMANCE TEST"),
+
+          ctaTitle: content.cta?.title ?? "HAVE A PROJECT IN MIND?",
+
+          ctaText: content.cta?.description ?? "",
+
+          ctaButton: content.cta?.button ?? "START A PROJECT",
+
+          liveWebsite: content.hero?.websiteButton ?? "LIVE WEBSITE",
+
+          rankingLabel: "GOOGLE RANKING",
+
+          rankingTitle: "Local visibility",
+
+          performanceLabel: "CORE WEB VITALS",
+
+          performanceTitle: "Technical performance",
+        },
+  );
+
+  /* =========================================================
+     FULL WEBSITE ALT
+  ========================================================= */
+
+  const fullWebsiteAlt = $derived(
+    content.language === "de"
+      ? `${content.hero.title} Website Gesamtansicht`
+      : `${content.hero.title} full website screenshot`,
+  );
+
+  /* =========================================================
+     THREE VISUALS
+
+     EVA
+     1. Old website
+     2. New website
+     3. Full website
+
+     BALDAUF
+     1. Google ranking
+     2. Core Web Vitals
+     3. Full website
+  ========================================================= */
+
+  const transformationItems = $derived.by(() => {
+    if (isBaldauf) {
+      return [
+        {
+          label: copy.rankingLabel,
+          title: copy.rankingTitle,
+          image: media.ranking,
+          alt:
+            content.language === "de"
+              ? "Google Ranking der Website von Dr. Bosede Baldauf"
+              : "Google ranking for the Dr. Bosede Baldauf website",
+          type: "static",
+        },
+
+        {
+          label: copy.performanceLabel,
+          title: copy.performanceTitle,
+          image: media.performance,
+          alt:
+            content.language === "de"
+              ? "Core Web Vitals und Performance der Website von Dr. Bosede Baldauf"
+              : "Core Web Vitals and performance for the Dr. Bosede Baldauf website",
+          type: "static",
+        },
+
+        {
+          label: copy.fullWebsite,
+          title: copy.fullWebsiteTitle,
+          image: fullWebsiteScreenshot,
+          alt: fullWebsiteAlt,
+          type: "scroll",
+        },
+      ];
+    }
+
+    return [
+      {
+        label: copy.oldWebsite,
+        title: copy.oldWebsiteTitle,
+        image: media.oldWebsiteImage,
+        alt: content.comparison?.before?.title ?? copy.oldWebsiteTitle,
+        type: "static",
+      },
+
+      {
+        label: copy.newWebsite,
+        title: copy.newWebsiteTitle,
+        image: media.newWebsiteImage,
+        alt: content.comparison?.after?.title ?? copy.newWebsiteTitle,
+        type: "static",
+      },
+
+      {
+        label: copy.fullWebsite,
+        title: copy.fullWebsiteTitle,
+        image: fullWebsiteScreenshot,
+        alt: fullWebsiteAlt,
+        type: "scroll",
+      },
+    ];
+  });
+
+  /* =========================================================
+     RESULT IMAGE
+
+     EVA     -> performance screenshot
+     BALDAUF -> booking image
+  ========================================================= */
+
+  const resultImage = $derived(isBaldauf ? media.booking : media.speedTestNew);
+
+  const resultImageAlt = $derived(
+    isBaldauf
+      ? content.language === "de"
+        ? "Online-Terminbuchung der Website von Dr. Bosede Baldauf"
+        : "Online appointment booking on the Dr. Bosede Baldauf website"
+      : (content.performance?.afterTitle ?? copy.performanceTest),
+  );
+
+  /* =========================================================
+     OG IMAGE
+  ========================================================= */
+
+  const ogImage = $derived.by(() => {
+    const image = media.ogImage ?? media.newWebsiteImage ?? media.ranking ?? "";
+
+    if (!image) {
+      return "";
+    }
+
+    if (image.startsWith("http://") || image.startsWith("https://")) {
+      return image;
+    }
+
+    return `https://www.zorawebdesign.com${
+      image.startsWith("/") ? image : `/${image}`
+    }`;
+  });
+
+  /* =========================================================
+     LIGHTBOX
+  ========================================================= */
 
   function openLightbox(src, alt) {
+    if (!src) {
+      return;
+    }
+
     lightboxImage = src;
     lightboxAlt = alt;
 
@@ -123,39 +357,88 @@
     }
   }
 
-  function scrollToSection(event, id) {
-    event.preventDefault();
+  /* =========================================================
+     FULL WEBSITE SCROLL
+  ========================================================= */
 
-    const section = document.getElementById(id);
+  function scrollPreview(node) {
+    const image = node.querySelector("img");
 
-    if (!section) return;
+    if (!image) {
+      return {
+        destroy() {},
+      };
+    }
 
-    const headerHeight =
-      document.querySelector(".site-header")?.getBoundingClientRect().height ??
-      0;
+    let resizeObserver;
 
-    window.scrollTo({
-      top:
-        section.getBoundingClientRect().top +
-        window.scrollY -
-        headerHeight -
-        16,
+    function updateDistance() {
+      requestAnimationFrame(() => {
+        const imageHeight = image.offsetHeight;
 
-      behavior: "smooth",
-    });
+        const frameHeight = node.clientHeight;
+
+        const distance = Math.max(0, imageHeight - frameHeight);
+
+        node.style.setProperty("--scroll-distance", `${distance}px`);
+      });
+    }
+
+    if (image.complete) {
+      updateDistance();
+    }
+
+    image.addEventListener("load", updateDistance);
+
+    if (typeof ResizeObserver !== "undefined") {
+      resizeObserver = new ResizeObserver(updateDistance);
+
+      resizeObserver.observe(node);
+      resizeObserver.observe(image);
+    }
+
+    updateDistance();
+
+    return {
+      destroy() {
+        image.removeEventListener("load", updateDistance);
+
+        resizeObserver?.disconnect();
+      },
+    };
   }
+
+  /* =========================================================
+     FORCE PROJECT PAGES TO DARK MODE
+
+     The user's previous theme is restored when leaving
+     the project page.
+  ========================================================= */
 
   onMount(() => {
     document.documentElement.lang = content.language;
+
+    const body = document.body;
+
+    const hadLightMode = body.classList.contains("light");
+
+    body.classList.remove("light");
+    body.classList.add("project-dark-page");
+
+    return () => {
+      body.classList.remove("project-dark-page");
+
+      if (hadLightMode) {
+        body.classList.add("light");
+      }
+    };
   });
 </script>
 
 <svelte:window onkeydown={handleKeydown} />
 
 <svelte:head>
-  <title>
-    {content.seo.title}
-  </title>
+  <title>{content.seo.title}</title>
 
   <meta name="description" content={content.seo.description} />
 
@@ -181,278 +464,217 @@
 
   <meta property="og:url" content={content.seo.canonical} />
 
-  <meta
-    property="og:image"
-    content="https://www.zorawebdesign.com/images/new_website_design_result.webp"
-  />
+  {#if ogImage}
+    <meta property="og:image" content={ogImage} />
+  {/if}
 </svelte:head>
 
-<Header nav={content.nav} showStaticThemeIcon={false} />
-
-<ThemeToggle />
+<Header nav={content.nav} showThemeControl={false} />
 
 <main class="project-page">
   <!-- =====================================================
-       HERO
-       TEXT LEFT / IMAGE RIGHT
+       01 — PROJECT
   ====================================================== -->
 
-  <section class="project-hero">
-    <div class="hero-shell">
-      <!-- LEFT -->
+  <section class="project-section">
+    <div class="page-shell intro-shell">
+      <span class="edge-line edge-left" aria-hidden="true"></span>
 
-      <div class="hero-content">
-        <div class="project-kicker">
-          {content.hero.eyebrow}
-        </div>
+      <span class="edge-line edge-right" aria-hidden="true"></span>
 
-        <h1 class="hero-title">
-          <span>
-            {content.hero.title}
+      <div class="reading-column">
+        <div class="project-hero">
+          <span class="eyebrow">
+            {content.hero.eyebrow}
           </span>
 
-          <span>
-            {content.hero.outlinedTitle}
-          </span>
-        </h1>
-
-        <p class="hero-subtitle">
-          {content.hero.subtitle}
-        </p>
-
-        <p class="hero-description">
-          {content.hero.description}
-        </p>
-
-        <div class="hero-actions">
-          <a
-            href="#overview"
-            class="hero-button"
-            onclick={(event) => scrollToSection(event, "overview")}
-          >
+          <h1>
             <span>
-              {content.hero.primaryButton}
+              {content.hero.title}
             </span>
 
-            <span aria-hidden="true"> → </span>
-          </a>
+            <span>
+              {content.hero.outlinedTitle}
+            </span>
+          </h1>
+
+          <p class="hero-lead">
+            {content.hero.subtitle}
+          </p>
 
           <a
-            href={websiteUrl}
-            class="hero-button hero-button-secondary"
+            href={projectWebsiteUrl}
+            class="live-link"
             target="_blank"
             rel="noopener noreferrer"
           >
-            {content.hero.websiteButton}
+            <span>
+              {copy.liveWebsite}
+            </span>
+
+            <svg viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path
+                d="M4.3418 11.6582L11.6587 4.3413"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              ></path>
+
+              <path
+                d="M4.58714 4.34104H11.6582V11.4121"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              ></path>
+            </svg>
           </a>
         </div>
-      </div>
 
-      <!-- RIGHT -->
+        <!-- PROJECT OVERVIEW -->
 
-      <div class="hero-media">
-        <img
-          src={media.newWebsiteImage}
-          alt={content.comparison.after.title}
-          fetchpriority="high"
-        />
+        <div class="overview">
+          <h2>
+            {copy.overviewTitle}
+          </h2>
+
+          <p class="overview-text">
+            {copy.overviewText}
+          </p>
+
+          {#if content.overview?.description}
+            <p class="overview-text overview-text-secondary">
+              {content.overview.description}
+            </p>
+          {/if}
+
+          {#if overviewItems.length}
+            <ul class="overview-list">
+              {#each overviewItems as item}
+                <li>
+                  {item}
+                </li>
+              {/each}
+            </ul>
+          {/if}
+
+          <!-- PROJECT FACTS -->
+
+          {#if projectFacts.length}
+            <div class="project-facts">
+              {#each projectFacts as fact, index}
+                {#if index > 0}
+                  <span class="fact-divider" aria-hidden="true"> · </span>
+                {/if}
+
+                <span>
+                  {fact}
+                </span>
+              {/each}
+            </div>
+          {/if}
+
+          <!-- TECHNOLOGY STACK -->
+
+          {#if technologyStack.length}
+            <div class="stack">
+              {#each technologyStack as technology, index}
+                {#if index > 0}
+                  <span class="stack-divider" aria-hidden="true"> · </span>
+                {/if}
+
+                <span>
+                  {technology}
+                </span>
+              {/each}
+            </div>
+          {/if}
+        </div>
       </div>
     </div>
   </section>
 
   <!-- =====================================================
-       OVERVIEW
-       NOW DIRECTLY AFTER HERO
+       02 — WEBSITE TRANSFORMATION
   ====================================================== -->
 
-  <section id="overview" class="project-section">
-    <div class="section-shell">
+  <section class="project-section">
+    <div class="page-shell transformation-shell">
       <span class="edge-line edge-left" aria-hidden="true"></span>
 
       <span class="edge-line edge-right" aria-hidden="true"></span>
 
-      <div
-        class="section-header single-header centered-section-header overview-section-header"
-      >
-        <div class="section-heading">
-          <h2>
-            {content.overview.title}
-          </h2>
-        </div>
+      <div class="section-title centered-title">
+        <h2>
+          {copy.transformationTitle}
+        </h2>
       </div>
 
-      <div class="overview-grid">
-        <div class="overview-copy">
-          <p class="section-description overview-introduction">
-            {content.overview.introduction}
-          </p>
-
-          <p class="section-description secondary-description">
-            {content.overview.description}
-          </p>
-        </div>
-
-        <div class="overview-meta">
-          {#each content.meta as item}
-            <div>
+      <div class="visual-grid">
+        {#each transformationItems as item}
+          <article class="visual-column">
+            <div class="visual-label">
               <span>
-                {item[0]}
-              </span>
-
-              <strong>
-                {item[1]}
-              </strong>
-            </div>
-          {/each}
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- =====================================================
-       COMPARISON
-  ====================================================== -->
-
-  <section
-    id="comparison"
-    class="project-section comparison-section"
-    style="margin-top: calc(var(--section-space) / -1.5);"
-  >
-    <div class="section-shell">
-      <span class="edge-line edge-left" aria-hidden="true"></span>
-
-      <span class="edge-line edge-right" aria-hidden="true"></span>
-
-      <div class="section-header">
-        <div class="section-heading">
-          <h2>
-            {content.comparison.title}
-          </h2>
-        </div>
-
-        <p class="section-description section-header-description">
-          {content.language === "de"
-            ? "Ziehe den Regler nach links oder rechts, um die alte Website direkt mit dem neuen Design zu vergleichen."
-            : "Drag the control left or right to compare the previous website directly with the redesigned version."}
-        </p>
-      </div>
-
-      <div class="comparison-stage-wrap">
-        <div class="before-after-stage">
-          <div class="comparison-inside-label comparison-before-label">
-            <span>
-              {content.comparison.before.label}
-            </span>
-
-            <strong>
-              {content.comparison.before.title}
-            </strong>
-          </div>
-
-          <div class="comparison-inside-label comparison-after-label">
-            <span>
-              {content.comparison.after.label}
-            </span>
-
-            <strong>
-              {content.comparison.after.title}
-            </strong>
-          </div>
-
-          <img
-            class="comparison-sizer"
-            src={media.newWebsiteImage}
-            alt=""
-            aria-hidden="true"
-          />
-
-          <img
-            class="comparison-layer"
-            src={media.oldWebsiteImage}
-            alt={content.comparison.before.title}
-            loading="lazy"
-          />
-
-          <div
-            class="after-mask"
-            style={`clip-path: inset(0 ${100 - comparisonPosition}% 0 0)`}
-          >
-            <img
-              class="comparison-layer"
-              src={media.newWebsiteImage}
-              alt={content.comparison.after.title}
-              loading="lazy"
-            />
-          </div>
-
-          <div class="comparison-line" style={`left: ${comparisonPosition}%`}>
-            <span aria-hidden="true"> ↔ </span>
-          </div>
-
-          <input
-            class="comparison-range"
-            type="range"
-            min="0"
-            max="100"
-            step="1"
-            bind:value={comparisonPosition}
-            aria-label={content.language === "de"
-              ? "Vorher-Nachher-Vergleich"
-              : "Before and after comparison"}
-          />
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- =====================================================
-       TECHNOLOGY
-  ====================================================== -->
-
-  <section id="technology" class="project-section">
-    <div class="section-shell">
-      <span class="edge-line edge-left" aria-hidden="true"></span>
-
-      <span class="edge-line edge-right" aria-hidden="true"></span>
-
-      <div class="section-header">
-        <div class="section-heading">
-          <h2>
-            {content.technology.title}
-          </h2>
-        </div>
-
-        <p class="section-description section-header-description">
-          {content.language === "de"
-            ? "Ein einfaches WordPress-Backend kombiniert mit einem individuellen SvelteKit-Frontend und einer schnellen Auslieferung über Vercel."
-            : "A simple WordPress backend combined with a custom SvelteKit frontend and fast deployment through Vercel."}
-        </p>
-      </div>
-
-      <div class="technology-grid">
-        {#each technologyCards as item}
-          <article class="technology-card">
-            <div class="technology-image">
-              <img
-                src={item.image}
-                alt={`${item.name} – Eva Eichinger Website`}
-                loading="lazy"
-              />
-            </div>
-
-            <div class="technology-copy">
-              <span class="small-label">
-                {item.role}
+                {item.label}
               </span>
 
               <h3>
-                {item.name}
+                {item.title}
               </h3>
-
-              <p class="section-description">
-                {item.description}
-              </p>
             </div>
+
+            {#if item.type === "scroll"}
+              <button
+                type="button"
+                class="visual-frame scroll-frame"
+                onclick={() => openLightbox(item.image, item.alt)}
+              >
+                <div class="scroll-preview" use:scrollPreview>
+                  <img
+                    class="scroll-image"
+                    src={item.image}
+                    alt={item.alt}
+                    loading="lazy"
+                  />
+                </div>
+
+                <span class="zoom-indicator" aria-hidden="true">
+                  <svg viewBox="0 0 24 24">
+                    <circle cx="11" cy="11" r="6"></circle>
+
+                    <path d="M15.5 15.5L20 20"></path>
+
+                    <path d="M8 11H14"></path>
+
+                    <path d="M11 8V14"></path>
+                  </svg>
+                </span>
+              </button>
+            {:else}
+              <button
+                type="button"
+                class="visual-frame"
+                onclick={() => openLightbox(item.image, item.alt)}
+              >
+                <img
+                  class="static-image"
+                  src={item.image}
+                  alt={item.alt}
+                  loading="lazy"
+                />
+
+                <span class="zoom-indicator" aria-hidden="true">
+                  <svg viewBox="0 0 24 24">
+                    <circle cx="11" cy="11" r="6"></circle>
+
+                    <path d="M15.5 15.5L20 20"></path>
+
+                    <path d="M8 11H14"></path>
+
+                    <path d="M11 8V14"></path>
+                  </svg>
+                </span>
+              </button>
+            {/if}
           </article>
         {/each}
       </div>
@@ -460,162 +682,128 @@
   </section>
 
   <!-- =====================================================
-       PERFORMANCE
+       03 — RESULT
   ====================================================== -->
 
-  <section id="performance" class="project-section">
-    <div class="section-shell">
+  <section class="project-section">
+    <div class="page-shell result-shell">
       <span class="edge-line edge-left" aria-hidden="true"></span>
 
       <span class="edge-line edge-right" aria-hidden="true"></span>
 
-      <div class="section-header single-header">
-        <div class="section-heading">
-          <h2>
-            {content.performance.title}
-          </h2>
-        </div>
+      <div class="result-intro">
+        <h2>
+          {copy.resultTitle}
+        </h2>
+
+        <p>
+          {copy.resultText}
+        </p>
       </div>
 
-      <div class="performance-layout">
-        <div class="performance-copy">
-          <p class="section-description">
-            {content.performance.description}
-          </p>
+      <!-- RESULT METRICS -->
 
-          <div class="performance-score-grid">
-            {#each performanceScores as score}
-              <article>
-                <strong>
-                  {score[0]}
-                </strong>
+      <div class="performance-scores" class:baldauf-scores={isBaldauf}>
+        {#each performanceScores as score}
+          <article>
+            {#if isBaldauf}
+              <div class="score-bracket-group">
+                <div class="score-content">
+                  <strong>
+                    {score[0]}
+                  </strong>
 
-                <span>
-                  {score[1]}
-                </span>
-              </article>
-            {/each}
-          </div>
-        </div>
-
-        <div class="performance-proof">
-          <div class="performance-proof-header">
-            <div>
-              <span>
-                {content.performance.afterLabel}
-              </span>
-
+                  <span class="score-label">
+                    {score[1]}
+                  </span>
+                </div>
+              </div>
+            {:else}
               <strong>
-                {content.performance.afterTitle}
+                {score[0]}
               </strong>
-            </div>
 
-            <button
-              type="button"
-              aria-label="Open performance screenshot"
-              onclick={() =>
-                openLightbox(
-                  media.speedTestNew,
-                  content.performance.afterTitle,
-                )}
-            >
-              ↗
-            </button>
+              <span>
+                {score[1]}
+              </span>
+            {/if}
+          </article>
+        {/each}
+      </div>
+
+      <!-- SINGLE RESULT IMAGE -->
+
+      {#if resultImage}
+        <div class="performance-proof">
+          <div class="performance-label">
+            {copy.performanceTest}
           </div>
 
           <button
-            class="performance-image"
             type="button"
-            onclick={() =>
-              openLightbox(media.speedTestNew, content.performance.afterTitle)}
+            class="performance-image"
+            onclick={() => openLightbox(resultImage, resultImageAlt)}
           >
-            <img
-              src={media.speedTestNew}
-              alt={content.performance.afterTitle}
-              loading="lazy"
-            />
+            <img src={resultImage} alt={resultImageAlt} loading="lazy" />
+
+            <span class="zoom-indicator" aria-hidden="true">
+              <svg viewBox="0 0 24 24">
+                <circle cx="11" cy="11" r="6"></circle>
+
+                <path d="M15.5 15.5L20 20"></path>
+
+                <path d="M8 11H14"></path>
+
+                <path d="M11 8V14"></path>
+              </svg>
+            </span>
           </button>
         </div>
-      </div>
+      {/if}
     </div>
   </section>
 
   <!-- =====================================================
-       RESULTS
+       04 — CTA
   ====================================================== -->
 
-  <section id="results" class="project-section">
-    <div class="section-shell">
+  <section class="project-section">
+    <div class="page-shell cta-shell">
       <span class="edge-line edge-left" aria-hidden="true"></span>
 
       <span class="edge-line edge-right" aria-hidden="true"></span>
 
-      <div class="results-layout">
-        <div class="results-heading">
-          <h2>
-            {content.results.title}
-          </h2>
-        </div>
+      <div class="cta-column">
+        <h2>
+          {copy.ctaTitle}
+        </h2>
 
-        <div class="results-list">
-          {#each content.results.items.slice(0, 3) as item}
-            <article>
-              <span class="result-line" aria-hidden="true"></span>
+        <p>
+          {copy.ctaText}
+        </p>
 
-              <p class="section-description">
-                {item}
-              </p>
-            </article>
-          {/each}
-        </div>
-      </div>
-    </div>
-  </section>
+        <div class="cta-actions">
+          <a href={content.cta?.href ?? configuratorUrl} class="primary-button">
+            <span>
+              {copy.ctaButton}
+            </span>
 
-  <!-- =====================================================
-       CTA
-  ====================================================== -->
+            <svg viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path
+                d="M4.3418 11.6582L11.6587 4.3413"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              ></path>
 
-  <section class="project-section project-cta">
-    <div class="section-shell">
-      <span class="edge-line edge-left" aria-hidden="true"></span>
-
-      <span class="edge-line edge-right" aria-hidden="true"></span>
-
-      <div class="cta-layout">
-        <div>
-          <div class="cta-kicker">
-            {content.cta.eyebrow}
-          </div>
-
-          <h2>
-            {content.cta.title}
-          </h2>
-        </div>
-
-        <div class="cta-right">
-          <p class="section-description">
-            {content.cta.description}
-          </p>
-
-          <div class="cta-actions">
-            <a href={content.cta.href ?? configuratorUrl} class="cta-primary">
-              <span>
-                {content.cta.button}
-              </span>
-
-              <span aria-hidden="true"> → </span>
-            </a>
-
-            <a
-              href={websiteUrl}
-              class="cta-secondary"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              {content.language === "de" ? "LIVE-WEBSITE" : "LIVE WEBSITE"}
-            </a>
-          </div>
+              <path
+                d="M4.58714 4.34104H11.6582V11.4121"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              ></path>
+            </svg>
+          </a>
         </div>
       </div>
     </div>
@@ -649,12 +837,9 @@
   </div>
 {/if}
 
-<!-- =====================================================
-     FOOTER
-====================================================== -->
-
 <div class="project-footer">
   <Footer
+    homepage
     location={footerContent.location}
     imprintText={footerContent.imprintText}
     language={content.language}
@@ -663,7 +848,7 @@
 
 <style>
   /* =========================================================
-     GLOBAL
+     BASE — DARK MODE ONLY
   ========================================================= */
 
   :global(*) {
@@ -674,137 +859,89 @@
     scroll-behavior: smooth;
   }
 
-  :global(body) {
+  :global(body.project-dark-page) {
     margin: 0;
 
-    background: #000000;
+    background: #000000 !important;
+    color: #f5f5f5 !important;
 
-    color: #ffffff;
-  }
-
-  :global(body.light) {
-    background: #ffffff !important;
-
-    color: #111111;
+    color-scheme: dark;
   }
 
   .project-page {
     --blue: #0043ff;
 
     --bg: #000000;
+    --text: #f5f5f5;
 
-    --surface: #0d0d0e;
-
-    --text: #f2f2f2;
-
-    --muted: rgba(255, 255, 255, 0.62);
+    --muted: rgba(255, 255, 255, 0.64);
 
     --line: rgba(255, 255, 255, 0.08);
 
-    --line-strong: rgba(255, 255, 255, 0.14);
+    --line-strong: rgba(255, 255, 255, 0.16);
 
-    /*
-     * ONE COPY SYSTEM
-     */
+    --bracket-line: rgba(255, 255, 255, 0.48);
 
-    --copy-size: 15px;
+    --hero-size: clamp(1.45rem, 2.25vw, 2.55rem);
 
-    --copy-line: 1.7;
-
-    --copy-weight: 400;
-
-    /*
-     * EVERY SECTION AFTER HERO
-     * USES THIS SAME TOP/BOTTOM SPACE
-     */
-
-    --section-space: clamp(96px, 8vw, 128px);
+    --heading-size: clamp(21px, 1.65vw, 27px);
 
     width: 100%;
 
     overflow: clip;
 
-    background: var(--bg);
+    background: #000000;
+    color: #f5f5f5;
 
-    color: var(--text);
+    color-scheme: dark;
 
-    font-family: "Space Grotesk", Arial, Helvetica, sans-serif;
-  }
-
-  :global(body.light) .project-page {
-    --bg: #ffffff;
-
-    --surface: #ffffff;
-
-    --text: #111111;
-
-    --muted: rgba(0, 0, 0, 0.62);
-
-    --line: rgba(0, 0, 0, 0.08);
-
-    --line-strong: rgba(0, 0, 0, 0.14);
-
-    background: #ffffff !important;
+    font-family: "DM Sans", Arial, sans-serif;
   }
 
   /* =========================================================
-     BODY COPY
-  ========================================================= */
-
-  .section-description,
-  .hero-description,
-  .technology-copy p,
-  .cta-right p {
-    font-size: var(--copy-size);
-
-    font-weight: var(--copy-weight);
-
-    line-height: var(--copy-line);
-
-    letter-spacing: 0;
-  }
-
-  .section-description {
-    margin: 0;
-
-    color: var(--muted);
-  }
-
-  /* =========================================================
-     ALL SECTIONS AFTER HERO
+     SECTION FRAME
   ========================================================= */
 
   .project-section {
+    position: relative;
+
     width: 100%;
 
-    background: var(--bg);
+    border-top: 1px solid var(--line);
+
+    background: #000000;
 
     color: var(--text);
   }
 
-  :global(body.light) .project-section {
-    background: #ffffff !important;
+  .project-section:last-child {
+    border-bottom: 1px solid var(--line);
   }
 
-  .section-shell {
+  .page-shell {
+    --shell-x: 40px;
+
     position: relative;
 
     width: min(1540px, calc(100% - 32px));
 
     margin: 0 auto;
 
-    padding: var(--section-space) 40px;
+    padding-left: var(--shell-x);
+
+    padding-right: var(--shell-x);
   }
 
   /* =========================================================
-     EDGE LINES
+     VERTICAL GUIDE LINES
   ========================================================= */
 
   .edge-line {
     position: absolute;
 
-    top: 0;
+    z-index: 2;
 
+    top: 0;
     bottom: 0;
 
     width: 1px;
@@ -823,148 +960,52 @@
   }
 
   /* =========================================================
-     HERO
+     READING COLUMN
   ========================================================= */
 
-  .project-hero {
-    width: 100%;
-
-    padding: clamp(42px, 5vw, 72px) 0 0;
-
-    background: var(--bg);
-
-    color: var(--text);
-  }
-
-  :global(body.light) .project-hero {
-    background: #ffffff !important;
-  }
-
-  .hero-shell {
-    width: min(1540px, 94%);
-
-    min-height: 540px;
+  .reading-column {
+    width: min(800px, 100%);
 
     margin: 0 auto;
-
-    display: grid;
-
-    grid-template-columns:
-      minmax(360px, 0.85fr)
-      minmax(0, 1.55fr);
-
-    align-items: stretch;
-
-    overflow: hidden;
-
-    border: 0;
   }
 
   /* =========================================================
-     HERO TEXT
+     INTRO
   ========================================================= */
 
-  .hero-content {
-    width: 100%;
-
-    padding: clamp(48px, 5vw, 76px) clamp(34px, 4vw, 62px);
-
-    display: flex;
-
-    flex-direction: column;
-
-    align-items: flex-start;
-
-    justify-content: center;
-
-    background: #000000;
+  .intro-shell {
+    padding-top: 86px;
+    padding-bottom: 98px;
   }
 
-  :global(body.light) .hero-content {
-    background: #ffffff;
-  }
-
-  /* =========================================================
-     HERO IMAGE
-     NO CROPPING
-  ========================================================= */
-
-  .hero-media {
-    position: relative;
-
-    min-width: 0;
-
-    min-height: 540px;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    overflow: hidden;
-
-    background: var(--surface);
-  }
-
-  :global(body.light) .hero-media {
-    background: #ffffff;
-  }
-
-  .hero-media img {
-    width: 100%;
-
-    height: 100%;
-
+  .eyebrow {
     display: block;
-
-    object-fit: contain;
-
-    object-position: center center;
-  }
-
-  /* =========================================================
-     HERO EYEBROW
-  ========================================================= */
-
-  .project-kicker {
-    width: fit-content;
-
-    margin-bottom: 24px;
-
-    padding-bottom: 7px;
-
-    border-bottom: 1px solid #0043ff;
 
     color: var(--muted);
 
     font-size: 11px;
 
-    font-weight: 500;
+    font-weight: 600;
 
-    line-height: 1.3;
+    line-height: 1.4;
 
-    letter-spacing: 0.08em;
+    letter-spacing: 0.07em;
+
+    text-transform: uppercase;
   }
 
-  /* =========================================================
-     HERO TITLE
-  ========================================================= */
-
-  .hero-title {
-    width: 100%;
-
-    margin: 0;
+  .project-hero h1 {
+    margin: 27px 0 0;
 
     display: flex;
 
     flex-direction: column;
 
-    gap: 7px;
+    gap: 5px;
 
     color: var(--text);
 
-    font-size: clamp(1.45rem, 2.25vw, 2.55rem);
+    font-size: var(--hero-size);
 
     font-weight: 600;
 
@@ -975,54 +1016,34 @@
     text-transform: uppercase;
   }
 
-  .hero-title span {
+  .project-hero h1 span {
     display: block;
   }
 
-  /* =========================================================
-     HERO COPY
-  ========================================================= */
-
-  .hero-subtitle {
-    max-width: 520px;
+  .hero-lead {
+    max-width: 630px;
 
     margin: 24px 0 0;
 
-    color: var(--text);
+    color: var(--muted);
 
     font-size: 16px;
 
-    font-weight: 500;
-
-    line-height: 1.55;
-  }
-
-  .hero-description {
-    max-width: 520px;
-
-    margin: 13px 0 0;
-
-    color: var(--muted);
+    line-height: 1.7;
   }
 
   /* =========================================================
-     HERO BUTTONS
+     LIVE WEBSITE
   ========================================================= */
 
-  .hero-actions {
-    margin-top: 27px;
+  .live-link {
+    width: fit-content;
 
-    display: flex;
+    min-height: 43px;
 
-    flex-wrap: wrap;
+    margin-top: 28px;
 
-    gap: 11px;
-  }
-
-  .hero-button {
-    min-height: 42px;
-
-    padding: 0 17px;
+    padding: 0 18px;
 
     display: inline-flex;
 
@@ -1030,662 +1051,667 @@
 
     justify-content: center;
 
-    gap: 10px;
+    gap: 11px;
 
     border: 1px solid #ffffff;
 
     background: #ffffff;
 
-    color: #000000;
+    color: #050505;
 
-    font-size: 10px;
+    font-size: 11px;
 
     font-weight: 700;
 
     line-height: 1;
 
-    letter-spacing: 0.07em;
+    letter-spacing: 0.06em;
 
     text-decoration: none;
 
     text-transform: uppercase;
-
-    transition:
-      transform 0.25s ease,
-      background 0.25s ease,
-      color 0.25s ease;
   }
 
-  .hero-button:hover {
-    transform: translateY(-3px);
-  }
+  .live-link svg,
+  .primary-button svg {
+    width: 16px;
+    height: 16px;
 
-  .hero-button-secondary {
-    border-color: rgba(255, 255, 255, 0.36);
-
-    background: transparent;
-
-    color: #ffffff;
-  }
-
-  .hero-button-secondary:hover {
-    border-color: #ffffff;
-
-    background: #ffffff;
-
-    color: #000000;
-  }
-
-  :global(body.light) .hero-button {
-    border-color: #111111;
-
-    background: #111111;
-
-    color: #ffffff;
-  }
-
-  :global(body.light) .hero-button-secondary {
-    border-color: rgba(0, 0, 0, 0.3);
-
-    background: #ffffff;
-
-    color: #111111;
-  }
-
-  /* =========================================================
-     SECTION HEADERS
-  ========================================================= */
-
-  .section-header {
-    width: 100%;
-
-    margin-bottom: 56px;
-
-    padding-bottom: 31px;
-
-    border-bottom: 1px solid #0043ff;
-
-    display: grid;
-
-    grid-template-columns:
-      minmax(0, 1fr)
-      minmax(280px, 420px);
-
-    align-items: end;
-
-    gap: 60px;
-  }
-
-  .section-header.single-header {
-    display: block;
-  }
-
-  .section-heading {
-    display: block;
-  }
-
-  .section-heading h2 {
-    max-width: 760px;
-
-    margin: 0;
-
-    color: var(--text);
-
-    font-size: clamp(24px, 2.1vw, 34px);
-
-    font-weight: 600;
-
-    line-height: 1.12;
-
-    letter-spacing: -0.035em;
-  }
-
-  .section-header-description {
-    max-width: 420px;
-  }
-
-  /* =========================================================
-     OVERVIEW HEADER
-     CENTERED + NO BLUE LINE
-  ========================================================= */
-
-  .overview-section-header {
-    padding-bottom: 0;
-
-    border-bottom: 0;
-  }
-
-  .centered-section-header {
-    text-align: center;
-  }
-
-  .centered-section-header .section-heading {
-    display: flex;
-
-    justify-content: center;
-  }
-
-  .centered-section-header .section-heading h2 {
-    margin-left: auto;
-
-    margin-right: auto;
+    flex: 0 0 auto;
   }
 
   /* =========================================================
      OVERVIEW
   ========================================================= */
 
-  .overview-grid {
-    width: min(1100px, 100%);
-
-    margin: 0 auto;
-
-    display: grid;
-
-    grid-template-columns:
-      minmax(0, 1.18fr)
-      minmax(260px, 0.72fr);
-
-    gap: clamp(60px, 8vw, 110px);
-
-    align-items: center;
+  .overview {
+    margin-top: 78px;
   }
 
-  .overview-copy {
-    max-width: 680px;
-  }
+  .overview h2 {
+    margin: 0;
 
-  .overview-introduction {
     color: var(--text);
+
+    font-size: var(--heading-size);
+
+    font-weight: 600;
+
+    line-height: 1.15;
+
+    letter-spacing: -0.025em;
   }
 
-  .secondary-description {
-    margin-top: 20px;
-  }
+  .overview-text {
+    max-width: 720px;
 
-  .overview-meta {
-    border-top: 1px solid var(--line-strong);
-  }
+    margin: 21px 0 0;
 
-  .overview-meta div {
-    padding: 13px 0;
-
-    border-bottom: 1px solid var(--line);
-
-    display: grid;
-
-    grid-template-columns:
-      95px
-      minmax(0, 1fr);
-
-    gap: 20px;
-  }
-
-  .overview-meta span {
     color: var(--muted);
 
-    font-size: 9px;
+    font-size: 16px;
 
-    font-weight: 600;
-
-    line-height: 1.4;
-
-    letter-spacing: 0.08em;
+    line-height: 1.75;
   }
 
-  .overview-meta strong {
-    color: var(--text);
-
-    font-size: 12px;
-
-    font-weight: 450;
-
-    line-height: 1.4;
+  .overview-text-secondary {
+    margin-top: 15px;
   }
 
   /* =========================================================
-     COMPARISON
+     OVERVIEW BULLETS
   ========================================================= */
 
-  .comparison-stage-wrap {
-    width: min(960px, 100%);
+  .overview-list {
+    max-width: 720px;
 
-    margin: 0 auto;
+    margin: 32px 0 0;
+
+    padding: 0;
+
+    list-style: none;
   }
 
-  .before-after-stage {
+  .overview-list li {
     position: relative;
-
-    width: 100%;
-
-    overflow: hidden;
-
-    border: 1px solid var(--line-strong);
-
-    background: var(--surface);
-  }
-
-  .comparison-sizer {
-    width: 100%;
-
-    height: auto;
-
-    display: block;
-
-    visibility: hidden;
-  }
-
-  .comparison-layer,
-  .after-mask {
-    position: absolute;
-
-    inset: 0;
-
-    width: 100%;
-
-    height: 100%;
-  }
-
-  .comparison-layer {
-    display: block;
-
-    object-fit: contain;
-
-    object-position: top center;
-
-    background: var(--surface);
-  }
-
-  .after-mask {
-    overflow: hidden;
-  }
-
-  /* =========================================================
-     COMPARISON LABELS
-  ========================================================= */
-
-  .comparison-inside-label {
-    position: absolute;
-
-    z-index: 7;
-
-    top: 15px;
-
-    min-width: 110px;
-
-    padding: 9px 11px;
-
-    border: 1px solid rgba(255, 255, 255, 0.18);
-
-    background: #000000;
-
-    color: #ffffff;
-
-    pointer-events: none;
-  }
-
-  .comparison-before-label {
-    left: 15px;
-  }
-
-  .comparison-after-label {
-    right: 15px;
-
-    text-align: right;
-  }
-
-  .comparison-inside-label span,
-  .comparison-inside-label strong {
-    display: block;
-  }
-
-  .comparison-inside-label span {
-    color: #0043ff;
-
-    font-size: 8px;
-
-    font-weight: 600;
-
-    line-height: 1.3;
-
-    letter-spacing: 0.1em;
-  }
-
-  .comparison-inside-label strong {
-    margin-top: 4px;
-
-    color: inherit;
-
-    font-size: 10px;
-
-    font-weight: 500;
-
-    line-height: 1.3;
-  }
-
-  :global(body.light) .comparison-inside-label {
-    border-color: rgba(0, 0, 0, 0.14);
-
-    background: #ffffff;
-
-    color: #111111;
-  }
-
-  :global(body.light) .comparison-inside-label span {
-    color: #0043ff;
-  }
-
-  :global(body.light) .comparison-section .section-description {
-    color: rgba(0, 0, 0, 0.62);
-  }
-
-  /* =========================================================
-     COMPARISON HANDLE
-  ========================================================= */
-
-  .comparison-line {
-    position: absolute;
-
-    z-index: 5;
-
-    top: 0;
-
-    bottom: 0;
-
-    width: 1px;
-
-    background: #ffffff;
-
-    transform: translateX(-50%);
-
-    pointer-events: none;
-  }
-
-  .comparison-line span {
-    position: absolute;
-
-    top: 50%;
-
-    left: 50%;
-
-    width: 38px;
-
-    height: 38px;
-
-    display: grid;
-
-    place-items: center;
-
-    border: 1px solid rgba(255, 255, 255, 0.35);
-
-    background: #000000;
-
-    color: #ffffff;
-
-    font-size: 12px;
-
-    transform: translate(-50%, -50%);
-  }
-
-  :global(body.light) .comparison-line {
-    background: #111111;
-  }
-
-  :global(body.light) .comparison-line span {
-    border-color: rgba(0, 0, 0, 0.25);
-
-    background: #ffffff;
-
-    color: #111111;
-  }
-
-  .comparison-range {
-    position: absolute;
-
-    z-index: 8;
-
-    inset: 0;
-
-    width: 100%;
-
-    height: 100%;
 
     margin: 0;
 
-    opacity: 0;
+    padding-left: 24px;
 
-    cursor: ew-resize;
+    color: var(--muted);
+
+    font-size: 16px;
+
+    line-height: 1.7;
+  }
+
+  .overview-list li + li {
+    margin-top: 13px;
+  }
+
+  .overview-list li::before {
+    content: "";
+
+    position: absolute;
+
+    top: 0.68em;
+    left: 0;
+
+    width: 6px;
+    height: 6px;
+
+    border-radius: 50%;
+
+    background: var(--blue);
   }
 
   /* =========================================================
-     TECHNOLOGY
+     PROJECT FACTS
   ========================================================= */
 
-  .technology-grid {
+  .project-facts {
+    margin-top: 38px;
+
+    display: flex;
+
+    flex-wrap: wrap;
+
+    align-items: center;
+
+    gap: 8px;
+
+    color: var(--text);
+
+    font-size: 14px;
+
+    line-height: 1.65;
+  }
+
+  .fact-divider {
+    color: var(--blue);
+  }
+
+  /* =========================================================
+     STACK
+  ========================================================= */
+
+  .stack {
+    margin-top: 11px;
+
+    display: flex;
+
+    flex-wrap: wrap;
+
+    align-items: center;
+
+    gap: 5px;
+
+    color: #ffffff;
+
+    font-size: 14px;
+
+    font-weight: 700;
+
+    line-height: 1.65;
+  }
+
+  .stack span {
+    color: inherit;
+
+    font-weight: inherit;
+  }
+
+  .stack-divider {
+    color: rgba(255, 255, 255, 0.7);
+  }
+
+  /* =========================================================
+     TRANSFORMATION
+  ========================================================= */
+
+  .transformation-shell {
+    padding-top: 82px;
+    padding-bottom: 94px;
+  }
+
+  .section-title {
+    margin-bottom: 50px;
+  }
+
+  .centered-title {
+    text-align: center;
+  }
+
+  .section-title h2 {
+    margin: 0;
+
+    color: var(--text);
+
+    font-size: var(--heading-size);
+
+    font-weight: 600;
+
+    line-height: 1.15;
+
+    letter-spacing: -0.025em;
+  }
+
+  /* =========================================================
+     THREE VISUAL COLUMNS
+  ========================================================= */
+
+  .visual-grid {
     width: 100%;
 
     display: grid;
 
     grid-template-columns: repeat(3, minmax(0, 1fr));
 
-    gap: clamp(22px, 2.5vw, 36px);
+    gap: clamp(22px, 2.3vw, 34px);
 
-    align-items: start;
+    align-items: stretch;
   }
 
-  .technology-card {
+  .visual-column {
     min-width: 0;
 
-    padding-top: 16px;
+    display: grid;
 
-    border-top: 1px solid var(--line-strong);
+    grid-template-rows:
+      auto
+      minmax(0, 1fr);
   }
 
-  .technology-image {
-    width: 100%;
+  .visual-label {
+    min-height: 74px;
 
-    height: clamp(185px, 16vw, 245px);
+    margin-bottom: 18px;
 
-    overflow: hidden;
-
-    border: 1px solid var(--line);
-
-    background: var(--surface);
+    text-align: center;
   }
 
-  :global(body.light) .technology-image {
-    background: #ffffff;
-  }
-
-  .technology-image img {
-    width: 100%;
-
-    height: 100%;
-
+  .visual-label > span {
     display: block;
 
-    object-fit: contain;
+    color: var(--muted);
 
-    object-position: top left;
-  }
-
-  .technology-copy {
-    max-width: 430px;
-
-    margin-top: 20px;
-  }
-
-  .small-label {
-    color: #0043ff;
-
-    font-size: 9px;
+    font-size: 11px;
 
     font-weight: 600;
 
-    line-height: 1.3;
+    line-height: 1.4;
 
-    letter-spacing: 0.08em;
+    letter-spacing: 0.06em;
 
     text-transform: uppercase;
   }
 
-  .technology-copy h3 {
-    margin: 9px 0 11px;
-
-    color: var(--text);
-
-    font-size: clamp(20px, 1.5vw, 25px);
-
-    font-weight: 600;
-
-    line-height: 1.15;
-
-    letter-spacing: -0.03em;
-  }
-
-  /* =========================================================
-     PERFORMANCE
-  ========================================================= */
-
-  .performance-layout {
-    width: 100%;
-
-    display: grid;
-
-    grid-template-columns:
-      minmax(0, 0.65fr)
-      minmax(0, 1.35fr);
-
-    gap: clamp(50px, 6vw, 90px);
-
-    align-items: center;
-  }
-
-  .performance-copy {
-    max-width: 500px;
-  }
-
-  .performance-score-grid {
-    margin-top: 34px;
-
-    display: grid;
-
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-
-    border-top: 1px solid var(--line-strong);
-  }
-
-  .performance-score-grid article {
-    padding: 19px 12px 18px 0;
-
-    border-right: 1px solid var(--line);
-
-    border-bottom: 1px solid var(--line);
-  }
-
-  .performance-score-grid article:nth-child(2n) {
-    padding-left: 18px;
-
-    border-right: 0;
-  }
-
-  .performance-score-grid strong {
-    display: block;
-
-    color: #0043ff;
-
-    font-size: clamp(1.7rem, 2.8vw, 3rem);
-
-    font-weight: 500;
-
-    line-height: 1;
-  }
-
-  .performance-score-grid span {
-    display: block;
-
-    margin-top: 6px;
-
-    color: var(--muted);
-
-    font-size: 9px;
-
-    font-weight: 500;
-
-    line-height: 1.4;
-  }
-
-  .performance-proof {
-    width: 100%;
-    max-width: 850px;
-
-    border: 1px solid var(--line-strong);
-
-    background: var(--surface);
-  }
-
-  :global(body.light) .performance-proof {
-    background: #ffffff;
-  }
-
-  .performance-proof-header {
-    padding: 12px 14px;
-
-    border-bottom: 1px solid var(--line);
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: space-between;
-
-    gap: 15px;
-  }
-
-  .performance-proof-header div {
-    display: flex;
-
-    align-items: baseline;
-
-    gap: 9px;
-  }
-
-  .performance-proof-header span {
-    color: #0043ff;
-
-    font-size: 8px;
-
-    font-weight: 600;
-
-    letter-spacing: 0.08em;
-  }
-
-  .performance-proof-header strong {
-    color: var(--text);
-
-    font-size: 10px;
-
-    font-weight: 500;
-  }
-
-  .performance-proof-header button {
-    padding: 0;
-
-    border: 0;
-
-    background: transparent;
+  .visual-label h3 {
+    margin: 8px 0 0;
 
     color: var(--text);
 
     font-size: 16px;
 
-    cursor: pointer;
+    font-weight: 500;
+
+    line-height: 1.35;
+
+    letter-spacing: -0.015em;
+  }
+
+  /* =========================================================
+     VISUAL FRAME
+  ========================================================= */
+
+  .visual-frame {
+    position: relative;
+
+    width: 100%;
+
+    height: clamp(400px, 36vw, 540px);
+
+    padding: 0;
+
+    overflow: hidden;
+
+    border: 0;
+
+    display: block;
+
+    background: #0b0b0b;
+
+    cursor: zoom-in;
+  }
+
+  .static-image {
+    width: 100%;
+    height: 100%;
+
+    display: block;
+
+    object-fit: cover;
+
+    object-position: top center;
+  }
+
+  /* =========================================================
+     FULL WEBSITE SCROLL
+  ========================================================= */
+
+  .scroll-frame {
+    overflow: hidden;
+  }
+
+  .scroll-preview {
+    --scroll-distance: 0px;
+
+    position: absolute;
+
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    overflow: hidden;
+  }
+
+  .scroll-image {
+    position: absolute;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: auto;
+
+    max-width: none;
+
+    display: block;
+
+    transform: translate3d(0, 0, 0);
+
+    transition: transform 7s linear;
+
+    will-change: transform;
+  }
+
+  .scroll-frame:hover .scroll-image,
+  .scroll-frame:focus-visible .scroll-image {
+    transform: translate3d(0, calc(-1 * var(--scroll-distance)), 0);
+  }
+
+  /* =========================================================
+     ZOOM
+  ========================================================= */
+
+  .zoom-indicator {
+    position: absolute;
+
+    z-index: 5;
+
+    top: 50%;
+    left: 50%;
+
+    width: 46px;
+    height: 46px;
+
+    display: grid;
+
+    place-items: center;
+
+    border: 1px solid rgba(255, 255, 255, 0.48);
+
+    background: rgba(0, 0, 0, 0.68);
+
+    color: #ffffff;
+
+    transform: translate(-50%, -50%);
+
+    pointer-events: none;
+  }
+
+  .zoom-indicator svg {
+    width: 20px;
+    height: 20px;
+
+    fill: none;
+
+    stroke: currentColor;
+
+    stroke-width: 1.5;
+
+    stroke-linecap: round;
+
+    stroke-linejoin: round;
+  }
+
+  /* =========================================================
+     RESULT
+  ========================================================= */
+
+  .result-shell {
+    padding-top: 82px;
+    padding-bottom: 96px;
+  }
+
+  .result-intro {
+    width: min(730px, 100%);
+
+    margin: 0 auto;
+
+    text-align: center;
+  }
+
+  .result-intro h2 {
+    margin: 0;
+
+    color: var(--text);
+
+    font-size: var(--heading-size);
+
+    font-weight: 600;
+
+    line-height: 1.15;
+
+    letter-spacing: -0.025em;
+  }
+
+  .result-intro p {
+    max-width: 630px;
+
+    margin: 20px auto 0;
+
+    color: var(--muted);
+
+    font-size: 16px;
+
+    line-height: 1.7;
+  }
+
+  /* =========================================================
+     EVA RESULT SCORES
+  ========================================================= */
+
+  .performance-scores {
+    width: min(860px, calc(100% - 80px));
+
+    margin: 62px auto 0;
+
+    display: grid;
+
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+
+    gap: clamp(30px, 4vw, 60px);
+
+    text-align: center;
+  }
+
+  .performance-scores article {
+    min-width: 0;
+  }
+
+  .performance-scores > article > strong {
+    display: block;
+
+    color: var(--text);
+
+    font-size: clamp(28px, 2.5vw, 42px);
+
+    font-weight: 500;
+
+    line-height: 1;
+
+    letter-spacing: -0.03em;
+  }
+
+  .performance-scores > article > span {
+    display: block;
+
+    margin-top: 12px;
+
+    color: var(--muted);
+
+    font-size: 12px;
+
+    font-weight: 500;
+
+    line-height: 1.45;
+  }
+
+  /* =========================================================
+     BALDAUF RESULT SCORES
+
+     1px graphic brackets.
+     Centered text.
+     Bracket width follows content.
+  ========================================================= */
+
+  .performance-scores.baldauf-scores {
+    width: 100%;
+
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+
+    gap: clamp(10px, 2vw, 28px);
+
+    align-items: center;
+
+    text-align: center;
+  }
+
+  .baldauf-scores article {
+    min-width: 0;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+  }
+
+  .score-bracket-group {
+    position: relative;
+
+    width: fit-content;
+
+    max-width: 100%;
+
+    min-height: 64px;
+
+    padding: 9px 16px;
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+  }
+
+  .score-bracket-group::before,
+  .score-bracket-group::after {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    bottom: 0;
+
+    width: 7px;
+
+    pointer-events: none;
+  }
+
+  .score-bracket-group::before {
+    left: 0;
+
+    border-top: 1px solid var(--bracket-line);
+
+    border-bottom: 1px solid var(--bracket-line);
+
+    border-left: 1px solid var(--bracket-line);
+  }
+
+  .score-bracket-group::after {
+    right: 0;
+
+    border-top: 1px solid var(--bracket-line);
+
+    border-right: 1px solid var(--bracket-line);
+
+    border-bottom: 1px solid var(--bracket-line);
+  }
+
+  .score-content {
+    width: fit-content;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    text-align: center;
+  }
+
+  .score-content strong {
+    display: block;
+
+    margin: 0 0 6px;
+
+    color: #ffffff;
+
+    font-size: clamp(19px, 1.55vw, 23px);
+
+    font-weight: 600;
+
+    line-height: 1;
+
+    letter-spacing: -0.03em;
+
+    text-align: center;
+
+    white-space: nowrap;
+  }
+
+  .score-label {
+    display: block;
+
+    margin: 0;
+
+    color: rgba(255, 255, 255, 0.58);
+
+    font-size: clamp(8px, 0.72vw, 10px);
+
+    font-weight: 500;
+
+    line-height: 1.25;
+
+    letter-spacing: 0.01em;
+
+    text-align: center;
+
+    white-space: nowrap;
+  }
+
+  /* =========================================================
+     RESULT IMAGE
+  ========================================================= */
+
+  .performance-proof {
+    width: min(940px, calc(100% - 80px));
+
+    margin: 68px auto 0;
+  }
+
+  .performance-label {
+    margin-bottom: 14px;
+
+    color: var(--muted);
+
+    font-size: 11px;
+
+    font-weight: 600;
+
+    line-height: 1.4;
+
+    letter-spacing: 0.06em;
+
+    text-align: center;
+
+    text-transform: uppercase;
   }
 
   .performance-image {
+    position: relative;
+
     width: 100%;
 
     padding: 0;
+
+    overflow: hidden;
 
     border: 0;
 
@@ -1698,155 +1724,67 @@
 
   .performance-image img {
     width: 100%;
-
     height: auto;
 
     display: block;
   }
 
   /* =========================================================
-     RESULTS
+     CTA
   ========================================================= */
 
-  .results-layout {
-    width: 100%;
-
-    display: grid;
-
-    grid-template-columns:
-      minmax(0, 0.9fr)
-      minmax(0, 1.1fr);
-
-    gap: clamp(65px, 8vw, 120px);
-
-    align-items: center;
+  .cta-shell {
+    padding-top: 76px;
+    padding-bottom: 84px;
   }
 
-  .results-heading {
-    max-width: 560px;
+  .cta-column {
+    width: min(730px, 100%);
+
+    margin: 0 auto;
+
+    text-align: center;
   }
 
-  .results-heading h2 {
+  .cta-column h2 {
     margin: 0;
 
     color: var(--text);
 
-    font-size: clamp(24px, 2.1vw, 34px);
+    font-size: var(--heading-size);
 
     font-weight: 600;
 
-    line-height: 1.12;
+    line-height: 1.15;
 
-    letter-spacing: -0.035em;
+    letter-spacing: -0.025em;
   }
 
-  .results-list {
-    border-top: 1px solid var(--line-strong);
-  }
+  .cta-column p {
+    max-width: 580px;
 
-  .results-list article {
-    min-height: 82px;
-
-    padding: 20px 0;
-
-    border-bottom: 1px solid var(--line-strong);
-
-    display: grid;
-
-    grid-template-columns:
-      26px
-      minmax(0, 1fr);
-
-    align-items: center;
-
-    gap: 16px;
-  }
-
-  .result-line {
-    width: 8px;
-    height: 8px;
-
-    display: block;
-
-    border-radius: 50%;
-
-    background: #0043ff;
-  }
-
-  /* =========================================================
-     CTA
-  ========================================================= */
-
-  .project-cta {
-    border-top: 1px solid var(--line);
-  }
-
-  .cta-layout {
-    width: 100%;
-
-    display: grid;
-
-    grid-template-columns:
-      minmax(0, 1.15fr)
-      minmax(300px, 0.85fr);
-
-    gap: clamp(65px, 8vw, 120px);
-
-    align-items: center;
-  }
-
-  .cta-kicker {
-    width: fit-content;
-
-    padding-bottom: 7px;
-
-    border-bottom: 1px solid #0043ff;
+    margin: 20px auto 0;
 
     color: var(--muted);
 
-    font-size: 9px;
+    font-size: 16px;
 
-    font-weight: 600;
-
-    line-height: 1.3;
-
-    letter-spacing: 0.1em;
-
-    text-transform: uppercase;
-  }
-
-  .cta-layout h2 {
-    max-width: 760px;
-
-    margin: 25px 0 0;
-
-    color: var(--text);
-
-    font-size: clamp(29px, 3.2vw, 48px);
-
-    font-weight: 600;
-
-    line-height: 1.08;
-
-    letter-spacing: -0.04em;
-  }
-
-  .cta-right {
-    max-width: 520px;
+    line-height: 1.7;
   }
 
   .cta-actions {
-    margin-top: 26px;
+    margin-top: 28px;
 
     display: flex;
 
-    flex-wrap: wrap;
-
-    gap: 11px;
+    justify-content: center;
   }
 
-  .cta-primary,
-  .cta-secondary {
+  /* =========================================================
+     CTA BUTTON
+  ========================================================= */
+
+  .primary-button {
     min-height: 43px;
 
     padding: 0 18px;
@@ -1861,45 +1799,21 @@
 
     border: 1px solid #ffffff;
 
-    font-size: 10px;
+    background: #ffffff;
+
+    color: #050505;
+
+    font-size: 11px;
 
     font-weight: 700;
 
-    letter-spacing: 0.07em;
+    line-height: 1;
+
+    letter-spacing: 0.06em;
 
     text-decoration: none;
 
     text-transform: uppercase;
-  }
-
-  .cta-primary {
-    background: #ffffff;
-
-    color: #000000;
-  }
-
-  .cta-secondary {
-    border-color: rgba(255, 255, 255, 0.35);
-
-    background: transparent;
-
-    color: #ffffff;
-  }
-
-  :global(body.light) .cta-primary {
-    border-color: #111111;
-
-    background: #111111;
-
-    color: #ffffff;
-  }
-
-  :global(body.light) .cta-secondary {
-    border-color: rgba(0, 0, 0, 0.3);
-
-    background: #ffffff;
-
-    color: #111111;
   }
 
   /* =========================================================
@@ -1936,7 +1850,6 @@
 
   .lightbox-dialog img {
     width: 100%;
-
     height: auto;
 
     display: block;
@@ -1950,7 +1863,6 @@
     top: 12px;
 
     width: 42px;
-
     height: 42px;
 
     margin: 12px 12px -54px auto;
@@ -1965,7 +1877,7 @@
 
     color: #ffffff;
 
-    font-size: 1.4rem;
+    font-size: 18px;
 
     cursor: pointer;
   }
@@ -1975,83 +1887,144 @@
   ========================================================= */
 
   .project-footer {
-    width: 100%;
+    width: min(1540px, calc(100% - 32px));
+
+    margin: 0 auto;
+
+    background: #000000;
   }
 
   :global(.project-footer .site-footer) {
-    width: 100%;
+    width: 100% !important;
 
-    margin-top: 0 !important;
+    margin: 0 auto !important;
 
-    font-family: "Space Grotesk", Arial, Helvetica, sans-serif !important;
+    box-sizing: border-box;
+
+    background: #000000 !important;
+
+    color: #ffffff !important;
+
+    font-family: "DM Sans", Arial, sans-serif !important;
   }
 
   :global(.project-footer .site-footer .footer-row) {
+    width: 100% !important;
+
+    max-width: none !important;
+
     margin-left: auto !important;
 
     margin-right: auto !important;
-  }
 
-  :global(body.light .project-footer .site-footer) {
-    background: #ffffff !important;
+    box-sizing: border-box;
 
-    color: #111111 !important;
+    padding-left: 40px !important;
+
+    padding-right: 40px !important;
   }
 
   /* =========================================================
      TABLET
   ========================================================= */
 
-  @media (min-width: 768px) and (max-width: 1100px) {
+  @media (max-width: 1100px) {
     .project-page {
-      --section-space: 88px;
+      --hero-size: clamp(1.5rem, 4.5vw, 2.45rem);
+
+      --heading-size: 22px;
+    }
+  }
+
+  @media (min-width: 768px) and (max-width: 1024px) {
+    .page-shell {
+      width: 90%;
+
+      padding-left: 28px;
+      padding-right: 28px;
     }
 
-    .hero-shell {
-      width: min(calc(100% - 32px), 1100px);
+    .intro-shell {
+      padding-top: 72px;
 
-      min-height: 500px;
-
-      grid-template-columns:
-        minmax(320px, 0.9fr)
-        minmax(0, 1.1fr);
+      padding-bottom: 84px;
     }
 
-    .hero-content {
-      padding: 44px 34px;
+    .transformation-shell,
+    .result-shell {
+      padding-top: 72px;
+
+      padding-bottom: 82px;
     }
 
-    .hero-media {
-      min-height: 500px;
+    .reading-column {
+      width: min(700px, 100%);
     }
 
-    .hero-media img {
-      object-fit: contain;
+    /* SAME HEIGHT FOR ALL 3 */
 
-      object-position: center center;
+    .visual-column {
+      grid-template-rows:
+        auto
+        400px;
     }
 
-    .section-header {
-      grid-template-columns:
-        minmax(0, 1fr)
-        minmax(240px, 330px);
+    .visual-frame {
+      width: 100%;
 
-      gap: 40px;
+      height: 400px;
+
+      min-height: 400px;
+
+      max-height: 400px;
     }
 
-    .overview-grid,
-    .performance-layout,
-    .results-layout,
-    .cta-layout {
-      gap: 52px;
+    .static-image {
+      width: 100%;
+
+      height: 100%;
     }
 
-    .technology-grid {
-      gap: 20px;
+    .scroll-preview {
+      height: 100%;
     }
 
-    .technology-image {
-      height: clamp(160px, 18vw, 220px);
+    /* BALDAUF SCORES */
+
+    .performance-scores.baldauf-scores {
+      width: 100%;
+
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+
+      gap: 8px;
+    }
+
+    .score-bracket-group {
+      min-height: 60px;
+
+      padding: 8px 12px;
+    }
+
+    .score-content strong {
+      font-size: 20px;
+    }
+
+    .score-label {
+      font-size: 9px;
+    }
+
+    .performance-proof {
+      width: min(840px, calc(100% - 40px));
+    }
+
+    .project-footer {
+      width: 90%;
+    }
+
+    :global(.project-footer .site-footer .footer-row) {
+      padding-left: 28px !important;
+
+      padding-right: 28px !important;
     }
   }
 
@@ -2061,295 +2034,240 @@
 
   @media (max-width: 767px) {
     .project-page {
-      --copy-size: 14px;
+      --hero-size: clamp(1.15rem, 5.3vw, 1.7rem);
 
-      --copy-line: 1.65;
-
-      --section-space: 72px;
+      --heading-size: clamp(20px, 5.5vw, 24px);
     }
 
-    /* HERO */
+    .page-shell {
+      width: calc(100% - 20px);
 
-    .project-hero {
-      padding-top: 0;
+      padding-left: 20px;
+
+      padding-right: 20px;
     }
 
-    .hero-shell {
-      width: 100%;
+    .intro-shell,
+    .transformation-shell,
+    .result-shell,
+    .cta-shell {
+      padding-top: 58px;
 
-      min-height: 600px;
-
-      margin: 0;
-
-      display: grid;
-
-      grid-template-columns:
-        minmax(0, 56%)
-        minmax(0, 44%);
-
-      align-items: stretch;
+      padding-bottom: 64px;
     }
 
-    .hero-content {
-      min-width: 0;
-
-      padding: 52px 16px 48px 22px;
-
-      justify-content: center;
-    }
-
-    .hero-media {
-      min-width: 0;
-
-      min-height: 600px;
-
-      height: auto;
-
-      display: flex;
-
-      align-items: center;
-
-      justify-content: center;
-    }
-
-    .hero-media img {
-      width: 100%;
-
-      height: 100%;
-
-      object-fit: contain;
-
-      object-position: center center;
-    }
-
-    .project-kicker {
-      margin-bottom: 18px;
-
-      font-size: 9px;
-    }
-
-    .hero-title {
-      font-size: clamp(1.1rem, 5vw, 1.55rem);
+    .project-hero h1 {
+      margin-top: 21px;
 
       font-weight: 500;
 
-      line-height: 1;
+      letter-spacing: -0.04em;
 
       text-transform: none;
     }
 
-    .hero-subtitle {
-      margin-top: 18px;
-
+    .hero-lead,
+    .overview-text,
+    .overview-list li,
+    .result-intro p,
+    .cta-column p {
       font-size: 14px;
 
-      line-height: 1.5;
+      line-height: 1.65;
     }
 
-    .hero-description {
-      margin-top: 10px;
-
-      font-size: 12px;
-
-      line-height: 1.55;
+    .overview {
+      margin-top: 60px;
     }
 
-    .hero-actions {
-      margin-top: 20px;
-
-      gap: 8px;
+    .overview-text {
+      margin-top: 17px;
     }
 
-    .hero-button {
-      min-height: 36px;
-
-      padding: 0 10px;
-
-      font-size: 8px;
+    .overview-text-secondary {
+      margin-top: 13px;
     }
 
-    /* SECTIONS */
-
-    .section-shell {
-      width: calc(100% - 20px);
-
-      padding: var(--section-space) 18px;
+    .overview-list {
+      margin-top: 27px;
     }
 
-    /* HEADERS */
+    .project-facts {
+      margin-top: 32px;
+    }
 
-    .section-header {
+    /* =====================================================
+       VISUALS
+    ====================================================== */
+
+    .section-title {
+      margin-bottom: 40px;
+    }
+
+    .visual-grid {
       grid-template-columns: 1fr;
 
-      gap: 20px;
-
-      margin-bottom: 42px;
-
-      padding-bottom: 25px;
+      gap: 46px;
     }
 
-    /*
-     * Overview still has no blue line,
-     * including mobile.
-     */
-
-    .overview-section-header {
-      padding-bottom: 0;
-
-      border-bottom: 0;
+    .visual-column {
+      grid-template-rows:
+        auto
+        390px;
     }
 
-    .section-heading h2,
-    .results-heading h2 {
-      font-size: clamp(21px, 6vw, 27px);
+    .visual-label {
+      min-height: auto;
+
+      margin-bottom: 16px;
     }
 
-    /* OVERVIEW */
+    .visual-frame {
+      height: 390px;
 
-    .overview-grid {
-      grid-template-columns: 1fr;
+      min-height: 390px;
 
-      gap: 42px;
-
-      align-items: start;
+      max-height: 390px;
     }
 
-    .overview-meta {
+    /* =====================================================
+       BALDAUF RESULTS
+       ONE ROW ON MOBILE
+    ====================================================== */
+
+    .performance-scores.baldauf-scores {
       width: 100%;
 
-      max-width: 440px;
+      margin-top: 46px;
+
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+
+      gap: 3px;
     }
 
-    /* COMPARISON */
+    .baldauf-scores article {
+      min-width: 0;
+    }
 
-    .comparison-inside-label {
-      top: 9px;
-
-      min-width: 82px;
+    .score-bracket-group {
+      min-height: 54px;
 
       padding: 6px 7px;
     }
 
-    .comparison-before-label {
-      left: 9px;
+    .score-bracket-group::before,
+    .score-bracket-group::after {
+      width: 4px;
     }
 
-    .comparison-after-label {
-      right: 9px;
+    .score-content strong {
+      margin-bottom: 5px;
+
+      font-size: clamp(15px, 4.7vw, 19px);
     }
 
-    .comparison-inside-label span {
-      font-size: 7px;
+    .score-label {
+      font-size: clamp(6px, 1.9vw, 8px);
+
+      line-height: 1.15;
+
+      white-space: normal;
     }
 
-    .comparison-inside-label strong {
-      font-size: 9px;
-    }
+    /* EVA KEEPS 2 × 2 MOBILE */
 
-    .comparison-line span {
-      width: 34px;
-
-      height: 34px;
-    }
-
-    /* TECHNOLOGY */
-
-    .technology-grid {
-      grid-template-columns: 1fr;
-
-      gap: 48px;
-    }
-
-    .technology-card {
+    .performance-scores:not(.baldauf-scores) {
       width: 100%;
 
-      max-width: 520px;
-    }
+      margin-top: 48px;
 
-    .technology-image {
-      height: auto;
-    }
+      grid-template-columns: repeat(2, minmax(0, 1fr));
 
-    .technology-image img {
-      height: auto;
-
-      max-height: 320px;
-    }
-
-    /* PERFORMANCE */
-
-    .performance-layout {
-      grid-template-columns: 1fr;
-
-      gap: 44px;
-
-      align-items: start;
+      gap: 36px 22px;
     }
 
     .performance-proof {
       width: 100%;
+
+      margin-top: 54px;
     }
 
-    /* RESULTS */
+    /* =====================================================
+       CTA MOBILE
+       LEFT ALIGNED
+    ====================================================== */
 
-    .results-layout {
-      grid-template-columns: 1fr;
-
-      gap: 38px;
-
-      align-items: start;
+    .cta-column {
+      text-align: left;
     }
 
-    /* CTA */
-
-    .cta-layout {
-      grid-template-columns: 1fr;
-
-      gap: 30px;
-
-      align-items: start;
+    .cta-column h2 {
+      text-align: left;
     }
 
-    .cta-layout h2 {
-      font-size: clamp(27px, 8vw, 38px);
+    .cta-column p {
+      max-width: 100%;
+
+      margin-left: 0;
+
+      margin-right: 0;
+
+      text-align: left;
+    }
+
+    .cta-actions {
+      justify-content: flex-start;
+    }
+
+    /* =====================================================
+       FOOTER
+    ====================================================== */
+
+    .project-footer {
+      width: calc(100% - 20px);
+    }
+
+    :global(.project-footer .site-footer .footer-row) {
+      padding-left: 20px !important;
+
+      padding-right: 20px !important;
     }
   }
 
-  /* =========================================================
-     SMALL MOBILE
-  ========================================================= */
-
-  @media (max-width: 480px) {
-    .hero-shell {
-      grid-template-columns:
-        minmax(0, 59%)
-        minmax(0, 41%);
+  @media (max-width: 420px) {
+    .visual-column {
+      grid-template-rows:
+        auto
+        340px;
     }
 
-    .hero-content {
-      padding-left: 18px;
+    .visual-frame {
+      height: 340px;
 
-      padding-right: 12px;
+      min-height: 340px;
+
+      max-height: 340px;
     }
 
-    .hero-title {
-      font-size: clamp(1rem, 5vw, 1.35rem);
+    .performance-scores.baldauf-scores {
+      gap: 1px;
     }
 
-    .hero-subtitle {
-      font-size: 13px;
+    .score-bracket-group {
+      padding: 6px 5px;
     }
 
-    .hero-description {
-      font-size: 11px;
-
-      line-height: 1.5;
+    .score-content strong {
+      font-size: 16px;
     }
 
-    .hero-actions {
-      flex-direction: column;
+    .score-label {
+      font-size: 6px;
+    }
 
-      align-items: flex-start;
+    .project-facts,
+    .stack {
+      line-height: 1.8;
     }
   }
 
@@ -2360,6 +2278,10 @@
   @media (prefers-reduced-motion: reduce) {
     :global(html) {
       scroll-behavior: auto;
+    }
+
+    .scroll-image {
+      transition: none;
     }
   }
 </style>

@@ -2,9 +2,6 @@
   import { onDestroy, onMount } from "svelte";
 
   let {
-    title,
-    subtitle,
-    eyebrow = "",
     projects = [],
     loadMoreCopy = "Want to see more",
     loadMoreText = "Load more projects",
@@ -22,7 +19,7 @@
   } = $props();
 
   let visibleCount = $state(7);
-  let headerVisible = $state(false);
+
   let expandedProjectDescription = $state(0);
 
   /* =========================================================
@@ -396,41 +393,6 @@
       autoReset: true,
       mode: "tap",
     });
-  }
-
-  /* =========================================================
-     HEADER OBSERVER
-  ========================================================= */
-
-  function observeHeader(node) {
-    if (typeof IntersectionObserver === "undefined") {
-      headerVisible = true;
-
-      return {
-        destroy() {},
-      };
-    }
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          headerVisible = true;
-          observer.disconnect();
-        }
-      },
-      {
-        threshold: 0.25,
-        rootMargin: "0px 0px -8% 0px",
-      },
-    );
-
-    observer.observe(node);
-
-    return {
-      destroy() {
-        observer.disconnect();
-      },
-    };
   }
 
   /* =========================================================
@@ -1156,37 +1118,13 @@
   });
 </script>
 
-<section id="projects" class="projects">
+<section class="projects">
   <div class="projects-shell">
     <div class="project-v-line edge-left"></div>
 
     <div class="project-v-line edge-right"></div>
 
     <div class="container projects-container">
-      <!-- =====================================================
-           BLUE SECTION HEADER
-      ====================================================== -->
-
-      <div
-        class="projects-header"
-        class:visible={headerVisible}
-        use:observeHeader
-      >
-        <div class="projects-header-inner">
-          <div class="projects-header-main">
-            <h2>
-              {title}
-            </h2>
-          </div>
-
-          {#if subtitle}
-            <p class="projects-subtitle">
-              {subtitle}
-            </p>
-          {/if}
-        </div>
-      </div>
-
       <!-- =====================================================
            PROJECT GRID
       ====================================================== -->
@@ -1455,7 +1393,7 @@
 
     margin: 0 auto;
 
-    padding: 150px var(--shell-x);
+    padding: 60px var(--shell-x) 150px;
 
     box-sizing: border-box;
   }
