@@ -11,7 +11,7 @@ body {
   background: #050505;
   color: #ffffff;
   font-family: "Space Grotesk", Arial, sans-serif;
-   padding: clamp(64px, 7vw, 105px) 0 clamp(35px, 4vw, 55px);
+  padding: clamp(96px, 10vw, 150px) 0 clamp(35px, 4vw, 55px);
 }
 
 .blog-article-shell {
@@ -32,7 +32,11 @@ body {
   align-items: center;
   justify-content: space-between;
   gap: 24px;
-  margin-bottom: 22px;
+
+  width: 100%;
+  max-width: 940px;
+
+  margin: 0 auto 22px;
 }
 
 .blog-article-back,
@@ -54,7 +58,7 @@ body {
   text-transform: uppercase;
 
   text-decoration-line: underline !important;
-  text-decoration-color: #3f00ff !important;
+  text-decoration-color: #0043ff !important;
   text-decoration-thickness: 1.5px !important;
   text-underline-offset: 5px;
 
@@ -118,7 +122,7 @@ body {
 
 .blog-breadcrumb > span[aria-hidden="true"] {
   flex: 0 0 auto;
-  color: #3f00ff;
+  color: #0043ff;
 }
 
 .blog-breadcrumb-current {
@@ -150,22 +154,7 @@ body {
   border-bottom: 1px solid rgba(255, 255, 255, 0.12);
 }
 
-.blog-article-header::before {
-  content: "ZORA WEB DESIGN";
 
-  order: 1;
-
-  display: block;
-  margin-bottom: 14px;
-
-  color: #3f00ff;
-
-  font-size: 0.64rem;
-  font-weight: 700;
-  line-height: 1;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-}
 
 .blog-article-header h1 {
   order: 2;
@@ -198,7 +187,7 @@ body {
   width: 100%;
   margin: 14px 0 0;
 
-  color: #3f00ff;
+  color: #0043ff;
 
   font-size: calc(0.62rem + 2px);
   font-weight: 500;
@@ -215,7 +204,7 @@ body {
 }
 
 .blog-article-meta span[aria-hidden="true"] {
-  color: #3f00ff;
+  color: #0043ff;
   font-size: 0.78rem;
   line-height: 1;
 }
@@ -298,14 +287,19 @@ body {
 .blog-article-toc-title {
   margin: 0 0 18px !important;
 
-  color: #3f00ff !important;
+  color: #0043ff !important;
 
-  font-size: 0.62rem !important;
+  font-size: 0.8rem !important;
   font-weight: 700;
   line-height: 1.2 !important;
 
   letter-spacing: 0.18em;
   text-transform: uppercase;
+}
+
+.blog-article-toc-label {
+  font-size: 0.9rem;
+  line-height: 1.45;
 }
 
 .blog-article-toc nav {
@@ -318,11 +312,7 @@ body {
 }
 
 .blog-article-toc a {
-  display: grid;
-  grid-template-columns: 30px minmax(0, 1fr);
-
-  gap: 10px;
-
+  display: block;
   align-items: start;
 
   padding: 13px 0;
@@ -348,7 +338,7 @@ body {
 }
 
 .blog-article-toc-number {
-  color: #3f00ff;
+  color: #0043ff;
 
   font-size: 0.68rem;
   font-weight: 600;
@@ -433,7 +423,7 @@ body {
   font-size: clamp(1.35rem, 1.9vw, 1.7rem);
   line-height: 1.22;
 
-  border-bottom: 1px solid #3f00ff;
+  border-bottom: 1px solid #0043ff;
 
   scroll-margin-top: 120px;
 }
@@ -522,7 +512,7 @@ body {
 }
 
 .blog-article-content li::marker {
-  color: #3f00ff;
+  color: #0043ff;
 }
 
 /* =========================================================
@@ -546,7 +536,7 @@ body {
   color: #ffffff !important;
 
   text-decoration-line: underline;
-  text-decoration-color: #3f00ff;
+  text-decoration-color: #0043ff;
   text-decoration-thickness: 1.5px;
   text-underline-offset: 4px;
 
@@ -569,7 +559,7 @@ body {
 
   border-top: 1px solid rgba(255, 255, 255, 0.09);
   border-bottom: 1px solid rgba(255, 255, 255, 0.09);
-  border-left: 2px solid #3f00ff;
+  border-left: 2px solid #0043ff;
 
   color: #ffffff !important;
 
@@ -608,7 +598,7 @@ body {
   margin: clamp(34px, 4vw, 52px) 0;
   padding: clamp(32px, 4vw, 48px);
 
-  background: #3f00ff;
+  background: #0043ff;
   color: #ffffff;
 }
 
@@ -905,7 +895,7 @@ body {
 
 @media (max-width: 767px) {
   .blog-article {
-    padding: 52px 0 40px;
+     padding: 78px 0 0px;
   }
 
   .blog-article-shell {

@@ -1839,7 +1839,7 @@
     .hero-shell {
       width: 100%;
 
-      padding-left: calc(var(--hero-side-pad) + 18px);
+      padding-left: var(--hero-side-pad);
       padding-right: var(--hero-side-pad);
     }
 
@@ -2091,7 +2091,8 @@
 
   @media (max-width: 420px) {
     .hero-shell {
-      padding-left: calc(var(--hero-side-pad) + 14px);
+      padding-left: var(--hero-side-pad);
+      padding-right: var(--hero-side-pad);
     }
 
     .hero {

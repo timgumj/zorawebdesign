@@ -10,15 +10,8 @@ body {
 ========================================================= */
 
 .blog-archive {
-  width: 100%;
-
-  background: #050505;
-  color: #ffffff;
-
-  font-family: "Space Grotesk", Arial, sans-serif;
-
   padding:
-    clamp(42px, 5vw, 72px)
+    clamp(84px, 10vw, 144px)
     0
     clamp(48px, 6vw, 82px);
 }
@@ -67,7 +60,7 @@ body {
   text-transform: uppercase;
 
   text-decoration-line: underline;
-  text-decoration-color: #3f00ff;
+  text-decoration-color: #0043ff;
   text-decoration-thickness: 1.5px;
   text-underline-offset: 5px;
 
@@ -108,22 +101,7 @@ body {
     1px solid rgba(255, 255, 255, 0.12);
 }
 
-.blog-archive-header::before {
-  content: "ZORA WEB DESIGN";
 
-  display: block;
-
-  margin-bottom: 13px;
-
-  color: #3f00ff;
-
-  font-size: 0.7rem;
-  font-weight: 700;
-
-  letter-spacing: 0.2em;
-
-  text-transform: uppercase;
-}
 
 .blog-archive-header h1 {
   margin: 0;
@@ -221,35 +199,16 @@ body {
   letter-spacing: -0.02em;
 }
 
-.blog-archive-item h2::before {
-  content:
-    counter(
-      blog-item,
-      decimal-leading-zero
-    );
 
-  display: block;
-
-  margin-bottom: 12px;
-
-  color: #3f00ff;
-
-  font-size: 0.68rem;
-  font-weight: 700;
-
-  letter-spacing: 0.16em;
-
-  line-height: 1;
-}
 
 .blog-archive-item h2 a {
   color: #ffffff;
 
   text-decoration-line: underline;
 
-  text-decoration-color: #3f00ff;
+  text-decoration-color: #0043ff;
 
-  text-decoration-thickness: 2px;
+  text-decoration-thickness: 1px;
 
   text-underline-offset: 7px;
 
@@ -284,7 +243,7 @@ body {
     0
     0;
 
-  color: #3f00ff;
+  color: #0043ff;
 
   font-size: 0.68rem;
   font-weight: 600;
@@ -314,18 +273,7 @@ body {
   font-weight: 400;
 }
 
-.blog-archive-meta::before {
-  content: "";
 
-  width: 18px;
-  height: 1px;
-
-  flex: 0 0 auto;
-
-  margin-right: 2px;
-
-  background: #3f00ff;
-}
 
 /* =========================================================
    DESCRIPTION
@@ -339,17 +287,11 @@ body {
     0
     0;
 
-  color:
-    rgba(
-      255,
-      255,
-      255,
-      0.62
-    );
+  color: rgba(255, 255, 255, 0.62);
 
-  font-size: 0.95rem;
+  font-size: 16px;
 
-  line-height: 1.7;
+  line-height: 1.65;
 }
 
 /* =========================================================
@@ -396,10 +338,10 @@ body {
 
 @media (max-width: 980px) {
   .blog-archive {
-    padding:
-      44px
-      0
-      56px;
+   padding:
+  88px
+  0
+  56px;
   }
 
   .blog-archive-shell {
@@ -442,7 +384,7 @@ body {
   }
 
   .blog-archive-meta {
-    margin-top: 13px;
+    margin-top: 14px;
   }
 
   .blog-archive-item:last-child {
@@ -457,9 +399,9 @@ body {
 @media (max-width: 767px) {
   .blog-archive {
     padding:
-      32px
-      0
-      42px;
+  64px
+  0
+  10px;
   }
 
   .blog-archive-shell {

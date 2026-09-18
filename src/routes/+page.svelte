@@ -29,7 +29,7 @@
   });
 
   const nav = {
-    tagline: "SEO • Webdesign • Branding",
+    tagline: "SEO • WEBDESIGN • BRANDING",
 
     services: "[LEISTUNGEN]",
     projects: "[PROJEKTE]",

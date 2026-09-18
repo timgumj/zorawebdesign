@@ -10,7 +10,7 @@
     reviews: "REVIEWS",
     contact: "CONTACT",
 
-    tagline: "WEB DESIGN & DEVELOPMENT",
+    tagline: "SEO • WEB DESIGN • BRANDING",
 
     servicesLink: "/en-2/#services",
     projectsLink: "/en-2/#projects",

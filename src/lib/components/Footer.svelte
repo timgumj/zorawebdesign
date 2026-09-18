@@ -1,64 +1,99 @@
 <script>
   const currentYear = new Date().getFullYear();
 
-  let {
-    copyright = `ZORA DESIGN © COPYRIGHT ${currentYear}`,
-    location = "VIENNA / AUSTRIA",
-    imprintText = "IMPRINT",
-    language = "en",
-    currentArea = "",
-    homepage = false,
-  } = $props();
+  let { language = "en", currentArea = "", homepage = false } = $props();
 
   const areaLinks = {
     de: [
-      { key: "salzburg", label: "SALZBURG", href: "/webdesign/salzburg/" },
-      { key: "graz", label: "GRAZ", href: "/webdesign/graz/" },
-      { key: "munich", label: "MÜNCHEN", href: "/webdesign/muenchen/" },
+      {
+        key: "salzburg",
+        label: "SALZBURG",
+        href: "/webdesign/salzburg/",
+      },
+      {
+        key: "graz",
+        label: "GRAZ",
+        href: "/webdesign/graz/",
+      },
+      {
+        key: "munich",
+        label: "MÜNCHEN",
+        href: "/webdesign/muenchen/",
+      },
     ],
+
     en: [
       {
         key: "salzburg",
         label: "SALZBURG",
         href: "/en-2/web-design/salzburg/",
       },
-      { key: "graz", label: "GRAZ", href: "/en-2/web-design/graz/" },
-      { key: "munich", label: "MUNICH", href: "/en-2/web-design/munich/" },
+      {
+        key: "graz",
+        label: "GRAZ",
+        href: "/en-2/web-design/graz/",
+      },
+      {
+        key: "munich",
+        label: "MUNICH",
+        href: "/en-2/web-design/munich/",
+      },
     ],
   };
 
   let serviceAreas = $derived(areaLinks[language] ?? areaLinks.en);
+
+  let footerCopyright = $derived(`ZORA WEB DESIGN © COPYRIGHT ${currentYear}`);
+
+  let footerLocation = $derived(
+    language === "de"
+      ? "HACKENGASSE 22, 1150 WIEN"
+      : "HACKENGASSE 22, 1150 VIENNA",
+  );
+
+  let footerImprint = $derived(language === "de" ? "IMPRESSUM" : "IMPRINT");
+
+  let footerServiceAreasTitle = $derived(
+    language === "de" ? "WEBDESIGN REGIONEN" : "WEB DESIGN SERVICE AREAS",
+  );
+
+  let footerServiceAreasAria = $derived(
+    language === "de" ? "Webdesign Regionen" : "Web design service areas",
+  );
 </script>
 
 <footer class="site-footer" class:homepage-footer={homepage}>
-  <div class="container footer-row">
+  <div class="footer-row">
     <div class="footer-meta">
-      <p class="footer-copyright">{copyright}</p>
-      <p>{location}</p>
+      <p class="footer-copyright">
+        {footerCopyright}
+      </p>
+
+      <p>
+        {footerLocation}
+      </p>
     </div>
 
     <div class="footer-service-areas">
       <p>
-        {language === "de" ? "WEBDESIGN REGIONEN" : "WEB DESIGN SERVICE AREAS"}
+        {footerServiceAreasTitle}
       </p>
-      <nav
-        aria-label={language === "de"
-          ? "Webdesign Regionen"
-          : "Web design service areas"}
-      >
+
+      <nav aria-label={footerServiceAreasAria}>
         {#each serviceAreas as area}
           <a
             href={area.href}
             class:active={area.key === currentArea}
             aria-current={area.key === currentArea ? "page" : undefined}
-            >{area.label}</a
           >
+            {area.label}
+          </a>
         {/each}
       </nav>
     </div>
 
     <a href="/impressum/" class="footer-imprint-link">
-      {imprintText}
+      {footerImprint}
     </a>
 
     <a
@@ -80,10 +115,15 @@
 <style>
   .site-footer {
     margin-top: 110px;
-    border-top: 1px solid #111;
+
+    border-top: 1px solid #111111;
+
     background: #050505;
+
     color: #ffffff;
+
     font-family: "DM Sans", Arial, sans-serif;
+
     transition:
       background 0.3s ease,
       color 0.3s ease,
@@ -92,33 +132,67 @@
 
   :global(body.light) .site-footer {
     background: #ffffff;
+
     color: #111111;
+
     border-top: 1px solid rgba(17, 17, 17, 0.12);
   }
 
+  /* =========================================================
+     FOOTER LAYOUT
+     SELF-CONTAINED — NO GLOBAL .container DEPENDENCY
+  ========================================================= */
+
   .footer-row {
+    width: min(1560px, 94%);
+
+    margin: 0 auto;
+
+    box-sizing: border-box;
+
     display: grid;
+
     grid-template-areas: "meta imprint wko regions";
-    grid-template-columns: minmax(250px, 1.15fr) auto auto minmax(360px, 1.7fr);
+
+    grid-template-columns:
+      minmax(250px, 1.15fr)
+      auto
+      auto
+      minmax(360px, 1.7fr);
+
     align-items: center;
+
     gap: clamp(28px, 3.5vw, 64px);
+
     padding: 36px 0;
   }
 
+  /* =========================================================
+     SERVICE AREAS
+  ========================================================= */
+
   .footer-service-areas {
     grid-area: regions;
+
     display: flex;
+
     flex-direction: column;
+
     align-items: flex-end;
+
     gap: 12px;
+
     min-width: 0;
   }
 
   .footer-service-areas p {
     margin: 0;
+
     color: rgba(255, 255, 255, 0.62);
+
     letter-spacing: 0.16em;
   }
+
   :global(body:not(:has(.homepage-footer))) .footer-service-areas p {
     font-size: 9.72px;
   }
@@ -129,21 +203,32 @@
 
   .footer-service-areas nav {
     display: flex;
+
     flex-wrap: wrap;
+
     align-items: center;
+
     justify-content: flex-end;
+
     gap: clamp(14px, 1.5vw, 26px);
   }
 
   .footer-service-areas a {
     display: inline-block;
+
     width: fit-content;
+
     padding-bottom: 4px;
+
     border-bottom: 1px solid #0043ff;
-    color: #fff;
+
+    color: #ffffff;
+
     letter-spacing: 0.14em;
+
     text-decoration: none;
   }
+
   :global(body:not(:has(.homepage-footer))) .footer-service-areas a {
     font-size: 10.53px;
   }
@@ -154,27 +239,41 @@
   }
 
   :global(body.light) .footer-service-areas a {
-    color: #111;
+    color: #111111;
   }
+
+  /* =========================================================
+     META
+  ========================================================= */
 
   .footer-meta {
     grid-area: meta;
+
     display: flex;
+
     flex-direction: column;
+
     align-items: flex-start;
+
     gap: 8px;
   }
 
   .footer-meta p {
     margin: 0;
-    color: #fff;
+
+    color: #ffffff;
+
     letter-spacing: 0.18em;
+
     text-transform: uppercase;
+
     transition: color 0.3s ease;
   }
+
   :global(body:not(:has(.homepage-footer))) .footer-meta p {
     font-size: 11.34px;
   }
+
   :global(body:not(:has(.homepage-footer))) .footer-meta .footer-copyright {
     font-weight: 300;
   }
@@ -183,44 +282,73 @@
     color: #111111;
   }
 
+  /* =========================================================
+     IMPRINT
+  ========================================================= */
+
   .footer-imprint-link {
     grid-area: imprint;
+
     display: inline-block;
+
     width: fit-content;
+
     justify-self: start;
-    background: transparent;
-    color: #fff;
-    font: inherit;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    text-decoration: none;
-    border-bottom: 1px solid #0043ff;
+
     padding: 0 0 4px;
+
+    border-bottom: 1px solid #0043ff;
+
+    background: transparent;
+
+    color: #ffffff;
+
+    font: inherit;
+
+    letter-spacing: 0.18em;
+
+    text-transform: uppercase;
+
+    text-decoration: none;
+
     transition:
       color 0.3s ease,
       border-color 0.3s ease;
   }
+
   :global(body:not(:has(.homepage-footer))) .footer-imprint-link {
     font-size: 11.34px;
   }
 
   :global(body.light) .footer-imprint-link {
     color: #111111;
+
     border-bottom-color: #0043ff;
   }
 
+  /* =========================================================
+     WKO
+  ========================================================= */
+
   .footer-wko-link {
     grid-area: wko;
+
     display: flex;
+
     align-items: center;
+
     margin: 0;
   }
 
   .footer-wko-logo {
     width: 120px;
+
     height: auto;
+
     display: block;
+
     filter: brightness(0) invert(1);
+
     transition:
       filter 0.3s ease,
       opacity 0.3s ease;
@@ -234,23 +362,40 @@
     filter: none;
   }
 
+  /* =========================================================
+     DESKTOP
+  ========================================================= */
+
   @media (min-width: 1025px) {
     .footer-row {
-      width: min(1560px, 94%);
-      grid-template-columns: minmax(0, 1fr) auto auto minmax(0, 1fr);
+      grid-template-columns:
+        minmax(0, 1fr)
+        auto
+        auto
+        minmax(0, 1fr);
     }
   }
 
+  /* =========================================================
+     TABLET + MOBILE
+  ========================================================= */
+
   @media (max-width: 1024px) {
     .footer-row {
+      width: 90%;
+
       grid-template-areas:
         "meta"
         "regions"
         "imprint"
         "wko";
+
       grid-template-columns: 1fr;
+
       align-items: start;
+
       gap: 24px;
+
       padding: 34px 0;
     }
 
@@ -266,6 +411,7 @@
     .footer-wko-link {
       justify-self: start;
     }
+
     :global(body:not(:has(.homepage-footer))) .footer-meta p,
     :global(body:not(:has(.homepage-footer))) .footer-imprint-link {
       font-size: 12.96px;
@@ -276,18 +422,26 @@
     }
   }
 
+  /* =========================================================
+     TABLET
+  ========================================================= */
+
   @media (min-width: 768px) and (max-width: 1024px) {
     .footer-row {
       grid-template-areas:
         "meta regions"
         "wko imprint";
+
       grid-template-columns: repeat(2, minmax(0, 1fr));
+
       column-gap: 48px;
+
       row-gap: 28px;
     }
 
     .footer-service-areas {
       align-items: flex-end;
+
       text-align: right;
     }
 
@@ -300,6 +454,16 @@
     }
   }
 
+  /* =========================================================
+     MOBILE
+  ========================================================= */
+
+  @media (max-width: 767px) {
+    .footer-row {
+      width: calc(100% - 40px);
+    }
+  }
+
   @media (max-width: 600px) {
     .site-footer {
       margin-top: 80px;
@@ -309,6 +473,7 @@
     .footer-imprint-link {
       letter-spacing: 0.12em;
     }
+
     :global(body:not(:has(.homepage-footer))) .footer-meta p,
     :global(body:not(:has(.homepage-footer))) .footer-imprint-link {
       font-size: 11.34px;
@@ -318,36 +483,62 @@
       width: 90px;
     }
   }
+
+  /* =========================================================
+     HOMEPAGE / CITY FOOTER
+     FULL-WIDTH BACKGROUND, INNER CONTENT KEEPS SITE GRID
+  ========================================================= */
+
   @media (min-width: 1025px) {
     .site-footer.homepage-footer {
-      width: min(1540px, calc(100% - 32px));
-      margin: 0 auto;
+      width: 100%;
+
+      margin: 0;
+
       box-sizing: border-box;
+    }
+
+    .homepage-footer .footer-row {
+      width: min(1540px, calc(100% - 32px));
+
+      max-width: none;
+
+      margin: 0 auto;
+
+      box-sizing: border-box;
+
+      padding-right: 39px;
+
+      padding-left: 39px;
+
       border-left: 1px solid rgba(255, 255, 255, 0.08);
+
       border-right: 1px solid rgba(255, 255, 255, 0.08);
     }
-    .homepage-footer .footer-row {
-      width: 100%;
-      max-width: none;
-      box-sizing: border-box;
-      padding-right: 39px;
-      padding-left: 39px;
-    }
-    :global(body.light) .site-footer.homepage-footer {
+
+    :global(body.light) .homepage-footer .footer-row {
       border-left-color: rgba(0, 0, 0, 0.08);
+
       border-right-color: rgba(0, 0, 0, 0.08);
     }
   }
-  /* Shared homepage typography; other routes retain their existing styles. */
+
+  /* =========================================================
+     SHARED HOMEPAGE TYPOGRAPHY
+  ========================================================= */
+
   :global(body:has(.homepage-footer)) .footer-meta p,
   :global(body:has(.homepage-footer)) .footer-meta .footer-copyright {
     font-size: var(--text-small);
+
     font-weight: var(--weight-regular);
   }
+
   :global(body:has(.homepage-footer)) .footer-service-areas p,
   :global(body:has(.homepage-footer)) .footer-service-areas a,
   :global(body:has(.homepage-footer)) .footer-imprint-link {
     font-size: var(--text-label);
+
     font-weight: var(--weight-semibold);
   }
 </style>

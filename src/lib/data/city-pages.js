@@ -382,7 +382,7 @@ function makePage(config) {
     locale: config.locale ?? (isGerman ? "de_AT" : "en_US"),
     nav: {
       tagline: isGerman
-        ? "SEO • WEBDESIGN • WORDPRESS"
+        ? "SEO • WEBDESIGN • BRANDING"
         : "SEO • WEB DESIGN • BRANDING",
       services: isGerman ? "[LEISTUNGEN]" : "[SERVICES]",
       projects: isGerman ? "[PROJEKTE]" : "[PROJECTS]",

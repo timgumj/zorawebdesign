@@ -52,7 +52,7 @@ export const baldaufProjectContent = {
     ======================================================= */
 
     nav: {
-      tagline: "SEO • WEBDESIGN • WORDPRESS",
+      tagline: "SEO • WEBDESIGN • BRANDING",
 
       services: "[LEISTUNGEN]",
 
@@ -582,7 +582,7 @@ export const baldaufProjectContent = {
 
     nav: {
       tagline:
-        "SEO • WEB DESIGN • WORDPRESS",
+        "SEO • WEB DESIGN • BRANDING",
 
       services: "[SERVICES]",
 

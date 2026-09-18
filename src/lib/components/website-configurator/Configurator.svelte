@@ -126,7 +126,7 @@
           reviews: "[REVIEWS]",
           contact: "[CONTACT]",
 
-          tagline: "SEO • WEB DESIGN • WORDPRESS",
+          tagline: "SEO • WEB DESIGN • BRANDING",
 
           servicesLink: "/en-2/#services",
           projectsLink: "/en-2/#projects",
@@ -159,7 +159,7 @@
           reviews: "[REVIEWS]",
           contact: "[KONTAKT]",
 
-          tagline: "SEO • WEBDESIGN • WORDPRESS",
+          tagline: "SEO • WEBDESIGN • BRANDING",
 
           servicesLink: "/#services",
           projectsLink: "/#projects",

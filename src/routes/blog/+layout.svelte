@@ -10,7 +10,7 @@
     reviews: "BEWERTUNGEN",
     contact: "KONTAKT",
 
-    tagline: "WEBDESIGN & ENTWICKLUNG",
+    tagline: "SEO • WEBDESIGN • BRANDING",
 
     servicesLink: "/#services",
     projectsLink: "/#projects",

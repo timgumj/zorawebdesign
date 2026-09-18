@@ -26,7 +26,7 @@
       "Kostenloser Website-Audit mit über 50 automatisierten Prüfungen für SEO, Performance, Sicherheit, Barrierefreiheit und Core Web Vitals.",
 
     nav: {
-      tagline: "SEO • WEBDESIGN • WORDPRESS",
+      tagline: "SEO • WEBDESIGN • BRANDING",
 
       services: "[LEISTUNGEN]",
       servicesLink: "/#services",

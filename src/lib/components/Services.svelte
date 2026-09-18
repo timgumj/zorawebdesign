@@ -222,7 +222,7 @@
   const resolvedProblemSectionTitle = $derived(
     problemLanguage === "en"
       ? "The value I bring to your online presence"
-      : "Was ich für deinen Online-Auftritt mitbringe",
+      : "Was ich für deinen Onlineauftritt biete",
   );
 
   const resolvedProblemInstruction = $derived(
@@ -1100,18 +1100,6 @@
               <h3 id="problem-solution-title" class="problem-section-title">
                 {resolvedProblemSectionTitle}
               </h3>
-
-              <p class="problem-instruction">
-                <span class="problem-instruction-arrow" aria-hidden="true">
-                  ↳
-                </span>
-
-                <span class="problem-instruction-text">
-                  {resolvedProblemInstruction}
-                </span>
-              </p>
-
-              <span class="problem-heading-line" aria-hidden="true"></span>
             </div>
 
             <p
@@ -1948,17 +1936,19 @@
 
     margin: 0 auto;
 
-    color: #ffffff;
+    color: #f2f2f2;
 
-    font-size: var(--problem-copy-size);
+    font-size: var(--services-component-title-size);
 
-    font-weight: 700;
+    font-weight: 600;
 
-    line-height: 1.42;
+    line-height: 1.12;
 
-    letter-spacing: -0.018em;
+    letter-spacing: -0.035em;
 
     text-align: center;
+
+    text-transform: uppercase;
 
     text-wrap: balance;
   }
@@ -1981,6 +1971,22 @@
 
   :global(body.light) .problem-heading-line {
     background: #111111;
+  }
+
+  .problem-section-title {
+    font-size: var(--problem-copy-size);
+
+    font-weight: 700;
+
+    line-height: 1.42;
+
+    letter-spacing: -0.018em;
+
+    text-align: center;
+
+    text-transform: uppercase;
+
+    text-wrap: balance;
   }
 
   .problem-instruction {
@@ -5333,6 +5339,31 @@
       margin-right: 0;
 
       text-align: left;
+    }
+
+    .problem-section-title {
+      max-width: 100%;
+
+      margin-left: 0;
+      margin-right: 0;
+
+      text-align: left;
+    }
+
+    .problem-section-title {
+      font-size: var(--problem-copy-size);
+
+      font-weight: 700;
+
+      line-height: 1.42;
+
+      letter-spacing: -0.018em;
+
+      text-align: center;
+
+      text-transform: uppercase;
+
+      text-wrap: balance;
     }
 
     .problem-section-title {

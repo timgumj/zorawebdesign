@@ -165,12 +165,8 @@
                 ? "Article contents"
                 : "Artikelinhalt"}
             >
-              {#each post.toc as item, index}
+              {#each post.toc as item}
                 <a href={`#${item.id}`}>
-                  <span class="blog-article-toc-number">
-                    {String(index + 1).padStart(2, "0")}
-                  </span>
-
                   <span class="blog-article-toc-label">
                     {item.label}
                   </span>

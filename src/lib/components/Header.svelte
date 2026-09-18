@@ -238,6 +238,7 @@
     previousHtmlOverflow = document.documentElement.style.overflow;
 
     document.body.style.overflow = "hidden";
+
     document.documentElement.style.overflow = "hidden";
   }
 
@@ -334,6 +335,7 @@
     const dropdownWidth = window.innerWidth <= 640 ? 184 : 200;
 
     const viewportPadding = 12;
+
     const halfDropdownWidth = dropdownWidth / 2;
 
     let centerPosition = triggerRect.left + triggerRect.width / 2;
@@ -363,6 +365,7 @@
     const dropdownWidth = window.innerWidth <= 640 ? 184 : 200;
 
     const viewportPadding = 12;
+
     const halfDropdownWidth = dropdownWidth / 2;
 
     let centerPosition = triggerRect.left + triggerRect.width / 2;
@@ -708,7 +711,6 @@
 
     <!-- =====================================================
          MOBILE / TABLET HEADER ICONS
-
          CONTACT → THEME → MENU
     ====================================================== -->
 
@@ -723,7 +725,8 @@
         onclick={handleMobileContactIconClick}
       >
         <svg class="mobile-contact-svg" viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M4 5.5h16v13H4z"></path>
+          <path d="M4 5.5h16v13H4z"> </path>
+
           <path d="m4.8 6.4 7.2 6 7.2-6"></path>
         </svg>
       </a>
@@ -795,21 +798,11 @@
 
     <!-- =====================================================
          DESKTOP NAVIGATION
-
-         SERVICES
-         TOOLS
-         PROJECTS
-         REVIEWS
-         BLOG
-         CONTACT
-         LANGUAGE
     ====================================================== -->
 
     <div class="header-right">
       <nav class="main-nav" aria-label="Main navigation">
         {#each navItems as item, index}
-          <!-- TOOLS BEFORE PROJECTS -->
-
           {#if index === 1 && freebiesMenu}
             <div
               bind:this={dropdownElement}
@@ -821,7 +814,9 @@
                 bind:this={dropdownTriggerElement}
                 type="button"
                 class="dropdown-trigger"
-                aria-label={`${freebiesOpen ? "Close" : "Open"} ${freebiesMenu.label} menu`}
+                aria-label={`${
+                  freebiesOpen ? "Close" : "Open"
+                } ${freebiesMenu.label} menu`}
                 aria-expanded={freebiesOpen}
                 aria-controls="website-tools-dropdown-panel"
                 onclick={toggleFreebies}
@@ -853,8 +848,6 @@
             </div>
           {/if}
 
-          <!-- NORMAL NAV ITEM -->
-
           <a
             href={item.href}
             title={item.title}
@@ -867,8 +860,6 @@
             </span>
           </a>
         {/each}
-
-        <!-- LANGUAGE -->
 
         <div class="lang-switch">
           <a
@@ -900,8 +891,6 @@
     {#if showThemeControl}
       <div class="header-theme-area" aria-hidden="true">
         <span class="header-theme-icon">
-          <!-- SUN -->
-
           <svg
             class="theme-svg theme-sun"
             viewBox="0 0 24 24"
@@ -913,8 +902,6 @@
               d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.42-1.41M17.66 6.34l1.41-1.41"
             ></path>
           </svg>
-
-          <!-- MOON -->
 
           <svg
             class="theme-svg theme-moon"
@@ -941,8 +928,6 @@
   >
     <nav class="mobile-menu-nav" aria-label="Mobile navigation">
       {#each navItems as item, index}
-        <!-- TOOLS BEFORE PROJECTS -->
-
         {#if index === 1 && freebiesMenu}
           <section class="mobile-menu-group">
             <div class="mobile-menu-parent mobile-menu-parent-static">
@@ -963,8 +948,6 @@
             </div>
           </section>
         {/if}
-
-        <!-- ALL MAIN ITEMS -->
 
         <section class="mobile-menu-group">
           <a
@@ -1085,6 +1068,7 @@
     bottom: 0;
 
     width: min(1540px, calc(100% - 32px));
+
     height: 1px;
 
     background: rgba(255, 255, 255, 0.1);
@@ -1139,12 +1123,15 @@
 
   :global(body.light) .header-grid {
     border-left-color: rgba(0, 0, 0, 0.1);
+
     border-right-color: rgba(0, 0, 0, 0.1);
   }
 
   .header-left,
   .header-right,
   .header-theme-area {
+    min-width: 0;
+
     min-height: 78px;
 
     display: flex;
@@ -1266,23 +1253,22 @@
 
   .brand-subtext {
     margin: 0;
-
     color: rgba(255, 255, 255, 0.46);
-
+    font-size: 0.54rem;
+    font-weight: 500;
     line-height: 1.2;
-
     letter-spacing: 0.08em;
-
     text-transform: uppercase;
-
     transition:
       color 0.25s ease,
       transform 0.25s ease;
   }
 
-  :global(body:not(:has(.homepage-footer))) .brand-subtext {
-    font-size: 0.66rem;
-    font-weight: 500;
+  @media (min-width: 901px) {
+    .brand-subtext-desktop {
+      font-size: 0.71rem;
+      font-weight: 700;
+    }
   }
 
   :global(body.light) .brand-subtext {
@@ -1461,6 +1447,7 @@
     z-index: 1020;
 
     top: calc(100% - 6px);
+
     left: -12px;
 
     min-width: 220px;
@@ -1509,6 +1496,7 @@
     color: #ffffff;
 
     font-size: 16px;
+
     font-weight: 700;
 
     text-decoration: none;
@@ -1584,6 +1572,7 @@
     display: inline-flex;
 
     align-items: center;
+
     justify-content: center;
 
     flex: 0 0 32px;
@@ -1612,6 +1601,7 @@
     stroke-width: 1.65;
 
     stroke-linecap: round;
+
     stroke-linejoin: round;
   }
 
@@ -1650,6 +1640,75 @@
   }
 
   /* =========================================================
+     COMPACT DESKTOP
+     Prevents navigation from colliding with logo
+  ========================================================= */
+
+  @media (min-width: 901px) and (max-width: 1180px) {
+    .header-grid {
+      width: min(1540px, calc(100% - 24px));
+    }
+
+    .site-header:not(.no-theme-control) .header-grid {
+      grid-template-columns:
+        minmax(170px, 1fr)
+        auto
+        minmax(44px, 1fr);
+    }
+
+    .site-header.no-theme-control .header-grid {
+      grid-template-columns:
+        minmax(170px, 1fr)
+        auto;
+    }
+
+    .header-left {
+      min-width: 0;
+
+      padding: 0 12px;
+    }
+
+    .site-header:not(.no-theme-control) .header-right,
+    .site-header.no-theme-control .header-right {
+      min-width: 0;
+
+      padding: 0 10px;
+    }
+
+    .header-theme-area {
+      padding: 0 12px;
+    }
+
+    .brand-block {
+      max-width: 100%;
+    }
+
+    .brand {
+      gap: 0.34em;
+
+      font-size: 1rem;
+    }
+
+    .main-nav {
+      gap: 10px;
+    }
+
+    .main-nav > a,
+    .dropdown-trigger,
+    .lang-link {
+      font-size: 13px;
+    }
+
+    .lang-switch {
+      margin-left: 10px;
+    }
+
+    .dropdown-panel a {
+      font-size: 13px;
+    }
+  }
+
+  /* =========================================================
      CONTACT DESKTOP
   ========================================================= */
 
@@ -1664,36 +1723,11 @@
   }
 
   /* =========================================================
-     HOMEPAGE TYPOGRAPHY
-  ========================================================= */
-
-  :global(body:has(.homepage-footer)) .brand-subtext,
-  :global(body:has(.homepage-footer)) .mobile-language-switcher {
-    font-size: var(--text-label);
-
-    font-weight: var(--weight-semibold);
-  }
-
-  :global(body:has(.homepage-footer)) .main-nav > a,
-  :global(body:has(.homepage-footer)) .dropdown-trigger,
-  :global(body:has(.homepage-footer)) .lang-link,
-  :global(body:has(.homepage-footer)) .dropdown-panel a {
-    font-size: 16px;
-
-    font-weight: 700;
-  }
-
-  /* =========================================================
      MOBILE + TABLET
      <= 900PX
   ========================================================= */
 
   @media (max-width: 900px) {
-    /*
-     * Hide the old floating ThemeToggle on tablet/mobile.
-     * The new header theme icon triggers the same button
-     * programmatically.
-     */
     :global(.theme-side-toggle) {
       display: none !important;
     }
@@ -1720,6 +1754,7 @@
       z-index: 5100;
 
       width: 100%;
+
       min-height: 72px;
 
       display: grid;
@@ -1735,6 +1770,7 @@
       padding: 0 clamp(14px, 3.5vw, 20px);
 
       border: 0 !important;
+
       border-bottom: 0 !important;
 
       box-sizing: border-box;
@@ -1752,6 +1788,7 @@
       grid-column: 1;
 
       min-width: 0;
+
       min-height: 72px;
 
       padding: 0;
@@ -1785,6 +1822,7 @@
       display: inline-flex;
 
       justify-content: flex-start;
+
       align-items: center;
 
       gap: 0.34em;
@@ -1806,6 +1844,7 @@
       display: flex;
 
       align-items: center;
+
       justify-content: space-between;
 
       gap: 4px;
@@ -1850,7 +1889,6 @@
 
     /* =====================================================
        MOBILE HEADER ACTIONS
-
        CONTACT → THEME → MENU
     ====================================================== */
 
@@ -1864,18 +1902,13 @@
       display: flex;
 
       align-items: center;
+
       justify-content: flex-end;
 
       gap: clamp(5px, 1.5vw, 10px);
 
       min-width: 0;
     }
-
-    /*
-     * Transparent visual treatment.
-     * The 38px hit area is only for usability —
-     * there is no visible box.
-     */
 
     .mobile-header-icon {
       width: 38px;
@@ -1884,6 +1917,7 @@
       flex: 0 0 38px;
 
       padding: 0;
+
       margin: 0;
 
       border: 0;
@@ -1891,6 +1925,7 @@
       display: inline-flex;
 
       align-items: center;
+
       justify-content: center;
 
       background: transparent;
@@ -1925,6 +1960,7 @@
       stroke-width: 1.45;
 
       stroke-linecap: round;
+
       stroke-linejoin: round;
     }
 
@@ -1941,12 +1977,9 @@
       stroke-width: 1.55;
 
       stroke-linecap: round;
+
       stroke-linejoin: round;
     }
-
-    /*
-     * Once menu opens, keep only the X visible.
-     */
 
     .site-header.mobile-menu-open .mobile-contact-action,
     .site-header.mobile-menu-open .mobile-theme-action {
@@ -1972,9 +2005,11 @@
       display: inline-flex;
 
       align-items: center;
+
       justify-content: flex-end;
 
       margin: 0;
+
       padding: 0;
 
       border: 0;
@@ -2118,6 +2153,7 @@
       flex-direction: column;
 
       justify-content: center;
+
       align-items: flex-start;
 
       gap: clamp(18px, 4vh, 30px);
@@ -2142,6 +2178,7 @@
       align-items: flex-start;
 
       margin: 0;
+
       padding: 0;
 
       border: 0;
@@ -2161,6 +2198,7 @@
       display: inline-block;
 
       margin: 0;
+
       padding: 0;
 
       color: inherit;
@@ -2239,6 +2277,7 @@
       display: block;
 
       margin: 0;
+
       padding: 0;
 
       color: rgba(255, 255, 255, 0.5);
@@ -2296,6 +2335,7 @@
       bottom: max(14px, env(safe-area-inset-bottom));
 
       min-width: 48px;
+
       height: 42px;
 
       padding: 0 10px;
@@ -2303,6 +2343,7 @@
       display: inline-flex;
 
       align-items: center;
+
       justify-content: center;
 
       gap: 0.3em;
@@ -2313,11 +2354,15 @@
 
       color: #ffffff;
 
+      font-size: 0.7rem;
+      font-weight: 600;
+
       text-decoration: none;
 
       box-shadow: 0 10px 28px rgba(0, 0, 0, 0.24);
 
       backdrop-filter: blur(14px);
+
       -webkit-backdrop-filter: blur(14px);
     }
 
@@ -2377,6 +2422,7 @@
       gap: 14px;
 
       padding-top: 12px;
+
       padding-bottom: 12px;
     }
 

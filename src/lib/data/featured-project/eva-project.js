@@ -15,7 +15,7 @@ export const evaProjectContent = {
     homeUrl: "/",
     alternateUrl: "/en-2/featured-project/",
     nav: {
-      tagline: "SEO • WEBDESIGN • WORDPRESS",
+      tagline: "SEO • WEBDESIGN • BRANDING",
       services: "[LEISTUNGEN]",
       projects: "[PROJEKTE]",
       reviews: "[BEWERTUNGEN]",
@@ -243,7 +243,7 @@ export const evaProjectContent = {
     homeUrl: "/en-2/",
     alternateUrl: "/referenzprojekt/",
     nav: {
-      tagline: "SEO • WEB DESIGN • WORDPRESS",
+      tagline: "SEO • WEB DESIGN • BRANDING",
       services: "[SERVICES]",
       projects: "[PROJECTS]",
       reviews: "[REVIEWS]",

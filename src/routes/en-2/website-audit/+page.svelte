@@ -26,7 +26,7 @@
       "Free website audit with 50+ automated checks. Get instant results and a detailed PDF report with prioritized fixes for SEO, performance, security and accessibility.",
 
     nav: {
-      tagline: "SEO • WEB DESIGN • WORDPRESS",
+      tagline: "SEO • WEB DESIGN • BRANDING",
 
       services: "[SERVICES]",
       servicesLink: "/en-2/#services",
