@@ -4764,7 +4764,7 @@
 
       width: calc(100% - 40px);
 
-      padding: 72px 0;
+      padding: 110px 0 72px;
     }
 
     .shell-line,
@@ -4811,7 +4811,7 @@
     /* ABOUT */
 
     .premium-about {
-      margin-top: 50px;
+      margin-top: -10px;
 
       padding-bottom: 0;
     }
@@ -5306,14 +5306,65 @@
   }
 
   /* =========================================================
-     SMALL MOBILE
-  ========================================================= */
+   SMALL MOBILE
+========================================================= */
 
   @media (max-width: 480px) {
     .services-shell {
       width: calc(100% - 40px);
 
-      padding: 64px 0;
+      padding: 110px 0 64px;
+    }
+
+    .problem-story-wrap {
+      width: 100%;
+
+      padding-inline: 0;
+
+      text-align: left;
+    }
+
+    .problem-heading-row {
+      align-items: flex-start;
+
+      justify-content: flex-start;
+
+      margin-left: 0;
+      margin-right: 0;
+
+      text-align: left;
+    }
+
+    .problem-section-title {
+      max-width: 100%;
+
+      margin-left: 0;
+      margin-right: 0;
+
+      text-align: left;
+    }
+
+    .problem-heading-line {
+      margin-left: 0;
+      margin-right: auto;
+    }
+
+    .problem-instruction {
+      justify-content: flex-start;
+
+      margin-left: 0;
+      margin-right: 0;
+
+      text-align: left;
+    }
+
+    .problem-story {
+      max-width: 100%;
+
+      margin-left: 0;
+      margin-right: 0;
+
+      text-align: left;
     }
 
     .service-content h3 {
@@ -5348,8 +5399,8 @@
   }
 
   /* =========================================================
-     REDUCED MOTION
-  ========================================================= */
+   REDUCED MOTION
+========================================================= */
 
   @media (prefers-reduced-motion: reduce) {
     .services-header {

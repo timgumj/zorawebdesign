@@ -246,8 +246,6 @@
                   <div class="dashboard-graph">
                     <div class="graph-area">
                       <div class="graph-plot">
-                        <!-- HORIZONTAL GRID -->
-
                         <span
                           class="graph-grid graph-grid-top"
                           aria-hidden="true"
@@ -261,8 +259,6 @@
 
                         <span class="graph-grid graph-grid-c" aria-hidden="true"
                         ></span>
-
-                        <!-- VERTICAL GRID -->
 
                         <span
                           class="graph-v-grid graph-v-grid-a"
@@ -289,7 +285,7 @@
                           aria-hidden="true"
                         ></span>
 
-                        <!-- DESKTOP GRAPH -->
+                        <!-- DESKTOP -->
 
                         <svg
                           class="graph-svg graph-svg-desktop"
@@ -297,8 +293,6 @@
                           preserveAspectRatio="none"
                           aria-hidden="true"
                         >
-                          <!-- ENQUIRIES FILL -->
-
                           <path
                             class="enquiries-fill"
                             d="
@@ -322,8 +316,6 @@
                             "
                           ></path>
 
-                          <!-- ENQUIRIES LINE -->
-
                           <path
                             class="enquiries-line"
                             d="
@@ -343,8 +335,6 @@
                               L1000 38
                             "
                           ></path>
-
-                          <!-- VISITORS FILL -->
 
                           <path
                             class="visitors-fill"
@@ -369,8 +359,6 @@
                             "
                           ></path>
 
-                          <!-- VISITORS LINE -->
-
                           <path
                             class="visitors-line"
                             d="
@@ -392,7 +380,7 @@
                           ></path>
                         </svg>
 
-                        <!-- TABLET / MOBILE GRAPH -->
+                        <!-- TABLET / MOBILE -->
 
                         <svg
                           class="graph-svg graph-svg-responsive"
@@ -400,8 +388,6 @@
                           preserveAspectRatio="none"
                           aria-hidden="true"
                         >
-                          <!-- ENQUIRIES -->
-
                           <path
                             class="enquiries-fill"
                             d="
@@ -434,8 +420,6 @@
                               L1000 38
                             "
                           ></path>
-
-                          <!-- VISITORS -->
 
                           <path
                             class="visitors-fill"
@@ -471,8 +455,6 @@
                           ></path>
                         </svg>
                       </div>
-
-                      <!-- TIMELINE -->
 
                       <div class="graph-timeline">
                         {#each baldaufFeature.graph.timeline as period}
@@ -582,12 +564,10 @@
 
                           <div
                             class="eva-score-track"
-                            aria-label={`${item.label}: ${item.value} von 100`}
+                            style={`--score: ${item.score}%`}
+                            aria-label={`${item.label}: ${item.value}/100`}
                           >
-                            <div
-                              class="eva-score-fill"
-                              style={`--score: ${item.score}%`}
-                            >
+                            <div class="eva-score-fill">
                               <span class="eva-score-point" aria-hidden="true"
                               ></span>
                             </div>
@@ -690,6 +670,10 @@
     font-family: "DM Sans", Arial, sans-serif;
   }
 
+  .eva-layout {
+    --eva-blue: #0043ff;
+  }
+
   /* =========================================================
      LIGHT MODE
   ========================================================= */
@@ -719,11 +703,22 @@
 
     margin: 0 auto;
 
-    padding: 95px var(--shell-x);
+    /*
+     * Keep the normal desktop top rhythm.
+     *
+     * 48px bottom + 48px next section top
+     * = 96px between Featured Project and project cards.
+     */
+
+    padding: 95px var(--shell-x) 48px;
 
     background: var(--section-bg);
 
     box-sizing: border-box;
+  }
+
+  :global(#projects > .featured-project + .projects > .projects-shell) {
+    padding-top: 48px !important;
   }
 
   .featured-container {
@@ -895,13 +890,6 @@
 
   /* =========================================================
      DESKTOP MASTER LAYOUT
-
-     Graph now receives significantly more width.
-
-     The right information column is intentionally narrower.
-
-     The graph itself and separator share the same vertical
-     centre so neither appears shifted up/down.
   ========================================================= */
 
   .dashboard-layout {
@@ -942,12 +930,6 @@
 
   /* =========================================================
      GRAPH COLUMN
-
-     Important change:
-     the separator belongs to the graph itself.
-
-     This means the line and graph always have exactly
-     the same vertical centre.
   ========================================================= */
 
   .dashboard-graph {
@@ -1015,8 +997,6 @@
 
     text-align: center;
   }
-
-  /* old divider removed */
 
   .dashboard-info::before {
     content: none;
@@ -1089,6 +1069,58 @@
     flex: 0 0 auto;
 
     color: var(--accent-blue);
+  }
+
+  /* =========================================================
+     EVA LINK
+  ========================================================= */
+
+  .eva-layout .graph-link > span {
+    position: relative;
+
+    border-bottom: 0;
+
+    opacity: 1;
+
+    filter: none;
+
+    mix-blend-mode: normal;
+  }
+
+  .eva-layout .graph-link > span::after {
+    content: "";
+
+    position: absolute;
+
+    right: 0;
+    bottom: 0;
+    left: 0;
+
+    height: 1px;
+
+    background-color: var(--eva-blue);
+
+    opacity: 1;
+
+    filter: none;
+
+    mix-blend-mode: normal;
+
+    pointer-events: none;
+  }
+
+  .eva-layout .graph-link svg {
+    color: var(--eva-blue);
+
+    opacity: 1;
+
+    filter: none;
+
+    mix-blend-mode: normal;
+  }
+
+  .eva-layout .graph-link svg path {
+    stroke: var(--eva-blue);
   }
 
   /* =========================================================
@@ -1452,9 +1484,19 @@
 
     flex: 0 0 8px;
 
+    border: 0;
+
     border-radius: 50%;
 
-    background: var(--accent-blue);
+    background-color: var(--eva-blue);
+
+    opacity: 1;
+
+    filter: none;
+
+    mix-blend-mode: normal;
+
+    box-shadow: none;
   }
 
   .eva-key-item {
@@ -1552,7 +1594,7 @@
 
     width: 100%;
 
-    height: 11px;
+    height: 9px;
   }
 
   .eva-score-track::before {
@@ -1560,44 +1602,60 @@
 
     position: absolute;
 
-    top: 50%;
+    z-index: 0;
+
+    top: 4px;
+
     right: 0;
-    left: 0;
+
+    left: calc(var(--score) + 2px);
 
     height: 1px;
 
-    background: rgba(255, 255, 255, 0.14);
+    background-color: rgba(255, 255, 255, 0.14);
 
-    transform: translateY(-50%);
+    opacity: 1;
+
+    transform: none;
   }
 
   .eva-score-fill {
     position: absolute;
 
-    z-index: 1;
+    z-index: 2;
 
-    top: 50%;
+    top: 4px;
     left: 0;
 
     width: var(--score);
 
-    height: 3px;
+    height: 1px;
 
-    background: #0043ff;
+    background-color: var(--eva-blue);
 
-    transform: translateY(-50%);
+    opacity: 1;
+
+    filter: none;
+
+    mix-blend-mode: normal;
+
+    box-shadow: none;
+
+    transform: none;
   }
 
   .eva-score-point {
     position: absolute;
 
+    z-index: 3;
+
     top: 50%;
-    right: -4px;
+    right: -3px;
 
-    width: 8px;
-    height: 8px;
+    width: 6px;
+    height: 6px;
 
-    border: 2px solid #0043ff;
+    border: 1px solid var(--eva-blue);
 
     border-radius: 50%;
 
@@ -1732,8 +1790,6 @@
 
   /* =========================================================
      LARGE DESKTOP
-
-     Give the graph even more visual dominance.
   ========================================================= */
 
   @media (min-width: 1200px) {
@@ -1745,6 +1801,7 @@
 
     .feature-visual-inner {
       padding-left: 46px;
+
       padding-right: 46px;
     }
   }
@@ -1764,14 +1821,25 @@
       display: none;
     }
 
+    /*
+     * Restore the original top spacing so this section
+     * follows the same vertical rhythm as the other sections.
+     *
+     * 18px bottom + 18px next section = 36px separation.
+     */
+
     .featured-shell {
       width: 90%;
 
-      padding: 85px 0;
+      padding: 40px 0 18px;
+    }
+
+    :global(#projects > .featured-project + .projects > .projects-shell) {
+      padding-top: 18px !important;
     }
 
     .featured-heading {
-      margin-bottom: 29px;
+      margin-bottom: 39px;
     }
 
     .project-toggle {
@@ -1797,29 +1865,21 @@
     }
 
     .feature-visual-inner {
-      min-height: 550px;
+      min-height: 0;
 
-      padding: 38px 26px;
+      padding: 32px 26px 26px;
     }
 
-    /* =====================================================
-       TABLET
-
-       KEY LEFT
-       INFO RIGHT
-       GRAPH FULL WIDTH BELOW
-    ====================================================== */
-
     .dashboard-layout {
-      min-height: 474px;
+      min-height: 0;
 
       grid-template-columns:
         minmax(0, 1fr)
         auto;
 
       grid-template-rows:
-        auto
-        1fr;
+        142px
+        auto;
 
       grid-template-areas:
         "key info"
@@ -1827,13 +1887,21 @@
 
       column-gap: 28px;
 
-      row-gap: 30px;
+      row-gap: 16px;
+
+      align-items: start;
+    }
+
+    .dashboard-key {
+      align-self: start;
     }
 
     .dashboard-graph {
-      min-height: calc(var(--graph-height) + 26px);
+      min-height: 0;
 
-      align-self: center;
+      justify-content: flex-start;
+
+      align-self: start;
     }
 
     .dashboard-graph::after {
@@ -1841,6 +1909,8 @@
     }
 
     .dashboard-info {
+      height: 142px;
+
       padding-left: 0;
 
       align-items: flex-end;
@@ -1882,13 +1952,9 @@
     }
 
     .graph-link {
-      margin-top: 17px;
+      margin-top: auto;
 
       font-size: 9px;
-    }
-
-    .dashboard-key {
-      align-self: center;
     }
 
     .graph-svg-desktop {
@@ -1899,7 +1965,38 @@
       display: block;
     }
 
-    /* EVA */
+    /* =====================================================
+       EVA TABLET
+    ====================================================== */
+
+    .eva-key-dot {
+      width: 8px;
+      height: 8px;
+
+      flex: 0 0 8px;
+
+      border: 0;
+
+      border-radius: 50%;
+
+      background-color: var(--eva-blue);
+
+      opacity: 1;
+
+      filter: none;
+
+      mix-blend-mode: normal;
+
+      box-shadow: none;
+
+      transform: none;
+    }
+
+    .eva-graph {
+      min-height: 0;
+
+      justify-content: flex-start;
+    }
 
     .eva-score-list {
       gap: 25px;
@@ -1911,6 +2008,24 @@
         minmax(0, 1fr);
 
       gap: 22px;
+    }
+
+    .eva-score-fill {
+      height: 1px;
+
+      background-color: var(--eva-blue);
+
+      opacity: 1;
+    }
+
+    .eva-score-point {
+      display: none;
+    }
+
+    .eva-layout .graph-link > span::after {
+      height: 1px;
+
+      background-color: var(--eva-blue);
     }
 
     .eva-scale {
@@ -1934,19 +2049,28 @@
 
   @media (max-width: 767px) {
     .featured-project {
-      --graph-height: clamp(255px, 73vw, 305px);
-
-      --metric-width: 126px;
+      --graph-height: clamp(245px, 69vw, 290px);
     }
 
     .shell-line {
       display: none;
     }
 
+    /*
+     * Restore original section-entry spacing.
+     *
+     * 12px bottom + 12px Projects top
+     * = 24px between the two components.
+     */
+
     .featured-shell {
       width: calc(100% - 40px);
 
-      padding: 70px 0;
+      padding: 40px 0 24px;
+    }
+
+    :global(#projects > .featured-project + .projects > .projects-shell) {
+      padding-top: 12px !important;
     }
 
     .featured-heading {
@@ -1988,34 +2112,35 @@
     }
 
     .feature-visual-inner {
-      min-height: 580px;
+      min-height: 0;
 
-      padding: 28px 14px;
+      padding: 22px 12px 18px;
     }
 
     /* =====================================================
-       KEY LEFT / INFO RIGHT
-       GRAPH FULL WIDTH
+       SAME INFO / GRAPH POSITION
     ====================================================== */
 
     .dashboard-layout {
-      min-height: 524px;
+      min-height: 0;
 
       grid-template-columns:
         minmax(0, 1fr)
         auto;
 
       grid-template-rows:
-        auto
-        1fr;
+        108px
+        auto;
 
       grid-template-areas:
         "key info"
         "graph graph";
 
-      column-gap: 12px;
+      column-gap: 10px;
 
-      row-gap: 27px;
+      row-gap: 12px;
+
+      align-items: start;
     }
 
     .dashboard-key {
@@ -2023,9 +2148,13 @@
     }
 
     .dashboard-graph {
-      min-height: calc(var(--graph-height) + 22px);
+      width: 100%;
 
-      align-self: center;
+      min-height: 0;
+
+      justify-content: flex-start;
+
+      align-self: start;
     }
 
     .dashboard-graph::after {
@@ -2033,6 +2162,12 @@
     }
 
     .dashboard-info {
+      width: max-content;
+
+      max-width: 100%;
+
+      height: 108px;
+
       padding-left: 0;
 
       align-items: flex-end;
@@ -2045,11 +2180,11 @@
     }
 
     .dashboard-eyebrow {
-      max-width: 145px;
+      max-width: 132px;
 
-      font-size: 8px;
+      font-size: 7px;
 
-      line-height: 1.35;
+      line-height: 1.3;
 
       text-align: right;
     }
@@ -2059,13 +2194,13 @@
     ====================================================== */
 
     .chart-key {
-      gap: 8px;
+      gap: 7px;
     }
 
     .chart-key-item {
-      gap: 6px;
+      gap: 5px;
 
-      font-size: 8px;
+      font-size: 7.5px;
     }
 
     .chart-key-dot {
@@ -2076,62 +2211,100 @@
     }
 
     .growth-metrics {
-      margin-top: 14px;
+      width: max-content;
 
-      flex-direction: column;
+      max-width: 100%;
 
-      align-items: flex-end;
+      margin-top: 9px;
 
-      gap: 7px;
+      display: flex;
+
+      flex-direction: row;
+
+      align-items: center;
+
+      justify-content: flex-end;
+
+      gap: 6px;
     }
 
     .growth-metric {
-      min-height: 54px;
+      width: max-content;
 
-      padding: 6px 7px;
+      min-width: 0;
+
+      min-height: 43px;
+
+      flex: 0 0 auto;
+
+      padding: 5px 7px;
+
+      white-space: nowrap;
     }
 
     .growth-metric::before,
     .growth-metric::after {
-      width: 5px;
+      width: 4px;
     }
 
     .growth-value {
-      gap: 4px;
+      width: auto;
+
+      gap: 3px;
+
+      white-space: nowrap;
     }
 
     .growth-value strong {
-      font-size: 18px;
+      font-size: 14px;
+
+      line-height: 1;
     }
 
     .growth-value span {
-      font-size: 6.5px;
+      font-size: 5.5px;
+
+      line-height: 1.1;
     }
 
     .growth-metric small {
-      margin-top: 4px;
+      width: auto;
 
-      font-size: 6.5px;
+      margin-top: 3px;
+
+      font-size: 5.5px;
+
+      line-height: 1.1;
+
+      white-space: nowrap;
     }
 
+    /* =====================================================
+       LINK
+    ====================================================== */
+
     .graph-link {
-      margin-top: 14px;
+      margin-top: auto;
 
       gap: 5px;
 
-      font-size: 7px;
+      font-size: 6.5px;
 
       line-height: 1.2;
     }
 
-    .graph-link svg {
-      width: 11px;
-      height: 11px;
+    .graph-link > span {
+      padding-bottom: 3px;
     }
 
-    .dashboard-graph {
-      width: 100%;
+    .graph-link svg {
+      width: 10px;
+      height: 10px;
     }
+
+    /* =====================================================
+       BALDAUF GRAPH
+    ====================================================== */
 
     .graph-svg-desktop {
       display: none;
@@ -2148,18 +2321,22 @@
       stroke-linecap: square;
     }
 
+    .visitors-line {
+      stroke: var(--accent-blue);
+    }
+
     .graph-timeline {
-      margin-top: 10px;
+      margin-top: 9px;
     }
 
     .graph-timeline span {
-      font-size: 6.5px;
+      font-size: 6px;
 
       white-space: nowrap;
     }
 
     /* =====================================================
-       EVA
+       EVA MOBILE
     ====================================================== */
 
     .eva-key {
@@ -2167,30 +2344,48 @@
     }
 
     .eva-key-dot {
-      width: 6px;
-      height: 6px;
+      width: 8px;
+      height: 8px;
 
-      flex: 0 0 6px;
+      flex: 0 0 8px;
+
+      border: 0;
+
+      border-radius: 50%;
+
+      background-color: var(--eva-blue);
+
+      opacity: 1;
+
+      filter: none;
+
+      mix-blend-mode: normal;
+
+      box-shadow: none;
+
+      transform: none;
     }
 
     .eva-key-item {
-      font-size: 8px;
+      font-size: 7.5px;
     }
 
     .eva-graph {
       width: 100%;
 
-      min-height: calc(var(--graph-height) + 25px);
+      min-height: 0;
+
+      justify-content: flex-start;
     }
 
     .eva-score-list {
-      gap: 22px;
+      gap: 19px;
     }
 
     .eva-score-row {
       grid-template-columns: 1fr;
 
-      gap: 8px;
+      gap: 7px;
     }
 
     .eva-score-copy {
@@ -2198,57 +2393,119 @@
     }
 
     .eva-score-copy span {
-      font-size: 8px;
+      font-size: 7.5px;
     }
 
     .eva-score-copy strong {
-      font-size: 18px;
+      font-size: 16px;
     }
 
     .eva-score-track {
       height: 9px;
     }
 
+    .eva-score-track::before {
+      top: 4px;
+
+      left: calc(var(--score) + 2px);
+
+      height: 1px;
+    }
+
     .eva-score-fill {
-      height: 3px;
+      top: 4px;
+
+      height: 1px;
+
+      background-color: var(--eva-blue);
+
+      opacity: 1;
+
+      filter: none;
+
+      mix-blend-mode: normal;
+
+      box-shadow: none;
+
+      transform: none;
     }
 
     .eva-score-point {
-      width: 7px;
-      height: 7px;
+      display: none;
+    }
 
-      right: -3px;
+    .eva-layout .graph-link > span::after {
+      height: 1px;
+
+      background-color: var(--eva-blue);
+
+      opacity: 1;
+
+      filter: none;
+
+      mix-blend-mode: normal;
+    }
+
+    .eva-layout .graph-link svg,
+    .eva-layout .graph-link svg path {
+      color: var(--eva-blue);
+
+      stroke: var(--eva-blue);
+
+      opacity: 1;
     }
 
     .eva-scale {
-      margin: 15px 0 0;
+      margin: 13px 0 0;
     }
 
     .eva-scale span {
       font-size: 6px;
     }
 
+    /* =====================================================
+       EVA RESULT
+    ====================================================== */
+
     .eva-load-metric {
-      min-height: 54px;
+      width: max-content;
 
-      margin-top: 14px;
+      min-width: 0;
 
-      padding: 6px 7px;
+      max-width: 100%;
+
+      min-height: 43px;
+
+      margin-top: 9px;
+
+      padding: 5px 7px;
+
+      align-self: flex-end;
+
+      white-space: nowrap;
     }
 
     .eva-load-metric::before,
     .eva-load-metric::after {
-      width: 5px;
+      width: 4px;
     }
 
     .eva-load-metric strong {
-      font-size: 20px;
+      font-size: 15px;
+
+      line-height: 1;
     }
 
     .eva-load-metric span {
-      margin-top: 5px;
+      width: auto;
 
-      font-size: 6.5px;
+      margin-top: 4px;
+
+      font-size: 5.5px;
+
+      line-height: 1.1;
+
+      white-space: nowrap;
     }
   }
 
@@ -2257,12 +2514,23 @@
   ========================================================= */
 
   @media (max-width: 430px) {
+    /*
+     * Original entry rhythm restored.
+     *
+     * 10px bottom + 10px Projects top = 20px between
+     * Featured Project and the project cards.
+     */
+
     .featured-shell {
-      padding: 62px 0;
+      padding: 62px 0 20px;
+    }
+
+    :global(#projects > .featured-project + .projects > .projects-shell) {
+      padding-top: 10px !important;
     }
 
     .featured-heading {
-      margin-bottom: 23px;
+      margin-bottom: 33px;
     }
 
     .project-toggle-button {
@@ -2274,18 +2542,60 @@
     }
 
     .feature-visual-inner {
-      min-height: 560px;
+      min-height: 0;
 
-      padding-top: 26px;
-      padding-bottom: 26px;
+      padding-top: 20px;
+
+      padding-bottom: 16px;
     }
 
     .dashboard-layout {
-      row-gap: 24px;
+      grid-template-rows:
+        104px
+        auto;
+
+      row-gap: 10px;
+    }
+
+    .dashboard-info {
+      height: 104px;
+    }
+
+    .growth-metrics {
+      gap: 5px;
+    }
+
+    .growth-metric {
+      padding-left: 6px;
+
+      padding-right: 6px;
+    }
+
+    .growth-value strong {
+      font-size: 13px;
+    }
+
+    .growth-value span,
+    .growth-metric small {
+      font-size: 5.2px;
     }
 
     .eva-score-list {
-      gap: 20px;
+      gap: 18px;
+    }
+
+    .eva-load-metric {
+      padding-left: 6px;
+
+      padding-right: 6px;
+    }
+
+    .eva-load-metric strong {
+      font-size: 14px;
+    }
+
+    .eva-load-metric span {
+      font-size: 5.2px;
     }
   }
 

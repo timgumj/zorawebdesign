@@ -1734,15 +1734,14 @@
 
       padding: 0 clamp(14px, 3.5vw, 20px);
 
-      border: 0;
-
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      border: 0 !important;
+      border-bottom: 0 !important;
 
       box-sizing: border-box;
     }
 
     :global(body.light) .header-grid {
-      border-bottom-color: rgba(0, 0, 0, 0.1);
+      border-bottom: 0 !important;
     }
 
     /* =====================================================
