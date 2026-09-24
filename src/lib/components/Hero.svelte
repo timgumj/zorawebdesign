@@ -2068,20 +2068,27 @@
 
     .hero-actions {
       width: 100%;
+      max-width: 82%;
 
       justify-content: flex-start;
+      flex-direction: row;
+      flex-wrap: nowrap;
 
-      gap: clamp(8px, 1.2vh, 12px);
+      gap: 6px;
     }
 
     .cta-link {
       min-height: 38px;
 
-      padding: 0 12px;
+      padding: 0 8px;
 
       font-size: 0.6rem;
 
       flex: 0 1 auto;
+    }
+
+    .cta-link > span[aria-hidden="true"] {
+      display: none;
     }
   }
 

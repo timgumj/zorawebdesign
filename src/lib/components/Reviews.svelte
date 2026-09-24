@@ -881,6 +881,10 @@
       position: relative;
     }
 
+    .reviews-grid {
+      gap: 42px;
+    }
+
     .reviews::before,
     .reviews::after {
       content: "";
@@ -910,6 +914,12 @@
     :global(body.light) .reviews::before,
     :global(body.light) .reviews::after {
       background: rgba(0, 0, 0, 0.08);
+    }
+  }
+
+  @media (min-width: 1025px) and (max-width: 1100px) {
+    .reviews-grid {
+      gap: 30px;
     }
   }
 

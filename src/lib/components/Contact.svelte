@@ -830,7 +830,6 @@
 
   /* =========================================================
      FORM COLUMN
-     ONLY THIS COLUMN HAS AN OUTER BORDER
   ========================================================= */
 
   .contact-form {
@@ -905,7 +904,7 @@
 
   /* =========================================================
      PERSONAL CONTACT COLUMN
-     NO OUTER BORDER
+     BRACKET BORDER ON DESKTOP
   ========================================================= */
 
   .contact-info {
@@ -1875,6 +1874,38 @@
   @media (min-width: 1025px) {
     .contact {
       position: relative;
+    }
+
+    .contact-info {
+      --info-border: rgba(255, 255, 255, 0.16);
+
+      padding: 32px;
+    }
+
+    :global(body.light) .contact-info {
+      --info-border: rgba(0, 0, 0, 0.15);
+    }
+
+    .contact-info::before,
+    .contact-info::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 24px;
+      border-top: 1px solid var(--info-border);
+      border-bottom: 1px solid var(--info-border);
+      pointer-events: none;
+    }
+
+    .contact-info::before {
+      left: 0;
+      border-left: 1px solid var(--info-border);
+    }
+
+    .contact-info::after {
+      right: 0;
+      border-right: 1px solid var(--info-border);
     }
 
     .contact-container {

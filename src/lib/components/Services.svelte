@@ -3893,6 +3893,30 @@
     color: rgba(0, 0, 0, 0.075);
   }
 
+  @media (min-width: 768px) {
+    :global(body.dark) .services-showcase {
+      background: transparent;
+    }
+
+    :global(body.dark) .service-detail-list {
+      border-top: 0;
+      border-bottom: 0;
+      background: #242526;
+    }
+
+    :global(body.dark) .service-detail-panel {
+      padding-inline: clamp(20px, 2.5vw, 32px);
+    }
+
+    :global(body.dark) .service-detail-number {
+      right: 16px;
+    }
+
+    :global(body.dark) .service-detail-panel.active .service-detail-number {
+      color: rgba(255, 255, 255, 0.2);
+    }
+  }
+
   .service-detail-icon-wrap {
     position: relative;
 
