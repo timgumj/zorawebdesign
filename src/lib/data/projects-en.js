@@ -140,6 +140,7 @@ export const projects = [
     description:
       "Website for political scientist Ewa Ernst-Dziedzic.",
     image: "/images/ewaernst-700.webp",
+    scrollImage: "/images/ewascreenshot.webp",
     alt: "Website project for Ewa Ernst Dziedzic",
     link: "https://ewaernst.at/",
     tags: [
@@ -156,6 +157,7 @@ export const projects = [
     description:
       "Portfolio website for Vienna-based artist Anna Hofbauer.",
     image: "/images/anna_hofbauer-700.webp",
+    scrollImage: "/images/annscreenshot.webp",
     alt: "Portfolio website for Anna Hofbauer",
     link: "https://annahofbauer.com/",
     tags: [
@@ -172,6 +174,7 @@ export const projects = [
     description:
       "Portfolio website for artist and cognitive scientist Imani Rameses.",
     image: "/images/imani-700.webp",
+    scrollImage: "/images/imaniscreenshot.webp",
     alt: "Website project for Imani Rameses",
     link: "https://imanirameses.com/",
     tags: [
@@ -188,6 +191,7 @@ export const projects = [
     description:
       "Website for wellness, mindfulness and personal development.",
     image: "/images/glucksraum-700.webp",
+    scrollImage: "/images/glucksraumscreenshot.webp",
     alt: "Website project for Glücksraum",
     link: "http://www.gluecksraum.at/",
     tags: [
@@ -204,6 +208,7 @@ export const projects = [
     description:
       "Online shop for contemporary handcrafted jewellery.",
     image: "/images/moha-700.webp",
+    scrollImage: "/images/mohascreenshot.webp",
     alt: "Website project for Moha Galerie",
     link: "https://www.moha.at/",
     tags: [
@@ -236,6 +241,7 @@ export const projects = [
     description:
       "Website for Vienna-based cultural organisation AFRIEUROTEXT.",
     image: "/images/Afrieurotext-700.webp",
+    scrollImage: "/images/afrieurotextscreenshot.webp",
     alt: "Website project for Afrieurotext in Vienna",
     link: "https://www.afrieurotext.at/",
     tags: [
