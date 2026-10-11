@@ -1,0 +1,160 @@
+main.compact-service-page .projects-header-shell {
+  padding-top: 50px;
+}
+
+main.compact-service-page .projects-header-inner {
+  padding-block: 24px;
+}
+
+main.compact-service-page .intro-shell {
+  padding-top: 60px;
+  padding-bottom: 45px;
+}
+
+main.compact-service-page .overview {
+  margin-top: 45px;
+}
+
+main.compact-service-page .overview p,
+main.compact-service-page .section-intro p {
+  margin-top: 18px;
+}
+
+main.compact-service-page .benefit-list {
+  gap: 12px;
+  margin-top: 24px;
+}
+
+main.compact-service-page .content-shell,
+main.compact-service-page .pricing-shell,
+main.compact-service-page .tools-shell,
+main.compact-service-page .faq-shell {
+  padding-top: 32px;
+  padding-bottom: 50px;
+}
+
+main.compact-service-page .projects-section {
+  padding-bottom: 40px;
+}
+
+main.compact-service-page .projects-shell {
+  padding-top: 32px;
+  padding-bottom: 40px;
+}
+
+main.compact-service-page .content-card,
+main.compact-service-page .info-card,
+main.compact-service-page .process-card,
+main.compact-service-page .pricing-card,
+main.compact-service-page .free-tool-content,
+main.compact-service-page .tool-body,
+main.compact-service-page .metric-card {
+  padding-block: 28px;
+}
+
+main.compact-service-page .free-tool-card {
+  padding-block: 0;
+}
+
+main.compact-service-page .tool-card {
+  padding-bottom: 0;
+}
+
+main.compact-service-page .content-card h3,
+main.compact-service-page .info-card h3,
+main.compact-service-page .process-card h3,
+main.compact-service-page .pricing-card h3,
+main.compact-service-page .free-tool-content h3 {
+  margin-top: 22px;
+}
+
+main.compact-service-page .content-card p,
+main.compact-service-page .info-card p,
+main.compact-service-page .process-card p,
+main.compact-service-page .pricing-card p,
+main.compact-service-page .free-tool-content p {
+  margin-top: 16px;
+}
+
+main.compact-service-page .tag-list {
+  padding-top: 22px;
+}
+
+main.compact-service-page .metric-value {
+  margin-top: 24px;
+}
+
+main.compact-service-page .section-note {
+  margin-top: 28px;
+}
+
+main.compact-service-page .section-intro,
+main.compact-service-page .pricing-intro {
+  padding-bottom: 28px;
+}
+
+main.compact-service-page .pricing-bottom {
+  padding-top: 28px;
+  gap: 24px;
+}
+
+main.compact-service-page .marquee-heading {
+  margin-top: 40px;
+  margin-bottom: 20px;
+}
+
+main.compact-service-page .faq-item summary {
+  padding-block: 18px;
+}
+
+main.compact-service-page .faq-item p {
+  padding-bottom: 20px;
+}
+
+main.compact-service-page .final-shell {
+  padding-top: 55px;
+  padding-bottom: 60px;
+}
+
+main.compact-service-page .more-services {
+  margin-bottom: 40px;
+  padding-top: 22px;
+}
+
+@media (max-width: 767px) {
+  main.compact-service-page .projects-header-shell {
+    padding-top: 32px;
+  }
+
+  main.compact-service-page .projects-header-inner {
+    gap: 16px;
+    padding-block: 20px;
+  }
+
+  main.compact-service-page .intro-shell {
+    padding-top: 40px;
+    padding-bottom: 32px;
+  }
+
+  main.compact-service-page .overview {
+    margin-top: 32px;
+  }
+
+  main.compact-service-page .content-shell,
+  main.compact-service-page .pricing-shell,
+  main.compact-service-page .tools-shell,
+  main.compact-service-page .faq-shell {
+    padding-top: 24px;
+    padding-bottom: 32px;
+  }
+
+  main.compact-service-page .projects-section,
+  main.compact-service-page .projects-shell {
+    padding-bottom: 28px;
+  }
+
+  main.compact-service-page .final-shell {
+    padding-top: 40px;
+    padding-bottom: 40px;
+  }
+}

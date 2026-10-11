@@ -12,6 +12,18 @@ export function GET() {
     "en-2/website-configurator/",
     "website-audit/",
     "en-2/website-audit/",
+    "webdesign/",
+    "seo-performance/",
+    "webshop/",
+    "webentwicklung/",
+    "website-wartung/",
+    "webhosting/",
+    "en-2/web-design/",
+    "en-2/seo-performance/",
+    "en-2/e-commerce/",
+    "en-2/web-development/",
+    "en-2/website-maintenance/",
+    "en-2/website-hosting/",
     "webdesign/salzburg/",
     "webdesign/graz/",
     "webdesign/muenchen/",
@@ -39,10 +51,12 @@ export function GET() {
   );
 
   const pages = [
-    ...staticPages,
-    ...legacyBlogPages,
-    ...germanBlogPages,
-    ...englishBlogPages,
+    ...new Set([
+      ...staticPages,
+      ...legacyBlogPages,
+      ...germanBlogPages,
+      ...englishBlogPages,
+    ]),
   ];
 
   // Updated whenever npm run build is executed.

@@ -3,6 +3,26 @@
 
   let { language = "en", currentArea = "", homepage = false } = $props();
 
+  const serviceLinks = {
+    de: [
+      { label: "WEBDESIGN", href: "/webdesign/" },
+      { label: "SEO & PERFORMANCE", href: "/seo-performance/" },
+      { label: "WEBSHOP", href: "/webshop/" },
+      { label: "WEBENTWICKLUNG", href: "/webentwicklung/" },
+      { label: "WEBSITE-WARTUNG", href: "/website-wartung/" },
+      { label: "WEBHOSTING", href: "/webhosting/" },
+    ],
+
+    en: [
+      { label: "WEB DESIGN", href: "/en-2/web-design/" },
+      { label: "SEO & PERFORMANCE", href: "/en-2/seo-performance/" },
+      { label: "E-COMMERCE", href: "/en-2/e-commerce/" },
+      { label: "WEB DEVELOPMENT", href: "/en-2/web-development/" },
+      { label: "WEBSITE MAINTENANCE", href: "/en-2/website-maintenance/" },
+      { label: "WEBSITE HOSTING", href: "/en-2/website-hosting/" },
+    ],
+  };
+
   const areaLinks = {
     de: [
       {
@@ -42,6 +62,7 @@
   };
 
   let serviceAreas = $derived(areaLinks[language] ?? areaLinks.en);
+  let services = $derived(serviceLinks[language] ?? serviceLinks.en);
 
   let footerCopyright = $derived(`ZORA WEB DESIGN © COPYRIGHT ${currentYear}`);
 
@@ -55,6 +76,14 @@
 
   let footerServiceAreasTitle = $derived(
     language === "de" ? "WEBDESIGN REGIONEN" : "WEB DESIGN SERVICE AREAS",
+  );
+
+  let footerServicesTitle = $derived(
+    language === "de" ? "LEISTUNGEN" : "SERVICES",
+  );
+
+  let footerServicesAria = $derived(
+    language === "de" ? "Leistungen" : "Services",
   );
 
   let footerServiceAreasAria = $derived(
@@ -72,6 +101,20 @@
       <p>
         {footerLocation}
       </p>
+
+      <div class="footer-services">
+        <p>
+          {footerServicesTitle}
+        </p>
+
+        <nav aria-label={footerServicesAria}>
+          {#each services as service}
+            <a href={service.href}>
+              {service.label}
+            </a>
+          {/each}
+        </nav>
+      </div>
     </div>
 
     <div class="footer-service-areas">
@@ -171,6 +214,50 @@
      SERVICE AREAS
   ========================================================= */
 
+  .footer-services {
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    gap: 12px;
+
+    min-width: 0;
+  }
+
+  .footer-services p {
+    margin: 0;
+
+    color: rgba(255, 255, 255, 0.62);
+
+    letter-spacing: 0.16em;
+  }
+
+  .footer-services > p {
+    margin-top: 4px;
+  }
+
+  :global(body:not(:has(.homepage-footer))) .footer-services p {
+    font-size: 9.72px;
+  }
+
+  :global(body.light) .footer-services p {
+    color: rgba(17, 17, 17, 0.62);
+  }
+
+  .footer-services nav {
+    display: flex;
+
+    flex-wrap: wrap;
+
+    align-items: center;
+
+    justify-content: flex-start;
+
+    gap: clamp(14px, 1.5vw, 26px);
+  }
+
   .footer-service-areas {
     grid-area: regions;
 
@@ -213,10 +300,19 @@
     gap: clamp(14px, 1.5vw, 26px);
   }
 
+  .footer-services a,
   .footer-service-areas a {
     display: inline-block;
 
     width: fit-content;
+
+    font-family: inherit;
+
+    font-size: 10.53px;
+
+    font-weight: inherit;
+
+    line-height: inherit;
 
     padding-bottom: 4px;
 
@@ -229,15 +325,13 @@
     text-decoration: none;
   }
 
-  :global(body:not(:has(.homepage-footer))) .footer-service-areas a {
-    font-size: 10.53px;
-  }
-
+  .footer-services a:hover,
   .footer-service-areas a:hover,
   .footer-service-areas a.active {
     border-bottom-color: #0043ff;
   }
 
+  :global(body.light) .footer-services a,
   :global(body.light) .footer-service-areas a {
     color: #111111;
   }
@@ -258,7 +352,7 @@
     gap: 8px;
   }
 
-  .footer-meta p {
+  .footer-meta > p {
     margin: 0;
 
     color: #ffffff;
@@ -270,15 +364,15 @@
     transition: color 0.3s ease;
   }
 
-  :global(body:not(:has(.homepage-footer))) .footer-meta p {
+  :global(body:not(:has(.homepage-footer))) .footer-meta > p {
     font-size: 11.34px;
   }
 
-  :global(body:not(:has(.homepage-footer))) .footer-meta .footer-copyright {
+  :global(body:not(:has(.homepage-footer))) .footer-meta > .footer-copyright {
     font-weight: 300;
   }
 
-  :global(body.light) .footer-meta p {
+  :global(body.light) .footer-meta > p {
     color: #111111;
   }
 
@@ -374,6 +468,16 @@
         auto
         minmax(0, 1fr);
     }
+
+    .footer-services nav {
+      display: grid;
+
+      grid-template-columns: repeat(3, max-content);
+
+      column-gap: clamp(14px, 1.5vw, 26px);
+
+      row-gap: 8px;
+    }
   }
 
   /* =========================================================
@@ -412,7 +516,7 @@
       justify-self: start;
     }
 
-    :global(body:not(:has(.homepage-footer))) .footer-meta p,
+    :global(body:not(:has(.homepage-footer))) .footer-meta > p,
     :global(body:not(:has(.homepage-footer))) .footer-imprint-link {
       font-size: 12.96px;
     }

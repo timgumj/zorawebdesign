@@ -13,6 +13,7 @@
     toolsAlt = "Tools",
 
     serviceKeywordsLabel = "Service keywords",
+    serviceLinkLabel = "MEHR ERFAHREN",
 
     serviceDescriptionToggleLabel = "Leistungsbeschreibung ein- oder ausblenden",
 
@@ -1606,6 +1607,15 @@
                     </span>
                   {/each}
                 </div>
+                {#if service.href}
+                  <a
+                    class="service-page-link"
+                    href={service.href}
+                    aria-label={`${serviceLinkLabel}: ${service.title}`}
+                  >
+                    {serviceLinkLabel}
+                  </a>
+                {/if}
               </article>
             {/each}
           </div>
@@ -1683,6 +1693,15 @@
                     </span>
                   </button>
                 </div>
+                {#if service.href}
+                  <a
+                    class="service-page-link"
+                    href={service.href}
+                    aria-label={`${serviceLinkLabel}: ${service.title}`}
+                  >
+                    {serviceLinkLabel}
+                  </a>
+                {/if}
               </div>
             </article>
           {/each}
@@ -2106,7 +2125,7 @@
 
     font: inherit;
 
-    font-weight: 700;
+    font-weight: 500;
 
     line-height: inherit;
 
@@ -2728,7 +2747,7 @@
   }
 
   .experience-item {
-    --experience-border: rgba(255, 255, 255, 0.42);
+    border-bottom: 1px solid #ffffff;
 
     position: relative;
 
@@ -2743,38 +2762,6 @@
     padding: 8px 24px;
 
     text-align: center;
-  }
-
-  .experience-item::before,
-  .experience-item::after {
-    content: "";
-
-    position: absolute;
-
-    top: 0;
-    bottom: 0;
-
-    width: 28px;
-
-    border-top: 1px solid var(--experience-border);
-
-    border-bottom: 1px solid var(--experience-border);
-  }
-
-  .experience-item::before {
-    left: 0;
-
-    border-left: 1px solid var(--experience-border);
-  }
-
-  .experience-item::after {
-    right: 0;
-
-    border-right: 1px solid var(--experience-border);
-  }
-
-  :global(body.light) .experience-item {
-    --experience-border: rgba(0, 0, 0, 0.4);
   }
 
   .experience-title {
@@ -3425,6 +3412,8 @@
   }
 
   .about-experience-copy {
+    border-bottom: 1px solid #ffffff;
+
     position: relative;
 
     display: block;
@@ -3438,34 +3427,6 @@
     font-size: 12px;
 
     line-height: 1.48;
-  }
-
-  .about-experience-copy::before,
-  .about-experience-copy::after {
-    content: "";
-
-    position: absolute;
-
-    top: 0;
-    bottom: 0;
-
-    width: 20px;
-
-    border-top: 1px solid #ffffff;
-
-    border-bottom: 1px solid #ffffff;
-  }
-
-  .about-experience-copy::before {
-    left: 0;
-
-    border-left: 1px solid #ffffff;
-  }
-
-  .about-experience-copy::after {
-    right: 0;
-
-    border-right: 1px solid #ffffff;
   }
 
   /* =========================================================
@@ -4064,6 +4025,32 @@
     width: 100%;
 
     margin: 22px 0 0;
+  }
+
+  .service-page-link {
+    position: relative;
+    z-index: 2;
+    display: inline-block;
+    align-self: flex-start;
+    width: fit-content;
+    margin-top: 18px;
+    padding-bottom: 4px;
+    border-bottom: 1px solid var(--accent-blue);
+    color: #ffffff;
+    font-size: 10.53px;
+    font-weight: 400;
+    line-height: 1.5;
+    letter-spacing: 0.14em;
+    text-decoration: none;
+  }
+
+  :global(body.light) .service-page-link {
+    color: #111111;
+  }
+
+  .service-page-link:focus-visible {
+    outline: 2px solid var(--accent-blue);
+    outline-offset: 4px;
   }
 
   .service-tags {
@@ -4868,11 +4855,6 @@
       flex: 0 1 auto;
 
       padding: 0;
-    }
-
-    .experience-item::before,
-    .experience-item::after {
-      display: none;
     }
 
     .experience-title {

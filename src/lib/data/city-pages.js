@@ -264,6 +264,25 @@ const englishContact = {
 };
 
 function makeServices(language, city, copy) {
+  const links =
+    language === "de"
+      ? [
+          "/webdesign/",
+          "/webentwicklung/",
+          "/webshop/",
+          "/seo-performance/",
+          "/webhosting/",
+          "/website-wartung/",
+        ]
+      : [
+          "/en-2/web-design/",
+          "/en-2/web-development/",
+          "/en-2/e-commerce/",
+          "/en-2/seo-performance/",
+          "/en-2/website-hosting/",
+          "/en-2/website-maintenance/",
+        ];
+
   const titles =
     language === "de"
       ? [
@@ -286,6 +305,7 @@ function makeServices(language, city, copy) {
   return titles.map((title, index) => ({
     icon: serviceIcons[index],
     title,
+    href: links[index],
     text: copy[index],
     alt: `${title} – Zora Web Design`,
   }));

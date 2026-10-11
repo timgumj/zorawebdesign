@@ -243,6 +243,7 @@
     title={isGerman ? "LEISTUNGEN" : "SERVICES"}
     subtitle={page.serviceIntro}
     services={page.services}
+    serviceLinkLabel={isGerman ? "MEHR ERFAHREN" : "LEARN MORE"}
     stats={page.stats}
     experienceLabel={isGerman ? "Erfahrungspunkt" : "Experience point"}
     toolsLabel="TOOLS"

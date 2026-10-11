@@ -140,6 +140,7 @@
       alt: "Professionelles Webdesign Wien für responsive Websites und moderne Benutzeroberflächen",
 
       title: "WEBDESIGN WIEN",
+      href: "/webdesign/",
 
       text: "Moderne, responsive Websites für Selbstständige, kleine Unternehmen und Organisationen. Klar strukturiert, benutzerfreundlich und so gestaltet, dass deine Marke professionell wirkt und deine Inhalte einfach gepflegt werden können.",
     },
@@ -150,6 +151,7 @@
       alt: "Professionelle Webentwicklung in Wien für WordPress und individuelle Funktionen",
 
       title: "WEBENTWICKLUNG",
+      href: "/webentwicklung/",
 
       text: "Technische Umsetzung moderner Websites mit WordPress und individuellen Lösungen. Von maßgeschneiderten Funktionen und API-Integrationen bis hin zu barrierefreien Anwendungen und einer technisch sauberen Umsetzung.",
     },
@@ -160,6 +162,7 @@
       alt: "Webshop erstellen mit WooCommerce und Shopify für Selbstständige und Unternehmen",
 
       title: "WEBSHOP",
+      href: "/webshop/",
 
       text: "Individuelle E-Commerce-Lösungen mit WooCommerce oder Shopify für den Online-Verkauf von Produkten und Dienstleistungen. Mit sicheren Zahlungen, einfachem Checkout und unkomplizierter Produktverwaltung.",
     },
@@ -170,6 +173,7 @@
       alt: "SEO und Performance-Optimierung für WordPress-Websites in Wien",
 
       title: "SEO & PERFORMANCE",
+      href: "/seo-performance/",
 
       text: "Technisches SEO, schnelle Ladezeiten und eine klare Website-Struktur helfen dabei, dass deine Website von Google besser gefunden wird. Ich optimiere WordPress-Websites für Sichtbarkeit und eine bessere Nutzererfahrung.",
     },
@@ -180,6 +184,7 @@
       alt: "Schnelles Website-Hosting mit SSL, Backups und DSGVO-konformer Serververwaltung",
 
       title: "HOSTING",
+      href: "/webhosting/",
 
       text: "Schnelles und sicheres Website-Hosting für WordPress-Websites und Webshops. Inklusive SSL, Caching, Backups, E-Mail-Hosting, regelmäßigen Updates sowie Unterstützung bei Domain- und DNS-Einstellungen.",
     },
@@ -190,6 +195,7 @@
       alt: "WordPress-Wartung und technischer Website-Support für Unternehmen und Selbstständige",
 
       title: "WARTUNG & SUPPORT",
+      href: "/website-wartung/",
 
       text: "Optionale WordPress-Wartung mit Updates, Backups, Sicherheitslösungen, Monitoring und technischem Support. Damit deine Website langfristig stabil, sicher und gut gepflegt bleibt.",
     },

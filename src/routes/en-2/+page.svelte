@@ -304,6 +304,7 @@
       alt: "Bespoke web design services in Vienna for modern responsive websites",
 
       title: "WEB DESIGN VIENNA",
+      href: "/en-2/web-design/",
 
       titleTag: "Bespoke web design services in Vienna",
 
@@ -316,6 +317,7 @@
       alt: "WordPress development and custom coding services in Austria",
 
       title: "WORDPRESS DEVELOPMENT",
+      href: "/en-2/web-development/",
 
       titleTag: "Custom WordPress development services",
 
@@ -328,6 +330,7 @@
       alt: "E commerce and online shop development using WooCommerce or Shopify",
 
       title: "WEB SHOP",
+      href: "/en-2/e-commerce/",
 
       titleTag: "E commerce website development services",
 
@@ -340,6 +343,7 @@
       alt: "SEO and performance optimization for WordPress websites in Vienna",
 
       title: "SEO & PERFORMANCE",
+      href: "/en-2/seo-performance/",
 
       text: "Technical SEO, fast loading speeds and a clear website structure help rank high on search engines. I optimise your websites for visibility and an improved user experience.",
     },
@@ -350,6 +354,7 @@
       alt: "Fast website hosting and domain management on secure servers",
 
       title: "HOSTING",
+      href: "/en-2/website-hosting/",
 
       titleTag: "Secure high speed web hosting services",
 
@@ -362,6 +367,7 @@
       alt: "WordPress maintenance and technical support for website safety",
 
       title: "SUPPORT",
+      href: "/en-2/website-maintenance/",
 
       titleTag: "Website support and WordPress maintenance services",
 
@@ -1048,6 +1054,7 @@
     title="SERVICES"
     subtitle="Web design, custom development, hosting, ongoing maintenance, and everything needed to turn your idea into a live website."
     services={servicesList}
+    serviceLinkLabel="LEARN MORE"
     stats={serviceStats}
     experienceLabel="Experience point"
     toolsLabel="TOOLS"
