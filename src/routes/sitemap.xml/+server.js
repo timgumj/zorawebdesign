@@ -4,6 +4,30 @@ import { blogPostsEn } from "$lib/content/blog-en.js";
 
 export const prerender = true;
 
+// Confirmed content and internal-link updates, not build or layout changes.
+const pageModificationDates = {
+  "": "2026-10-11",
+  "en-2/": "2026-10-11",
+  "webdesign/": "2026-10-11",
+  "seo-performance/": "2026-10-11",
+  "webshop/": "2026-10-11",
+  "webentwicklung/": "2026-10-11",
+  "website-wartung/": "2026-10-11",
+  "webhosting/": "2026-10-11",
+  "en-2/web-design/": "2026-10-11",
+  "en-2/seo-performance/": "2026-10-11",
+  "en-2/e-commerce/": "2026-10-11",
+  "en-2/web-development/": "2026-10-11",
+  "en-2/website-maintenance/": "2026-10-11",
+  "en-2/website-hosting/": "2026-10-11",
+  "webdesign/salzburg/": "2026-10-11",
+  "webdesign/graz/": "2026-10-11",
+  "webdesign/muenchen/": "2026-10-11",
+  "en-2/web-design/salzburg/": "2026-10-11",
+  "en-2/web-design/graz/": "2026-10-11",
+  "en-2/web-design/munich/": "2026-10-11",
+};
+
 export function GET() {
   const staticPages = [
     "",
@@ -59,44 +83,17 @@ export function GET() {
     ]),
   ];
 
-  // Updated whenever npm run build is executed.
-  const buildDate = new Date().toISOString();
-
   const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${pages
   .map((page) => {
     const loc = page
       ? `https://www.zorawebdesign.com/${page}`
-: "https://www.zorawebdesign.com/";
-
-    let priority = "0.7";
-    let changefreq = "monthly";
-
-    if (page === "") {
-      priority = "1.0";
-    } else if (page === "en-2/") {
-      priority = "0.9";
-    } else if (page === "blog/" || page === "en-2/blog/") {
-      priority = "0.8";
-      changefreq = "weekly";
-    } else if (page.includes("webdesign/") || page.includes("web-design/")) {
-      priority = "0.8";
-    } else if (
-      page.includes("website-audit") ||
-      page.includes("website-konfigurator") ||
-      page.includes("website-configurator")
-    ) {
-      priority = "0.8";
-    } else if (page === "impressum/") {
-      priority = "0.3";
-    }
+      : "https://www.zorawebdesign.com/";
+    const lastmod = pageModificationDates[page];
 
     return `  <url>
-    <loc>${loc}</loc>
-    <lastmod>${buildDate}</lastmod>
-    <changefreq>${changefreq}</changefreq>
-    <priority>${priority}</priority>
+    <loc>${loc}</loc>${lastmod ? `\n    <lastmod>${lastmod}</lastmod>` : ""}
   </url>`;
   })
   .join("\n")}
